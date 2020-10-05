@@ -238,10 +238,12 @@ function build_dc_with_docs() {
     mkdir -p doc/doxygen/xml
     osx_command brew install doxygen pandoc graphviz
     osx_command brew link doxygen pandoc graphviz
-    linux_command require_sudo apt-get -y install doxygen python3-sphinx pandoc graphviz
+    if [ "${NO_ROOT}" == "FALSE" ]; then
+      linux_command require_sudo apt-get -y install doxygen python3-sphinx pandoc graphviz
+    fi
     epython -m pip install -r ../requirements.txt
-    sed -i "s#../../commonroad-io/#${COMMONROAD}/#g" ../doc/conf.py
-    cmake -DADD_PYTHON_BINDINGS=TRUE -DPATH_TO_PYTHON_ENVIRONMENT="${ENVIRONMENT}" -DPYTHON_VERSION="${VERSION}" -DCMAKE_BUILD_TYPE=Release -DBUILD_DOC=TRUE ..
+    #sed -i "s#../../commonroad-io/#${COMMONROAD}/#g" ../doc/conf.py
+    cmake $PREFIX_STRING -DADD_PYTHON_BINDINGS=TRUE -DPATH_TO_PYTHON_ENVIRONMENT="${ENVIRONMENT}" -DPYTHON_VERSION="${VERSION}" -DCMAKE_BUILD_TYPE=Release -DBUILD_DOC=TRUE ..
     osx_command sed -i '' 's!-lccd!/usr/local/lib/libccd.2.0.dylib!' python_binding/CMakeFiles/pycrcc.dir/link.txt
     make -j ${JOBS}
     print_progress "Done!" -n
@@ -352,7 +354,7 @@ set -- "${POSITIONAL[@]}" # restore positional parameters
 
 # Check args
 check_mandatory_args
-check_doc_args
+#check_doc_args
 set_pythonfile
 print_args
 

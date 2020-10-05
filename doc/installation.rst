@@ -109,6 +109,7 @@ For the installation of CGAL, please refer to `their website <https://github.com
 To use the pickle feature of the collision checker, install s11n.net library by running:
 
     .. code-block:: bash
+
         $ cd third_party/libs11n
         $ mkdir build && cd build
         $ cmake .. -DCMAKE_BUILD_TYPE=Release

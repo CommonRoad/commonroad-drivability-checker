@@ -1,6 +1,7 @@
 project(crcc)
 cmake_minimum_required(VERSION 3.0)
 
+option(ADD_TESTS "unit tests" OFF)
 option(BUILD_DOC "generate the doc target." OFF)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../commonroad_dc/)
@@ -23,6 +24,9 @@ endif()
 
 find_library(S11N_LIBRARY s11n HINTS ${PC_S11N_LIBRARY} )
 
+if(ADD_TESTS)
+  add_subdirectory(cpp/tests)
+endif()
 
 if(ADD_PYTHON_BINDINGS)
     set(PYTHON_INCLUDE_DIR ${PATH_TO_PYTHON_ENVIRONMENT}/include/python${PYTHON_VERSION}m)
@@ -38,5 +42,4 @@ if (BUILD_DOC)
   set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules" ${CMAKE_MODULE_PATH})
   add_subdirectory(doc)
 endif ()
-
 

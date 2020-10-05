@@ -12,10 +12,16 @@
 #
 import os
 import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../commonroad_dc'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../tutorials'))
+sys.path.insert(0, os.path.dirname(__file__) + '/../../third_party/commonroad-vehicle-models/Python')
+#sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../commonroad-io')) # ToDo: change this
 import commonroad_dc.pycrcc as pycrcc
-sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
-sys.path.append(os.path.dirname(__file__) + '/../../third_party/commonroad-vehicle-models/Python')
-sys.path.append(os.path.join(os.path.dirname(__file__), '../commonroad-io')) # ToDo: change this
+
+
+print("building documentation for the library {}".format(pycrcc.__file__))
 
 # -- Project information -----------------------------------------------------
 
@@ -45,6 +51,8 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode'
 ]
+
+nbsphinx_execute = 'never'
 
 # Add any paths that contain templates here, relative to this directory.
 #templates_path = ['_templates']
