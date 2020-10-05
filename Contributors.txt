@@ -1,0 +1,9 @@
+The CommonRoad Drivability Checker has been made possible by many contributors. We thank the following contributors for their great work:
+
+Vitaliy Rusinov
+Murat Can Üste
+Stefanie Manzinger
+Christian Pek
+Moritz Klischat
+Alexander Zhu
+Sebastian Söntges

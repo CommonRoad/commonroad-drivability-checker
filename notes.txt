@@ -1,0 +1,9 @@
+Permission is hereby granted to use the commonroad-drivability-checker under the terms of the Modified BSD license provided that the license requirements for optional plugins and dependencies are also met.
+
+Running 'git submodule update', 'bash build.sh' as well as installing the library begins the download of the third-party Triangle library. 
+Please note that the Triangle library can not be used for commercial projects. See license conditions for the Triangle library at https://github.com/libigl/triangle/blob/master/triangle.c  or https://www.cs.cmu.edu/~quake/triangle.html for details. It can be substituted with the CGAL library for polygon triangulation.
+
+Installing the library begins the download of the third-party Polygon3 python package. Please note that the Polygon3 python package can not be used for commercial projects. Please see its license details at https://www.j-raedler.de/projects/polygon/
+
+You could optionally modify the library to use a plugin for fast triangulation of polygons which uses the CGAL library (https://www.cgal.org/). Please see its license details.
+To do so, CGAL needs to be installed, and in line 4 of the file cpp/collision/src/plugins/triangulation/triangulate.cc 0 needs to be replaced with 1.
