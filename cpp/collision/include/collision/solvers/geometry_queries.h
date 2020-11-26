@@ -2,6 +2,7 @@
 #define CPP_COLLISION_INCLUDE_COLLISION_SOLVERS_GEOMETRY_QUERIES_H_
 
 #include "collision/collision_object.h"
+#include "collision/narrowphase/detail/obb.h"
 
 namespace collision
 
@@ -26,6 +27,9 @@ int create_rectangles_obb_from_vertex_list(std::vector<Eigen::Vector2d>& verts,
 
 namespace detail {
 namespace geometry_queries {
+
+OBB merge_obbs(const OBB& obb1, const OBB& obb2);
+
 RectangleOBBConstPtr ccd_merge_entities(const RectangleOBB* first,
                                         const RectangleOBB* second);
 }
