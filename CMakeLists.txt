@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.0)
 
 option(ADD_TESTS "unit tests" OFF)
 option(BUILD_DOC "generate the doc target." OFF)
+option(ADD_MODULE_GEOMETRY "add geometry module" ON)
+option(ADD_MODULE_COLLISION "add collision module" ON)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../commonroad_dc/)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../commonroad_dc/)
@@ -22,10 +24,33 @@ else()
   set(COM_HAVE_EIGEN FALSE)
 endif()
 
+
+if(ADD_MODULE_GEOMETRY)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Wno-ignored-attributes)
+
+find_package(OpenMP)
+if (OPENMP_FOUND)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+endif ()
+
+include_directories(${EIGEN3_INCLUDE_DIR})
+
+endif()
+
+if(ADD_MODULE_COLLISION)
 find_library(S11N_LIBRARY s11n HINTS ${PC_S11N_LIBRARY} )
 
 if(ADD_TESTS)
   add_subdirectory(cpp/tests)
+endif()
+
 endif()
 
 if(ADD_PYTHON_BINDINGS)
@@ -38,8 +63,10 @@ endif()
 
 add_subdirectory(cpp)
 
+if(ADD_MODULE_COLLISION)
 if (BUILD_DOC)
   set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules" ${CMAKE_MODULE_PATH})
   add_subdirectory(doc)
 endif ()
+endif()
 
