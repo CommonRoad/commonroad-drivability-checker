@@ -3,7 +3,7 @@ from enum import Enum, unique
 from typing import List, Union, Tuple
 
 import numpy as np
-from commonroad.common.solution_writer import VehicleType, VehicleModel
+from commonroad.common.solution import VehicleType, VehicleModel
 from commonroad.geometry.shape import Rectangle
 from commonroad.scenario.trajectory import State, Trajectory
 from scipy.integrate import odeint
