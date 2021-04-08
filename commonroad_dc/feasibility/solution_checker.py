@@ -134,8 +134,8 @@ def solution_feasible(solution: Solution, dt: float,
                                                                              vehicle_dynamics, dt)
             results[pp_solution.planning_problem_id] = (feasible, pp_solution.trajectory, simulated_trajectory)
         else:
-            feasible, reconstructed_inputs = _check_trajectory_feasibility(pp_solution, vehicle_dynamics, dt)
-            results[pp_solution.planning_problem_id] = (feasible, reconstructed_inputs, pp_solution.trajectory)
+            feasible, inputs = _check_trajectory_feasibility(pp_solution, vehicle_dynamics, dt)
+            results[pp_solution.planning_problem_id] = (feasible, inputs, pp_solution.trajectory)
 
     return results
 
