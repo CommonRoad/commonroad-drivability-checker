@@ -36,7 +36,7 @@ CurvilinearCoordinateSystem::CurvilinearCoordinateSystem(EigenPolyline reference
                       reference_path[last_idx] - reference_path[last_idx - 1]);
   this->approximateProjectionDomain(eps);
   this->computeBestProjectionAxisForSegments();
-  this->approximateCurvilinearProjectionDomain();
+//  this->approximateCurvilinearProjectionDomain();
 }
 
 EigenPolyline CurvilinearCoordinateSystem::referencePath() const {
