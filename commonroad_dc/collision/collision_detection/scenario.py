@@ -9,8 +9,7 @@ import triangle
 from commonroad.scenario.scenario import Scenario
 
 import commonroad_dc.collision.collision_detection.pycrcc_collision_dispatch
-import random
-import matplotlib.pyplot as plt
+
 
 def create_collision_checker_scenario(scenario: Scenario, params=None, collision_object_func=None):
     cc = pycrcc.CollisionChecker()
@@ -57,14 +56,7 @@ def create_collision_object_polygon(polygon, params=None, collision_object_func=
         number_of_vertices = len(vertices)
         segments = list(zip(range(0, number_of_vertices - 1), range(1, number_of_vertices)))
         segments.append((0, number_of_vertices - 1))
-        # plt.figure(figsize=(30,10))
-        # plt.scatter(vertices[:,0], vertices[:,1])
-        # for i, vv in enumerate(vertices):
-        #     plt.text(vv[0], vv[1], s=str(i))
-        # plt.savefig("/home/klischat/Downloads/2101_tmp_videos/figs/" + f"{random.randint(0,9000000)}.svg")
-        # plt.close('all')
-
-        triangles = triangle.triangulate({'vertices': vertices, 'segments': segments}, opts='p')
+        triangles = triangle.triangulate({'vertices': vertices, 'segments': segments}, opts='pqS2.4')
         mesh = list()
         for t in triangles['triangles']:
             v0 = triangles['vertices'][t[0]]
