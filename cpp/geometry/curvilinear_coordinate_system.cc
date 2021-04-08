@@ -577,7 +577,7 @@ void CurvilinearCoordinateSystem::rasterizeTransformedPolygonInProjectionDomain(
 }
 
 bool CurvilinearCoordinateSystem::cartesianPointInProjectionDomain(double x, double y) const {
-  return boost::geometry::within(point_type(x, y), this->projection_domain_);
+  return boost::geometry::covered_by(point_type(x, y), this->projection_domain_);
 }
 
 bool CurvilinearCoordinateSystem::curvilinearPointInProjectionDomain(double s, double l) const {
