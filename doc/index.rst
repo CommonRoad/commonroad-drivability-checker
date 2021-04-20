@@ -10,6 +10,8 @@ The CommonRoad Drivability Checker consists of three core modules:
 
 - **boundary**: The road boundary module determines the road compliance of a given trajectory by either checking whether the ego vehicle is still fully enclosed in the road network or collision checking with obstacles that model the boundary of the road network. Our module provides two different approaches (triangulation and the creation of oriented rectangles) to generate road boundary obstacles.
 
+- **geometry**: The geometry module creates a curvilinear coordinate system aligned to the given reference path. The unique projection domain along the reference path is automatically computed.
+
 - **feasibility**: The feasibility module builds on top of the vehicle models provided by CommonRoad. It determines the feasibility of a given trajectory by reconstructing the input to the corresponding (non-linear) vehicle model. Trajectories are feasible if the obtained input respects the constraints of the vehicle model, e.g., limited steering rate.
 
 Getting Started 

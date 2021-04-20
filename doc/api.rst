@@ -10,5 +10,6 @@ Overview
     api_feasibility.rst
     api_boundary.rst    
     api_collision.rst
-    api_pythonbindings.rst
+    api_pythonbindings_collision.rst
+    api_pythonbindings_geometry.rst
     api_cpp.rst

@@ -467,6 +467,8 @@ class CurvilinearCoordinateSystem {
   int findSegmentIndex(double s) const;
 
  private:
+  void removeSegment(int ind);
+
   EigenPolyline reference_path_;
   std::vector<std::unique_ptr<Segment>> segment_list_;
   std::vector<double> segment_longitudinal_coord_;

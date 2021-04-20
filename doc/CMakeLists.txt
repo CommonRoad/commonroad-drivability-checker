@@ -36,6 +36,7 @@ set(SPHINX_INDEX_FILE ${SPHINX_BUILD}/index.html)
 # - Doxygen has rerun
 # - Our doc files have been updated
 # - The Sphinx config has been updated
+#python bindings have been updated
 add_custom_command(OUTPUT ${SPHINX_INDEX_FILE}
                    COMMAND 
                      ${SPHINX_EXECUTABLE} -b html
@@ -47,11 +48,13 @@ add_custom_command(OUTPUT ${SPHINX_INDEX_FILE}
                    # Other docs files you want to track should go here (or in some variable)
                    ${CMAKE_CURRENT_SOURCE_DIR}
                    ${DOXYGEN_INDEX_FILE}
+		   pycrcc
+		   pycrccosy
                    MAIN_DEPENDENCY ${SPHINX_SOURCE}/conf.py
                    COMMENT "Generating documentation with Sphinx")
 
 # Nice named target so we can run the job easily
-add_custom_target(Sphinx ALL DEPENDS ${SPHINX_INDEX_FILE} pycrcc)
+add_custom_target(Sphinx ALL DEPENDS ${SPHINX_INDEX_FILE} pycrcc pycrccosy)
 
 # Add an install target to install the docs
 # include(GNUInstallDirs)

@@ -28,9 +28,9 @@ environment with python3.6m (dev version), and activate you environment.
 Installation of Essential Third Party Libraries
 -----------------------------------------------
 
-We assume that `Eigen3 <https://eigen.tuxfamily.org/dox/>`_ (version >=3.3.7 - preferably the newest version) and the
-`Boost libraries <https://www.boost.org/>`_ (version >= 1.58) are already installed on your system. For the
-documentation, we require the libraries `Pandoc <https://pandoc.org>`_ and `Doxygen <http://www.doxygen.nl>`_.
+We assume that `Eigen3 <https://eigen.tuxfamily.org/dox/>`_ (version >=3.3.7 - preferably the newest version), the
+`Boost libraries <https://www.boost.org/>`_ (version >= 1.58) and OpenMP (for the geometry submodule support) are already 
+installed on your system. For the documentation, we require the libraries `Pandoc <https://pandoc.org>`_ and `Doxygen <http://www.doxygen.nl>`_.
 The aforementioned libraries can be installed on Ubunutu via apt-get and on macOS via brew install (see homebrew).
 
 Following third party libraries are included as submodules:
@@ -116,6 +116,45 @@ To use the pickle feature of the collision checker, install s11n.net library by 
         $ make
         $ sudo make install
 
+Full Installation with Installation Script
+------------------------------------------
+
+**Note: The installation script only works on Ubuntu based distributions. If your operating system is not Ubuntu
+based, please refer to the previous sections.**
+
+We have provided a build script for easy installation. You still need to activate your conda environment
+(or virtual environment if you like). Full installation option will install third party libraries (suggested).
+
+The **-i** option on the build command will install the drivability checker to the environment specified in the path.
+
+#. Open your console in the root folder of the CommonRoad Drivability Checker.
+
+#. Activate your conda environment with the following command if you didn't before
+
+    .. code-block:: bash
+
+            $ conda activate commonroad-py36
+
+#. Run the build script
+
+        **Basic installation without CGAL and s11n:**
+
+        .. code-block:: bash
+
+            $ bash build.sh -e /path/to/your/anaconda3/envs/commonroad-py36 -v 3.6 -i -j JOB_COUNT
+
+        **(SUGGESTED) Full installation:**
+
+        .. code-block:: bash
+
+            $ bash build.sh -e /path/to/your/anaconda3/envs/commonroad-py36 -v 3.6 --cgal --serializer -i -j JOB_COUNT
+
+        **Note that you have to replace**
+         - */path/to/your/anaconda3/envs/commonroad-py36* with the path to your Anaconda environment (or virtualenv);
+         - *3.6*  with the Python version of your Anaconda environment.
+         - *JOB_COUNT*  with the number of jobs you are willing to allocate to cmake, for example *-j 2*. Each job (possibly) will use a core, so specify this number according to your system and free cores.
+
+        For additional options, please run **bash build.sh -h** command to view them.
 
 
 Full Installation with Anaconda
@@ -162,43 +201,3 @@ After installing all essential third party libraries and packages, you can now i
             $ python setup.py install
     
     **OR** add the root folder of the CommonRoad Drivability Checker to your Python-Interpreter. 
-
-Full Installation with Installation Script
-------------------------------------------
-
-**Note: The installation script only works on Ubuntu based distributions. If your operating system is not Ubuntu
-based, please refer to the previous sections.**
-
-We have provided a build script for easy installation. You still need to activate your conda environment
-(or virtual environment if you like). Full installation option will install third party libraries (suggested).
-
-The **-i** option on the build command will install the drivability checker to the environment specified in the path.
-
-#. Open your console in the root folder of the CommonRoad Drivability Checker.
-
-#. Activate your conda environment with the following command if you didn't before
-
-    .. code-block:: bash
-
-            $ conda activate commonroad-py36
-
-#. Run the build script
-
-        **Basic installation without CGAL and s11n:**
-
-        .. code-block:: bash
-
-            $ bash build.sh -e /path/to/your/anaconda3/envs/commonroad-py36 -v 3.6 -i -j JOB_COUNT
-
-        **(SUGGESTED) Full installation:**
-
-        .. code-block:: bash
-
-            $ bash build.sh -e /path/to/your/anaconda3/envs/commonroad-py36 -v 3.6 --cgal --serializer -i -j JOB_COUNT
-
-        **Note that you have to replace**
-         - */path/to/your/anaconda3/envs/commonroad-py36* with the path to your Anaconda environment (or virtualenv);
-         - *3.6*  with the Python version of your Anaconda environment.
-         - *JOB_COUNT*  with the number of jobs you are willing to allocate to cmake, for example *-j 2*. Each job (possibly) will use a core, so specify this number according to your system and free cores.
-
-        For additional options, please run **bash build.sh -h** command to view them.

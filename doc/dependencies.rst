@@ -22,6 +22,7 @@ Third-party libraries
 * `Eigen3 <https://eigen.tuxfamily.org/dox/>`_ 
 * `Boost <https://www.boost.org/>`_
 * `pybind11 <https://github.com/pybind/pybind11>`_
+* `OpenMP <https://github.com/OpenMP>`_ (for the geometry submodule)
 * `Pandoc <https://pandoc.org>`_ (for the documentation)
 * `Doxygen <http://www.doxygen.nl>`_ (for the documentation)
 
