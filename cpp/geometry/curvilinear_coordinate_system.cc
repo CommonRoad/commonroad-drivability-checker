@@ -21,10 +21,8 @@ CurvilinearCoordinateSystem::CurvilinearCoordinateSystem(EigenPolyline reference
   this->reference_path_ = reference_path;
 
   EigenPolyline ref_path;
-  std::cout << "eps2" << eps2;
   if(eps2!=0)
   {
-	  std::cout << "eps2 conversion";
 	  Eigen::Vector2d tangent1=(reference_path[0]-reference_path[1]).normalized();
 
 	  Eigen::Vector2d new_point0=reference_path[0]+tangent1*3*eps2;
@@ -46,7 +44,6 @@ CurvilinearCoordinateSystem::CurvilinearCoordinateSystem(EigenPolyline reference
   }
   else
   {
-	  std::cout << "no eps2 conversion";
 	  ref_path.insert(ref_path.end(), reference_path.begin(), reference_path.end());
   }
   this->createSegment(ref_path[0],
