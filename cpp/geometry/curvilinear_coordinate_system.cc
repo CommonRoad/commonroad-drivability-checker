@@ -4,7 +4,7 @@ namespace geometry {
 
 CurvilinearCoordinateSystem::CurvilinearCoordinateSystem(EigenPolyline reference_path,
                                                          double default_projection_domain_limit,
-                                                         double eps) {
+                                                         double eps, double eps2) {
   this->length_ = 0.0;
   this->segment_longitudinal_coord_.push_back(0.0);
   this->default_projection_domain_limit_ = default_projection_domain_limit;
@@ -21,24 +21,34 @@ CurvilinearCoordinateSystem::CurvilinearCoordinateSystem(EigenPolyline reference
   this->reference_path_ = reference_path;
 
   EigenPolyline ref_path;
+  std::cout << "eps2" << eps2;
+  if(eps2!=0)
+  {
+	  std::cout << "eps2 conversion";
+	  Eigen::Vector2d tangent1=(reference_path[0]-reference_path[1]).normalized();
 
-  Eigen::Vector2d tangent1=(reference_path[0]-reference_path[1]).normalized();
+	  Eigen::Vector2d new_point0=reference_path[0]+tangent1*3*eps2;
+	  Eigen::Vector2d new_point1=reference_path[0]+tangent1*2*eps2;
 
-  Eigen::Vector2d new_point1=reference_path[0]+tangent1*2;
+	  Eigen::Vector2d new_point2=reference_path[0]+tangent1*eps2;
 
-  Eigen::Vector2d new_point2=reference_path[0]+tangent1;
+	  Eigen::Vector2d tangent2=(reference_path.back()-reference_path[reference_path.size()-2]).normalized();
 
-  Eigen::Vector2d tangent2=(reference_path.back()-reference_path[reference_path.size()-2]).normalized();
+	  Eigen::Vector2d new_point3=reference_path.back()+tangent2*eps2;
+	  Eigen::Vector2d new_point4=reference_path.back()+tangent2*2*eps2;
 
-  Eigen::Vector2d new_point3=reference_path.back()+tangent2;
-
-
-  ref_path.push_back(new_point1);
-  ref_path.push_back(new_point2);
-  ref_path.insert(ref_path.end(), reference_path.begin(), reference_path.end());
-  ref_path.push_back(new_point3);
-
-
+	  ref_path.push_back(new_point0);
+	  ref_path.push_back(new_point1);
+	  ref_path.push_back(new_point2);
+	  ref_path.insert(ref_path.end(), reference_path.begin(), reference_path.end());
+	  ref_path.push_back(new_point3);
+	  ref_path.push_back(new_point4);
+  }
+  else
+  {
+	  std::cout << "no eps2 conversion";
+	  ref_path.insert(ref_path.end(), reference_path.begin(), reference_path.end());
+  }
   this->createSegment(ref_path[0],
 		  ref_path[1],
 		  ref_path[1] - ref_path[0],

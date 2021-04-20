@@ -16,7 +16,7 @@ arr = np.array([[64.1976, -38.03163],
                 [62.92092826, -36.49211408],
                 [62.4976, -35.98163]])
 arr_resample=resample_polyline(arr)
-res = pycrccosy.CurvilinearCoordinateSystem(arr_resample)
+res = pycrccosy.CurvilinearCoordinateSystem(arr_resample,20.,0.1,0.00000001)
 
 first_point=np.asarray(arr[0])
 last_point=np.asarray(arr[-1])

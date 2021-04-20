@@ -44,10 +44,12 @@ class CurvilinearCoordinateSystem {
    * @param default_projection_domain_limit maximum absolute distance of the projection domain border
    * from the reference path
    * @param eps reduces the lateral distance of the projection domain border from the reference path
+   * @param eps2 add three additional segments to the beginning the reference path and two segments to the end,
+   * with length eps2 to enable the conversion of points near the beginning and the end of the reference path
    */
   CurvilinearCoordinateSystem(EigenPolyline reference_path,
                               double default_projection_domain_limit = 20.,
-                              double eps = 0.1);
+                              double eps = 0.1, double eps2=0.);
 
   /**
    * Returns the reference path as a 2D polyline in Cartesian coordiantes
