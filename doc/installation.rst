@@ -1,15 +1,16 @@
 .. _installation:
 
 Installation
-------------
+-----------------
 
 In order to install CommonRoad Drivability Checker, we first need to install essential third party libraries,
 followed by installation of optional third party libraries, and finally the installation of CommonRoad Drivability
-Checker itself. All required steps have been provide in the following sections.
+Checker itself. All required steps are described in the following sections.
 
-**We have also provided an easy to use installation script for full installation for Ubuntu based distributions
-on the last section. The other sections can be skipped in case you wish to install using the script.**
+We provide two installation methods:
 
+* **Method 1: Automatic Installation via Bash Script** (recommended for Ubuntu)
+* **Method 2: Manual Installation**
 
 Before installing anything, we recommend you to install Anaconda_ and to create an Anaconda environment.
 Below, we assume that your Anaconda environment is called **commonroad-py36**. In the root folder of the
@@ -25,13 +26,64 @@ environment with python3.6m (dev version), and activate you environment.
 .. _Anaconda: https://www.anaconda.com/download/#download
 .. _documentation: https://docs.python.org/3/tutorial/venv.html
 
-Installation of Essential Third Party Libraries
------------------------------------------------
+Method 1: Automatic Installation via Bash Script
+################################################
 
-We assume that `Eigen3 <https://eigen.tuxfamily.org/dox/>`_ (version >=3.3.7 - preferably the newest version), the
-`Boost libraries <https://www.boost.org/>`_ (version >= 1.58) and OpenMP (for the geometry submodule support) are already 
-installed on your system. For the documentation, we require the libraries `Pandoc <https://pandoc.org>`_ and `Doxygen <http://www.doxygen.nl>`_.
-The aforementioned libraries can be installed on Ubunutu via apt-get and on macOS via brew install (see homebrew).
+**Note: The installation script only works on Ubuntu based distributions. If your operating system is not Ubuntu
+based, please refer to Method 2, which is described below.**
+
+We have provided a build script for easy installation. You still need to activate your conda environment
+(or virtual environment if you like). Full installation option will install third party libraries (suggested).
+
+The **-i** option on the build command will install the drivability checker to the environment specified in the path.
+
+#. Open your console in the root folder of the CommonRoad Drivability Checker.
+
+#. Activate your conda environment with the following command if you didn't before
+
+    .. code-block:: bash
+
+            $ conda activate commonroad-py36
+
+#. Run the build script
+
+        **Basic installation without CGAL and s11n:**
+
+        .. code-block:: bash
+
+            $ bash build.sh -e /path/to/your/anaconda3/envs/commonroad-py36 -v 3.6 -i -j JOB_COUNT
+
+        **(SUGGESTED) Full installation:**
+
+        .. code-block:: bash
+
+            $ bash build.sh -e /path/to/your/anaconda3/envs/commonroad-py36 -v 3.6 --cgal --serializer -i -j JOB_COUNT
+
+        **Note that you have to replace**
+         - */path/to/your/anaconda3/envs/commonroad-py36* with the path to your Anaconda environment (or virtualenv);
+         - *3.6*  with the Python version of your Anaconda environment.
+         - *JOB_COUNT*  with the number of jobs you are willing to allocate to cmake, for example *-j 2*. Each job (possibly) will use a core, so specify this number according to your system and free cores.
+
+        For additional options, please run **bash build.sh -h** command to view them.
+
+
+Method 2: Manual Installation
+#############################
+
+Prerequisites
+*************
+
+We assume that the following libraries are already installed on your system:
+
+* `Eigen3 <https://eigen.tuxfamily.org/dox/>`_ (version >=3.3.7 - preferably the newest version)
+* `Boost libraries <https://www.boost.org/>`_ (version >= 1.58)
+* `OpenMP <https://www.openmp.org/>`_ (for the geometry submodule support)
+
+For the documentation, we require the libraries `Pandoc <https://pandoc.org>`__ and `Doxygen <http://www.doxygen.nl>`_.
+All aforementioned libraries can be installed on Ubunutu via apt-get and on macOS via brew install (see homebrew).
+
+Installation of Essential Third Party Libraries and Packages
+************************************************************
 
 Following third party libraries are included as submodules:
 
@@ -100,9 +152,8 @@ They can be installed with the following command:
 
       $ pip3 install -r requirements.txt
 
-
 Installation of Optional Third Party Libraries
-----------------------------------------------
+**********************************************
 
 For the installation of CGAL, please refer to `their website <https://github.com/CGAL/cgal>`_.
 
@@ -116,49 +167,8 @@ To use the pickle feature of the collision checker, install s11n.net library by 
         $ make
         $ sudo make install
 
-Full Installation with Installation Script
-------------------------------------------
-
-**Note: The installation script only works on Ubuntu based distributions. If your operating system is not Ubuntu
-based, please refer to the previous sections.**
-
-We have provided a build script for easy installation. You still need to activate your conda environment
-(or virtual environment if you like). Full installation option will install third party libraries (suggested).
-
-The **-i** option on the build command will install the drivability checker to the environment specified in the path.
-
-#. Open your console in the root folder of the CommonRoad Drivability Checker.
-
-#. Activate your conda environment with the following command if you didn't before
-
-    .. code-block:: bash
-
-            $ conda activate commonroad-py36
-
-#. Run the build script
-
-        **Basic installation without CGAL and s11n:**
-
-        .. code-block:: bash
-
-            $ bash build.sh -e /path/to/your/anaconda3/envs/commonroad-py36 -v 3.6 -i -j JOB_COUNT
-
-        **(SUGGESTED) Full installation:**
-
-        .. code-block:: bash
-
-            $ bash build.sh -e /path/to/your/anaconda3/envs/commonroad-py36 -v 3.6 --cgal --serializer -i -j JOB_COUNT
-
-        **Note that you have to replace**
-         - */path/to/your/anaconda3/envs/commonroad-py36* with the path to your Anaconda environment (or virtualenv);
-         - *3.6*  with the Python version of your Anaconda environment.
-         - *JOB_COUNT*  with the number of jobs you are willing to allocate to cmake, for example *-j 2*. Each job (possibly) will use a core, so specify this number according to your system and free cores.
-
-        For additional options, please run **bash build.sh -h** command to view them.
-
-
-Full Installation with Anaconda
--------------------------------
+Installation of the CommonRoad Drivability Checker
+**************************************************
 
 After installing all essential third party libraries and packages, you can now install the CommonRoad Drivability Checker.
 
