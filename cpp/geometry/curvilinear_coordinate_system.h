@@ -472,7 +472,7 @@ class CurvilinearCoordinateSystem {
   void removeSegment(int ind);
 
   EigenPolyline reference_path_;
-  std::vector<std::shared_ptr<Segment>> segment_list_;
+  std::vector<std::unique_ptr<Segment>> segment_list_;
   std::vector<double> segment_longitudinal_coord_;
   polygon_type projection_domain_;
   polygon_type curvilinear_projection_domain_;
