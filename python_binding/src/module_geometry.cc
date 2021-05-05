@@ -46,7 +46,7 @@ void init_module_geometry(py::module &m) {
     The absolute value of the lateral distance of the projection domain border from the reference path is\n\
     limited to default_projection_domain_limit.\n\
     To account for numeric imprecisions, the parameter eps reduces the computed lateral distance of the\n\
-    projection domain border from the reference path.\n:param reference_path: 2D polyline in Cartesian coordinates\n:param default_projection_domain_limit: maximum absolute distance of the projection domain border from the reference path, defaults to 20\n:param eps: reduces the lateral distance of the projection domain border from the reference path, defaults to 0.1\n:param eps2: if nonzero, adds additional segments to the beginning (3 segments) and the end (2 segments) of the reference path to enable the conversion of the points near the beginning and the end of the reference path, defaults to 0, the recommended value is 0.000001"
+    projection domain border from the reference path.\n:param reference_path: 2D polyline in Cartesian coordinates\n:param default_projection_domain_limit: maximum absolute distance of the projection domain border from the reference path, defaults to 20\n:param eps: reduces the lateral distance of the projection domain border from the reference path, defaults to 0.1\n:param eps2: if nonzero, adds additional segments to the beginning (3 segments) and the end (2 segments) of the reference path to enable the conversion of the points near the beginning and the end of the reference path, defaults to 0.0001, the recommended value is 0.000001"
 
           )
           .def("length", &geometry::CurvilinearCoordinateSystem::length, ":return: length of the reference path of the curvilinear coordinate system")
