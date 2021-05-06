@@ -28,11 +28,11 @@ print("building documentation for the library {}".format(pycrcc.__file__))
 # -- Project information -----------------------------------------------------
 
 project = 'CommonRoad Drivability Checker'
-copyright = '2020, Technical University of Munich, Professorship Cyber-Physical Systems'
+copyright = '2021, Technical University of Munich, Professorship Cyber-Physical Systems'
 author = 'Technical University of Munich, Professorship Cyber-Physical Systems'
 
 # The full version, including alpha/beta/rc tags
-release = '2020.1'
+release = '2021.1'
 
 
 # -- General configuration ---------------------------------------------------

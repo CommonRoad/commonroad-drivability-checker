@@ -39,7 +39,7 @@ Contact information
     :Date: |today|
 
 :Website: `http://commonroad.in.tum.de <https://commonroad.in.tum.de/>`_
-:Email: `commonroad-i06@in.tum.de <commonroad-i06@in.tum.de>`_
+:Email: `commonroad@lists.lrz.de <commonroad@lists.lrz.de>`_
 
 
 Indices and tables
