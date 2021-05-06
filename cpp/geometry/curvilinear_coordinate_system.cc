@@ -4,7 +4,7 @@ namespace geometry {
 
 CurvilinearCoordinateSystem::CurvilinearCoordinateSystem(EigenPolyline reference_path,
                                                          double default_projection_domain_limit,
-                                                         double eps) {
+                                                         double eps, double eps2) {
   this->length_ = 0.0;
   this->segment_longitudinal_coord_.push_back(0.0);
   this->default_projection_domain_limit_ = default_projection_domain_limit;
@@ -20,21 +20,52 @@ CurvilinearCoordinateSystem::CurvilinearCoordinateSystem(EigenPolyline reference
 
   this->reference_path_ = reference_path;
 
-  this->createSegment(reference_path[0],
-                      reference_path[1],
-                      reference_path[1] - reference_path[0],
-                      reference_path[2] - reference_path[0]);
-  for (int i = 1; i < reference_path.size() - 2; i++) {
-    this->createSegment(reference_path[i],
-                        reference_path[i + 1],
-                        reference_path[i + 1] - reference_path[i - 1],
-                        reference_path[i + 2] - reference_path[i]);
+  EigenPolyline ref_path;
+  if(eps2!=0)
+  {
+	  Eigen::Vector2d tangent1=(reference_path[0]-reference_path[1]).normalized();
+
+	  Eigen::Vector2d new_point0=reference_path[0]+tangent1*3*eps2;
+	  Eigen::Vector2d new_point1=reference_path[0]+tangent1*2*eps2;
+
+	  Eigen::Vector2d new_point2=reference_path[0]+tangent1*eps2;
+
+	  Eigen::Vector2d tangent2=(reference_path.back()-reference_path[reference_path.size()-2]).normalized();
+
+	  Eigen::Vector2d new_point3=reference_path.back()+tangent2*eps2;
+	  Eigen::Vector2d new_point4=reference_path.back()+tangent2*2*eps2;
+
+	  ref_path.push_back(new_point0);
+	  ref_path.push_back(new_point1);
+	  ref_path.push_back(new_point2);
+	  ref_path.insert(ref_path.end(), reference_path.begin(), reference_path.end());
+	  ref_path.push_back(new_point3);
+	  ref_path.push_back(new_point4);
   }
-  int last_idx = reference_path.size() - 1;
-  this->createSegment(reference_path[last_idx - 1], reference_path[last_idx],
-                      reference_path[last_idx] - reference_path[last_idx - 2],
-                      reference_path[last_idx] - reference_path[last_idx - 1]);
+  else
+  {
+	  ref_path.insert(ref_path.end(), reference_path.begin(), reference_path.end());
+  }
+  this->createSegment(ref_path[0],
+		  ref_path[1],
+		  ref_path[1] - ref_path[0],
+		  ref_path[2] - ref_path[0]);
+  for (int i = 1; i < ref_path.size() - 2; i++) {
+    this->createSegment(ref_path[i],
+    		ref_path[i + 1],
+			ref_path[i + 1] - ref_path[i - 1],
+			ref_path[i + 2] - ref_path[i]);
+  }
+  int last_idx = ref_path.size() - 1;
+  this->createSegment(ref_path[last_idx - 1], ref_path[last_idx],
+		  ref_path[last_idx] - ref_path[last_idx - 2],
+		  ref_path[last_idx] - ref_path[last_idx - 1]);
   this->approximateProjectionDomain(eps);
+
+  //this->removeSegment(0);
+  //this->removeSegment(0);
+  //this->removeSegment(this->segment_list_.size()-1);
+
   this->computeBestProjectionAxisForSegments();
 //  this->approximateCurvilinearProjectionDomain();
 }
@@ -698,6 +729,7 @@ std::vector<EigenPolyline> CurvilinearCoordinateSystem::polygonWithinProjectionD
   return polygons_within_projection_domain;
 }
 
+
 void CurvilinearCoordinateSystem::createSegment(Eigen::Vector2d pt_1,
                                                 Eigen::Vector2d pt_2,
                                                 Eigen::Vector2d t_1,
@@ -706,6 +738,17 @@ void CurvilinearCoordinateSystem::createSegment(Eigen::Vector2d pt_1,
   this->length_ = this->length_ + this->segment_list_.back()->length();
   this->segment_longitudinal_coord_.push_back(length_);
 }
+
+void CurvilinearCoordinateSystem::removeSegment(int ind)
+{
+	//todo: check for correctness
+
+	this->length_-=this->segment_list_[ind]->length();
+	this->segment_list_.erase(this->segment_list_.begin()+ind);
+	this->segment_longitudinal_coord_.erase(this->segment_longitudinal_coord_.begin()+ind);
+
+}
+
 
 std::vector<int> CurvilinearCoordinateSystem::findCandidatePointsInSegment(
     int segment_idx,
@@ -863,22 +906,11 @@ std::tuple<double, double> CurvilinearCoordinateSystem::computeProjectionDomainL
 EigenPolyline CurvilinearCoordinateSystem::computeProjectionDomainBorder(double min_radius, double max_radius) {
   // create upper and lower border of projection domain
   EigenPolyline projection_domain_border;
-
-  const auto &segment_second = this->segment_list_[1];
-  this->upper_projection_domain_border_.push_back(this->reference_path_[0] + max_radius * segment_second->normalSegmentEnd());
-  this->lower_projection_domain_border_.push_back(this->reference_path_[0] + min_radius * segment_second->normalSegmentEnd());
-
-
-  for (int i = 1; i < this->segment_list_.size()-1 ; i++) {
+  for (int i = 1; i < this->segment_list_.size() - 1; i++) {
     const auto &segment = this->segment_list_[i];
     this->upper_projection_domain_border_.push_back(segment->pt_2() + max_radius * segment->normalSegmentEnd());
     this->lower_projection_domain_border_.push_back(segment->pt_2() + min_radius * segment->normalSegmentEnd());
   }
-
-  const auto &segment_last_but_one = this->segment_list_[this->segment_list_.size()-2];
-    this->upper_projection_domain_border_.push_back(this->reference_path_.back() + max_radius * segment_last_but_one->normalSegmentEnd());
-    this->lower_projection_domain_border_.push_back(this->reference_path_.back() + min_radius * segment_last_but_one->normalSegmentEnd());
-
 
   // concatenate projection domain border
   projection_domain_border.insert(

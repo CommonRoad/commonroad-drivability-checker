@@ -1,10 +1,10 @@
 import unittest
-import pycrcc
-import pycrccosy
+from commonroad_dc import pycrcc
+from commonroad_dc import pycrccosy
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle
-from commonroad_ccosy.geometry.util import chaikins_corner_cutting, resample_polyline, \
+from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline, \
     compute_curvature_from_polyline
 
 

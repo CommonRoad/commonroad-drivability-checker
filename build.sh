@@ -363,7 +363,7 @@ remove_folder build dist *.egg-info *.so *.a
 fetch_submodules
 if [ "${NO_ROOT}" == "FALSE" ]; then
 	linux_command require_sudo apt-get -y install build-essential cmake git wget unzip libboost-dev libboost-thread-dev
-	linux_command require_sudo apt-get -y install libboost-test-dev libboost-filesystem-dev libeigen3-dev
+	linux_command require_sudo apt-get -y install libboost-test-dev libboost-filesystem-dev libeigen3-dev libomp-dev
 else 
   PREFIX_STRING="-DCMAKE_PREFIX_PATH=$HOME -DCMAKE_INSTALL_PREFIX=$HOME"
 fi
