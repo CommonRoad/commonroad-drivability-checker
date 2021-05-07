@@ -1218,9 +1218,9 @@ void init_module_collision(py::module &m) {
         auto traj_batch = new collision::detail::OBBDenseTrajectoryBatch(
             obb1_fast_container, traj_length, start_time_step);
         return traj_batch;
-      }))
+      }), "See 05_collision_checks_dynamic_obstacles.ipynb for an initialization example.")
       .def("preprocess_",
-           &collision::detail::OBBDenseTrajectoryBatch::preprocess_inplace)
+           &collision::detail::OBBDenseTrajectoryBatch::preprocess_inplace, "Preprocesses each trajectory using OBB sum hull (for continuous collision detection). The occupancies of the OBB boxes for two subsequent states are overapproximated with a tightly fitting OBB box. It is an in-place operation.")
       .def("to_tvobstacle",
            [](std::shared_ptr<collision::detail::OBBDenseTrajectoryBatch> &tb) {
              py::list ret;
@@ -1246,11 +1246,14 @@ void init_module_collision(py::module &m) {
                ret.append(tvobstacle);
              }
              return ret;
-           })
+           },"Returns a list of TimeVariantCollisionObjects corresponding to the OBB trajectory batch.")
+		   /*
       .def("computeAABB",
            [](std::shared_ptr<collision::detail::OBBDenseTrajectoryBatch> &tb) {
              return tb->computeAABBs();
-           });
+           })
+           */
+           ;
 
   py::class_<collision::CollisionChecker,
              std::shared_ptr<collision::CollisionChecker>>(m,
