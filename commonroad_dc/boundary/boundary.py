@@ -34,7 +34,6 @@ def create_road_boundary_obstacle(scenario: Scenario, method='triangulation', re
     -obb_rectangles
 
     In contrast to triangulation, this method creates a set of oriented rectangles that separates the road and the road boundary.
-    To compute the set, we perform a polygon union operation for all lanelets and then use oriented rectangles to represent each line segment of the resulant polygons with holes.
     To compute the set, we first compute the union of all lanelets in the road network and then extract the inner and outer contours of the resulting polygon.
     Afterwards, we create an oriented rectangle for each line segment of the inner and outer contours.
     The oriented rectangles symmetrically overapproximate each line segment.

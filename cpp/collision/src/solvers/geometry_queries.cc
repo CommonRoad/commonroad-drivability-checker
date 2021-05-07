@@ -39,6 +39,34 @@ int fillFclOBBHelper(const RectangleOBB* obb,
   return 0;
 }
 
+int fillFclOBBHelper(const OBB* obb,
+                     fcl::OBB<FCL_PRECISION>* fcl_obb) {
+  fcl_obb->axis = fcl::Matrix3<FCL_PRECISION>::Zero();
+  fcl_obb->To = fcl::Vector3<FCL_PRECISION>::Zero();
+  fcl_obb->extent = fcl::Vector3<FCL_PRECISION>::Zero();
+  fcl_obb->To.topRows(2) = obb->center().cast<double>();
+
+  if (obb->r_x() > obb->r_y())
+
+  {
+    fcl_obb->axis.block<2, 1>(0, 0) = obb->local_x_axis();
+    fcl_obb->axis.block<2, 1>(0, 1) = obb->local_y_axis();
+    fcl_obb->axis(2, 2) = 1;
+
+    fcl_obb->extent(0) = obb->r_x();
+    fcl_obb->extent(1) = obb->r_y();
+
+  } else {
+    fcl_obb->axis.block<2, 1>(0, 0) = obb->local_y_axis();
+    fcl_obb->axis.block<2, 1>(0, 1) = obb->local_x_axis();
+    fcl_obb->axis(2, 2) = 1;
+    fcl_obb->extent(0) = obb->r_x();
+    fcl_obb->extent(1) = obb->r_y();
+  }
+
+  return 0;
+}
+
 // todo: add AABB handling
 
 RectangleOBBConstPtr ccd_merge_entities(const RectangleOBB* first,
@@ -61,6 +89,28 @@ RectangleOBBConstPtr ccd_merge_entities(const RectangleOBB* first,
   RectangleOBBConstPtr ret(new collision::RectangleOBB(rx, ry, local_ax, cent));
 
   return (ret);
+}
+
+OBB merge_obbs(const OBB& first, const OBB& second)
+{
+	OBB obb_merged;
+
+	fcl::OBB<FCL_PRECISION> this_obb;
+	fcl::OBB<FCL_PRECISION> other_obb;
+
+	  fillFclOBBHelper(&first, &this_obb);
+	  fillFclOBBHelper(&second, &other_obb);
+
+	  fcl::OBB<FCL_PRECISION> merged_obb = this_obb + other_obb;
+
+	  Eigen::Matrix2d local_ax;
+
+	  local_ax = merged_obb.axis.block<2, 2>(0, 0).cast<double>();
+	  Eigen::Vector2d r(merged_obb.extent(0), merged_obb.extent(1));
+
+	  Eigen::Vector2d cent = merged_obb.To.topRows(2).cast<double>();
+
+	  return OBB(local_ax, r, cent);
 }
 
 inline RectangleOBBConstPtr obb_from_aabb(const RectangleAABB* aabb) {

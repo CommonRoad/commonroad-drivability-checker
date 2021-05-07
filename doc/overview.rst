@@ -11,7 +11,7 @@ The following code examples are available as Jupyter Notebooks in tutorials/. To
 #. Activate your environment with 
 
   .. code-block:: bash
-    
+
     $ conda activate commonroad-py36
     $ cd tutorials/
     $ jupyter notebook name_of_notebook
@@ -25,5 +25,7 @@ The following code examples are available as Jupyter Notebooks in tutorials/. To
     
     01_python_wrapper.nblink
     02_commonroad_interface.nblink
-    03_commonroad_road_compliance_checking.nblink
+    03_road_compliance_checking.nblink
     04_feasibility_checker.nblink
+    05_collision_checks_dynamic_obstacles.nblink
+    06_curvilinear_coordinate_system.nblink

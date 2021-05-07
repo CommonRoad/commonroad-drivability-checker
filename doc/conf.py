@@ -12,19 +12,27 @@
 #
 import os
 import sys
+
+print('documentation root' + os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../commonroad_dc')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../tutorials')))
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__) + '/../../third_party/commonroad-vehicle-models/Python'))
+#sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../commonroad-io')) # ToDo: change this
 import commonroad_dc.pycrcc as pycrcc
-sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
-sys.path.append(os.path.dirname(__file__) + '/../../third_party/commonroad-vehicle-models/Python')
-sys.path.append(os.path.join(os.path.dirname(__file__), '../commonroad-io')) # ToDo: change this
+
+
+print("building documentation for the library {}".format(pycrcc.__file__))
 
 # -- Project information -----------------------------------------------------
 
 project = 'CommonRoad Drivability Checker'
-copyright = '2020, Technical University of Munich, Professorship Cyber-Physical Systems'
+copyright = '2021, Technical University of Munich, Professorship Cyber-Physical Systems'
 author = 'Technical University of Munich, Professorship Cyber-Physical Systems'
 
 # The full version, including alpha/beta/rc tags
-release = '2020.1'
+release = '2021.1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -45,6 +53,8 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode'
 ]
+
+nbsphinx_execute = 'never'
 
 # Add any paths that contain templates here, relative to this directory.
 #templates_path = ['_templates']
