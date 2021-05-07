@@ -39,8 +39,7 @@ int fillFclOBBHelper(const RectangleOBB* obb,
   return 0;
 }
 
-int fillFclOBBHelper(const OBB* obb,
-                     fcl::OBB<FCL_PRECISION>* fcl_obb) {
+int fillFclOBBHelper(const OBB* obb, fcl::OBB<FCL_PRECISION>* fcl_obb) {
   fcl_obb->axis = fcl::Matrix3<FCL_PRECISION>::Zero();
   fcl_obb->To = fcl::Vector3<FCL_PRECISION>::Zero();
   fcl_obb->extent = fcl::Vector3<FCL_PRECISION>::Zero();
@@ -91,26 +90,25 @@ RectangleOBBConstPtr ccd_merge_entities(const RectangleOBB* first,
   return (ret);
 }
 
-OBB merge_obbs(const OBB& first, const OBB& second)
-{
-	OBB obb_merged;
+OBB merge_obbs(const OBB& first, const OBB& second) {
+  OBB obb_merged;
 
-	fcl::OBB<FCL_PRECISION> this_obb;
-	fcl::OBB<FCL_PRECISION> other_obb;
+  fcl::OBB<FCL_PRECISION> this_obb;
+  fcl::OBB<FCL_PRECISION> other_obb;
 
-	  fillFclOBBHelper(&first, &this_obb);
-	  fillFclOBBHelper(&second, &other_obb);
+  fillFclOBBHelper(&first, &this_obb);
+  fillFclOBBHelper(&second, &other_obb);
 
-	  fcl::OBB<FCL_PRECISION> merged_obb = this_obb + other_obb;
+  fcl::OBB<FCL_PRECISION> merged_obb = this_obb + other_obb;
 
-	  Eigen::Matrix2d local_ax;
+  Eigen::Matrix2d local_ax;
 
-	  local_ax = merged_obb.axis.block<2, 2>(0, 0).cast<double>();
-	  Eigen::Vector2d r(merged_obb.extent(0), merged_obb.extent(1));
+  local_ax = merged_obb.axis.block<2, 2>(0, 0).cast<double>();
+  Eigen::Vector2d r(merged_obb.extent(0), merged_obb.extent(1));
 
-	  Eigen::Vector2d cent = merged_obb.To.topRows(2).cast<double>();
+  Eigen::Vector2d cent = merged_obb.To.topRows(2).cast<double>();
 
-	  return OBB(local_ax, r, cent);
+  return OBB(local_ax, r, cent);
 }
 
 inline RectangleOBBConstPtr obb_from_aabb(const RectangleAABB* aabb) {
@@ -172,8 +170,8 @@ std::size_t test_polygon_enclosure(const ShapeGroup& sg,
 }
 
 RectangleOBBConstPtr create_rectangle_obb_from_points(Eigen::Vector2d pt1,
-                                            Eigen::Vector2d pt2,
-                                            double rect_width) {
+                                                      Eigen::Vector2d pt2,
+                                                      double rect_width) {
   Eigen::Matrix2d local_axes;
 
   Eigen::Vector2d v = pt2 - pt1;
@@ -193,22 +191,20 @@ RectangleOBBConstPtr create_rectangle_obb_from_points(Eigen::Vector2d pt1,
 }
 
 int create_rectangles_obb_from_vertex_list(std::vector<Eigen::Vector2d>& verts,
-                                         collision::ShapeGroup* sg_rects_ptr,
-                                         double rect_width) {
+                                           collision::ShapeGroup* sg_rects_ptr,
+                                           double rect_width) {
   for (auto vert = verts.begin(); vert < verts.end() - 1; vert++) {
     collision::RectangleOBBConstPtr rect_new =
         create_rectangle_obb_from_points(*vert, *(vert + 1), rect_width);
     if (rect_new) sg_rects_ptr->addToGroup(rect_new);
   }
   if (verts.size() > 1) {
-    collision::RectangleOBBConstPtr rect_new =
-        create_rectangle_obb_from_points(*(verts.end() - 1), *(verts.begin()),
-                                          rect_width);
+    collision::RectangleOBBConstPtr rect_new = create_rectangle_obb_from_points(
+        *(verts.end() - 1), *(verts.begin()), rect_width);
     if (rect_new) sg_rects_ptr->addToGroup(rect_new);
   }
   return 0;
 }
-
 
 }  // namespace geometry_queries
 }  // namespace collision

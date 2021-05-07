@@ -110,11 +110,11 @@ class RoutePlanner:
     def find_all_adjacent_lanelets(self, lanelet):
         right = left = lanelet
         adjacent_lanelet_ids = set()
-        while(left.adj_left != None and left.adj_left_same_direction):
+        while (left.adj_left != None and left.adj_left_same_direction):
             adjacent_lanelet_ids.add(left.adj_left)
             left = self.lanelet_network.find_lanelet_by_id(left.adj_left)
 
-        while(right.adj_right != None and right.adj_right_same_direction):
+        while (right.adj_right != None and right.adj_right_same_direction):
             adjacent_lanelet_ids.add(right.adj_right)
             right = self.lanelet_network.find_lanelet_by_id(right.adj_right)
         return adjacent_lanelet_ids

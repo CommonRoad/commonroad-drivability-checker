@@ -4,8 +4,8 @@
 #include <exception>
 #include <iostream>
 
-#include "collision/narrowphase/shape.h"
 #include "collision/narrowphase/detail/obb.h"
+#include "collision/narrowphase/shape.h"
 
 #include "collision/line_segment.h"
 
@@ -83,10 +83,8 @@ class RectangleOBB : public Shape {
     is_fastAABB_cached_ = true;
   }
 
-  RectangleOBB(const detail::OBB &obb):
-	  RectangleOBB(obb.r_x(), obb.r_y(), obb.local_axes(),obb.center())
-  {
-  };
+  RectangleOBB(const detail::OBB &obb)
+      : RectangleOBB(obb.r_x(), obb.r_y(), obb.local_axes(), obb.center()){};
 
   RectangleOBB(double _r_x, double _r_y, Eigen::Matrix2d _local_axes,
                const Eigen::Vector2d &_center = Eigen::Vector2d(0, 0))

@@ -1,20 +1,20 @@
 #ifndef CPP_COLLISION_INCLUDE_COLLISION_GRID_BOX2D_H_
 #define CPP_COLLISION_INCLUDE_COLLISION_GRID_BOX2D_H_
 
+#include <stdint.h>
 #include "collision/collision_object.h"
 #include "collision/shape_group.h"
 #include "collision/solvers/primitive_collision_queries.h"
-#include <stdint.h>
 
 #include <box2d/b2_dynamic_tree.h>
 #include <boost/align/aligned_allocator.hpp>
 
+#include "collision/narrowphase/detail/aabb.h"
 #include "collision/solvers/accelerators/declarations.h"
 #include "collision/solvers/accelerators/detail/common.h"
 #include "collision/solvers/accelerators/detail/common_impl.h"
 #include "collision/solvers/sat2d/aabb_sat2d.h"
 #include "collision/solvers/sat2d/obb_sat2d.h"
-#include "collision/narrowphase/detail/aabb.h"
 
 template <typename T>
 using aligned_vector =
@@ -167,7 +167,8 @@ class ContainerBox2D {
       int numcands_local = 0;
       if (obj->getCollisionObjectType() == OBJ_TYPE_OBB_BOX && all_obbs_) {
         const RectangleOBB* obb1 = static_cast<const RectangleOBB*>(obj);
-        std::vector<OBB_SAT2D, Eigen::aligned_allocator<OBB_SAT2D>> obb1_fast_container;
+        std::vector<OBB_SAT2D, Eigen::aligned_allocator<OBB_SAT2D>>
+            obb1_fast_container;
         obb1_fast_container.emplace_back(obb1->center(), obb1->r_x() * 2,
                                          obb1->r_y() * 2, obb1->local_x_axis(),
                                          obb1->local_y_axis());
@@ -275,7 +276,7 @@ class ContainerBox2D {
     }
     for (auto id : objects_optimized_id_) {
       broadphase_manager_->CreateProxy(box2d_objects_[id],
-                                      &objects_optimized_id_[id]);
+                                       &objects_optimized_id_[id]);
     }
 
     return 0;

@@ -5,12 +5,19 @@
 #include <cmath>
 #include <iostream>
 #include <limits>
+#include <vector>
+
 
 namespace geometry {
 
 typedef std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> EigenPolyline;
+using RowMatrixXd = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
 
 namespace util {
+
+		int resample_polyline(const RowMatrixXd& polyline, double step, RowMatrixXd& ret);
+
+		int chaikins_corner_cutting(const RowMatrixXd& polyline, int refinements, RowMatrixXd& ret);
 
 enum class Orientation { COLINEAR, CLOCKWISE, COUNTERCLOCKWISE };
 

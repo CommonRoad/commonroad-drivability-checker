@@ -16,12 +16,12 @@ std::size_t test_polygon_enclosure(const ShapeGroup& sg_polygons,
                                    const RectangleOBB& obb, bool& res);
 
 RectangleOBBConstPtr create_rectangle_obb_from_points(Eigen::Vector2d pt1,
-                                            Eigen::Vector2d pt2,
-                                            double rect_width);
+                                                      Eigen::Vector2d pt2,
+                                                      double rect_width);
 
 int create_rectangles_obb_from_vertex_list(std::vector<Eigen::Vector2d>& verts,
-                                         collision::ShapeGroup* sg_rects_ptr,
-                                         double rect_width);
+                                           collision::ShapeGroup* sg_rects_ptr,
+                                           double rect_width);
 
 }  // namespace geometry_queries
 
@@ -32,7 +32,7 @@ OBB merge_obbs(const OBB& obb1, const OBB& obb2);
 
 RectangleOBBConstPtr ccd_merge_entities(const RectangleOBB* first,
                                         const RectangleOBB* second);
-}
+}  // namespace geometry_queries
 }  // namespace detail
 
 }  // namespace collision

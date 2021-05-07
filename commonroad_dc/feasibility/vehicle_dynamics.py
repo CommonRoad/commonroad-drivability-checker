@@ -432,7 +432,8 @@ class PointMassDynamics(VehicleDynamics):
 
     def _state_to_array(self, state: State, steering_angle_default=0.0) -> Tuple[np.array, int]:
         """ Implementation of the VehicleDynamics abstract method. """
-        if hasattr(state, 'velocity') and hasattr(state, 'orientation') and not hasattr(state, 'velocity_y'):  # If initial state
+        if hasattr(state, 'velocity') and hasattr(state, 'orientation') and not hasattr(state,
+                                                                                        'velocity_y'):  # If initial state
             velocity_x, velocity_y = self._convert_from_directional_velocity(state.velocity, state.orientation)
         else:
             velocity_x, velocity_y = state.velocity, state.velocity_y

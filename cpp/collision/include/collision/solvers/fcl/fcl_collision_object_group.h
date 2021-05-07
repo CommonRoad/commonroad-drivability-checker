@@ -61,12 +61,12 @@ class FCLCollisionObjectGroup : public SolverEntity_FCL {
   void invalidateManagerCache(void) const;
   void invalidateManagerInstanceCache(void) const;
 
-
  private:
   const ICollisionContainer *m_CollisionContainer;
   const CollisionObject *m_parent;
   const IFCLCollisionObjectGroup *m_parent_interface;
-  mutable std::unique_ptr<fcl::BroadPhaseCollisionManager<FCL_PRECISION>> m_group_manager;
+  mutable std::unique_ptr<fcl::BroadPhaseCollisionManager<FCL_PRECISION>>
+      m_group_manager;
   mutable BroadPhaseManagerFactoryConstPtr m_broadphase_factory;
   mutable bool manager_cached;
   mutable bool manager_instance_cached;

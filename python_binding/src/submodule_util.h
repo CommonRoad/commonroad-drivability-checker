@@ -16,9 +16,6 @@ inline int postprocess_dynamic_collision_result(aligned_vector<int>& result,
                                                 py::list& ret_list) {
   int num_colliding = 0;
 
-  // for (auto el = result.begin(); el < result.end() - 2; el++) {
-  // if (*el != -1) num_colliding++;
-  //}
 
   for (int cur_obst = 0; cur_obst < num_trajectories; cur_obst++) {
     ret_list.append(result[cur_obst]);
@@ -26,7 +23,6 @@ inline int postprocess_dynamic_collision_result(aligned_vector<int>& result,
 
   ret_list.append(*(result.end() - 2));
   ret_list.append(*(result.end() - 1));
-  // ret_list.append(num_colliding);
   return 0;
 }
 

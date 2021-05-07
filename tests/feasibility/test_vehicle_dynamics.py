@@ -1,12 +1,12 @@
 import math
 import numpy as np
 import unittest
-from commonroad.common.solution_writer import VehicleType
+from commonroad.common.solution import VehicleType
 from commonroad.scenario.trajectory import State, Trajectory
 from scipy.integrate import odeint
 
 from commonroad_dc.feasibility.vehicle_dynamics import VehicleDynamics
-from tests.feasibility.dummy_data_generator import DummyDataGenerator
+from dummy_data_generator import DummyDataGenerator
 
 
 class TestVehicleDynamics(unittest.TestCase):

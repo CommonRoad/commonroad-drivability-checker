@@ -1,9 +1,9 @@
 #ifndef CPP_COLLISION_INCLUDE_COLLISION_GRID_VIRTUAL_H_
 #define CPP_COLLISION_INCLUDE_COLLISION_GRID_VIRTUAL_H_
 
+#include <stdint.h>
 #include "collision/collision_object.h"
 #include "collision/shape_group.h"
-#include <stdint.h>
 
 #include "collision/solvers/accelerators/declarations.h"
 #include "collision/solvers/accelerators/detail/common.h"
@@ -51,19 +51,20 @@ inline int getBestGridOrientationAndBounds(
   double max_x = std::numeric_limits<double>::min();
   double min_y = std::numeric_limits<double>::max();
   double max_y = std::numeric_limits<double>::min();
-  if(objects_in.size()==0)
-  {
-	  min_x=0; max_x=0;
-	  min_y=0; max_y=0;
+  if (objects_in.size() == 0) {
+    min_x = 0;
+    max_x = 0;
+    min_y = 0;
+    max_y = 0;
   }
 
   for (auto obj : objects_in) {
-	AABB aabb = getAABB(obj);
+    AABB aabb = getAABB(obj);
 
-	min_x = std::min(min_x, aabb.x_min);
-	min_y = std::min(min_y, aabb.y_min);
-	max_x = std::max(max_x, aabb.x_max);
-	max_y = std::max(max_y, aabb.y_max);
+    min_x = std::min(min_x, aabb.x_min);
+    min_y = std::min(min_y, aabb.y_min);
+    max_x = std::max(max_x, aabb.x_max);
+    max_y = std::max(max_y, aabb.y_max);
   }
 
   bounds = AABB(min_x, max_x, min_y, max_y);
@@ -224,7 +225,8 @@ class ContainerGrid {
       int numcands_local = 0;
       if (obj->getCollisionObjectType() == OBJ_TYPE_OBB_BOX && all_obbs_) {
         const RectangleOBB* obb1 = static_cast<const RectangleOBB*>(obj);
-        std::vector<OBB_SAT2D, Eigen::aligned_allocator<OBB_SAT2D>> obb1_fast_container;
+        std::vector<OBB_SAT2D, Eigen::aligned_allocator<OBB_SAT2D>>
+            obb1_fast_container;
         obb1_fast_container.emplace_back(obb1->center(), obb1->r_x() * 2,
                                          obb1->r_y() * 2, obb1->local_x_axis(),
                                          obb1->local_y_axis());
@@ -251,7 +253,8 @@ class ContainerGrid {
                  obj->getCollisionObjectType() == OBJ_TYPE_OBB_BOX &&
                  all_triangles_) {
         const RectangleOBB* obb1 = static_cast<const RectangleOBB*>(obj);
-        std::vector<OBB_SAT2D, Eigen::aligned_allocator<OBB_SAT2D>> obb1_fast_container;
+        std::vector<OBB_SAT2D, Eigen::aligned_allocator<OBB_SAT2D>>
+            obb1_fast_container;
         obb1_fast_container.emplace_back(obb1->center(), obb1->r_x() * 2,
                                          obb1->r_y() * 2, obb1->local_x_axis(),
                                          obb1->local_y_axis());
@@ -269,7 +272,7 @@ class ContainerGrid {
         }
         for (auto el : collision_candidates2) {
           if (sat2dChecks::overlaps(fast_triangles_[el],
-                                   (*(obb1_fast_container.begin())))) {
+                                    (*(obb1_fast_container.begin())))) {
             numcands_ += numcands_local;
             return 1;
           }
@@ -478,7 +481,8 @@ class ContainerGrid {
   aligned_vector<int> cell_start_;
   aligned_vector<int> cell_end_;
 
-  std::vector<Triangle_SAT2D, Eigen::aligned_allocator<Triangle_SAT2D>> fast_triangles_;
+  std::vector<Triangle_SAT2D, Eigen::aligned_allocator<Triangle_SAT2D>>
+      fast_triangles_;
   bool all_obbs_;
   bool all_triangles_;
 

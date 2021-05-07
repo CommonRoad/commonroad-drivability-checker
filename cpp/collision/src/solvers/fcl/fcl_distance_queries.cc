@@ -79,8 +79,7 @@ int FCL_CalculateDistance(const FCLCollisionObjectGroup &group1,
   fcl::BroadPhaseCollisionManager<double> *mngr;
   distData.request.gjk_solver_type = fcl::GST_LIBCCD;
   group1.getManager_fcl(mngr);
-  if (!mngr)
-    return -1;
+  if (!mngr) return -1;
   fcl::CollisionObject<FCL_PRECISION> *obj2_ptr =
       obj2.getCollisionObject_fcl().get();
   if (!obj2_ptr) {
@@ -88,7 +87,7 @@ int FCL_CalculateDistance(const FCLCollisionObjectGroup &group1,
   }
   mngr->distance(obj2_ptr, &distData, defaultDistanceFunction);
   if (distData.result_code == -1) {
-    return -2; // Group contained object with the same Geometry as obj2
+    return -2;  // Group contained object with the same Geometry as obj2
   }
   if (distData.minDist == get_max_distance()) {
     return 1;
@@ -105,14 +104,12 @@ int FCL_CalculateDistance(const FCLCollisionObjectGroup &group1,
   fcl::BroadPhaseCollisionManager<double> *mngr2;
   distData.request.gjk_solver_type = fcl::GST_LIBCCD;
   group1.getManager_fcl(mngr1);
-  if (!mngr1)
-    return -1;
+  if (!mngr1) return -1;
   group2.getManager_fcl(mngr2);
-  if (!mngr2)
-    return -1;
+  if (!mngr2) return -1;
   mngr1->distance(mngr2, &distData, defaultDistanceFunction);
   if (distData.result_code == -1) {
-    return -2; // Group contained object with the same Geometry as obj2
+    return -2;  // Group contained object with the same Geometry as obj2
   }
   if (distData.minDist == get_max_distance()) {
     return 1;
@@ -135,8 +132,7 @@ int FCL_DistanceTolerance(const FCLCollisionObjectGroup &group1,
   distData.request.gjk_solver_type = fcl::GJKSolverType::GST_LIBCCD;
   fcl::BroadPhaseCollisionManager<double> *mngr;
   group1.getManager_fcl(mngr);
-  if (!mngr)
-    return -1;
+  if (!mngr) return -1;
   fcl::CollisionObject<FCL_PRECISION> *obj2_ptr =
       obj2.getCollisionObject_fcl().get();
   if (!obj2_ptr) {
@@ -149,12 +145,11 @@ int FCL_DistanceTolerance(const FCLCollisionObjectGroup &group1,
   }
 
   if (distData.result_code == -1) {
-    return -2; // Group contained object with the same Geometry as obj2
+    return -2;  // Group contained object with the same Geometry as obj2
   }
   if (distData.minDist == get_max_distance()) {
     return 1;
   } else {
-
     distance = distData.minDist;
     return 0;
   }
@@ -173,11 +168,9 @@ int FCL_DistanceTolerance(const FCLCollisionObjectGroup &group1,
   fcl::BroadPhaseCollisionManager<double> *mngr1;
   fcl::BroadPhaseCollisionManager<double> *mngr2;
   group1.getManager_fcl(mngr1);
-  if (!mngr1)
-    return -1;
+  if (!mngr1) return -1;
   group2.getManager_fcl(mngr2);
-  if (!mngr2)
-    return -1;
+  if (!mngr2) return -1;
   if (check_type == FCL_TOLERANCE_CHECK_TYPE::TOLERANCE_CHECK_NARROWPHASE) {
     mngr1->distance(mngr2, &distData, toleranceDistanceFunction);
   } else {
@@ -185,7 +178,7 @@ int FCL_DistanceTolerance(const FCLCollisionObjectGroup &group1,
   }
 
   if (distData.result_code == -1) {
-    return -2; // Group contained object with the same Geometry as obj2
+    return -2;  // Group contained object with the same Geometry as obj2
   }
   if (distData.minDist == get_max_distance()) {
     return 1;
@@ -194,8 +187,8 @@ int FCL_DistanceTolerance(const FCLCollisionObjectGroup &group1,
     return 0;
   }
 }
-} // namespace fcl_primitive_queries
-} // namespace solverFCL
-} // namespace solvers
+}  // namespace fcl_primitive_queries
+}  // namespace solverFCL
+}  // namespace solvers
 
-} // namespace collision
+}  // namespace collision
