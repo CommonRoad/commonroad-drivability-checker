@@ -62,10 +62,6 @@ CurvilinearCoordinateSystem::CurvilinearCoordinateSystem(EigenPolyline reference
 		  ref_path[last_idx] - ref_path[last_idx - 1]);
   this->approximateProjectionDomain(eps);
 
-  //this->removeSegment(0);
-  //this->removeSegment(0);
-  //this->removeSegment(this->segment_list_.size()-1);
-
   this->computeBestProjectionAxisForSegments();
   this->approximateCurvilinearProjectionDomain();
 }

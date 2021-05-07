@@ -7,20 +7,22 @@
 #include <limits>
 #include <vector>
 
-
 namespace geometry {
 
-typedef std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>> EigenPolyline;
-using RowMatrixXd = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+typedef std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d>>
+    EigenPolyline;
+using RowMatrixXd =
+    Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
 
 namespace util {
 
-		int resample_polyline(const RowMatrixXd& polyline, double step, RowMatrixXd& ret);
+int resample_polyline(const RowMatrixXd& polyline, double step,
+                      RowMatrixXd& ret);
 
-		int chaikins_corner_cutting(const RowMatrixXd& polyline, int refinements, RowMatrixXd& ret);
+int chaikins_corner_cutting(const RowMatrixXd& polyline, int refinements,
+                            RowMatrixXd& ret);
 
 enum class Orientation { COLINEAR, CLOCKWISE, COUNTERCLOCKWISE };
-
 
 /**
  * Intersection between two lines defined by four points, algorithm from:
@@ -37,8 +39,7 @@ static bool intersectionLineLine(const Eigen::Vector2d l1_pt1,
                                  const Eigen::Vector2d l1_pt2,
                                  const Eigen::Vector2d l2_pt1,
                                  const Eigen::Vector2d l2_pt2,
-                                 Eigen::Vector2d &intersection_point) {
-
+                                 Eigen::Vector2d& intersection_point) {
   double x1 = l1_pt1(0);
   double y1 = l1_pt1(1);
   double x2 = l1_pt2(0);
@@ -54,15 +55,17 @@ static bool intersectionLineLine(const Eigen::Vector2d l1_pt1,
     return false;
   }
 
-  double xi = ((x3 - x4) * (x1 * y2 - y1 * x2) - (x1 - x2) * (x3 * y4 - y3 * x4)) / d;
-  double yi = ((y3 - y4) * (x1 * y2 - y1 * x2) - (y1 - y2) * (x3 * y4 - y3 * x4)) / d;
+  double xi =
+      ((x3 - x4) * (x1 * y2 - y1 * x2) - (x1 - x2) * (x3 * y4 - y3 * x4)) / d;
+  double yi =
+      ((y3 - y4) * (x1 * y2 - y1 * x2) - (y1 - y2) * (x3 * y4 - y3 * x4)) / d;
   intersection_point = Eigen::Vector2d(xi, yi);
   return true;
 }
 
-
 /**
- * Given three colinear points p, q, r, the function checks if point q lies on the line segment 'pr', algorithm from:
+ * Given three colinear points p, q, r, the function checks if point q lies on
+ * the line segment 'pr', algorithm from:
  * https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
  *
  * @param p start point of the segment
@@ -70,7 +73,8 @@ static bool intersectionLineLine(const Eigen::Vector2d l1_pt1,
  * @param r end point of the segment
  * @return True, if point q lies on line segment 'pr', otherwise false
  */
-static bool onSegmentGivenColinearPoints(Eigen::Vector2d p, Eigen::Vector2d q, Eigen::Vector2d r) {
+static bool onSegmentGivenColinearPoints(Eigen::Vector2d p, Eigen::Vector2d q,
+                                         Eigen::Vector2d r) {
   if (std::isgreaterequal(std::max(p[0], r[0]), q[0]) &&
       std::isgreaterequal(q[0], std::min(p[0], r[0])) &&
       std::isgreaterequal(std::max(p[1], r[1]), q[1]) &&
@@ -82,15 +86,17 @@ static bool onSegmentGivenColinearPoints(Eigen::Vector2d p, Eigen::Vector2d q, E
 }
 
 /**
- * Determines if three points are ordered clockwise, counterclockwise, or colinear.
- * Reference: https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
+ * Determines if three points are ordered clockwise, counterclockwise, or
+ * colinear. Reference:
+ * https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
  *
  * @param p first point
  * @param q second point
  * @param r third point
  * @return orientation of points
  */
-static Orientation determineOrientation(Eigen::Vector2d p, Eigen::Vector2d q, Eigen::Vector2d r) {
+static Orientation determineOrientation(Eigen::Vector2d p, Eigen::Vector2d q,
+                                        Eigen::Vector2d r) {
   double val = (q[1] - p[1]) * (r[0] - q[0]) - (q[0] - p[0]) * (r[1] - q[1]);
 
   if (val > 0.0) {
@@ -112,7 +118,8 @@ static Orientation determineOrientation(Eigen::Vector2d p, Eigen::Vector2d q, Ei
  * @param q2 end point of second segment
  * @return True, if segments intersect, otherwise false
  */
-static bool segmentsIntersect(Eigen::Vector2d p1, Eigen::Vector2d q1, Eigen::Vector2d p2, Eigen::Vector2d q2) {
+static bool segmentsIntersect(Eigen::Vector2d p1, Eigen::Vector2d q1,
+                              Eigen::Vector2d p2, Eigen::Vector2d q2) {
   Orientation o1 = determineOrientation(p1, q1, p2);
   Orientation o2 = determineOrientation(p1, q1, q2);
   Orientation o3 = determineOrientation(p2, q2, p1);
@@ -123,19 +130,23 @@ static bool segmentsIntersect(Eigen::Vector2d p1, Eigen::Vector2d q1, Eigen::Vec
   }
   // Special Cases
   // p1, q1 and p2 are colinear and p2 lies on segment p1q1
-  if (o1 == Orientation::COLINEAR and onSegmentGivenColinearPoints(p1, p2, q1)) {
+  if (o1 == Orientation::COLINEAR and
+      onSegmentGivenColinearPoints(p1, p2, q1)) {
     return true;
   }
   // p1, q1 and q2 are colinear and q2 lies on segment p1q1
-  if (o2 == Orientation::COLINEAR and onSegmentGivenColinearPoints(p1, q2, q1)) {
+  if (o2 == Orientation::COLINEAR and
+      onSegmentGivenColinearPoints(p1, q2, q1)) {
     return true;
   }
   // p2, q2 and p1 are colinear and p1 lies on segment p2q2
-  if (o3 == Orientation::COLINEAR and onSegmentGivenColinearPoints(p2, p1, q2)) {
+  if (o3 == Orientation::COLINEAR and
+      onSegmentGivenColinearPoints(p2, p1, q2)) {
     return true;
   }
   // p2, q2 and q1 are colinear and q1 lies on segment p2q2
-  if (o4 == Orientation::COLINEAR and onSegmentGivenColinearPoints(p2, q1, q2)) {
+  if (o4 == Orientation::COLINEAR and
+      onSegmentGivenColinearPoints(p2, q1, q2)) {
     return true;
   }
   // Doesn't fall in any of the above cases
@@ -156,16 +167,18 @@ static bool intersectionSegmentSegment(Eigen::Vector2d l1_pt1,
                                        Eigen::Vector2d l1_pt2,
                                        Eigen::Vector2d l2_pt1,
                                        Eigen::Vector2d l2_pt2,
-                                       Eigen::Vector2d &intersection_point) {
+                                       Eigen::Vector2d& intersection_point) {
   if (segmentsIntersect(l1_pt1, l1_pt2, l2_pt1, l2_pt2)) {
-    return intersectionLineLine(l1_pt1, l1_pt2, l2_pt1, l2_pt2, intersection_point);
+    return intersectionLineLine(l1_pt1, l1_pt2, l2_pt1, l2_pt2,
+                                intersection_point);
   } else {
     return false;
   }
 }
 
 /**
- * Given three points p, q, r, the function checks if point q lies on the line segment 'pr'.
+ * Given three points p, q, r, the function checks if point q lies on the line
+ * segment 'pr'.
  *
  * @param p start point of the segment
  * @param q point to be tested if it is on the segment
@@ -180,7 +193,6 @@ static bool onSegment(Eigen::Vector2d p, Eigen::Vector2d q, Eigen::Vector2d r) {
   return onSegmentGivenColinearPoints(p, q, r);
 }
 
-
 /**
  * Projects a point onto new axes
  *
@@ -188,12 +200,13 @@ static bool onSegment(Eigen::Vector2d p, Eigen::Vector2d q, Eigen::Vector2d r) {
  * @param point 2D point
  * @return projected point
  */
-static Eigen::Vector2d projectOntoAxes(const Eigen::Matrix2d &matr, const Eigen::Vector2d &point) {
+static Eigen::Vector2d projectOntoAxes(const Eigen::Matrix2d& matr,
+                                       const Eigen::Vector2d& point) {
   return matr * point;
 }
 
-}
+}  // namespace util
 
-}
+}  // namespace geometry
 
 #endif

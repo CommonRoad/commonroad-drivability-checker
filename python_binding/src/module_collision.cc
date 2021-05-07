@@ -30,7 +30,6 @@
 #include <stdexcept>
 
 #include <pybind11/eigen.h>
-//#include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
@@ -1179,48 +1178,52 @@ void init_module_collision(py::module &m) {
   py::class_<collision::detail::OBBDenseTrajectoryBatch,
              std::shared_ptr<collision::detail::OBBDenseTrajectoryBatch>>(
       m, "OBBTrajectoryBatch")
-      .def(py::init([](Eigen::Ref<const RowMatrixXd> loaded_trajectories,
-                       Eigen::Ref<const VectorXi> start_time_step,
-                       double box_half_length, double box_half_width) {
-        py::list ret;
-        using OBB = collision::detail::OBB;
-        std::vector<OBB, Eigen::aligned_allocator<OBB>> obb1_fast_container;
-        obb1_fast_container.reserve(
-            int(loaded_trajectories.rows() * loaded_trajectories.cols() / 3));
+      .def(
+          py::init([](Eigen::Ref<const RowMatrixXd> loaded_trajectories,
+                      Eigen::Ref<const VectorXi> start_time_step,
+                      double box_half_length, double box_half_width) {
+            py::list ret;
+            using OBB = collision::detail::OBB;
+            std::vector<OBB, Eigen::aligned_allocator<OBB>> obb1_fast_container;
+            obb1_fast_container.reserve(int(loaded_trajectories.rows() *
+                                            loaded_trajectories.cols() / 3));
 
-        // std::vector<std::unique_ptr<const collision::detail:>> objects;
-        if (loaded_trajectories.rows() != start_time_step.size())
-          throw std::runtime_error("Incompatible buffer dimension!");
-        if (loaded_trajectories.cols() % 3 != 0)
-          throw std::runtime_error("Incompatible buffer dimension!");
-        int traj_length = int(loaded_trajectories.cols() / 3);
-        for (int traj_ind = 0; traj_ind < loaded_trajectories.rows();
-             traj_ind++) {
-          // collision::TimeVariantCollisionObjectPtr
-          // tvobstacle=std::make_shared<collision::TimeVariantCollisionObject>(start_time_step[traj_ind]);
+            // std::vector<std::unique_ptr<const collision::detail:>> objects;
+            if (loaded_trajectories.rows() != start_time_step.size())
+              throw std::runtime_error("Incompatible buffer dimension!");
+            if (loaded_trajectories.cols() % 3 != 0)
+              throw std::runtime_error("Incompatible buffer dimension!");
+            int traj_length = int(loaded_trajectories.cols() / 3);
+            for (int traj_ind = 0; traj_ind < loaded_trajectories.rows();
+                 traj_ind++) {
+              for (int idx = 0; idx < traj_length; idx++) {
+                int offset = 3 * idx;
+                double angle = loaded_trajectories(traj_ind, offset + 2);
+                Eigen::Matrix2d local_axes;
+                double cos_angle = cos(angle);
+                double sin_angle = sin(angle);
+                local_axes << cos_angle, -1 * sin_angle, sin_angle, cos_angle;
 
-          for (int idx = 0; idx < traj_length; idx++) {
-            int offset = 3 * idx;
-            double angle = loaded_trajectories(traj_ind, offset + 2);
-            Eigen::Matrix2d local_axes;
-            double cos_angle = cos(angle);
-            double sin_angle = sin(angle);
-            local_axes << cos_angle, -1 * sin_angle, sin_angle, cos_angle;
-            // obb1_fast_container.emplace_back()
-            obb1_fast_container.emplace_back(
-                local_axes, Eigen::Vector2d(box_half_length, box_half_width),
-                Eigen::Vector2d(loaded_trajectories(traj_ind, offset + 0),
-                                loaded_trajectories(traj_ind, offset + 1)));
-          }
-          // ret.append(0);
-        }
+                obb1_fast_container.emplace_back(
+                    local_axes,
+                    Eigen::Vector2d(box_half_length, box_half_width),
+                    Eigen::Vector2d(loaded_trajectories(traj_ind, offset + 0),
+                                    loaded_trajectories(traj_ind, offset + 1)));
+              }
+            }
 
-        auto traj_batch = new collision::detail::OBBDenseTrajectoryBatch(
-            obb1_fast_container, traj_length, start_time_step);
-        return traj_batch;
-      }), "See 05_collision_checks_dynamic_obstacles.ipynb for an initialization example.")
+            auto traj_batch = new collision::detail::OBBDenseTrajectoryBatch(
+                obb1_fast_container, traj_length, start_time_step);
+            return traj_batch;
+          }),
+          "See 05_collision_checks_dynamic_obstacles.ipynb for an "
+          "initialization example.")
       .def("preprocess_",
-           &collision::detail::OBBDenseTrajectoryBatch::preprocess_inplace, "Preprocesses each trajectory using OBB sum hull (for continuous collision detection). The occupancies of the OBB boxes for two subsequent states are overapproximated with a tightly fitting OBB box. It is an in-place operation.")
+           &collision::detail::OBBDenseTrajectoryBatch::preprocess_inplace,
+           "Preprocesses each trajectory using OBB sum hull (for continuous "
+           "collision detection). The occupancies of the OBB boxes for two "
+           "subsequent states are overapproximated with a tightly fitting OBB "
+           "box. It is an in-place operation.")
       .def("to_tvobstacle",
            [](std::shared_ptr<collision::detail::OBBDenseTrajectoryBatch> &tb) {
              py::list ret;
@@ -1246,14 +1249,16 @@ void init_module_collision(py::module &m) {
                ret.append(tvobstacle);
              }
              return ret;
-           },"Returns a list of TimeVariantCollisionObjects corresponding to the OBB trajectory batch.")
-		   /*
-      .def("computeAABB",
-           [](std::shared_ptr<collision::detail::OBBDenseTrajectoryBatch> &tb) {
-             return tb->computeAABBs();
-           })
-           */
-           ;
+           },
+           "Returns a list of TimeVariantCollisionObjects corresponding to the "
+           "OBB trajectory batch.")
+      /*
+.def("computeAABB",
+[](std::shared_ptr<collision::detail::OBBDenseTrajectoryBatch> &tb) {
+return tb->computeAABBs();
+})
+*/
+      ;
 
   py::class_<collision::CollisionChecker,
              std::shared_ptr<collision::CollisionChecker>>(m,
