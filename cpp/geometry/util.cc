@@ -2,14 +2,17 @@
 namespace geometry {
 namespace util {
 
+
+
 int resample_polyline(const RowMatrixXd& polyline, double step,
-                      RowMatrixXd& ret) {
+				geometry::EigenPolyline& new_polyline) {
+
   if (polyline.rows() < 2) {
-    ret = polyline.eval();
+	to_EigenPolyline(polyline, new_polyline);
     return 0;
   }
 
-  geometry::EigenPolyline new_polyline;
+  new_polyline = geometry::EigenPolyline();
   new_polyline.push_back(polyline.middleRows(0, 1).transpose().eval());
   double current_position = step;
   double current_length =
@@ -36,12 +39,26 @@ int resample_polyline(const RowMatrixXd& polyline, double step,
   new_polyline.push_back(
       polyline.middleRows(polyline.rows() - 1, 1).transpose().eval());
 
-  ret = RowMatrixXd(new_polyline.size(), polyline.cols());
-  for (int cc1 = 0; cc1 < new_polyline.size(); cc1++) {
-    ret.middleRows(cc1, 1) = new_polyline[cc1].transpose().eval();
-  }
+
 
   return 0;
+}
+
+int resample_polyline(const geometry::EigenPolyline& polyline, double step,
+						geometry::EigenPolyline& ret)
+
+{
+	RowMatrixXd polyline_converted;
+	to_RowMatrixXd(polyline, polyline_converted);
+	return resample_polyline(polyline_converted, step, ret);
+}
+
+int resample_polyline(const RowMatrixXd& polyline, double step,
+				RowMatrixXd& ret) {
+	geometry::EigenPolyline new_polyline;
+	int err=resample_polyline(polyline, step, new_polyline);
+	to_RowMatrixXd(new_polyline, ret);
+	return err;
 }
 
 int chaikins_corner_cutting(const RowMatrixXd& polyline, int refinements,
@@ -74,5 +91,35 @@ int chaikins_corner_cutting(const RowMatrixXd& polyline, int refinements,
   ret = el2;
   return 0;
 }
+
+int chaikins_corner_cutting(const geometry::EigenPolyline& polyline, int refinements,
+						geometry::EigenPolyline& ret)
+
+{
+	RowMatrixXd polyline_matrix;
+	to_RowMatrixXd(polyline, polyline_matrix);
+	RowMatrixXd ret_matrix;
+	int err=chaikins_corner_cutting(polyline_matrix, refinements, ret_matrix);
+	to_EigenPolyline(ret_matrix, ret);
+	return err;
+}
+
+int to_RowMatrixXd(const geometry::EigenPolyline& polyline, RowMatrixXd& ret) {
+  ret = RowMatrixXd(polyline.size(), 2);
+  for (int cc1 = 0; cc1 < polyline.size(); cc1++) {
+    ret.middleRows(cc1, 1) = polyline[cc1].transpose().eval();
+  }
+  return 0;
+}
+
+int to_EigenPolyline(const RowMatrixXd& polyline, geometry::EigenPolyline& ret)
+{
+	ret = geometry::EigenPolyline();
+	for (int cc1 = 0; cc1 < polyline.rows(); cc1++) {
+		ret.push_back(polyline.middleRows(cc1, 1).transpose().eval());
+	}
+	return 0;
+}
+
 }  // namespace util
 }  // namespace geometry

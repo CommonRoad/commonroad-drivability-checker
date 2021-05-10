@@ -1,11 +1,8 @@
 import commonroad_dc.pycrccosy as pycrccosy
 from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline
-from commonroad_dc.geometry.util import chaikins_corner_cutting_deprecated, resample_polyline_deprecated
-
 
 class RefPathLengthException(Exception):
     pass
-
 
 class CurvilinearCoordinateSystem(pycrccosy.CurvilinearCoordinateSystem):
     def __init__(self, reference_path, default_projection_domain_limit=25.0, eps=0.1, eps2=1e-4, resample=True):

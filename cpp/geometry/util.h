@@ -1,6 +1,7 @@
 #ifndef GEOMETRY_UTIL_H_
 #define GEOMETRY_UTIL_H_
 
+#pragma once
 #include <Eigen/Dense>
 #include <cmath>
 #include <iostream>
@@ -19,8 +20,14 @@ namespace util {
 int resample_polyline(const RowMatrixXd& polyline, double step,
                       RowMatrixXd& ret);
 
+int resample_polyline(const geometry::EigenPolyline& polyline, double step,
+                      geometry::EigenPolyline& ret);
+
 int chaikins_corner_cutting(const RowMatrixXd& polyline, int refinements,
                             RowMatrixXd& ret);
+
+int chaikins_corner_cutting(const geometry::EigenPolyline& polyline,
+                            int refinements, geometry::EigenPolyline& ret);
 
 enum class Orientation { COLINEAR, CLOCKWISE, COUNTERCLOCKWISE };
 
@@ -204,6 +211,9 @@ static Eigen::Vector2d projectOntoAxes(const Eigen::Matrix2d& matr,
                                        const Eigen::Vector2d& point) {
   return matr * point;
 }
+
+int to_RowMatrixXd(const geometry::EigenPolyline& polyline, RowMatrixXd& ret);
+int to_EigenPolyline(const RowMatrixXd& polyline, geometry::EigenPolyline& ret);
 
 }  // namespace util
 

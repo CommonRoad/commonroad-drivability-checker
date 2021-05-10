@@ -29,15 +29,19 @@ PYBIND11_MODULE(pycrccosy, m) {
   mutil_geom.def("resample_polyline",
                  [](Eigen::Ref<const RowMatrixXd> polyline, double step) {
                    RowMatrixXd ret;
+
                    geometry::util::resample_polyline(polyline, step, ret);
+
                    return ret;
                  });
 
   mutil_geom.def("chaikins_corner_cutting",
                  [](Eigen::Ref<const RowMatrixXd> polyline, int refinements) {
                    RowMatrixXd ret;
+
                    geometry::util::chaikins_corner_cutting(polyline,
                                                            refinements, ret);
+
                    return ret;
                  });
 
