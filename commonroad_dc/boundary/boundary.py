@@ -58,7 +58,7 @@ def create_road_polygons(scenario: Scenario, method='lane_polygons', **kwargs):
     Creates a ShapeGroup with collision checker polygons representing the road.
 
     :param scenario: the input scenario for the creation of road polygons
-    :param method: road polygons creation method: lane_polygons - lane polygons, whole_polygon - whole polygon, whole_polygon_tiled - whole polygon subdivided into tiles (default: lane_polygons)
+    :param method: road polygons creation method: lane_polygons - lane polygons, lanelet_polygons - lanelet polygons, whole_polygon - whole polygon, whole_polygon_tiled - whole polygon subdivided into tiles (default: lane_polygons)
     :param kwargs: settings of the method
     :return: ShapeGroup with the collision checker polygons
 
@@ -67,6 +67,22 @@ def create_road_polygons(scenario: Scenario, method='lane_polygons', **kwargs):
     -lane_polygons
 
     Creates lane polygons for the given scenario. Optionally uses Douglas-Peucker resampling and buffering of the polygons.
+
+    Settings:
+
+    resample - use Douglas-Peucker resampling. 0 - no resampling, 1 - enable resampling.
+
+    resample_tolerance_distance - tolerance distance for the resampling (default: 2e-5).
+
+    buffer - use polygon buffering. 0 - no buffering, 1 - enable buffering. The Boost Geometry library, mitre joins and flat ends are used for the buffering.
+
+    buf_width - buffer width by which the resulting polygons should be enlarged (default: 5e-5).
+
+    triangulate - True: triangles will be generated for the interior of each lane polygon using GPC Polygon strips, False: two triangles will be created for each lane polygon from its AABB bounding box.
+
+    -lanelet_polygons
+
+    Creates lanelet polygons for the given scenario. Optionally uses Douglas-Peucker resampling and buffering of the polygons.
 
     Settings:
 
