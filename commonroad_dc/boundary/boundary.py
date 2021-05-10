@@ -94,7 +94,7 @@ def create_road_polygons(scenario: Scenario, method='lane_polygons', **kwargs):
 
     buf_width - buffer width by which the resulting polygons should be enlarged (default: 5e-5).
 
-    triangulate - True: triangles will be generated for the interior of each lane polygon using GPC Polygon strips, False: two triangles will be created for each lane polygon from its AABB bounding box.
+    triangulate - True: triangles will be generated for the interior of each lanelet polygon using GPC Polygon strips, False: two triangles will be created for each lanelet polygon from its AABB bounding box.
 
     -whole_polygon
 
