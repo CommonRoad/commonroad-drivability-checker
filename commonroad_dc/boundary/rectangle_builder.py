@@ -1,6 +1,7 @@
 import numpy as np
 import commonroad_dc.pycrcc as pycrcc
 
+
 def get_rectangle(width, v1, v2):
     """builds a rectangle object which has the line v1,v2 as middle line"""
     v = v2 - v1

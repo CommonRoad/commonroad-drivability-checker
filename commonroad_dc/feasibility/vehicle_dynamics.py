@@ -3,6 +3,7 @@ from enum import Enum, unique
 from typing import List, Union, Tuple
 
 import numpy as np
+import math
 from commonroad.common.solution import VehicleType, VehicleModel
 from commonroad.geometry.shape import Rectangle
 from commonroad.scenario.trajectory import State, Trajectory
@@ -291,6 +292,7 @@ class VehicleDynamics(ABC):
             state = self._array_to_state(x, time_step)
             return state
         except Exception as e:
+            raise e
             err = f'Not a valid state array!\nTime step: {time_step}, State array:{str(x)}'
             raise StateException(err) from e
 
@@ -430,7 +432,8 @@ class PointMassDynamics(VehicleDynamics):
 
     def _state_to_array(self, state: State, steering_angle_default=0.0) -> Tuple[np.array, int]:
         """ Implementation of the VehicleDynamics abstract method. """
-        if hasattr(state, 'velocity') and hasattr(state, 'orientation'):  # If initial state
+        if hasattr(state, 'velocity') and hasattr(state, 'orientation') and not hasattr(state,
+                                                                                        'velocity_y'):  # If initial state
             velocity_x, velocity_y = self._convert_from_directional_velocity(state.velocity, state.orientation)
         else:
             velocity_x, velocity_y = state.velocity, state.velocity_y
@@ -449,7 +452,8 @@ class PointMassDynamics(VehicleDynamics):
         values = {
             'position': np.array([x[0], x[1]]),
             'velocity': x[2],
-            'velocity_y': x[3]
+            'velocity_y': x[3],
+            'orientation': math.atan2(x[3], x[2])
         }
         return State(**values, time_step=time_step)
 

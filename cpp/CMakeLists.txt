@@ -1,3 +1,5 @@
+if(ADD_MODULE_COLLISION)
+
 set(COLLISION_SRC_ROOT "collision/src")
 
 set(COLLISION_SRC 	
@@ -127,4 +129,25 @@ endif()
 
 target_link_libraries(crcc PUBLIC ccd fcl ${S11N_LIBRARY})
 
+endif()
 
+if(ADD_MODULE_GEOMETRY)
+
+set(LIB_CRCCOSY_SRC
+        geometry/segment.cc
+        geometry/curvilinear_coordinate_system.cc
+        geometry/util.cc
+        
+        )
+
+set(LIB_CRCCOSY_INCLUDE ".")
+
+add_library(crccosy ${LIB_CRCCOSY_SRC})
+
+target_compile_features(crccosy
+        PUBLIC cxx_lambdas cxx_auto_type
+        PRIVATE cxx_lambdas cxx_auto_type)
+set_property(TARGET crccosy PROPERTY POSITION_INDEPENDENT_CODE ON)
+target_include_directories(crccosy PUBLIC ${LIB_CRCCOSY_INCLUDE})
+
+endif()

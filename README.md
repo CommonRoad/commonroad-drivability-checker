@@ -9,7 +9,7 @@ algorithms. It is compatible with the CommonRoad benchmark suite, which
 additionally facilitates and drastically reduces the effort of the development
 of motion planning algorithms.
 
-Please visit our [website for installation instructions and documentation](https://commonroad.in.tum.de/drivability-checker).
+Please visit our [website for installation instructions and documentation](https://commonroad.in.tum.de/drivability_checker).
 
 Please post questions, bug reports, etc. related to our tools or website in our [forum](https://commonroad.in.tum.de/forum/).
 

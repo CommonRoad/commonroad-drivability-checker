@@ -13,8 +13,6 @@ bool TimeVariantCollisionObject::rayTrace(
   return res;
 }
 
-
-
 void TimeVariantCollisionObject::print(std::ostringstream &stream) const {
   stream << "Timevariant obstacle, time " << time_start_idx_ << "-"
          << time_end_idx_ << std::endl;
@@ -41,7 +39,7 @@ CollisionObjectConstPtr TimeVariantCollisionObject::getObstacleAtTime(
   return collision_object_at_time_[time_idx - time_start_idx_];
 }
 
-const CollisionObject* TimeVariantCollisionObject::getObstacleAtTimePtr(
+const CollisionObject *TimeVariantCollisionObject::getObstacleAtTimePtr(
     int time_idx) const {
   if (time_idx < time_start_idx_ || time_idx > time_end_idx_) return nullptr;
   return collision_object_at_time_ptr_[time_idx - time_start_idx_];

@@ -1,4 +1,3 @@
-
 def calc_corners(lanelets, boundary_margin=20):
     """calculate the corners of the scenario from the lanelets
         corners: outermost coordinates in x and y direction:

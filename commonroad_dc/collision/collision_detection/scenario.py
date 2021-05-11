@@ -1,8 +1,10 @@
 import math
+import warnings
 
 import commonroad.geometry.shape
 import commonroad.prediction
 import commonroad.scenario.obstacle
+import matplotlib.pyplot as plt
 import numpy as np
 import commonroad_dc.pycrcc as pycrcc
 import triangle
@@ -58,21 +60,28 @@ def create_collision_object_polygon(polygon, params=None, collision_object_func=
         segments.append((0, number_of_vertices - 1))
         triangles = triangle.triangulate({'vertices': vertices, 'segments': segments}, opts='pqS2.4')
         mesh = list()
-        for t in triangles['triangles']:
-            v0 = triangles['vertices'][t[0]]
-            v1 = triangles['vertices'][t[1]]
-            v2 = triangles['vertices'][t[2]]
-            mesh.append(pycrcc.Triangle(v0[0], v0[1],
-                                        v1[0], v1[1],
-                                        v2[0], v2[1]))
+        if not 'triangles' in triangles:
+            warnings.warn(f"Triangulation of polygon with vertices\n {polygon.vertices} \n not successful.",
+                          stacklevel=1)
+            return None
+        else:
+            for t in triangles['triangles']:
+                v0 = triangles['vertices'][t[0]]
+                v1 = triangles['vertices'][t[1]]
+                v2 = triangles['vertices'][t[2]]
+                mesh.append(pycrcc.Triangle(v0[0], v0[1],
+                                            v1[0], v1[1],
+                                            v2[0], v2[1]))
         return pycrcc.Polygon(polygon.vertices.tolist(), list(), mesh)
 
 
 def create_collision_object_shape_group(shape_group, params=None, collision_object_func=None):
     sg = pycrcc.ShapeGroup()
     for shape in shape_group.shapes:
-        sg.add_shape(commonroad_dc.collision.collision_detection.pycrcc_collision_dispatch.create_collision_object(
-            shape, params, collision_object_func))
+        co = commonroad_dc.collision.collision_detection.pycrcc_collision_dispatch.create_collision_object(
+            shape, params, collision_object_func)
+        if co is not None:
+            sg.add_shape(co)
     return sg
 
 

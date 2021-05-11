@@ -10,7 +10,7 @@ class BinaryDistribution(dist.Distribution):
 
 setup(
     name='commonroad-drivability-checker',
-    version='2020.1',
+    version='2021.1',
     description='Drivability checker for CommonRoad scenarios.',
     url='https://commonroad.in.tum.de/',
     author='Technical University of Munich',
@@ -28,7 +28,7 @@ setup(
     # Requirements
     python_requires='>=3.6',
     install_requires=[
-        'commonroad-io>=2020.2',
+        'commonroad-io>=2020.3',
         'commonroad-vehicle-models>=1.0.0',
         'numpy>=1.19',
         'scipy>=1.4.1',
