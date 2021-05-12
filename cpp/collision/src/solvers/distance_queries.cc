@@ -88,8 +88,9 @@ std::size_t inline distance_tolerance_neg(const CollisionObject &obj1,
 }
 }  // namespace detail
 
-//Only DRT_TOLERANCE_NEG works at the moment. It is implemented in FCL for some shapes.
-//For test purposes only. Underlying implementations of distance queries in FCL had bugs.
+// Only DRT_TOLERANCE_NEG works at the moment. It is implemented in FCL for some
+// shapes. For test purposes only. Underlying implementations of distance queries
+// in FCL had bugs.
 
 std::size_t distance(const CollisionObject &obj1, const CollisionObject &obj2,
                      DistanceResult &res, const DistanceRequest &req) {

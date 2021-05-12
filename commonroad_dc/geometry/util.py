@@ -1,6 +1,7 @@
 from typing import Union, List
 import numpy as np
 import enum
+import commonroad_dc.pycrccosy as pycrccosy
 
 
 def chaikins_corner_cutting(polyline: np.ndarray, refinements: int = 1) -> np.ndarray:
@@ -12,16 +13,8 @@ def chaikins_corner_cutting(polyline: np.ndarray, refinements: int = 1) -> np.nd
     :param refinements: how many times apply the chaikins corner cutting algorithm
     :return: smoothed polyline
     """
-    for _ in range(refinements):
-        L = polyline.repeat(2, axis=0)
-        R = np.empty_like(L)
-        R[0] = L[0]
-        R[2::2] = L[1:-1:2]
-        R[1:-1:2] = L[2::2]
-        R[-1] = L[-1]
-        polyline = L * 0.75 + R * 0.25
-
-    return polyline
+    new_polyline = pycrccosy.Util.chaikins_corner_cutting(polyline, refinements)
+    return np.array(new_polyline)
 
 
 def resample_polyline(polyline: np.ndarray, step: float = 2.0) -> np.ndarray:
@@ -32,26 +25,7 @@ def resample_polyline(polyline: np.ndarray, step: float = 2.0) -> np.ndarray:
     :param step: sampling interval
     :return: resampled polyline
     """
-    if len(polyline) < 2:
-        return np.array(polyline)
-    new_polyline = [polyline[0]]
-    current_position = step
-    current_length = np.linalg.norm(polyline[0] - polyline[1])
-    current_idx = 0
-    while current_idx < len(polyline) - 1:
-        if current_position >= current_length:
-            current_position = current_position - current_length
-            current_idx += 1
-            if current_idx > len(polyline) - 2:
-                break
-            current_length = np.linalg.norm(polyline[current_idx + 1]
-                                            - polyline[current_idx])
-        else:
-            rel = current_position / current_length
-            new_polyline.append((1 - rel) * polyline[current_idx] +
-                                rel * polyline[current_idx + 1])
-            current_position += step
-    new_polyline.append(polyline[-1])
+    new_polyline = pycrccosy.Util.resample_polyline(polyline, step)
     return np.array(new_polyline)
 
 

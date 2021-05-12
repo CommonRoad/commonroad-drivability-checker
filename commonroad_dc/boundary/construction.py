@@ -12,7 +12,7 @@ from commonroad.scenario.trajectory import State
 
 import commonroad_dc.pycrcc as pycrcc
 from commonroad_dc.boundary import triangle_builder, lanelet_bounds, scenario_bounds
-from commonroad_dc.collision.visualization.draw_dispatch import draw_object
+#from commonroad_dc.collision.visualization.draw_dispatch import draw_object
 
 
 def construct(scenario, build_order, boundary_margin=20):
@@ -409,6 +409,55 @@ def construct_road_boundary_lane_polygons(scenario: Scenario, resample=0, resamp
 
     return lane_polygons
 
+def construct_road_boundary_lanelet_polygons(scenario: Scenario, resample=0, resample_tolerance_distance=2e-5, buffer=0,
+                                          buf_width=5e-5, triangulate=True):
+    """
+    Creates lane polygons for the given scenario. Optionally uses Douglas-Peucker resampling and buffering of the polygons.
+
+    :param scenario: The input scenario
+    :param resample: Use Douglas-Peucker resampling. 0 - no resampling, 1 - enable resampling.
+    :param resample_tolerance_distance - tolerance distance for the resampling (default: 2e-5).
+    :param buffer: Use polygon buffering. 0 - no buffering, 1 - enable buffering. The Boost Geometry library, mitre joins and flat ends are used for the buffering.
+    :param buf_width: Buffer width by which the resulting polygons should be enlarged (default: 5e-5).
+    :param triangulate: True: triangles will be generated for the interior of each lane polygon using GPC Polygon strips, False: two triangles will be created for each lane polygon from its AABB bounding box.
+    :return: ShapeGroup with the lane polygons.
+    """
+
+    lanelet_network = scenario.lanelet_network
+
+    def lanelet_rep_setup(lanelet_network):
+        lanelet_rep = []
+        for lanelet in lanelet_network.lanelets:
+            lanelet_polyline = np.append(lanelet.right_vertices, np.flip(lanelet.left_vertices, axis=0), axis=0)
+            triangles = pycrcc.ShapeGroup()
+
+            lanelet_polyline_list = lanelet_polyline.tolist()
+            if resample == 1:
+                lanelet_polyline_list = list(gpc.Utils.reducePointsDP(lanelet_polyline_list, resample_tolerance_distance))
+
+            polygon = pycrcc.Polygon(lanelet_polyline_list, list(), triangles.unpack())
+            lanelet_rep.append(polygon)
+
+
+        return lanelet_rep
+
+    lanelet_rep = lanelet_rep_setup(lanelet_network)
+
+    lanelet_polygons = pycrcc.ShapeGroup()
+
+    for poly in lanelet_rep:
+        lanelet_polygons.add_shape(poly)
+
+    if buffer != 1:
+        buf_width = 0
+
+    lanelet_polygons = _lane_polygons_postprocess(lanelet_polygons, buf_width, False)
+
+    if triangulate:
+        lanelet_polygons = _lane_polygons_triangulate(lanelet_polygons)
+
+    return lanelet_polygons
+
 
 def construct_road_boundary_whole_polygon(scenario: Scenario, triangulate=True):
     """
@@ -520,6 +569,7 @@ def construct_road_boundary_whole_polygon_tiled(scenario: Scenario, max_cell_wid
 def construct_road_polygons(scenario: Scenario, method, kwargs):
     build_func_dict = {
         'lane_polygons': construct_road_boundary_lane_polygons,
+        'lanelet_polygons': construct_road_boundary_lanelet_polygons,
         'whole_polygon': construct_road_boundary_whole_polygon,
         'whole_polygon_tiled': construct_road_boundary_whole_polygon_tiled,
     }

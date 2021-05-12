@@ -49,7 +49,7 @@ class CurvilinearCoordinateSystem {
    */
   CurvilinearCoordinateSystem(EigenPolyline reference_path,
                               double default_projection_domain_limit = 20.,
-                              double eps = 0.1, double eps2=0.0001);
+                              double eps = 0.1, double eps2=1e-4);
 
   /**
    * Returns the reference path as a 2D polyline in Cartesian coordiantes

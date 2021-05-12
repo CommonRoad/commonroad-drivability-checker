@@ -61,7 +61,8 @@ def create_collision_object_polygon(polygon, params=None, collision_object_func=
         triangles = triangle.triangulate({'vertices': vertices, 'segments': segments}, opts='pqS2.4')
         mesh = list()
         if not 'triangles' in triangles:
-            warnings.warn(f"Triangulation of polygon with vertices\n {polygon.vertices} \n not successful.", stacklevel=1)
+            warnings.warn(f"Triangulation of polygon with vertices\n {polygon.vertices} \n not successful.",
+                          stacklevel=1)
             return None
         else:
             for t in triangles['triangles']:

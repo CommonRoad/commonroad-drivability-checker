@@ -1,5 +1,6 @@
 import sys
 from typing import Tuple
+import warnings
 
 import commonroad.visualization.draw_dispatch_cr as draw_dispatch_core
 import matplotlib.pyplot as plt
@@ -206,7 +207,8 @@ def draw_object(obj, plot_limits=None, ax=None, draw_params=None,
            depending on the call stack of draw_object, (usually 'None'!)
     :return: Returns matplotlib patch object for draw_funcs that actually draw a patch (used internally for creating handles dict)
     """
-
+    warnings.warn('draw_object is deprecated, use renderer interface instead',
+                  DeprecationWarning)
     if handles is None:
         handles = dict()
 

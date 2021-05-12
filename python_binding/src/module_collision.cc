@@ -9,6 +9,7 @@
 #include "collision/narrowphase/sphere.h"
 #include "collision/narrowphase/triangle.h"
 #include "collision/shape_group.h"
+
 #include "collision/time_variant_collision_object.h"
 
 #include "collision/solvers/boost/boost_collision_queries.h"
@@ -29,12 +30,10 @@
 #include <stdexcept>
 
 #include <pybind11/eigen.h>
-//#include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 #include <Eigen/Dense>
-
 
 namespace py = pybind11;
 template <typename T>
@@ -44,14 +43,16 @@ PYBIND11_DECLARE_HOLDER_TYPE(T, std::shared_ptr<T>);
 
 #include "collision/solvers/sat2d/sat2d_checks.h"
 
-typedef Eigen::MatrixXd  Matrixd;
-using RowMatrixXd = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+typedef Eigen::MatrixXd Matrixd;
 
 typedef Eigen::Matrix<int, Eigen::Dynamic, 1> VectorXi;
 
 typedef Matrixd::Scalar Scalard;
 
 typedef VectorXi::Scalar Scalari;
+
+using RowMatrixXd =
+    Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
 
 #include "submodule_util.h"
 
@@ -608,11 +609,7 @@ collision::CollisionObjectPtr pickle_object_in(py::tuple t) {
 }
 #endif
 
-
-
 void init_module_collision(py::module &m) {
-
-
   py::class_<collision::CollisionObject,
              std::shared_ptr<collision::CollisionObject>>(m, "CollisionObject")
 
@@ -700,6 +697,18 @@ void init_module_collision(py::module &m) {
            })
       .def_property_readonly("r_x", &collision::RectangleAABB::r_x)
 
+      .def("draw",
+           [](const std::shared_ptr<collision::RectangleAABB> &c,
+              py::object renderer, py::object draw_params,
+              py::object callstack) {
+             py::object pycrcc = py::module::import(
+                 "commonroad_dc.collision.visualization.drawing");
+             py::object draw = pycrcc.attr("draw_collision_rectaabb");
+             draw(c, renderer, draw_params, callstack);
+           },
+           py::arg("renderer"), py::arg("draw_params") = py::none(),
+           py::arg("callstack") = py::tuple())
+
 #if ENABLE_SERIALIZER
       .def(py::pickle(
           [](const collision::CollisionObject &obj) {  // __getstate__
@@ -777,6 +786,18 @@ void init_module_collision(py::module &m) {
                     " center_y=" + std::to_string(c.center_y()) + ">";
            })
 
+      .def("draw",
+           [](const std::shared_ptr<collision::RectangleOBB> &c,
+              py::object renderer, py::object draw_params,
+              py::object callstack) {
+             py::object pycrcc = py::module::import(
+                 "commonroad_dc.collision.visualization.drawing");
+             py::object draw = pycrcc.attr("draw_collision_rectobb");
+             draw(c, renderer, draw_params, callstack);
+           },
+           py::arg("renderer"), py::arg("draw_params") = py::none(),
+           py::arg("callstack") = py::tuple())
+
 #if ENABLE_SERIALIZER
       .def(py::pickle(
           [](const collision::CollisionObject &obj) {  // __getstate__
@@ -833,6 +854,17 @@ void init_module_collision(py::module &m) {
                     " v3=" + std::to_string(c.v3()[0]) + "/" +
                     std::to_string(c.v3()[1]) + ">";
            })
+      .def(
+          "draw",
+          [](const std::shared_ptr<collision::Triangle> &c, py::object renderer,
+             py::object draw_params, py::object callstack) {
+            py::object pycrcc = py::module::import(
+                "commonroad_dc.collision.visualization.drawing");
+            py::object draw = pycrcc.attr("draw_collision_triangle");
+            draw(c, renderer, draw_params, callstack);
+          },
+          py::arg("renderer"), py::arg("draw_params") = py::none(),
+          py::arg("callstack") = py::tuple())
 
 #if ENABLE_SERIALIZER
       .def(py::pickle(
@@ -868,6 +900,17 @@ void init_module_collision(py::module &m) {
       .def("x", &collision::Sphere::get_x, "x-coordinate of center")
       .def("y", &collision::Sphere::get_y, "y-coordinate of center")
 
+      .def("draw",
+           [](const std::shared_ptr<collision::Sphere> &c, py::object renderer,
+              py::object draw_params, py::object callstack) {
+             py::object pycrcc = py::module::import(
+                 "commonroad_dc.collision.visualization.drawing");
+             py::object draw = pycrcc.attr("draw_collision_circle");
+             draw(c, renderer, draw_params, callstack);
+           },
+           py::arg("renderer"), py::arg("draw_params") = py::none(),
+           py::arg("callstack") = py::tuple())
+
 #if ENABLE_SERIALIZER
       .def(py::pickle(
           [](const collision::CollisionObject &obj) {  // __getstate__
@@ -901,6 +944,19 @@ void init_module_collision(py::module &m) {
       .def("time_end_idx", &collision::TimeVariantCollisionObject::time_end_idx)
       .def("obstacle_at_time",
            &collision::TimeVariantCollisionObject::getObstacleAtTime)
+
+      .def("draw",
+           [](const std::shared_ptr<collision::TimeVariantCollisionObject> &c,
+              py::object renderer, py::object draw_params,
+              py::object callstack) {
+             py::object pycrcc = py::module::import(
+                 "commonroad_dc.collision.visualization.drawing");
+             py::object draw =
+                 pycrcc.attr("draw_collision_timevariantcollisionobject");
+             draw(c, renderer, draw_params, callstack);
+           },
+           py::arg("renderer"), py::arg("draw_params") = py::none(),
+           py::arg("callstack") = py::tuple())
 
 #if ENABLE_SERIALIZER
       .def(py::pickle(
@@ -970,6 +1026,18 @@ void init_module_collision(py::module &m) {
              }
              return ret_list;
            })
+
+      .def("draw",
+           [](const std::shared_ptr<collision::ShapeGroup> &c,
+              py::object renderer, py::object draw_params,
+              py::object callstack) {
+             py::object pycrcc = py::module::import(
+                 "commonroad_dc.collision.visualization.drawing");
+             py::object draw = pycrcc.attr("draw_collision_shapegroup");
+             draw(c, renderer, draw_params, callstack);
+           },
+           py::arg("renderer"), py::arg("draw_params") = py::none(),
+           py::arg("callstack") = py::tuple())
 
 #if ENABLE_SERIALIZER
       .def(py::pickle(
@@ -1082,6 +1150,17 @@ void init_module_collision(py::module &m) {
              return ss.str();
            })
 
+      .def("draw",
+           [](const std::shared_ptr<collision::Polygon> &c, py::object renderer,
+              py::object draw_params, py::object callstack) {
+             py::object pycrcc = py::module::import(
+                 "commonroad_dc.collision.visualization.drawing");
+             py::object draw = pycrcc.attr("draw_collision_polygon");
+             draw(c, renderer, draw_params, callstack);
+           },
+           py::arg("renderer"), py::arg("draw_params") = py::none(),
+           py::arg("callstack") = py::tuple())
+
 #if ENABLE_SERIALIZER
       .def(py::pickle(
           [](const collision::CollisionObject &obj) {  // __getstate__
@@ -1097,78 +1176,89 @@ void init_module_collision(py::module &m) {
       ;
 
   py::class_<collision::detail::OBBDenseTrajectoryBatch,
-             std::shared_ptr<collision::detail::OBBDenseTrajectoryBatch>>(m, "OBBTrajectoryBatch")
-			  .def(py::init( [](Eigen::Ref<const RowMatrixXd> loaded_trajectories, Eigen::Ref<const VectorXi> start_time_step, double box_half_length, double box_half_width)
-			  {
-				  py::list ret;
-				  using OBB=collision::detail::OBB;
-				  std::vector<OBB, Eigen::aligned_allocator<OBB>> obb1_fast_container;
-				  obb1_fast_container.reserve(int(loaded_trajectories.rows()*loaded_trajectories.cols()/3));
+             std::shared_ptr<collision::detail::OBBDenseTrajectoryBatch>>(
+      m, "OBBTrajectoryBatch")
+      .def(
+          py::init([](Eigen::Ref<const RowMatrixXd> loaded_trajectories,
+                      Eigen::Ref<const VectorXi> start_time_step,
+                      double box_half_length, double box_half_width) {
+            py::list ret;
+            using OBB = collision::detail::OBB;
+            std::vector<OBB, Eigen::aligned_allocator<OBB>> obb1_fast_container;
+            obb1_fast_container.reserve(int(loaded_trajectories.rows() *
+                                            loaded_trajectories.cols() / 3));
 
-			      //std::vector<std::unique_ptr<const collision::detail:>> objects;
-				  if(loaded_trajectories.rows()!=start_time_step.size())
-					  throw std::runtime_error("Incompatible buffer dimension!");
-				  if(loaded_trajectories.cols()%3 !=0)
-					  throw std::runtime_error("Incompatible buffer dimension!");
-				  int traj_length=int(loaded_trajectories.cols()/3);
-				  for(int traj_ind=0; traj_ind<loaded_trajectories.rows(); traj_ind++){
-					  //collision::TimeVariantCollisionObjectPtr tvobstacle=std::make_shared<collision::TimeVariantCollisionObject>(start_time_step[traj_ind]);
+            // std::vector<std::unique_ptr<const collision::detail:>> objects;
+            if (loaded_trajectories.rows() != start_time_step.size())
+              throw std::runtime_error("Incompatible buffer dimension!");
+            if (loaded_trajectories.cols() % 3 != 0)
+              throw std::runtime_error("Incompatible buffer dimension!");
+            int traj_length = int(loaded_trajectories.cols() / 3);
+            for (int traj_ind = 0; traj_ind < loaded_trajectories.rows();
+                 traj_ind++) {
+              for (int idx = 0; idx < traj_length; idx++) {
+                int offset = 3 * idx;
+                double angle = loaded_trajectories(traj_ind, offset + 2);
+                Eigen::Matrix2d local_axes;
+                double cos_angle = cos(angle);
+                double sin_angle = sin(angle);
+                local_axes << cos_angle, -1 * sin_angle, sin_angle, cos_angle;
 
-					  for(int idx=0; idx<traj_length; idx++)
-					  {
-						  int offset=3*idx;
-						  double angle=loaded_trajectories(traj_ind,offset+2);
-						  Eigen::Matrix2d local_axes;
-						  double cos_angle=cos(angle);
-						  double sin_angle=sin(angle);
-						  local_axes << cos_angle, -1*sin_angle, sin_angle, cos_angle;
-						  //obb1_fast_container.emplace_back()
-						  obb1_fast_container.emplace_back(local_axes, Eigen::Vector2d(box_half_length,box_half_width),
-								  Eigen::Vector2d(loaded_trajectories(traj_ind,offset+0), loaded_trajectories(traj_ind,offset+1)));
+                obb1_fast_container.emplace_back(
+                    local_axes,
+                    Eigen::Vector2d(box_half_length, box_half_width),
+                    Eigen::Vector2d(loaded_trajectories(traj_ind, offset + 0),
+                                    loaded_trajectories(traj_ind, offset + 1)));
+              }
+            }
 
-					  }
-					  //ret.append(0);
-				  }
+            auto traj_batch = new collision::detail::OBBDenseTrajectoryBatch(
+                obb1_fast_container, traj_length, start_time_step);
+            return traj_batch;
+          }),
+          "See 05_collision_checks_dynamic_obstacles.ipynb for an "
+          "initialization example.")
+      .def("preprocess_",
+           &collision::detail::OBBDenseTrajectoryBatch::preprocess_inplace,
+           "Preprocesses each trajectory using OBB sum hull (for continuous "
+           "collision detection). The occupancies of the OBB boxes for two "
+           "subsequent states are overapproximated with a tightly fitting OBB "
+           "box. It is an in-place operation.")
+      .def("to_tvobstacle",
+           [](std::shared_ptr<collision::detail::OBBDenseTrajectoryBatch> &tb) {
+             py::list ret;
+             for (int traj_id = 0; traj_id < tb->size(); traj_id++) {
+               int length = tb->length();
 
-				  auto traj_batch=new collision::detail::OBBDenseTrajectoryBatch(obb1_fast_container, traj_length, start_time_step);
-				  return traj_batch;
+               int start_step = tb->get_start_step(traj_id);
+               auto tvobstacle =
+                   std::make_shared<collision::TimeVariantCollisionObject>(
+                       start_step);
 
-			  }))
-			  .def("preprocess_", &collision::detail::OBBDenseTrajectoryBatch::preprocess_inplace)
-			  .def("to_tvobstacle",[](std::shared_ptr<collision::detail::OBBDenseTrajectoryBatch> &tb)
-				{
-	  	  	  	  	  py::list ret;
-	  	  	  	  	  for(int traj_id=0; traj_id<tb->size(); traj_id++)
-	  	  	  	  		  {
+               for (int ts = start_step; ts < start_step + length; ts++) {
+                 collision::detail::OBB obb;
+                 collision::AABB aabb;
+                 auto res = tb->get_object_at_time_ptr(traj_id, ts, obb, aabb);
 
-							int length=tb->length();
+                 if (res) return ret;
 
-	  	  	  	  		  	  int start_step=tb->get_start_step(traj_id);
-	  	  	  	  		  	  auto tvobstacle=std::make_shared<collision::TimeVariantCollisionObject>(start_step);
-
-	  	  	  	  		  	  for(int ts=start_step; ts<start_step+length; ts++)
-	  	  	  	  		  	  {
-	  	  	  	  		  		  	collision::detail::OBB obb;
-	  	  	  	  		  		  	collision::AABB aabb;
-	  	  	  	  		  		  	auto res=tb->get_object_at_time_ptr(traj_id, ts, obb, aabb);
-
-									if(res)
-										return ret;
-
-
-									auto obb_col=std::make_shared<const collision::RectangleOBB>(obb);
-									tvobstacle->appendObstacle(obb_col);
-	  	  	  	  		  	  }
-	  	  	  	  		  	  ret.append(tvobstacle);
-	  	  	  	  		  }
-	  	  	  	  	  return ret;
-				})
-  	  	  	  	.def("computeAABB",[](std::shared_ptr<collision::detail::OBBDenseTrajectoryBatch> &tb)
-				{
-  	  	  	  		return tb->computeAABBs();
-				}
-			  )
-			  ;
+                 auto obb_col =
+                     std::make_shared<const collision::RectangleOBB>(obb);
+                 tvobstacle->appendObstacle(obb_col);
+               }
+               ret.append(tvobstacle);
+             }
+             return ret;
+           },
+           "Returns a list of TimeVariantCollisionObjects corresponding to the "
+           "OBB trajectory batch.")
+      /*
+.def("computeAABB",
+[](std::shared_ptr<collision::detail::OBBDenseTrajectoryBatch> &tb) {
+return tb->computeAABBs();
+})
+*/
+      ;
 
   py::class_<collision::CollisionChecker,
              std::shared_ptr<collision::CollisionChecker>>(m,
@@ -1248,6 +1338,18 @@ void init_module_collision(py::module &m) {
              }
              return false;
            })
+      .def("draw",
+           [](const std::shared_ptr<collision::CollisionChecker> &c,
+              py::object renderer, py::object draw_params,
+              py::object callstack) {
+             py::object pycrcc = py::module::import(
+                 "commonroad_dc.collision.visualization.drawing");
+             py::object draw = pycrcc.attr("draw_collision_collisionchecker");
+             draw(c, renderer, draw_params, callstack);
+           },
+           py::arg("renderer"), py::arg("draw_params") = py::none(),
+           py::arg("callstack") = py::tuple())
+
 #if ENABLE_SERIALIZER
       .def(py::pickle(
           [](const collision::CollisionChecker &obj) {  // __getstate__

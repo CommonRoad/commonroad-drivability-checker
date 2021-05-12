@@ -355,8 +355,8 @@ class ContainerFCL {
             rect.center()));
     cur_obj.setUserData(0);
     ContainerCollisionRequestDataFCL reqData(candidates);
-    broadphase_manager_->collide(&cur_obj, &reqData,
-                                ContainerFunctionWindowQueryFCL<FCL_PRECISION>);
+    broadphase_manager_->collide(
+        &cur_obj, &reqData, ContainerFunctionWindowQueryFCL<FCL_PRECISION>);
     return 0;
   }
 

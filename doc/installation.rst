@@ -188,7 +188,13 @@ After installing all essential third party libraries and packages, you can now i
             $ cd build
             $ cmake -DADD_PYTHON_BINDINGS=TRUE -DPATH_TO_PYTHON_ENVIRONMENT="/path/to/your/anaconda3/envs/commonroad-py36" -DPYTHON_VERSION="3.6" -DCMAKE_BUILD_TYPE=Release ..
             
-        The next line refers only to users of Mac OS X 10+: 
+        Note that with Python 3.8 you might have to use:
+
+        .. code-block:: bash
+
+            $ cmake -DADD_PYTHON_BINDINGS=TRUE -DPYTHON_EXECUTABLE=$(which python) -DCMAKE_BUILD_TYPE=Release ..
+
+        The next line refers only to users of Mac OS X 10+:
 
         .. code-block:: bash
 

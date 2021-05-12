@@ -125,7 +125,7 @@ if(__name__=='__main__'):
 
     res_dict=dict()
 
-    dirname="/home/vit/Documents/driv_checker/commonroad-scenarios/scenarios"
+    dirname="[DIRECTORY]/commonroad-scenarios/scenarios"
     paths=[os.path.join(dp, f) for dp, dn, fn in os.walk(os.path.expanduser(dirname)) for f in fn]
     print(len(paths))
     paths=[x for x in paths if "ZAM_Urban-7_1_S-1.xml" not in x]

@@ -135,7 +135,10 @@ if(ADD_MODULE_GEOMETRY)
 
 set(LIB_CRCCOSY_SRC
         geometry/segment.cc
-        geometry/curvilinear_coordinate_system.cc)
+        geometry/curvilinear_coordinate_system.cc
+        geometry/util.cc
+        
+        )
 
 set(LIB_CRCCOSY_INCLUDE ".")
 

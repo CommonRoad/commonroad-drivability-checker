@@ -14,37 +14,28 @@ namespace collision {
 namespace detail {
 using namespace accelerators;
 
+int OBBDenseTrajectoryBatch::preprocess_inplace(void) {
+  if (traj_length_ < 2) return 0;
+  invalidateAABBs();
+  for (int traj_ind = 0; traj_ind < num_traj_; traj_ind++) {
+    auto read_iterator = rectangles_.begin() + traj_ind * traj_length_;
+    auto write_iterator = read_iterator;
+    for (int timestep = 0; timestep < traj_length_ - 1; timestep++) {
+      auto obb_cur = *read_iterator;
+      auto obb_next = *(read_iterator + 1);
 
-int OBBDenseTrajectoryBatch::preprocess_inplace(void)
-{
-	if(traj_length_<2)
-		return 0;
-	invalidateAABBs();
-	for(int traj_ind=0; traj_ind<num_traj_; traj_ind++)
-	{
-		auto read_iterator=rectangles_.begin()+traj_ind*traj_length_;
-		auto write_iterator=read_iterator;
-		for(int timestep=0; timestep<traj_length_-1; timestep++)
-		{
-			auto obb_cur=*read_iterator;
-			auto obb_next=*(read_iterator+1);
-
-			if(timestep==traj_length_-2)
-			{
-				*(write_iterator+1)=*write_iterator=collision::detail::geometry_queries::merge_obbs(obb_cur, obb_next);
-			}
-			else
-			{
-				*write_iterator++=collision::detail::geometry_queries::merge_obbs(obb_cur, obb_next);
-				read_iterator++;
-			}
-
-		}
-	}
-	return 0;
+      if (timestep == traj_length_ - 2) {
+        *(write_iterator + 1) = *write_iterator =
+            collision::detail::geometry_queries::merge_obbs(obb_cur, obb_next);
+      } else {
+        *write_iterator++ =
+            collision::detail::geometry_queries::merge_obbs(obb_cur, obb_next);
+        read_iterator++;
+      }
+    }
+  }
+  return 0;
 }
-
-
 
 namespace trajectory_queries {
 
@@ -595,7 +586,6 @@ int trajectory_preprocess_obb_sum(const TimeVariantCollisionObject* obj_old,
   return 0;
 }
 
-
 namespace deprecated {
 
 /*!
@@ -618,8 +608,6 @@ std::size_t ccd_trajectory_test_collision_chull(const ShapeGroup& sg,
                                                 const RectangleOBB& pos1,
                                                 const RectangleOBB& pos2,
                                                 bool& res) {
-
-
   if (boost_ccd_convex_hull_collision(sg, pos1, pos2, res))
     return 1;
   else
@@ -627,8 +615,8 @@ std::size_t ccd_trajectory_test_collision_chull(const ShapeGroup& sg,
 }
 
 /*!
-      \brief Checks if the over-approximative OBB box (OBB sum hull) for the two given OBB
-   boxes collides with any of the ShapeGroup objects.
+      \brief Checks if the over-approximative OBB box (OBB sum hull) for the two
+   given OBB boxes collides with any of the ShapeGroup objects.
 
        Returns 0 if no error has occured.
 
@@ -645,7 +633,6 @@ std::size_t ccd_trajectory_test_collision_obb_sum(const ShapeGroup& sg,
                                                   const RectangleOBB& pos1,
                                                   const RectangleOBB& pos2,
                                                   bool& res) {
-
   if (boost_ccd_obb_sum_collision(sg, pos1, pos2, res))
     return 1;
   else
@@ -678,8 +665,8 @@ std::size_t ccd_trajectory_test_polygon_enclosure_chull(
 }
 
 /*!
-      \brief Checks if the over-approximative OBB box (OBB sum hull) for the two given OBB
-   boxes boxes is enclosed within the ShapeGroup polygons.
+      \brief Checks if the over-approximative OBB box (OBB sum hull) for the two
+   given OBB boxes boxes is enclosed within the ShapeGroup polygons.
 
        Returns 0 if no error has occured.
 
