@@ -2,7 +2,7 @@ if(ADD_MODULE_COLLISION)
 
 set(COLLISION_SRC_ROOT "collision/src")
 
-set(COLLISION_SRC 	
+set(COLLISION_SRC
 ${COLLISION_SRC_ROOT}/raytrace_primitive.cc
 ${COLLISION_SRC_ROOT}/shape_group.cc
 ${COLLISION_SRC_ROOT}/collision_object.cc
@@ -72,7 +72,6 @@ tests/collision/online_tests/test_common.cc
 set(TRIANGLE_SRC ${COLLISION_SRC_ROOT}/plugins/triangulation/triangle_wrapper.c)
 
 
-add_definitions(-DANSI_DECLARATORS=1 -DTRILIBRARY=1)
 
 find_path(BOX2D_SRC_ROOT_1 NAMES "b2_broad_phase.cpp" PATHS "../third_party/box2d/src/collision/" REQUIRED)
 
@@ -102,6 +101,8 @@ if(NOT fcl_FOUND)
 endif()
 
 add_library(crcc ${LIB_CRCC_SRC})
+
+target_compile_definitions(crcc PUBLIC -DANSI_DECLARATORS=1 -DTRILIBRARY=1)
 
 target_compile_features(crcc
     PUBLIC cxx_lambdas cxx_auto_type
@@ -141,15 +142,22 @@ set(LIB_CRCCOSY_SRC
         geometry/serialize/public/serialize_public.cc
         )
 
-set(LIB_CRCCOSY_INCLUDE ".")
-
 add_library(crccosy ${LIB_CRCCOSY_SRC})
 
 target_compile_features(crccosy
         PUBLIC cxx_lambdas cxx_auto_type
         PRIVATE cxx_lambdas cxx_auto_type)
+
 set_property(TARGET crccosy PROPERTY POSITION_INDEPENDENT_CODE ON)
-target_include_directories(crccosy PUBLIC ${LIB_CRCCOSY_INCLUDE} ${COLLISION_INCLUDES} ${S11N_INCLUDES})
+
+target_include_directories(crccosy
+    PUBLIC
+        $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+
 target_link_libraries(crccosy PUBLIC ${S11N_LIBRARY})
 
 endif()

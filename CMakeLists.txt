@@ -1,13 +1,10 @@
-project(crcc)
+project(DrivabilityChecker)
 cmake_minimum_required(VERSION 3.0)
 
 option(ADD_TESTS "unit tests" OFF)
 option(BUILD_DOC "generate the doc target." OFF)
 option(ADD_MODULE_GEOMETRY "add geometry module" ON)
 option(ADD_MODULE_COLLISION "add collision module" ON)
-
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../commonroad_dc/)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../commonroad_dc/)
 
 find_package(Eigen3 3.0.5 QUIET CONFIG)
 
@@ -91,3 +88,46 @@ if (BUILD_DOC)
 endif ()
 endif()
 
+
+# Provides configure_package_config_file
+include(CMakePackageConfigHelpers)
+
+# Includes sane defaults for installation paths (CMAKE_INSTALL_LIBDIR, CMAKE_INSTALL_BINDIR etc.)
+include(GNUInstallDirs)
+
+if(ADD_MODULE_GEOMETRY)
+  install(TARGETS crccosy
+      EXPORT ${PROJECT_NAME}_Targets
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+      INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  )
+endif()
+
+configure_package_config_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+  INSTALL_DESTINATION
+  ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
+
+  PATH_VARS CMAKE_INSTALL_DATAROOTDIR
+  )
+
+# Export target configuration (for installation)
+install(EXPORT ${PROJECT_NAME}_Targets
+  FILE ${PROJECT_NAME}Targets.cmake
+  NAMESPACE ${PROJECT_NAME}::
+  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
+  )
+
+install(FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
+  )
+
+# Export target configuration (for local building)
+export(EXPORT ${PROJECT_NAME}_Targets
+  FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake"
+  NAMESPACE ${PROJECT_NAME}::
+  )
