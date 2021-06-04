@@ -1053,6 +1053,40 @@ void init_module_collision(py::module &m) {
 
       ;
 
+      py::class_<collision::Truck, collision::ShapeGroup,
+             std::shared_ptr<collision::Truck>>(m, "Truck")
+      .def(py::init<>())
+      .def("collide",
+           [](std::shared_ptr<collision::ShapeGroup> &cc,
+              std::shared_ptr<collision::CollisionObject> &co) {
+             return cc->collide(*co);
+           })
+      .def("draw",
+           [](const std::shared_ptr<collision::ShapeGroup> &c,
+              py::object renderer, py::object draw_params,
+              py::object callstack) {
+             py::object pycrcc = py::module::import(
+                 "commonroad_dc.collision.visualization.drawing");
+             py::object draw = pycrcc.attr("draw_collision_shapegroup");
+             draw(c, renderer, draw_params, callstack);
+           },
+           py::arg("renderer"), py::arg("draw_params") = py::none(),
+           py::arg("callstack") = py::tuple())
+
+#if ENABLE_SERIALIZER
+      .def(py::pickle(
+          [](const collision::CollisionObject &obj) {  // __getstate__
+            /* Return a tuple that fully encodes the state of the object */
+            return pickle_object_out(obj);
+          },
+          [](py::tuple t) {  // __setstate__
+            return std::static_pointer_cast<collision::ShapeGroup>(
+                pickle_object_in(t));
+          }))
+#endif
+
+      ;
+
   py::class_<collision::Polygon, collision::Shape,
              std::shared_ptr<collision::Polygon>>(m, "Polygon")
       .def(py::init([](std::vector<std::array<double, 2>> outer_boundary,
