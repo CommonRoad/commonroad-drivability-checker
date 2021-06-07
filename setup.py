@@ -45,11 +45,7 @@ class CMakeBuild(build_ext):
         if not extdir.endswith(os.path.sep):
             extdir += os.path.sep
 
-        cmake_args = ["-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={}".format(extdir),
-                      "-DPYTHON_EXECUTABLE={}".format(sys.executable),
-                      "-DADD_PYTHON_BINDINGS=TRUE",
-                      #"-DPATH_TO_PYTHON_ENVIRONMENT=",
-                      "-DPYTHON_VERSION=3.8",
+        cmake_args = ["-DADD_PYTHON_BINDINGS=TRUE",
                       "-DADD_TESTS=OFF",
                       "-DBUILD_DOC=OFF"]
 
@@ -69,7 +65,7 @@ class CMakeBuild(build_ext):
 
         dist_dir = os.path.abspath(os.path.join(self.build_temp, 'dist'))
         build_dir = os.path.abspath(os.path.join(self.build_temp, 'build'))
-        lib_dist_dir = os.path.join(dist_dir, 'lib')
+        lib_python_dir = os.path.join(dist_dir, 'lib', 'python')
         install_dir = self.get_ext_fullpath(ext.name)
         extension_install_dir = pathlib.Path(install_dir).parent.joinpath(ext.name).resolve()
 
@@ -82,10 +78,8 @@ class CMakeBuild(build_ext):
         subprocess.check_call(['cmake', ext.sourcedir] + cmake_args, cwd=build_dir)
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=build_dir)
 
-        extension_re = re.compile('^py(crcc|crccosy)\.')
-        for file in os.listdir(lib_dist_dir):
-            if extension_re.match(file):
-                self.copy_file(os.path.join(lib_dist_dir, file), extension_install_dir)
+        for file in os.listdir(lib_python_dir):
+            self.copy_file(os.path.join(lib_python_dir, file), extension_install_dir)
 
 
 
@@ -100,7 +94,6 @@ setup(
     data_files=[('.', ['LICENSE'])],
 
     # Source
-    #distclass=BinaryDistribution,
     zip_safe=False,
     include_package_data=True,
     packages=['commonroad_dc'],
