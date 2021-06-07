@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.1)
 
 option(BUILD_SHARED_LIBS "Build s11n as a shared library" ON)
 
+set(CMAKE_CXX_STANDARD 98)
+
 set(S11_SRC_ROOT "./src")
 
 set(S11_SRC 	
@@ -38,8 +40,6 @@ include(CMakePackageConfigHelpers)
 add_library(s11n ${S11_SRC})
 
 set_property(TARGET s11n PROPERTY POSITION_INDEPENDENT_CODE ON)
-
-target_compile_features(s11n PUBLIC cxx_std_98)
 
 target_include_directories(s11n
   PUBLIC
