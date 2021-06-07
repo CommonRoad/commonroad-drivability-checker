@@ -195,7 +195,6 @@ target_link_libraries(crcc_obj
   PRIVATE
     triangle
   PUBLIC
-    ccd
     fcl
     Eigen3::Eigen
     box2d::box2d
