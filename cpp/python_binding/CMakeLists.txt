@@ -1,6 +1,6 @@
 if(ADD_MODULE_COLLISION)
 
-pybind11_add_module(pycrcc SHARED src/module_collision.cc src/py_bind.cc)
+pybind11_add_module(pycrcc src/module_collision.cc src/py_bind.cc)
 
 target_compile_definitions(pycrcc PRIVATE -DPY_WRAPPER_MODULE_COLLISION=1)
 
