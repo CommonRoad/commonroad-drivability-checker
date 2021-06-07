@@ -1,4 +1,92 @@
+# CONF
+project(DrivabilityChecker)
+cmake_minimum_required(VERSION 3.12)
+
+option(BUILD_SHARED_LIBS "Build s11n as a shared library" OFF)
+
+option(ADD_TESTS "unit tests" OFF)
+option(BUILD_DOC "generate the doc target." OFF)
+option(ADD_MODULE_GEOMETRY "add geometry module" ON)
+option(ADD_MODULE_COLLISION "add collision module" ON)
+option(ADD_PYTHON_BINDINGS "add Python bindings" ON)
+
+if(ADD_PYTHON_BINDINGS)
+    find_package(Python COMPONENTS Interpreter Development REQUIRED)
+
+    # Specific binary directory required here
+    add_subdirectory(../third_party/pybind11 third_party/pybind11)
+endif()
+
+### Shared configuration
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+### Discover dependencies
+
+find_package(Eigen3 3.0.5 QUIET CONFIG)
+
+# If Eigen3Config.cmake is not found, use the FindEigen3.cmake module
+if(NOT Eigen3_FOUND)
+  find_package(Eigen3 3.0.5 QUIET MODULE)
+  set(Eigen3_FOUND ON)
+endif()
+
+if(Eigen3_FOUND)
+  set(COM_HAVE_EIGEN TRUE)
+else()
+  message(SEND_ERROR "EIGEN3 (>= 3.0.5) is required by the CollisionChecker")
+  set(COM_HAVE_EIGEN FALSE)
+endif()
+
+if(ADD_MODULE_COLLISION AND BUILD_DOC)
+  set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules" ${CMAKE_MODULE_PATH})
+  add_subdirectory(doc)
+endif()
+
+
+find_package(OpenMP)
+
 if(ADD_MODULE_COLLISION)
+    if(ADD_TESTS)
+        add_subdirectory(tests)
+    endif()
+endif(ADD_MODULE_COLLISION)
+
+if(ADD_MODULE_COLLISION)
+
+    find_package(fcl REQUIRED)
+
+    find_package(ccd REQUIRED)
+
+    find_package(box2d REQUIRED)
+
+    find_package(s11n)
+
+endif(ADD_MODULE_COLLISION)
+
+### Definition of crcc
+
+if(ADD_MODULE_COLLISION)
+
+# Object library for triangle sources
+
+add_library(triangle OBJECT
+    "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c/triangle.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c/triangle.h")
+
+target_compile_definitions(triangle PRIVATE -DANSI_DECLARATORS=1 -DTRILIBRARY=1 -DREAL=double -DVOID=int)
+
+set_property(TARGET triangle PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+target_include_directories(triangle
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c
+    )
+
 
 set(COLLISION_SRC_ROOT "collision/src")
 
@@ -69,68 +157,55 @@ tests/collision/online_tests/broadphase_test.cc
 tests/collision/online_tests/test_common.cc
 )
 
-set(TRIANGLE_SRC ${COLLISION_SRC_ROOT}/plugins/triangulation/triangle_wrapper.c)
 
 
 
-find_path(BOX2D_SRC_ROOT_1 NAMES "b2_broad_phase.cpp" PATHS "../third_party/box2d/src/collision/" REQUIRED)
+# $<TARGET_OBJECTS:triangle>
+add_library(crcc_obj OBJECT ${COLLISION_SRC})
 
-set(BOX2D_SRC_ROOT ${BOX2D_SRC_ROOT_1}/..)
-
-set(BOX2D_SRC
-	${BOX2D_SRC_ROOT}/collision/b2_broad_phase.cpp
-	${BOX2D_SRC_ROOT}/collision/b2_collision.cpp
-	${BOX2D_SRC_ROOT}/collision/b2_dynamic_tree.cpp
-	${BOX2D_SRC_ROOT}/common/b2_block_allocator.cpp
-	${BOX2D_SRC_ROOT}/common/b2_math.cpp
-	${BOX2D_SRC_ROOT}/common/b2_settings.cpp
-	${BOX2D_SRC_ROOT}/common/b2_stack_allocator.cpp
-	${BOX2D_SRC_ROOT}/common/b2_timer.cpp
-	)
-
-
-set(LIB_CRCC_SRC ${LIB_CRCC_SRC} ${COLLISION_SRC} ${TRIANGLE_SRC} ${BOX2D_SRC})
-
-find_package(fcl REQUIRED)
-
-find_package(ccd REQUIRED)
-
-
-if(NOT fcl_FOUND)
-    message(FATAL_ERROR "Could NOT find required library libfcl")
-endif()
-
-add_library(crcc ${LIB_CRCC_SRC})
-
-target_compile_definitions(crcc PUBLIC -DANSI_DECLARATORS=1 -DTRILIBRARY=1)
-
-target_compile_features(crcc
+target_compile_features(crcc_obj
     PUBLIC cxx_lambdas cxx_auto_type
     PRIVATE cxx_lambdas cxx_auto_type)
-set_property(TARGET crcc PROPERTY POSITION_INDEPENDENT_CODE ON)
 
-set(COLLISION_INCLUDES "./collision/include" ".")
-set(BOX2D_INCLUDES "../third_party/box2d/include")
+set_property(TARGET crcc_obj PROPERTY POSITION_INDEPENDENT_CODE ON)
 
-set(TRIANGLE_INCLUDES "../third_party/triangle/c/")
+target_include_directories(crcc_obj
+    PUBLIC
+        $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/collision/include>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/collision/include
+        ${CMAKE_CURRENT_SOURCE_DIR}
+    )
 
-set(S11N_INCLUDES "../third_party/libs11n/include")
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(crcc_obj PRIVATE OpenMP::OpenMP_CXX)
+endif()
 
-target_include_directories(crcc PUBLIC ${COLLISION_INCLUDES} ${TRIANGLE_INCLUDES} ${BOX2D_INCLUDES} ${S11N_INCLUDES})
-
-message(STATUS "Using serialization library from: ${S11N_LIBRARY}")
-
-if(NOT S11N_LIBRARY)
-	message(STATUS "Serialization and pickling support have been disabled for the C++ library")
-	set(S11N_LIBRARY "")
-	add_definitions(-DENABLE_SERIALIZER=0)
+if(NOT s11n_FOUND)
+    message(STATUS "Serialization and pickling support have been disabled for crcc")
+    target_compile_definitions(crcc_obj PRIVATE -DENABLE_SERIALIZER=0)
 else()
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated")
+    message(STATUS "Serialization using s11n enabled for crcc")
+    target_link_libraries(crcc_obj PRIVATE s11n::s11n)
+    target_compile_options(crcc_obj PRIVATE -Wno-deprecated)
 endif()
 
-target_link_libraries(crcc PUBLIC ccd fcl ${S11N_LIBRARY})
+target_link_libraries(crcc_obj
+  PRIVATE
+    triangle
+  PUBLIC
+    ccd
+    fcl
+    Eigen3::Eigen
+    box2d::box2d
+    )
 
-endif()
+add_library(crcc SHARED $<TARGET_OBJECTS:crcc_obj>)
+
+endif(ADD_MODULE_COLLISION)
+
+### Definition of crccosy
 
 if(ADD_MODULE_GEOMETRY)
 
@@ -142,15 +217,23 @@ set(LIB_CRCCOSY_SRC
         geometry/serialize/public/serialize_public.cc
         )
 
-add_library(crccosy ${LIB_CRCCOSY_SRC})
+add_library(crccosy_obj OBJECT ${LIB_CRCCOSY_SRC})
 
-target_compile_features(crccosy
+set_property(TARGET crccosy_obj PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(crccosy_obj PRIVATE OpenMP::OpenMP_CXX)
+endif()
+
+target_link_libraries(crccosy_obj
+    PUBLIC
+        Eigen3::Eigen)
+
+target_compile_features(crccosy_obj
         PUBLIC cxx_lambdas cxx_auto_type
         PRIVATE cxx_lambdas cxx_auto_type)
 
-set_property(TARGET crccosy PROPERTY POSITION_INDEPENDENT_CODE ON)
-
-target_include_directories(crccosy
+target_include_directories(crccosy_obj
     PUBLIC
         $<INSTALL_INTERFACE:include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
@@ -158,6 +241,74 @@ target_include_directories(crccosy
         ${CMAKE_CURRENT_SOURCE_DIR}
     )
 
-target_link_libraries(crccosy PUBLIC ${S11N_LIBRARY})
-
+if(NOT s11n_FOUND)
+    message(STATUS "Serialization and pickling support have been disabled for crccosy")
+    target_compile_definitions(crccosy_obj PRIVATE -DENABLE_SERIALIZER=0)
+else()
+    message(STATUS "Serialization using s11n enabled for crccosy")
+    target_link_libraries(crccosy_obj PRIVATE s11n::s11n)
+    target_compile_options(crccosy_obj PRIVATE -Wno-deprecated)
 endif()
+
+add_library(crccosy SHARED $<TARGET_OBJECTS:crccosy_obj>)
+
+endif(ADD_MODULE_GEOMETRY)
+
+if(ADD_PYTHON_BINDINGS)
+    add_subdirectory(python_binding)
+endif()
+
+# Provides configure_package_config_file
+include(CMakePackageConfigHelpers)
+
+# Includes sane defaults for installation paths (CMAKE_INSTALL_LIBDIR, CMAKE_INSTALL_BINDIR etc.)
+include(GNUInstallDirs)
+
+
+set(INSTALL_MODULES "")
+if(ADD_MODULE_GEOMETRY)
+    set(INSTALL_MODULES ${INSTALL_MODULES} crccosy pycrccosy)
+endif()
+if(ADD_MODULE_COLLISION)
+    set(INSTALL_MODULES ${INSTALL_MODULES} crcc pycrcc)
+endif()
+
+install(TARGETS ${INSTALL_MODULES}
+    EXPORT ${PROJECT_NAME}_Targets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  )
+
+configure_package_config_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+  INSTALL_DESTINATION
+  ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
+
+  PATH_VARS CMAKE_INSTALL_DATAROOTDIR
+  )
+
+# Export target configuration (for installation)
+install(EXPORT ${PROJECT_NAME}_Targets
+  FILE ${PROJECT_NAME}Targets.cmake
+  NAMESPACE ${PROJECT_NAME}::
+  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
+  )
+
+install(FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
+  )
+
+# Export target configuration (for local building)
+export(EXPORT ${PROJECT_NAME}_Targets
+  FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake"
+  NAMESPACE ${PROJECT_NAME}::
+  )
+
+install(
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/collision/include/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  )

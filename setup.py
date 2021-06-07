@@ -1,11 +1,92 @@
-from setuptools import setup, dist, find_packages
+import os
+import re
+import sys
+import platform
+import subprocess
+import pathlib
 
+from setuptools import setup, dist, find_packages, Extension
+from setuptools.command.build_ext import build_ext
+
+from distutils.version import LooseVersion
 
 class BinaryDistribution(dist.Distribution):
     """ Make sure the setup.py will be a binary distribution. """
 
     def has_ext_modules(foo):
         return True
+
+class CMakeExtension(Extension):
+    def __init__(self, name, sourcedir=''):
+        Extension.__init__(self, name, sources=[])
+        self.sourcedir = os.path.abspath(sourcedir)
+
+
+class CMakeBuild(build_ext):
+    def run(self):
+        try:
+            out = subprocess.check_output(['cmake', '--version'])
+        except OSError:
+            raise RuntimeError("CMake must be installed to build the following extensions: " +
+                               ", ".join(e.name for e in self.extensions))
+
+        if platform.system() == "Windows":
+            cmake_version = LooseVersion(re.search(r'version\s*([\d.]+)', out.decode()).group(1))
+            if cmake_version < '3.16':
+                raise RuntimeError("CMake >= 3.16 is required on Windows")
+
+        for ext in self.extensions:
+            self.build_extension(ext)
+
+    def build_extension(self, ext):
+        extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
+
+        # required for auto-detection of auxiliary "native" libs
+        if not extdir.endswith(os.path.sep):
+            extdir += os.path.sep
+
+        cmake_args = ["-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={}".format(extdir),
+                      "-DPYTHON_EXECUTABLE={}".format(sys.executable),
+                      "-DADD_PYTHON_BINDINGS=TRUE",
+                      #"-DPATH_TO_PYTHON_ENVIRONMENT=",
+                      "-DPYTHON_VERSION=3.8",
+                      "-DADD_TESTS=OFF",
+                      "-DBUILD_DOC=OFF"]
+
+        cfg = 'Debug' if self.debug else 'Release'
+        build_args = ['--config', cfg]
+
+        if platform.system() == "Windows":
+            cmake_args += ['-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{}={}'.format(cfg.upper(), extdir)]
+            if sys.maxsize > 2**32:
+                cmake_args += ['-A', 'x64']
+            build_args += ['--', '/m']
+        else:
+            cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
+            build_args += ['--', '-j4']
+
+
+
+        dist_dir = os.path.abspath(os.path.join(self.build_temp, 'dist'))
+        build_dir = os.path.abspath(os.path.join(self.build_temp, 'build'))
+        lib_dist_dir = os.path.join(dist_dir, 'lib')
+        install_dir = self.get_ext_fullpath(ext.name)
+        extension_install_dir = pathlib.Path(install_dir).parent.joinpath(ext.name).resolve()
+
+        for p in [dist_dir, build_dir]:
+            if not os.path.exists(p):
+                os.makedirs(p)
+
+        cmake_args += [ '-DCMAKE_INSTALL_PREFIX:PATH={}'.format(dist_dir) ]
+
+        subprocess.check_call(['cmake', ext.sourcedir] + cmake_args, cwd=build_dir)
+        subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=build_dir)
+
+        extension_re = re.compile('^py(crcc|crccosy)\.')
+        for file in os.listdir(lib_dist_dir):
+            if extension_re.match(file):
+                self.copy_file(os.path.join(lib_dist_dir, file), extension_install_dir)
+
 
 
 setup(
@@ -19,11 +100,13 @@ setup(
     data_files=[('.', ['LICENSE'])],
 
     # Source
-    distclass=BinaryDistribution,
+    #distclass=BinaryDistribution,
     zip_safe=False,
     include_package_data=True,
     packages=['commonroad_dc'],
-    package_data={'commonroad_dc': ['*.so']},
+
+    ext_modules=[CMakeExtension("commonroad_dc")],
+    cmdclass={"build_ext": CMakeBuild},
 
     # Requirements
     python_requires='>=3.6',
