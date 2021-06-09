@@ -92,13 +92,13 @@ function remove_folder() {
 }
 
 function osx_command() {
-  if [ "$(uname)" == "Darwin" ]; then
+  if [[ "$OSTYPE" == "darwin"* ]]; then
     "${@}"
   fi
 }
 
 function linux_command() {
-  if [ "$(expr substr "$(uname -s)" 1 5)" == "Linux" ]; then
+  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     "${@}"
   fi
 }
