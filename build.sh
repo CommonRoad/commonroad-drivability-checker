@@ -44,21 +44,21 @@ function print() {
 }
 
 function print_progress() {
-  print "${GREEN}${1}${NC}" ${2}
+  print "${GREEN}${1}${NC}" "${2}"
 }
 
 function print_info() {
-  print "${BLUE}${1}${NC}" ${2}
+  print "${BLUE}${1}${NC}" "${2}"
 }
 
 function print_error() {
-  print "${RED}${1}${NC}" ${2}
+  print "${RED}${1}${NC}" "${2}"
 }
 
 function check_mandatory_args() {
   if [ "${ENVIRONMENT}" == "" ] || [ "${VERSION}" == "" ]; then
     print_error "The python environment and version must be defined!"
-    print_info "${usage}"
+    print_info "${USAGE}"
     exit 1
   fi
 }
@@ -66,7 +66,7 @@ function check_mandatory_args() {
 function check_doc_args() {
   if [ "${DOCS}" == "TRUE" ] && [ "${COMMONROAD}" == "" ]; then
     print_error "The absolute path to commonroad-io must be defined!"
-    print_info "${usage}"
+    print_info "${USAGE}"
     exit 1
   fi
 }
@@ -86,42 +86,42 @@ function print_args() {
 
 function remove_folder() {
   for value in "$@"; do
-    rm -rf ${value}
+    rm -rf "${value}"
     print_info "Removed ${value}"
   done
 }
 
 function osx_command() {
   if [ "$(uname)" == "Darwin" ]; then
-    ${@}
+    "${@}"
   fi
 }
 
 function linux_command() {
-  if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    ${@}
+  if [ "$(expr substr "$(uname -s)" 1 5)" == "Linux" ]; then
+    "${@}"
   fi
 }
 
 function require_sudo() {
   if [ "${NO_ROOT}" == "TRUE" ]; then
-    ${@}
+    "${@}"
   else
 
     if [[ $EUID -ne 0 ]]; then
       print_info "Permission required, using root."
-      sudo ${@}
+      sudo "${@}"
     else
-      ${@}
+      "${@}"
     fi
   fi
 }
 
 function set_pythonfile() {
-  if [ -f ${ENVIRONMENT}/bin/python${VERSION} ]; then
+  if [ -f "${ENVIRONMENT}/bin/python${VERSION}" ]; then
     PYTHONFILE=${ENVIRONMENT}/bin/python${VERSION}
   else
-    if [ -f ${ENVIRONMENT}/bin/python${VERSION}m ]; then
+    if [ -f "${ENVIRONMENT}/bin/python${VERSION}m" ]; then
       PYTHONFILE=${ENVIRONMENT}/bin/python${VERSION}m
     else
       print_error "Could not find python interpreter!"
@@ -131,11 +131,11 @@ function set_pythonfile() {
 }
 
 function epython() {
-  ${PYTHONFILE} ${@}
+  ${PYTHONFILE} "${@}"
 }
 
 function back_to_basedir() {
-  cd ${BASEDIR}
+  cd "${BASEDIR}"
 }
 
 function create_build_dir() {
@@ -164,7 +164,7 @@ function build_libccd() {
     create_build_dir -r
 
 
-    cmake -G "Unix Makefiles" $PREFIX_STRING -DENABLE_DOUBLE_PRECISION=ON -DBUILD_SHARED_LIBS=ON ..
+    cmake -G "Unix Makefiles" "$PREFIX_STRING" -DENABLE_DOUBLE_PRECISION=ON -DBUILD_SHARED_LIBS=ON ..
     make -j ${JOBS}
     require_sudo make install
 
@@ -181,7 +181,7 @@ function build_fcl() {
     cd third_party/fcl
     osx_command brew install eigen
     create_build_dir -r
-    cmake $PREFIX_STRING ..
+    cmake "$PREFIX_STRING" ..
     make -j ${JOBS}
     require_sudo make install
     print_progress "Done!" -n
@@ -195,7 +195,7 @@ function build_s11n() {
     print_progress "Building s11n..."
     cd third_party/libs11n
     create_build_dir -r
-    cmake $PREFIX_STRING .. -DCMAKE_BUILD_TYPE=Release
+    cmake "$PREFIX_STRING" .. -DCMAKE_BUILD_TYPE=Release
     make -j ${JOBS}
     require_sudo make install
     print_progress "Done!" -n
@@ -220,7 +220,7 @@ function build_dc() {
     print_progress "Building drivability checker..." -n
     create_build_dir -r
     #epython -m pip install -r ../requirements.txt
-    cmake $PREFIX_STRING -DADD_PYTHON_BINDINGS=TRUE -DPATH_TO_PYTHON_ENVIRONMENT="${ENVIRONMENT}" -DPYTHON_VERSION="${VERSION}" -DCMAKE_BUILD_TYPE=Release ..
+    cmake "$PREFIX_STRING" -DADD_PYTHON_BINDINGS=TRUE -DPATH_TO_PYTHON_ENVIRONMENT="${ENVIRONMENT}" -DPYTHON_VERSION="${VERSION}" -DCMAKE_BUILD_TYPE=Release ..
     print_progress "Done!" -n
     osx_command sed -i '' 's!-lccd!/usr/local/lib/libccd.2.0.dylib!' python_binding/CMakeFiles/pycrcc.dir/link.txt
     make -j ${JOBS}
@@ -359,12 +359,12 @@ set_pythonfile
 print_args
 
 # Start building
-remove_folder build dist *.egg-info *.so *.a
+remove_folder build dist ./*.egg-info ./*.so ./*.a
 fetch_submodules
 if [ "${NO_ROOT}" == "FALSE" ]; then
 	linux_command require_sudo apt-get -y install build-essential cmake git wget unzip libboost-dev libboost-thread-dev
 	linux_command require_sudo apt-get -y install libboost-test-dev libboost-filesystem-dev libeigen3-dev libomp-dev
-else 
+else
   PREFIX_STRING="-DCMAKE_PREFIX_PATH=$HOME -DCMAKE_INSTALL_PREFIX=$HOME"
 fi
 build_libccd
