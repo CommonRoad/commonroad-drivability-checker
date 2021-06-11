@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 # Constants
 #set -e
 RED='\033[0;31m'
@@ -117,19 +119,6 @@ function require_sudo() {
   fi
 }
 
-function set_pythonfile() {
-  if [ -f "${ENVIRONMENT}/bin/python${VERSION}" ]; then
-    PYTHONFILE=${ENVIRONMENT}/bin/python${VERSION}
-  else
-    if [ -f "${ENVIRONMENT}/bin/python${VERSION}m" ]; then
-      PYTHONFILE=${ENVIRONMENT}/bin/python${VERSION}m
-    else
-      print_error "Could not find python interpreter!"
-      exit 1
-    fi
-  fi
-}
-
 function epython() {
   ${PYTHONFILE} "${@}"
 }
@@ -156,53 +145,6 @@ function fetch_submodules() {
   )
 }
 
-function build_libccd() {
-  (
-    set -e
-    print_progress "Building libccd..." -n
-    cd third_party/libccd
-    create_build_dir -r
-
-
-    cmake -G "Unix Makefiles" "$PREFIX_STRING" -DENABLE_DOUBLE_PRECISION=ON -DBUILD_SHARED_LIBS=ON ..
-    make -j ${JOBS}
-    require_sudo make install
-
-    print_progress "Done!" -n
-    back_to_basedir
-  )
-}
-
-function build_fcl() {
-  (
-    set -e
-    print_progress "Building fcl..."
-    print_info "Installing required packages for fcl..." -n
-    cd third_party/fcl
-    osx_command brew install eigen
-    create_build_dir -r
-    cmake "$PREFIX_STRING" ..
-    make -j ${JOBS}
-    require_sudo make install
-    print_progress "Done!" -n
-    back_to_basedir
-  )
-}
-
-function build_s11n() {
-  (
-    set -e
-    print_progress "Building s11n..."
-    cd third_party/libs11n
-    create_build_dir -r
-    cmake "$PREFIX_STRING" .. -DCMAKE_BUILD_TYPE=Release
-    make -j ${JOBS}
-    require_sudo make install
-    print_progress "Done!" -n
-    back_to_basedir
-  )
-}
-
 function install_cgal() {
   (
     set -e
@@ -220,7 +162,21 @@ function build_dc() {
     print_progress "Building drivability checker..." -n
     create_build_dir -r
     #epython -m pip install -r ../requirements.txt
-    cmake "$PREFIX_STRING" -DADD_PYTHON_BINDINGS=TRUE -DPATH_TO_PYTHON_ENVIRONMENT="${ENVIRONMENT}" -DPYTHON_VERSION="${VERSION}" -DCMAKE_BUILD_TYPE=Release ..
+    if [ "${S11N}" == "TRUE" ]; then
+      cmake "$PREFIX_STRING" \
+        -DADD_PYTHON_BINDINGS:BOOL=TRUE \
+        -DCMAKE_BUILD_TYPE:BOOL=Release \
+        -DBUILD_DOC:BOOL=FALSE \
+        -DBUILD_S11N:BOOL=TRUE \
+        ..
+    else
+      cmake "$PREFIX_STRING" \
+        -DADD_PYTHON_BINDINGS:BOOL=TRUE \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_DOC:BOOL=FALSE \
+        -DBUILD_S11N:BOOL=FALSE \
+        ..
+    fi
     print_progress "Done!" -n
     osx_command sed -i '' 's!-lccd!/usr/local/lib/libccd.2.0.dylib!' python_binding/CMakeFiles/pycrcc.dir/link.txt
     make -j ${JOBS}
@@ -243,7 +199,22 @@ function build_dc_with_docs() {
     fi
     epython -m pip install -r ../requirements.txt
     #sed -i "s#../../commonroad-io/#${COMMONROAD}/#g" ../doc/conf.py
-    cmake $PREFIX_STRING -DADD_PYTHON_BINDINGS=TRUE -DPATH_TO_PYTHON_ENVIRONMENT="${ENVIRONMENT}" -DPYTHON_VERSION="${VERSION}" -DCMAKE_BUILD_TYPE=Release -DBUILD_DOC=TRUE ..
+
+    if [ "${S11N}" == "TRUE" ]; then
+      cmake "$PREFIX_STRING" \
+        -DADD_PYTHON_BINDINGS:BOOL=TRUE \
+        -DCMAKE_BUILD_TYPE:BOOL=Release \
+        -DBUILD_DOC:BOOL=TRUE \
+        -DBUILD_S11N:BOOL=TRUE \
+        ..
+    else
+      cmake "$PREFIX_STRING" \
+        -DADD_PYTHON_BINDINGS:BOOL=TRUE \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_DOC:BOOL=TRUE \
+        -DBUILD_S11N:BOOL=FALSE \
+        ..
+    fi
     osx_command sed -i '' 's!-lccd!/usr/local/lib/libccd.2.0.dylib!' python_binding/CMakeFiles/pycrcc.dir/link.txt
     make -j ${JOBS}
     print_progress "Done!" -n
@@ -364,13 +335,6 @@ fetch_submodules
 if [ "${NO_ROOT}" == "FALSE" ]; then
 	linux_command require_sudo apt-get -y install build-essential cmake git wget unzip libboost-dev libboost-thread-dev
 	linux_command require_sudo apt-get -y install libboost-test-dev libboost-filesystem-dev libeigen3-dev libomp-dev
-else
-  PREFIX_STRING="-DCMAKE_PREFIX_PATH=$HOME -DCMAKE_INSTALL_PREFIX=$HOME"
-fi
-build_libccd
-build_fcl
-if [ "${S11N}" == "TRUE" ]; then
-  build_s11n
 fi
 if [ "${NO_ROOT}" == "FALSE" ]; then
 	if [ "${CGAL}" == "TRUE" ]; then
