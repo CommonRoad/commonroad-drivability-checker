@@ -43,7 +43,9 @@ if(BUILD_FCL)
   )
 endif()
 
+set(DEPEND_S11N "")
 if(BUILD_S11N)
+set(DEPEND_S11N s11n)
   ExternalProject_Add(s11n
       SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/third_party/libs11n"
       CMAKE_ARGS
@@ -79,5 +81,5 @@ ExternalProject_Add(commonroad_dc
       -DADD_MODULE_COLLISION:BOOL=${ADD_MODULE_COLLISION}
       -DADD_MODULE_GEOMETRY:BOOL=${ADD_MODULE_GEOMETRY}
       -DADD_PYTHON_BINDINGS:BOOL=${ADD_PYTHON_BINDINGS}
-    DEPENDS box2d s11n fcl
+    DEPENDS box2d ${DEPEND_S11N} fcl
 )
