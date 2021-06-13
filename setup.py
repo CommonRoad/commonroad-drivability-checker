@@ -45,21 +45,21 @@ class CMakeBuild(build_ext):
         if not extdir.endswith(os.path.sep):
             extdir += os.path.sep
 
-        cmake_args = ["-DADD_PYTHON_BINDINGS=TRUE",
-                      "-DADD_TESTS=OFF",
-                      "-DBUILD_DOC=OFF"]
+        cmake_args = [
+            "-DADD_PYTHON_BINDINGS=TRUE",
+            "-DADD_TESTS=OFF",
+            "-DBUILD_DOC=OFF"
+          ]
 
         cfg = 'Debug' if self.debug else 'Release'
         build_args = ['--config', cfg]
 
         if platform.system() == "Windows":
-            cmake_args += ['-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{}={}'.format(cfg.upper(), extdir)]
             if sys.maxsize > 2**32:
                 cmake_args += ['-A', 'x64']
             build_args += ['--', '/m']
         else:
             cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
-            build_args += ['--', '-j4']
 
 
 

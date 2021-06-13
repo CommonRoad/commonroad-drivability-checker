@@ -12,25 +12,18 @@ BASEDIR=$(pwd)
 INSTALL="FALSE"
 WHEEL="FALSE"
 CGAL="FALSE"
-S11N="FALSE"
 NO_ROOT="FALSE"
-PREFIX_STRING=""
 JOBS=1
-DOCS="FALSE"
 COMMONROAD=""
-PYTHONFILE=""
 
 function usage() {
     echo "$(basename "$0") [options] -- builds the drivability checker."
     echo "Options:"
     echo "    -h | --help                     show this help ext"
-    echo "    -e PATH | --environment PATH    absolute path to the python environment"
-    echo "    -v VERSION | --version VERSION  python version"
     echo "    -i | --install                  python install after compiling"
     echo "    -w | --wheel                    create wheel package"
     echo "    --cgal                          install the third-party package cgal"
-    echo "    --serializer                    install the third-party package s11n for pickle support"
-    echo "    -j COUNT                        allowed job count for make -j ${JOBS}"
+    echo '    -j COUNT                        allowed job count for make -j ${JOBS}'
     echo "    -d | --docs                     creates the documentation while compiling"
     echo "    -c PATH | --commonroad PATH     absolute path to the commonroad-io library"
     echo "    --no-root                       install libraries to the user home directory"
@@ -56,32 +49,13 @@ function print_error() {
   print "${RED}${1}${NC}" "${2}"
 }
 
-function check_mandatory_args() {
-  if [ "${ENVIRONMENT}" == "" ] || [ "${VERSION}" == "" ]; then
-    print_error "The python environment and version must be defined!"
-    print_info "${USAGE}"
-    exit 1
-  fi
-}
-
-function check_doc_args() {
-  if [ "${DOCS}" == "TRUE" ] && [ "${COMMONROAD}" == "" ]; then
-    print_error "The absolute path to commonroad-io must be defined!"
-    print_info "${USAGE}"
-    exit 1
-  fi
-}
-
 function print_args() {
   print_info "" -n
-  print_info "ENVIRONMENT PATH      = ${ENVIRONMENT}"
-  print_info "PYTHON VERSION        = ${VERSION}"
   print_info "INSTALL AFTER COMPILE = ${INSTALL}"
   print_info "CREATE WHEEL PACKAGE  = ${WHEEL}"
   print_info "INSTALL CGAL          = ${CGAL}"
   print_info "NO ROOT               = ${NO_ROOT}"
   print_info "ALLOWED JOBS          = ${JOBS}"
-  print_info "DOCS                  = ${DOCS}"
   print_info "COMMONROAD PATH       = ${COMMONROAD}" -n
 }
 
@@ -118,20 +92,8 @@ function require_sudo() {
   fi
 }
 
-function epython() {
-  python "${@}"
-}
-
 function back_to_basedir() {
   cd "${BASEDIR}"
-}
-
-function create_build_dir() {
-  if [ "${1}" == "-r" ]; then
-    rm -rf build
-  fi
-  mkdir build
-  cd build
 }
 
 function fetch_submodules() {
@@ -159,73 +121,18 @@ function build_dc() {
   (
     set -e
     print_progress "Building drivability checker..." -n
-    create_build_dir -r
-    #epython -m pip install -r ../requirements.txt
-    if [ "${S11N}" == "TRUE" ]; then
-      cmake "$PREFIX_STRING" \
-        -DADD_PYTHON_BINDINGS:BOOL=TRUE \
-        -DCMAKE_BUILD_TYPE:BOOL=Release \
-        -DBUILD_DOC:BOOL=FALSE \
-        -DBUILD_S11N:BOOL=TRUE \
-        ..
-    else
-      cmake "$PREFIX_STRING" \
-        -DADD_PYTHON_BINDINGS:BOOL=TRUE \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_DOC:BOOL=FALSE \
-        -DBUILD_S11N:BOOL=FALSE \
-        ..
-    fi
-    print_progress "Done!" -n
-    osx_command sed -i '' 's!-lccd!/usr/local/lib/libccd.2.0.dylib!' python_binding/CMakeFiles/pycrcc.dir/link.txt
-    make -j ${JOBS}
+    CMAKE_BUILD_PARALLEL_LEVEL="$JOBS" python setup.py build
     print_progress "Done!" -n
     back_to_basedir
   )
 }
 
-function build_dc_with_docs() {
-  (
-    set -e
-    print_progress "Building drivability checker..." -n
-    create_build_dir -r
-    mkdir -p doc/doxygen/html
-    mkdir -p doc/doxygen/xml
-    osx_command brew install doxygen pandoc graphviz
-    osx_command brew link doxygen pandoc graphviz
-    if [ "${NO_ROOT}" == "FALSE" ]; then
-      linux_command require_sudo apt-get -y install doxygen python3-sphinx pandoc graphviz
-    fi
-    epython -m pip install -r ../requirements.txt
-    #sed -i "s#../../commonroad-io/#${COMMONROAD}/#g" ../doc/conf.py
-
-    if [ "${S11N}" == "TRUE" ]; then
-      cmake "$PREFIX_STRING" \
-        -DADD_PYTHON_BINDINGS:BOOL=TRUE \
-        -DCMAKE_BUILD_TYPE:BOOL=Release \
-        -DBUILD_DOC:BOOL=TRUE \
-        -DBUILD_S11N:BOOL=TRUE \
-        ..
-    else
-      cmake "$PREFIX_STRING" \
-        -DADD_PYTHON_BINDINGS:BOOL=TRUE \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_DOC:BOOL=TRUE \
-        -DBUILD_S11N:BOOL=FALSE \
-        ..
-    fi
-    osx_command sed -i '' 's!-lccd!/usr/local/lib/libccd.2.0.dylib!' python_binding/CMakeFiles/pycrcc.dir/link.txt
-    make -j ${JOBS}
-    print_progress "Done!" -n
-    back_to_basedir
-  )
-}
 
 function install_dc() {
   (
     set -e
     print_progress "Installing as python package..." -n
-    epython setup.py install
+    python setup.py install
     print_progress "Done!" -n
   )
 }
@@ -234,7 +141,7 @@ function install_dc_wheel() {
   (
     set -e
     print_progress "Installing as python package..." -n
-    epython -m pip install dist/commonroad_drivability_checker-*.whl
+    python -m pip install dist/commonroad_drivability_checker-*.whl
     print_progress "Done!" -n
   )
 }
@@ -243,8 +150,8 @@ function wheel_dc() {
   (
     set -e
     print_progress "Creating wheel package..." -n
-    epython -m pip install wheel
-    epython setup.py bdist_wheel
+    python -m pip install wheel
+    python setup.py bdist_wheel
     print_progress "Done!" -n
   )
 }
@@ -256,19 +163,6 @@ while [[ $# -gt 0 ]]; do
   -h | --help)
     echo -e "${USAGE}"
     exit 1
-    ;;
-
-  -e | --env)
-    ENVIRONMENT="$2"
-    ENVIRONMENT=${ENVIRONMENT%/}
-    shift # past argument
-    shift # past value
-    ;;
-
-  -v | --version)
-    VERSION="$2"
-    shift # past argument
-    shift # past value
     ;;
 
   -i | --install)
@@ -286,11 +180,6 @@ while [[ $# -gt 0 ]]; do
     shift # past argument
     ;;
 
-  --serializer)
-    S11N="TRUE"
-    shift # past argument
-    ;;
-
   --no-root)
     NO_ROOT="TRUE"
     shift # past argument
@@ -300,11 +189,6 @@ while [[ $# -gt 0 ]]; do
     JOBS="$2"
     shift # past argument
     shift # past value
-    ;;
-
-  -d | --docs)
-    DOCS="TRUE"
-    shift # past argument
     ;;
 
   -c | --commonroad)
@@ -323,13 +207,10 @@ done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 # Check args
-check_mandatory_args
-#check_doc_args
-set_pythonfile
 print_args
 
 # Start building
-remove_folder build dist ./*.egg-info ./*.so ./*.a
+remove_folder build dist ./*.egg-info
 fetch_submodules
 if [ "${NO_ROOT}" == "FALSE" ]; then
 	linux_command require_sudo apt-get -y install build-essential cmake git wget unzip libboost-dev libboost-thread-dev
@@ -340,11 +221,7 @@ if [ "${NO_ROOT}" == "FALSE" ]; then
 	  install_cgal
 	fi
 fi
-if [ "${DOCS}" == "TRUE" ]; then
-  build_dc_with_docs
-else
-  build_dc
-fi
+build_dc
 if [ "${WHEEL}" == "TRUE" ]; then
   wheel_dc
 fi
