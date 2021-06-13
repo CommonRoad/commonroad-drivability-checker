@@ -72,7 +72,7 @@ if(ADD_MODULE_COLLISION)
 
 # Object library for triangle sources
 
-add_library(triangle OBJECT
+add_library(triangle STATIC
     "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c/triangle.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c/triangle.h")
 
@@ -158,9 +158,6 @@ tests/collision/online_tests/test_common.cc
 )
 
 
-
-
-# $<TARGET_OBJECTS:triangle>
 add_library(crcc_obj OBJECT ${COLLISION_SRC})
 
 target_compile_features(crcc_obj
@@ -168,6 +165,7 @@ target_compile_features(crcc_obj
     PRIVATE cxx_lambdas cxx_auto_type)
 
 set_property(TARGET crcc_obj PROPERTY POSITION_INDEPENDENT_CODE ON)
+
 
 target_include_directories(crcc_obj
     PUBLIC
