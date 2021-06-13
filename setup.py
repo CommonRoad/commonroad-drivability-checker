@@ -10,11 +10,6 @@ from setuptools.command.build_ext import build_ext
 
 from distutils.version import LooseVersion
 
-class BinaryDistribution(dist.Distribution):
-    """ Make sure the setup.py will be a binary distribution. """
-
-    def has_ext_modules(foo):
-        return True
 
 class CMakeExtension(Extension):
     def __init__(self, name, sourcedir=''):
