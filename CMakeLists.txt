@@ -16,7 +16,9 @@ option(ADD_PYTHON_BINDINGS "add Python bindings" ON)
 
 include(ExternalProject)
 
+set(DEPEND_LIBCCD "")
 if(BUILD_LIBCCD)
+  set(DEPEND_LIBCCD libccd)
   ExternalProject_Add(libccd
       SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/third_party/libccd"
       CMAKE_ARGS
@@ -30,7 +32,9 @@ if(BUILD_LIBCCD)
   )
 endif()
 
+set(DEPEND_FCL "")
 if(BUILD_FCL)
+  set(DEPEND_FCL fcl)
   ExternalProject_Add(fcl
       SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/third_party/fcl"
       CMAKE_ARGS
@@ -39,13 +43,13 @@ if(BUILD_FCL)
         -DBUILD_TESTING:BOOL=OFF
         -DFCL_STATIC_LIBRARY:BOOL=ON
         -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
-      DEPENDS libccd
+      DEPENDS ${DEPEND_LIBCCD}
   )
 endif()
 
 set(DEPEND_S11N "")
 if(BUILD_S11N)
-set(DEPEND_S11N s11n)
+  set(DEPEND_S11N s11n)
   ExternalProject_Add(s11n
       SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/third_party/libs11n"
       CMAKE_ARGS
@@ -56,7 +60,9 @@ set(DEPEND_S11N s11n)
   )
 endif()
 
+set(DEPEND_BOX2D "")
 if(BUILD_BOX2D)
+  set(DEPEND_BOX2D box2d)
   ExternalProject_Add(box2d
       SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/third_party/box2d"
       CMAKE_ARGS
@@ -81,5 +87,5 @@ ExternalProject_Add(commonroad_dc
       -DADD_MODULE_COLLISION:BOOL=${ADD_MODULE_COLLISION}
       -DADD_MODULE_GEOMETRY:BOOL=${ADD_MODULE_GEOMETRY}
       -DADD_PYTHON_BINDINGS:BOOL=${ADD_PYTHON_BINDINGS}
-    DEPENDS box2d ${DEPEND_S11N} fcl
+    DEPENDS ${DEPEND_BOX2D} ${DEPEND_S11N} ${DEPEND_FCL}
 )
