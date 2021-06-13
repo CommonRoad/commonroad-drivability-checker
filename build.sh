@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -u
-
 # Constants
 #set -e
 RED='\033[0;31m'
