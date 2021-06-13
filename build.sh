@@ -119,7 +119,7 @@ function require_sudo() {
 }
 
 function epython() {
-  ${PYTHONFILE} "${@}"
+  python "${@}"
 }
 
 function back_to_basedir() {
