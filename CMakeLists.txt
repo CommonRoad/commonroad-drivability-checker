@@ -1,5 +1,5 @@
 project(DrivabilityChecker)
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.12)
 
 # Flags for enabling superbuild
 option(BUILD_LIBCCD "build vendored libccd" ON)
