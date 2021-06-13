@@ -19,21 +19,22 @@ JOBS=1
 DOCS="FALSE"
 COMMONROAD=""
 PYTHONFILE=""
-USAGE="
-$(basename "$0") [options] -- builds the drivability checker.
-Options:
-    -h | --help   show this help ext
-    -e PATH | --environment PATH   absolute path to the python environment
-    -v VERSION | --version VERSION    python version
-    -i | --install    python install after compiling
-    -w | --wheel    create wheel package
-    --cgal    install the third-party package cgal
-    --serializer    install the third-party package s11n for pickle support
-    -j COUNT    allowed job count for make -j ${JOBS}
-    -d | --docs   creates the documentation while compiling
-    -c PATH | --commonroad PATH  absolute path to the commonroad-io library
-    --no-root   install libraries to the user home directory
-"
+
+function usage() {
+    echo "$(basename "$0") [options] -- builds the drivability checker."
+    echo "Options:"
+    echo "    -h | --help                     show this help ext"
+    echo "    -e PATH | --environment PATH    absolute path to the python environment"
+    echo "    -v VERSION | --version VERSION  python version"
+    echo "    -i | --install                  python install after compiling"
+    echo "    -w | --wheel                    create wheel package"
+    echo "    --cgal                          install the third-party package cgal"
+    echo "    --serializer                    install the third-party package s11n for pickle support"
+    echo "    -j COUNT                        allowed job count for make -j ${JOBS}"
+    echo "    -d | --docs                     creates the documentation while compiling"
+    echo "    -c PATH | --commonroad PATH     absolute path to the commonroad-io library"
+    echo "    --no-root                       install libraries to the user home directory"
+}
 
 # Functions
 function print() {
