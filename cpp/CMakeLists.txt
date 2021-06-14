@@ -159,6 +159,6 @@ endif()
 if(ADD_MODULE_GEOMETRY)
   install(
       DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/geometry/include/
-      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/geometry
+      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     )
 endif()
