@@ -93,8 +93,6 @@ After installing all essential third party libraries and packages, you can now i
    The Drivability Checker uses a superbuild system for first building
    the bundled third-party dependencies and then building the Drivability
    Checker itself.
-   As part of the build process, the dependencies will be installed to the
-   install prefix you specify.
 
    By default, CMake chooses ``/usr/local`` as
    the install prefix on Linux, a directory which normal users can't write
