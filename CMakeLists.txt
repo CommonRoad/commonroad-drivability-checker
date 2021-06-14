@@ -111,6 +111,12 @@ ExternalProject_Add(commonroad_dc
     BUILD_ALWAYS TRUE
 )
 
+# Note: commonroad_dc and its dependencies will be installed to the SUPERBUILD_INSTALL_DIR
+# during the build. This directory is only intended for internal usage.
+#
+# After the internal build completes, the whole internal install tree is installed
+# using the usual CMake install command below (honoring CMAKE_INSTALL_PREFIX etc.).
+
 install(
   DIRECTORY ${SUPERBUILD_INSTALL_DIR}/
   DESTINATION "."

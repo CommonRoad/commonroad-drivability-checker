@@ -170,15 +170,22 @@ After installing all essential third party libraries and packages, you can now i
 
             $ conda activate commonroad-py36
 
-#. Compile the CommonRoad Drivability Checker library by running
+#. Compile and Install the CommonRoad Drivability Checker library by running
 
         .. code-block:: bash
 
-            $ python setup.py build
+            $ pip install .
 
-#. Install the CommonRoad Drivability Checker with
+   **Note:** pip will automatically build all C++ dependencies of the CommonRoad
+   Drivability Checker. This can take several minutes during which pip won't output
+   any progress messages by default.
+   You can follow along the build process by adding ``-v`` to the pip invocation,
+   for example:
 
-    .. code-block:: bash
+        .. code-block:: bash
 
-            $ cd ..
-            $ python setup.py install
+            $ pip install -v .
+
+  Canceling the build and then restarting it should generally be safe,
+  however make sure that the Python environment you activated stays the same.
+  In case of any errors, try deleting the ```build`` folder and running pip again.
