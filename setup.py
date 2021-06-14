@@ -72,6 +72,7 @@ class CMakeBuild(build_ext):
 
         subprocess.check_call(['cmake', ext.sourcedir] + cmake_args, cwd=build_dir)
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=build_dir)
+        subprocess.check_call(['cmake', '--install', '.'] + build_args, cwd=build_dir)
 
         for file in os.listdir(lib_python_dir):
             self.copy_file(os.path.join(lib_python_dir, file), extension_install_dir)
