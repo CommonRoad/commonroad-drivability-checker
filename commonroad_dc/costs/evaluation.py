@@ -13,85 +13,103 @@ import commonroad_dc.costs.partial_cost_functions as cost_functions
 
 
 class PartialCostFunction(Enum):
-    A = "A"  """Acceleration"""
-    J = "J"  """Jerk"""
-    Jlat = "Jlat"  """Lateral Jerk"""
-    Jlon = "Jlon"  """Longitudinal Jerk"""
-    SA = "SA"  """Steering Angle"""
-    SR = "SR"  """Steering Rate"""
-    Y = "Y"  """Yaw Rate"""
-    LC = "LC"  """Lane Center Offset"""
-    V = "V"  """Velocity Offset"""
-    Vlon = "Vlon"  """Longitudinal Velocity Offset"""
-    O = "O"  """Orientation Offset"""
-    D = "D"  """Distance to Obstacles"""
-    L = "L"  """Path Length"""
-    T = "T"  """Time"""
-    ID = "ID"  """Inverse Duration"""
+    """
+    A: Acceleration
+    J: Jerk
+    Jlat: Lateral Jerk
+    Jlon: Longitudinal Jerk
+    SA: Steering Angle
+    SR: Steering Rate
+    Y: Yaw Rate
+    LC: Lane Center Offset
+    V: Velocity Offset
+    Vlon: Longitudinal Velocity Offset
+    O: Orientation Offset
+    D: Distance to Obstacles
+    L: Path Length
+    T: Time
+    ID: Inverse Duration
+    """
+    A = "A"
+    J = "J"
+    Jlat = "Jlat"
+    Jlon = "Jlon"
+    SA = "SA"
+    SR = "SR"
+    Y = "Y"
+    LC = "LC"
+    V = "V"
+    Vlon = "Vlon"
+    O = "O"
+    D = "D"
+    L = "L"
+    T = "T"
+    ID = "ID"
 
 
-class PartialCostFunctionMapping(Enum):
-    A = cost_functions.acceleration_cost
-    J = cost_functions.jerk_cost
-    Jlat = cost_functions.jerk_lat_cost
-    Jlon = cost_functions.jerk_lon_cost
-    SA = cost_functions.steering_angle_cost
-    SR = cost_functions.steering_rate_cost
-    Y = cost_functions.yaw_cost
-    LC = cost_functions.lane_center_offset_cost
-    V = cost_functions.velocity_offset_cost
-    Vlon = cost_functions.longitudinal_velocity_offset_cost
-    O = cost_functions.orientation_offset_cost
-    D = cost_functions.distance_to_obstacle_cost
-    L = cost_functions.lane_center_offset_cost
-    T = cost_functions.time_cost
-    ID = cost_functions.inverse_duration_cost
+PartialCostFunctionMapping = {
+    PartialCostFunction.A:  cost_functions.acceleration_cost,
+    PartialCostFunction.J:  cost_functions.jerk_cost,
+    PartialCostFunction.Jlat:  cost_functions.jerk_lat_cost,
+    PartialCostFunction.Jlon:  cost_functions.jerk_lon_cost,
+    PartialCostFunction.SA:  cost_functions.steering_angle_cost,
+    PartialCostFunction.SR:  cost_functions.steering_rate_cost,
+    PartialCostFunction.Y:  cost_functions.yaw_cost,
+    PartialCostFunction.LC:  cost_functions.lane_center_offset_cost,
+    PartialCostFunction.V:  cost_functions.velocity_offset_cost,
+    PartialCostFunction.Vlon:  cost_functions.longitudinal_velocity_offset_cost,
+    PartialCostFunction.O:  cost_functions.orientation_offset_cost,
+    PartialCostFunction.D:  cost_functions.distance_to_obstacle_cost,
+    PartialCostFunction.L:  cost_functions.lane_center_offset_cost,
+    PartialCostFunction.T:  cost_functions.time_cost,
+    PartialCostFunction.ID:  cost_functions.inverse_duration_cost,
+}
 
 
 class CostFunctionMapping(Enum):
     JB1 = [
-        (PartialCostFunction.T, PartialCostFunctionMapping.T, 1.0)
+        (PartialCostFunction.T, 1.0)
     ]
     MW1 = [
-        (PartialCostFunction.Jlat, PartialCostFunctionMapping.Jlat, 5.0),
-        (PartialCostFunction.Jlon, PartialCostFunctionMapping.Jlon, 0.5),
-        (PartialCostFunction.Vlon, PartialCostFunctionMapping.Vlon, 0.2),
-        (PartialCostFunction.ID, PartialCostFunctionMapping.ID, 1.0)
+        (PartialCostFunction.Jlat, 5.0),
+        (PartialCostFunction.Jlon, 0.5),
+        (PartialCostFunction.Vlon, 0.2),
+        (PartialCostFunction.ID, 1.0)
     ]
     SA1 = [
-        (PartialCostFunction.SA, PartialCostFunctionMapping.SA, 0.1),
-        (PartialCostFunction.SR, PartialCostFunctionMapping.SR, 0.1),
-        (PartialCostFunction.D, PartialCostFunctionMapping.D, 100000.0),
+        (PartialCostFunction.SA, 0.1),
+        (PartialCostFunction.SR, 0.1),
+        (PartialCostFunction.D, 100000.0),
     ]
     SM1 = [
-        (PartialCostFunction.A, PartialCostFunctionMapping.A, 50.0),
-        (PartialCostFunction.SA, PartialCostFunctionMapping.SA, 50.0),
-        (PartialCostFunction.SR, PartialCostFunctionMapping.SR, 50.0),
-        (PartialCostFunction.L, PartialCostFunctionMapping.L, 1.0),
-        (PartialCostFunction.V, PartialCostFunctionMapping.V, 20.0),
-        (PartialCostFunction.O, PartialCostFunctionMapping.O, 50.0),
+        (PartialCostFunction.A, 50.0),
+        (PartialCostFunction.SA, 50.0),
+        (PartialCostFunction.SR, 50.0),
+        (PartialCostFunction.L, 1.0),
+        (PartialCostFunction.V, 20.0),
+        (PartialCostFunction.O, 50.0),
     ]
     SM2 = [
-        (PartialCostFunction.A, PartialCostFunctionMapping.A, 50.0),
-        (PartialCostFunction.SA, PartialCostFunctionMapping.SA, 50.0),
-        (PartialCostFunction.SR, PartialCostFunctionMapping.SR, 50.0),
-        (PartialCostFunction.L, PartialCostFunctionMapping.L, 1.0),
-        (PartialCostFunction.O, PartialCostFunctionMapping.O, 50.0),
+        (PartialCostFunction.A, 50.0),
+        (PartialCostFunction.SA, 50.0),
+        (PartialCostFunction.SR, 50.0),
+        (PartialCostFunction.L, 1.0),
+        (PartialCostFunction.O, 50.0),
     ]
     SM3 = [
-        (PartialCostFunction.A, PartialCostFunctionMapping.A, 50.0),
-        (PartialCostFunction.SA, PartialCostFunctionMapping.SA, 50.0),
-        (PartialCostFunction.SR, PartialCostFunctionMapping.SR, 50.0),
-        (PartialCostFunction.V, PartialCostFunctionMapping.V, 20.0),
-        (PartialCostFunction.O, PartialCostFunctionMapping.O, 50.0),
+        (PartialCostFunction.A, 50.0),
+        (PartialCostFunction.SA, 50.0),
+        (PartialCostFunction.SR, 50.0),
+        (PartialCostFunction.V, 20.0),
+        (PartialCostFunction.O, 50.0),
     ]
     WX1 = [
-        (PartialCostFunction.T, PartialCostFunctionMapping.T, 10.0),
-        (PartialCostFunction.V, PartialCostFunctionMapping.V, 1.0),
-        (PartialCostFunction.A, PartialCostFunctionMapping.A, 0.1),
-        (PartialCostFunction.J, PartialCostFunctionMapping.J, 0.1),
-        (PartialCostFunction.D, PartialCostFunctionMapping.D, 0.1),
-        (PartialCostFunction.L, PartialCostFunctionMapping.L, 10.0),
+        (PartialCostFunction.T, 10.0),
+        (PartialCostFunction.V, 1.0),
+        (PartialCostFunction.A, 0.1),
+        (PartialCostFunction.J, 0.1),
+        (PartialCostFunction.D, 0.1),
+        (PartialCostFunction.L, 10.0),
     ]
 
 
@@ -127,7 +145,7 @@ class CostFunctionEvaluator:
 
     @property
     def required_properties(self):
-        return list(itertools.chain.from_iterable(required_properties[p[0]] for p in self.partial_cost_funcs.value))
+        return list(itertools.chain.from_iterable(required_properties[p] for p, _ in self.partial_cost_funcs.value))
 
     def evaluate_pp_solution(
             self,
@@ -143,7 +161,8 @@ class CostFunctionEvaluator:
         trajectory, _, properties = lm.compute_curvilinear_coordinates(trajectory,
                                                                        required_properties=self.required_properties,
                                                                        draw_lanelet_path=draw_lanelet_path)
-        for pcf, pcf_func, weight in self.partial_cost_funcs.value:
+        for pcf, weight in self.partial_cost_funcs.value:
+            pcf_func = PartialCostFunctionMapping[pcf]
             evaluation_result.add_partial_costs(pcf, pcf_func(cr_scenario, cr_pproblem, trajectory, properties),
                                                 weight)
 

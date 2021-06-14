@@ -1,6 +1,6 @@
 import math
 from collections import defaultdict
-from copy import deepcopy
+from copy import deepcopy, copy
 from enum import Enum
 from typing import Dict, Tuple, Union, Any
 
@@ -18,7 +18,7 @@ from commonroad_dc.collision.visualization.draw_dispatch import draw_object
 from commonroad_dc.feasibility.vehicle_dynamics import VehicleParameterMapping
 from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline
 # from commonroad_dc.lanelet_ccosy.lanelet_ccosy import LaneletCoordinateSystem
-from commonroad_dc.lanelet_ccosy.lanelet_ccosy import LaneletCoordinateSystem
+from commonroad_dc.geometry.lanelet_ccosy import LaneletCoordinateSystem
 from commonroad_dc.pycrcc import CollisionObject, CollisionChecker, Point, Circle
 
 from typing import List, Set, Dict, Tuple
@@ -87,7 +87,7 @@ def create_cosy_from_lanelet(lanelet):
     # try:
     # plt.figure()
     v0=lanelet.center_vertices
-    v = smoothen_polyline(extrapolate_polyline(v0), resampling_distance=1.5, n_lengthen=0)
+    v = smoothen_polyline(extrapolate_polyline(v0), resampling_distance=1.0, n_lengthen=0)
 
     # print(v)
     # v = np.abs(lanelet.center_vertices)
@@ -109,7 +109,6 @@ def create_cosy_from_lanelet(lanelet):
     plt.fill(dom[:,0], dom[:,1], fill=False)
     domc = np.array(tt.curvilinear_projection_domain())
     for ii, d in enumerate(dom):
-        print(ii)
         try:
             tt.convert_to_curvilinear_coords(d[0], d[1])
             plt.scatter(d[0], d[1], marker='x', c='r')
@@ -120,7 +119,6 @@ def create_cosy_from_lanelet(lanelet):
     poly = poly.buffer(-.5)
     plt.plot(np.array(poly.exterior.coords)[:,0], np.array(poly.exterior.coords)[:,1])
     for ii, d in enumerate(np.array(poly.exterior.coords)):
-        print(ii)
         try:
             tt.convert_to_curvilinear_coords(d[0], d[1])
             plt.scatter(d[0], d[1], marker='x', c='r')
@@ -148,7 +146,7 @@ def get_orientation_at_position(cosy, position):
         s, d = cosy.convert_to_curvilinear_coords(position[0], position[1])
         tangent = cosy.tangent(s)
     except ValueError as e:
-        print(str(e))
+        # print(str(e))
         return None
 
     return np.arctan2(tangent[1], tangent[0])
@@ -241,7 +239,7 @@ class LaneletRouteMatcher:
 
         # compute tangential vectors of trajectory
         errors = {}
-        print(successor_candidates)
+        # print(successor_candidates)
         for i, lanelets in enumerate(successor_candidates):
             errors_tmp = []
 
@@ -260,8 +258,6 @@ class LaneletRouteMatcher:
             if len(errors_tmp) > 0:
                 errors[i] = np.square(errors_tmp).mean(axis=0)
 
-        # get list of lanelet ids sorted by their error (ascending)
-        print('BESTIN',errors)
 
         best_index = sorted(errors.keys(), key=errors.get)[0]
         return successor_candidates[best_index]
@@ -348,11 +344,21 @@ class LaneletRouteMatcher:
                             candidate_paths_next.append(c_path)
                         else:
                             lanelet_tmp = self.lanelet_network.find_lanelet_by_id(c_path[-1])
-                            for s in lanelet_tmp.successor:
-                                if self.get_lanelet_cosy(s). \
-                                        cartesian_point_inside_projection_domain(trajectory.state_list[i].position[0],
-                                                                                 trajectory.state_list[i].position[1]):
-                                    candidate_paths_next.append(c_path + [s])
+                            if i > 0:
+                                dist = 10
+                            else:
+                                dist = 10 + np.linalg.norm([trajectory.state_list[i].position,
+                                                            trajectory.state_list[i-1].position],
+                                                           ord=np.inf)
+
+                            successors = lanelet_tmp.find_lanelet_successors_in_range(self.lanelet_network, dist)
+
+                            for path in successors:
+                                for i_l, l_id_tmp in enumerate(path):
+                                    if self.get_lanelet_cosy(l_id_tmp). \
+                                            cartesian_point_inside_projection_domain(trajectory.state_list[i].position[0],
+                                                                                     trajectory.state_list[i].position[1]):
+                                        candidate_paths_next.append(c_path + path[:i_l+1])
 
                     if len(candidate_paths_next) == 0:
                         # still no candidate -> add by best alignement
@@ -424,7 +430,7 @@ class LaneletRouteMatcher:
         return l_seq, properties
 
     def compute_curvilinear_coordinates(self, trajectory: Trajectory, required_properties: List[SolutionProperties],
-                                        draw_lanelet_path=False) \
+                                        draw_lanelet_path=False, debug_plot=False) \
             -> Tuple[Trajectory, List[int], Dict[SolutionProperties, Dict[int, Any]]]:
 
         lanelets, properties = self.find_lanelets_by_trajectory(trajectory, required_properties)
@@ -496,32 +502,31 @@ class LaneletRouteMatcher:
                 s, d = cosys[i_c].convert_to_curvilinear_coords(state.position[0], state.position[1])
 
             except ValueError:
-                # plt.close('all')
-                # plt.figure()
+                if debug_plot is True:
 
-                rnd = MPRenderer()
-                self.lanelet_network.draw(rnd, draw_params={'lanelet': {'show_label':True}})
-                l_tmp = LaneletNetwork.create_from_lanelet_list([self.lanelet_network._lanelets[l] for l in lanelets])
-                l_tmp.draw(draw_params={'lanelet': {'facecolor': 'red', 'show_label':True}, "traffic_sign": {
-                    "draw_traffic_signs": False}, "traffic_light": {
-                    "draw_traffic_lights": False}}, renderer=rnd)
-                trajectory.draw(draw_params={'time_begin': 0, 'time_end': trajectory.final_state.time_step + 1},
-                                renderer=rnd)
-                rnd.render(show=False)
+                    rnd = MPRenderer()
+                    self.lanelet_network.draw(rnd, draw_params={'lanelet': {'show_label':True}})
+                    l_tmp = LaneletNetwork.create_from_lanelet_list([self.lanelet_network._lanelets[l] for l in lanelets])
+                    l_tmp.draw(draw_params={'lanelet': {'facecolor': 'red', 'show_label':True}, "traffic_sign": {
+                        "draw_traffic_signs": False}, "traffic_light": {
+                        "draw_traffic_lights": False}}, renderer=rnd)
+                    trajectory.draw(draw_params={'time_begin': 0, 'time_end': trajectory.final_state.time_step + 1},
+                                    renderer=rnd)
+                    rnd.render(show=False)
 
-                dom = np.array(cosys[i_c].projection_domain())
-                plt.fill(dom[:, 0], dom[:, 1], fill=False)
-                plt.scatter(state.position[0], state.position[1], marker='x', zorder=1000)
+                    dom = np.array(cosys[i_c].projection_domain())
+                    plt.fill(dom[:, 0], dom[:, 1], fill=False, zorder=1000)
+                    plt.scatter(state.position[0], state.position[1], marker='x', zorder=1000)
 
-                for s in trajectory.state_list:
-                    plt.scatter(s.position[0], s.position[1], )
-                    plt.text(s.position[0], s.position[1], s=str(s.time_step), zorder=1e6)
+                    for state in trajectory.state_list:
+                        plt.scatter(state.position[0], state.position[1], )
+                        plt.text(state.position[0], state.position[1], s=str(state.time_step), zorder=1e6)
 
-                plt.axis('equal')
-                plt.title('s2 failed')
-                plt.show(block=True)
+                    plt.axis('equal')
+                    plt.title('s2 failed')
+                    plt.show(block=True)
 
-                plt.pause(0.01)
+                    plt.pause(0.01)
 
             if i_c + 1 < len(cosys):
                 try:
@@ -648,7 +653,7 @@ class LaneletRouteMatcher:
 
             plt.sca(ax1)
             rnd = MPRenderer()
-            self.lanelet_network.draw(rnd, draw_params={'lanelet': {'show_label': False}})
+            self.lanelet_network.draw(rnd, draw_params={'lanelet': {'show_label': True}})
             l_tmp = LaneletNetwork.create_from_lanelet_list([self.lanelet_network._lanelets[l] for l in lanelets])
             l_tmp.draw(draw_params={'lanelet': {'facecolor': 'red'}, "traffic_sign": {
                 "draw_traffic_signs": False}, "traffic_light": {

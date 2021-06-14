@@ -63,7 +63,7 @@ CurvilinearCoordinateSystem::CurvilinearCoordinateSystem(EigenPolyline reference
   this->approximateProjectionDomain(eps);
 
   this->computeBestProjectionAxisForSegments();
-//  this->approximateCurvilinearProjectionDomain();
+  this->approximateCurvilinearProjectionDomain();
 }
 
 EigenPolyline CurvilinearCoordinateSystem::referencePath() const {
