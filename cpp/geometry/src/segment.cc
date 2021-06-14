@@ -1,5 +1,6 @@
-#include "segment.h"
 #include <math.h>
+
+#include "geometry/segment.h"
 
 namespace geometry {
 

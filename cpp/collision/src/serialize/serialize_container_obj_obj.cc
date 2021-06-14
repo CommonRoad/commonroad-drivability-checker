@@ -3,7 +3,7 @@
 
 #if ENABLE_SERIALIZER
 
-#include "tests/collision/online_tests/broadphase_failure.h"
+#include "collision/tests/broadphase_failure.h"
 
 namespace collision {
 namespace serialize {
