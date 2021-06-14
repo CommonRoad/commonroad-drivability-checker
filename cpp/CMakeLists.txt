@@ -60,7 +60,7 @@ include(GNUInstallDirs)
 
 if(ADD_MODULE_COLLISION)
     set(INSTALL_MODULES ${INSTALL_MODULES} crcc)
-    set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrcc)
+    set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrcc crcc)
 
 
     if(ADD_TESTS)
@@ -163,16 +163,16 @@ if(ADD_MODULE_COLLISION)
     )
 
 
-    add_library(crcc_obj OBJECT ${COLLISION_SRC})
+    add_library(crcc SHARED ${COLLISION_SRC})
 
-    target_compile_features(crcc_obj
+    target_compile_features(crcc
         PUBLIC cxx_lambdas cxx_auto_type
         PRIVATE cxx_lambdas cxx_auto_type)
 
-    set_property(TARGET crcc_obj PROPERTY POSITION_INDEPENDENT_CODE ON)
+    set_property(TARGET crcc PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 
-    target_include_directories(crcc_obj
+    target_include_directories(crcc
         PUBLIC
             $<INSTALL_INTERFACE:include>
             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/collision/include>
@@ -182,19 +182,19 @@ if(ADD_MODULE_COLLISION)
         )
 
     if(OpenMP_CXX_FOUND)
-        target_link_libraries(crcc_obj PRIVATE OpenMP::OpenMP_CXX)
+        target_link_libraries(crcc PRIVATE OpenMP::OpenMP_CXX)
     endif()
 
     if(NOT s11n_FOUND)
         message(STATUS "Serialization and pickling support have been disabled for crcc")
-        target_compile_definitions(crcc_obj PRIVATE -DENABLE_SERIALIZER=0)
+        target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=0)
     else()
         message(STATUS "Serialization using s11n enabled for crcc")
-        target_link_libraries(crcc_obj PRIVATE s11n::s11n)
-        target_compile_options(crcc_obj PRIVATE -Wno-deprecated)
+        target_link_libraries(crcc PRIVATE s11n::s11n)
+        target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=1)
     endif()
 
-    target_link_libraries(crcc_obj
+    target_link_libraries(crcc
       PRIVATE
         triangle
       PUBLIC
@@ -202,8 +202,6 @@ if(ADD_MODULE_COLLISION)
         Eigen3::Eigen
         box2d::box2d
         )
-
-    add_library(crcc SHARED $<TARGET_OBJECTS:crcc_obj>)
 
     if(BUILD_DOC)
         add_subdirectory(../doc doc)
@@ -214,7 +212,7 @@ endif(ADD_MODULE_COLLISION)
 
 if(ADD_MODULE_GEOMETRY)
     set(INSTALL_MODULES ${INSTALL_MODULES} crccosy)
-    set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrccosy)
+    set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrccosy crccosy)
 
     set(LIB_CRCCOSY_SRC
             geometry/segment.cc
@@ -224,23 +222,23 @@ if(ADD_MODULE_GEOMETRY)
             geometry/serialize/public/serialize_public.cc
             )
 
-    add_library(crccosy_obj OBJECT ${LIB_CRCCOSY_SRC})
+    add_library(crccosy SHARED ${LIB_CRCCOSY_SRC})
 
-    set_property(TARGET crccosy_obj PROPERTY POSITION_INDEPENDENT_CODE ON)
+    set_property(TARGET crccosy PROPERTY POSITION_INDEPENDENT_CODE ON)
 
     if(OpenMP_CXX_FOUND)
-        target_link_libraries(crccosy_obj PRIVATE OpenMP::OpenMP_CXX)
+        target_link_libraries(crccosy PRIVATE OpenMP::OpenMP_CXX)
     endif()
 
-    target_link_libraries(crccosy_obj
+    target_link_libraries(crccosy
         PUBLIC
             Eigen3::Eigen)
 
-    target_compile_features(crccosy_obj
+    target_compile_features(crccosy
             PUBLIC cxx_lambdas cxx_auto_type
             PRIVATE cxx_lambdas cxx_auto_type)
 
-    target_include_directories(crccosy_obj
+    target_include_directories(crccosy
         PUBLIC
             $<INSTALL_INTERFACE:include>
             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
@@ -250,14 +248,12 @@ if(ADD_MODULE_GEOMETRY)
 
     if(NOT s11n_FOUND)
         message(STATUS "Serialization and pickling support have been disabled for crccosy")
-        target_compile_definitions(crccosy_obj PRIVATE -DENABLE_SERIALIZER=0)
+        target_compile_definitions(crccosy PRIVATE -DENABLE_SERIALIZER=0)
     else()
         message(STATUS "Serialization using s11n enabled for crccosy")
-        target_link_libraries(crccosy_obj PRIVATE s11n::s11n)
-        target_compile_options(crccosy_obj PRIVATE -Wno-deprecated)
+        target_link_libraries(crccosy PRIVATE s11n::s11n)
+        target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=1)
     endif()
-
-    add_library(crccosy SHARED $<TARGET_OBJECTS:crccosy_obj>)
 
 endif(ADD_MODULE_GEOMETRY)
 

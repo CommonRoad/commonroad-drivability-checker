@@ -3,7 +3,9 @@ if(ADD_MODULE_COLLISION)
 
     target_compile_definitions(pycrcc PRIVATE -DPY_WRAPPER_MODULE_COLLISION=1)
 
-    target_link_libraries(pycrcc PRIVATE crcc_obj)
+    target_link_libraries(pycrcc PRIVATE crcc)
+
+    set_property(TARGET pycrcc PROPERTY INSTALL_RPATH "$ORIGIN")
 
     if(NOT s11n_FOUND)
         message(STATUS "Serialization and pickling support have been disabled for the Python library")
@@ -16,7 +18,9 @@ if(ADD_MODULE_GEOMETRY)
 
     target_compile_definitions(pycrccosy PRIVATE -DPY_WRAPPER_MODULE_GEOMETRY=1)
 
-    target_link_libraries(pycrccosy PRIVATE crccosy_obj)
+    target_link_libraries(pycrccosy PRIVATE crccosy)
+
+    set_property(TARGET pycrccosy PROPERTY INSTALL_RPATH "$ORIGIN")
 
     message(STATUS "${PYTHON_INCLUDE_DIR}")
 endif(ADD_MODULE_GEOMETRY)
