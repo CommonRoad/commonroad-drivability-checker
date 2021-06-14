@@ -1,1 +1,4 @@
+include README.md LICENSE CMakeLists.txt
 graft commonroad_dc
+graft cpp
+graft third_party
