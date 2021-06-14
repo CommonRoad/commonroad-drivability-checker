@@ -14,6 +14,15 @@ option(ADD_MODULE_GEOMETRY "add geometry module" ON)
 option(ADD_MODULE_COLLISION "add collision module" ON)
 option(ADD_PYTHON_BINDINGS "add Python bindings" OFF)
 
+if("${CMAKE_BINARY_DIR}" EQUAL "${PROJECT_SOURCE_DIR}/build")
+  message(WARNING
+    "The 'build' directory inside the project root directory is also used by the Python build system!\n"
+    "While the file and directory names used by CMake and setuptools/Python normally don't clash "
+    "you should still consider using a different build directory.\n"
+    "CMAKE_BINARY_DIR is set to ${CMAKE_BINARY_DIR}"
+    )
+endif()
+
 include(ExternalProject)
 
 set(DEPEND_LIBCCD "")
