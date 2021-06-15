@@ -1,5 +1,6 @@
 from typing import List, Tuple, Dict, Any
 
+import matplotlib.pyplot as plt
 import numpy as np
 from commonroad.common.util import Interval
 from commonroad.geometry.shape import ShapeGroup
@@ -323,23 +324,12 @@ def distance_to_obstacle_cost(
 ) -> float:
     """
     Calculates the Distance to Obstacle cost.
-
-    TODO: Correct implementation in the future (priority middle)
-    TODO: Incorrect weight parameter (set to 1 for now)
     """
     try:
         min_dists = []
         for state in trajectory.state_list:
-            obstacle_occupancies = scenario.occupancies_at_time_step(state.time_step)
-            dists = [
-                euclidean_dist(state.position, _get_shape_center(occupancy.shape))
-                for occupancy in obstacle_occupancies
-            ]
-            min_dist = (
-                np.min(dists) if len(dists) > 0 else 100
-            )  # if there are no obstacles define default value
-            min_dists.append(min_dist)
-        neg_min_dists = -1 * np.array(min_dists)
+            min_dists.append(np.min(properties[SolutionProperties.LonDistanceObstacles][state.time_step]))
+        neg_min_dists = -0.1 * np.array(min_dists)
         exp_dists = np.array([np.math.exp(val) for val in neg_min_dists])
         cost = simps(exp_dists, dx=scenario.dt)
         return cost
