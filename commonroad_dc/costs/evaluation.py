@@ -14,6 +14,8 @@ import commonroad_dc.costs.partial_cost_functions as cost_functions
 
 class PartialCostFunction(Enum):
     """
+    See https://gitlab.lrz.de/tum-cps/commonroad-cost-functions/-/blob/master/costFunctions_commonRoad.pdf for more
+    details.
     A: Acceleration
     J: Jerk
     Jlat: Lateral Jerk
@@ -155,20 +157,39 @@ class CostFunctionEvaluator:
         return list(itertools.chain.from_iterable(required_properties[p] for p, _ in self.partial_cost_funcs.value))
 
     def evaluate_pp_solution(self, cr_scenario: Scenario, cr_pproblem: PlanningProblem, trajectory: Trajectory,
-            draw_lanelet_path=False):
+            draw_lanelet_path=False, debug_plot=False):
+        """
+        Computes costs of one solution for cr_pproblem.
+        :param cr_scenario: scenario
+        :param cr_pproblem: planning problem that is solved by trajectory
+        :param trajectory: solution trajectory
+        :param draw_lanelet_path: optionally visualize the detected lanelet path with respect to whose some
+        parameters for the cost computation are determined (only useful for development).
+        :param debug_plot: show plot in case a trajectory cannot be transformed to curvilinear coordinates.
+        :return:
+        """
         evaluation_result = PlanningProblemCostResult(cost_function_id=self.cost_function_id,
                                                       solution_id=cr_pproblem.planning_problem_id)
         lm = LaneletRouteMatcher(cr_scenario, self.vehicle_type)
         trajectory, _, properties = lm.compute_curvilinear_coordinates(trajectory,
                                                                        required_properties=self.required_properties,
-                                                                       draw_lanelet_path=draw_lanelet_path)
+                                                                       draw_lanelet_path=draw_lanelet_path,
+                                                                       debug_plot=debug_plot)
         for pcf, weight in self.partial_cost_funcs.value:
             pcf_func = PartialCostFunctionMapping[pcf]
             evaluation_result.add_partial_costs(pcf, pcf_func(cr_scenario, cr_pproblem, trajectory, properties), weight)
 
         return evaluation_result
 
-    def evaluate_solution(self, scenario: Scenario, cr_pproblems: PlanningProblemSet, solution: Solution):
+    def evaluate_solution(self, scenario: Scenario, cr_pproblems: PlanningProblemSet, solution: Solution)\
+            -> "SolutionResult":
+        """
+        Computes costs for all solutions of a planning problem set.
+        :param scenario: scenario that was solved
+        :param cr_pproblems: planning problem set that was solved
+        :param solution: Solution object that contains trajectories
+        :return: SolutionResult object that contains partial and total costs
+        """
         results = SolutionResult(benchmark_id=solution.benchmark_id)
         for pps in solution.planning_problem_solutions:
             results.add_results(
@@ -180,6 +201,9 @@ class CostFunctionEvaluator:
 
 class PlanningProblemCostResult:
     def __init__(self, cost_function_id: CostFunction, solution_id: int):
+        """
+        Contains results of a single solution of a planning problem.
+        """
         self.cost_function_id = cost_function_id
         self.partial_costs: Dict[PartialCostFunction, float] = {}
         self.weights: Dict[PartialCostFunction, float] = {}
@@ -206,6 +230,9 @@ class PlanningProblemCostResult:
 
 class SolutionResult:
     def __init__(self, benchmark_id: str, pp_results: List[PlanningProblemCostResult] = ()):
+        """
+        Contains results of all solutions of a planning problem set.
+        """
         self.benchmark_id: str = benchmark_id
         self.total_costs: float = 0.0
         self.pp_results: Dict[int, PlanningProblemCostResult] = {}

@@ -86,25 +86,8 @@ def extrapolate_polyline(polyline: np.ndarray, offset: float = 10) -> np.ndarray
 
 
 def create_cosy_from_lanelet(lanelet):
-    # print(lanelet.center_vertices)
-    # raise ValueError
-    # try:
-    # plt.figure()
     v0=lanelet.center_vertices
-    v = smoothen_polyline(extrapolate_polyline(v0), resampling_distance=2.0, n_lengthen=0)
-
-    # print(v)
-    # v = np.abs(lanelet.center_vertices)
-    # v = v0
-    # plt.scatter(v0[:, 0], v0[:, 1], c='r')
-    # plt.scatter(v[:,0], v[:,1])
-    # #
-    # plt.show(block=False)
-    # plt.pause(1)
-    # # # print(lanelet.center_vertices)
-    # # return CurvilinearCoordinateSystem(smoothen_polyline(extrapolate_polyline(lanelet.center_vertices, 2.0)))
-    # print(np.abs(v[0:25,:]))
-    # raise ValueError
+    v = smoothen_polyline(extrapolate_polyline(v0), resampling_distance=2.5, n_lengthen=0)
     tt = CurvilinearCoordinateSystem(v)
     return tt
     # raise ValueError
@@ -338,7 +321,8 @@ class LaneletRouteMatcher:
                             candidate_paths_next.append(c_path)
                             continue
 
-                        # find successor paths that lead to one current lanelet of t_tmp (considers that short lanelets can be skipped)
+                        # find successor paths that lead to one current lanelet of t_tmp
+                        # (considers that short lanelets can be skipped)
                         lanelet_prev = self.lanelet_network.find_lanelet_by_id(c_path[-1])
                         successor_paths = lanelet_prev.find_lanelet_successors_in_range(self.lanelet_network,
                                                                                         max_length=max_dist)
@@ -398,8 +382,9 @@ class LaneletRouteMatcher:
                                 select_path = False
                                 for i_l, l_id_tmp in enumerate(path):
                                     if self.get_lanelet_cosy(l_id_tmp). \
-                                            cartesian_point_inside_projection_domain(trajectory.state_list[i].position[0],
-                                                                                     trajectory.state_list[i].position[1]):
+                                            cartesian_point_inside_projection_domain(
+                                            trajectory.state_list[i].position[0],
+                                            trajectory.state_list[i].position[1]):
                                         select_path = True
                                     else:
                                         break
@@ -408,7 +393,8 @@ class LaneletRouteMatcher:
                                     succ_candidates.append(c_path + path[:i_l+1])
 
                             if len(succ_candidates) > 0:
-                                candidate_paths_next.append(self._select_by_best_alignment(lanelets2states, succ_candidates)[1:])
+                                candidate_paths_next.append(
+                                        self._select_by_best_alignment(lanelets2states, succ_candidates)[1:])
 
                     if len(candidate_paths_next) == 0:
                         # still no candidate -> add by best alignement
@@ -540,7 +526,6 @@ class LaneletRouteMatcher:
 
             except ValueError:
                 if debug_plot is True:
-
                     rnd = MPRenderer()
                     self.lanelet_network.draw(rnd, draw_params={'lanelet': {'show_label':True}})
                     l_tmp = LaneletNetwork.create_from_lanelet_list([self.lanelet_network._lanelets[l] for l in lanelets])
@@ -605,10 +590,11 @@ class LaneletRouteMatcher:
                         s = s2
                         i_c += 1
                 else:
-                    raise ValueError("Vehicle out of lane!")
+                    raise RuntimeError("Vehicle out of lane!")
 
             if s is None and s2 is None:
-                raise RuntimeError('No curvilinear found for projection')
+                raise RuntimeError('No curvilinear system found for projection.'
+                                   'Check whether the trajectory leaves the lanelet_network.')
 
             if not delta_orientation:
                 tangent = cosys[i_c].tangent(s)
@@ -636,13 +622,15 @@ class LaneletRouteMatcher:
             if SolutionProperties.LonDistanceObstacles in required_properties:
                 # compute longitudinal distance to vehicles ahead in the same lane
                 cc_tmp: CollisionChecker = self.scenario_cc().time_slice(state.time_step)
+                # pre-filter vehicles in surrounding
                 cc_tmp = cc_tmp.window_query(RectAABB(100, 100, state_tmp.position[0], state_tmp.position[1]))
                 dist_lon = [np.inf]
                 for obj in cc_tmp.obstacles():
                     if hasattr(obj, "center"):
                         try:
                             c = obj.center()
-                            s_ego, d_ego = cosys[i_c].convert_to_curvilinear_coords(state_tmp.position[0], state_tmp.position[1])
+                            s_ego, d_ego = cosys[i_c].convert_to_curvilinear_coords(state_tmp.position[0],
+                                                                                    state_tmp.position[1])
                             s_obs, d_obs = cosys[i_c].convert_to_curvilinear_coords(c[0], c[1])
                             dist = s_obs - s_ego
                             if abs(d_ego - d_obs) < 2.8 and dist > 0:
@@ -650,15 +638,6 @@ class LaneletRouteMatcher:
                         except:
                             continue
 
-                        # rnd = MPRenderer()
-                        # self.scenario.draw(rnd)
-                        # rnd.render()
-                        # plt.scatter([c[0]],[c[1]], marker="x", zorder=1000)
-                        # plt.scatter([state_tmp.position[0]], [state_tmp.position[1]], marker="x", c="r", zorder=1000)
-                        # plt.title(str(dist) + " " + str(abs(d_ego - d_obs)))
-                        # plt.draw()
-                        # plt.pause(5)
-                        # plt.close('all')
                 properties[SolutionProperties.LonDistanceObstacles][state_tmp.time_step] = dist_lon
 
         # longitudinal states
@@ -718,7 +697,8 @@ class LaneletRouteMatcher:
 
             ax1.title.set_text("matched lanelet route (red)")
             for l in lanelets:
-                proj_dom = np.array(create_cosy_from_lanelet(self.lanelet_network.find_lanelet_by_id(l)).projection_domain())
+                proj_dom = np.array(
+                        create_cosy_from_lanelet(self.lanelet_network.find_lanelet_by_id(l)).projection_domain())
                 plt.fill(proj_dom[:, 0], proj_dom[:, 1], fill=False)
 
             plt.sca(ax2)

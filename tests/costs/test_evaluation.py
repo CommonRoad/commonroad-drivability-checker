@@ -1,10 +1,7 @@
-import itertools
 import random
 
 import matplotlib
-import pandas as pd
 from commonroad.visualization.mp_renderer import MPRenderer
-from commonroad_dc.costs.route_matcher import LaneletRouteMatcher, draw_lanelet_path
 from test_costs_base import TestSolutionEvaluationBase
 
 from commonroad_dc.feasibility.feasibility_checker import input_vector_feasibility
@@ -27,7 +24,6 @@ class TestCostFunctionEvaluator(TestSolutionEvaluationBase):
     def test_init(self):
         for c in self.cost_funcs:
             ce = CostFunctionEvaluator(c, vehicle_type=VehicleType.FORD_ESCORT)
-            rp = ce.required_properties
 
     def test_costs(self):
         scenario_name = "USA_Lanker-2_23_T-1.xml"
@@ -39,7 +35,8 @@ class TestCostFunctionEvaluator(TestSolutionEvaluationBase):
             CostFunction.WX1,
             CostFunction.SM1,
             CostFunction.SM2,
-            CostFunction.SM3
+            CostFunction.SM3,
+            CostFunction.CR1
         ]
         for c in cost_funcs:
             # for vehicle_type in VehicleType.__members__:
@@ -61,7 +58,7 @@ class TestCostFunctionEvaluator(TestSolutionEvaluationBase):
 
     def test_solutions(self):
         """
-        Tests 100+ solutions and visualizes macthed routes for inspection
+        Tests 100+ solutions and visualizes matched routes for inspection
         :return:
         """
         vt = VehicleType.FORD_ESCORT
@@ -72,10 +69,10 @@ class TestCostFunctionEvaluator(TestSolutionEvaluationBase):
             CostFunction.WX1,
             CostFunction.SM1,
             CostFunction.SM2,
-            CostFunction.SM3
+            CostFunction.SM3,
+            CostFunction.CR1
         ]
-        g0 = False
-        for s in list(glob.glob(os.path.join(self.test_solutions_dir, "*.xml"), recursive=True))[:]:
+        for s in list(glob.glob(os.path.join(self.test_solutions_dir, "*.xml"), recursive=True))[:10]:
             sol, sce, pp = self._open_solution_scenario(s)
             print(sce.scenario_id)
             for c_fun in cost_funcs:
@@ -84,42 +81,9 @@ class TestCostFunctionEvaluator(TestSolutionEvaluationBase):
                     ce = CostFunctionEvaluator(c_fun, vt)
                     if pp_sol.planning_problem_id not in pp.planning_problem_dict:
                         continue
-                    try:
-                        ce.evaluate_pp_solution(cr_scenario=sce,
-                                                cr_pproblem=pp.planning_problem_dict[pp_sol.planning_problem_id],
-                                                trajectory=pp_sol.trajectory, draw_lanelet_path=False)
-                    except RuntimeError:
-                        continue
-
-    def test_partial_cost_functions_all_solutions(self):
-        vtype = VehicleType.FORD_ESCORT
-        data = []
-        # df = pd.DataFrame(columns=["scenario_id", "solution_file"] + [p for p in PartialCostFunction])
-        path = self.test_solutions_dir
-        path = "/home/klischat/GIT_REPOS/commonroad-drivability-checker/tests/costs/ressources/example_solutions/all"
-        for s in list(glob.glob(os.path.join(path, "**/*.xml"), recursive=True))[:]:
-            if "NOT_FOUND" in s:
-                continue
-            sol, sce, pp = self._open_solution_scenario(s)
-            lm = LaneletRouteMatcher(sce, vtype)
-            required_properties_all = set(itertools.chain.from_iterable(required_properties.values()))
-            try:
-                for pp_sol in sol.planning_problem_solutions[:1]:
-                    trajectory, _, properties = lm.compute_curvilinear_coordinates(pp_sol.trajectory,
-                                                                                   required_properties=required_properties_all,
-                                                                                   draw_lanelet_path=False)
-                    evaluation_result = {"scenario_id": str(sce.scenario_id),
-                                         "solution_file": str(os.path.basename(s)).rstrip(".xml"),
-                                         "local_path": str(s)}
-                    for pcf, pcf_func in PartialCostFunctionMapping.items():
-                        evaluation_result[pcf.value] = pcf_func(sce, pp.planning_problem_dict[pp_sol.planning_problem_id],
-                                                          trajectory, properties)
-                    data.append(evaluation_result)
-            except:
-                continue
-
-        df = pd.DataFrame(data)
-        print(df.to_csv(path_or_buf=f"/home/klischat/Downloads/xodr_out/{os.path.basename(path)}.csv"))
+                    ce.evaluate_pp_solution(cr_scenario=sce,
+                                            cr_pproblem=pp.planning_problem_dict[pp_sol.planning_problem_id],
+                                            trajectory=pp_sol.trajectory, draw_lanelet_path=False)
 
     def test_pm_input_solution(self):
         cost_funcs = [
@@ -129,7 +93,8 @@ class TestCostFunctionEvaluator(TestSolutionEvaluationBase):
             # CostFunction.WX1,
             # CostFunction.SM1,
             # CostFunction.SM2,
-            # CostFunction.SM3
+            # CostFunction.SM3,
+            # CostFunction.CR1
         ]
         scenario_name = "ZAM_Tjunction-1_18_T-1.xml"
         solution_file = "solution_PMInput.xml"
@@ -144,7 +109,9 @@ class TestCostFunctionEvaluator(TestSolutionEvaluationBase):
                 ce = CostFunctionEvaluator(c_fun, pp_sol.vehicle_type)
                 ce.evaluate_pp_solution(cr_scenario=sce,
                                         cr_pproblem=pp.planning_problem_dict[pp_sol.planning_problem_id],
-                                        trajectory=results[pp_sol.planning_problem_id][2])
+                                        trajectory=results[pp_sol.planning_problem_id][2],
+                                        draw_lanelet_path=False,
+                                        debug_plot=False)
 
     def test_vis(self):
         solution_file = "solution_PMInput.xml"
@@ -173,23 +140,23 @@ class TestCostFunctionEvaluator(TestSolutionEvaluationBase):
         sol = CommonRoadSolutionReader.open(os.path.join(self.test_solutions_dir, solution_file))
         sce, pp = CommonRoadFileReader(os.path.join(self.test_scenario_dir, scenario_name)).open()
         feasible, results = valid_solution(sce, pp, sol)
-        import matplotlib.pyplot as plt
-        import numpy as np
-        for k, v in results.items():
-            plt.figure()
-            acc = np.array([[s.velocity, s.velocity_y] for s in v[2].state_list])
-            plt.plot(acc[:30, 0], acc[:30, 1])
-            plt.show(block=False)
-
-            plt.figure()
-            acc = np.array([[s.acceleration, s.acceleration_y] for s in v[1].state_list])
-            plt.plot(acc[:30, 0], acc[:30, 1])
-            plt.show(block=False)
-
-            plt.figure()
-            p = np.array([s.position for s in v[2].state_list])
-            plt.plot(p[:,0], p[:,1])
-            plt.show(block=True)
+        # import matplotlib.pyplot as plt
+        # import numpy as np
+        # for k, v in results.items():
+        #     plt.figure()
+        #     acc = np.array([[s.velocity, s.velocity_y] for s in v[2].state_list])
+        #     plt.plot(acc[:30, 0], acc[:30, 1])
+        #     plt.show(block=False)
+        #
+        #     plt.figure()
+        #     acc = np.array([[s.acceleration, s.acceleration_y] for s in v[1].state_list])
+        #     plt.plot(acc[:30, 0], acc[:30, 1])
+        #     plt.show(block=False)
+        #
+        #     plt.figure()
+        #     p = np.array([s.position for s in v[2].state_list])
+        #     plt.plot(p[:,0], p[:,1])
+        #     plt.show(block=True)
 
 
 if __name__ == '__main__':
