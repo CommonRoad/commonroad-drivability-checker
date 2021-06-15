@@ -47,44 +47,96 @@ class PartialCostFunction(Enum):
     ID = "ID"
 
 
-PartialCostFunctionMapping = {PartialCostFunction.A: cost_functions.acceleration_cost,
-    PartialCostFunction.J: cost_functions.jerk_cost, PartialCostFunction.Jlat: cost_functions.jerk_lat_cost,
-    PartialCostFunction.Jlon: cost_functions.jerk_lon_cost, PartialCostFunction.SA: cost_functions.steering_angle_cost,
-    PartialCostFunction.SR: cost_functions.steering_rate_cost, PartialCostFunction.Y: cost_functions.yaw_cost,
-    PartialCostFunction.LC: cost_functions.lane_center_offset_cost,
-    PartialCostFunction.V: cost_functions.velocity_offset_cost,
-    PartialCostFunction.Vlon: cost_functions.longitudinal_velocity_offset_cost,
-    PartialCostFunction.O: cost_functions.orientation_offset_cost,
-    PartialCostFunction.D: cost_functions.distance_to_obstacle_cost,
-    PartialCostFunction.L: cost_functions.lane_center_offset_cost, PartialCostFunction.T: cost_functions.time_cost,
-    PartialCostFunction.ID: cost_functions.inverse_duration_cost, }
+PartialCostFunctionMapping = {
+    PartialCostFunction.A:  cost_functions.acceleration_cost,
+    PartialCostFunction.J:  cost_functions.jerk_cost,
+    PartialCostFunction.Jlat:  cost_functions.jerk_lat_cost,
+    PartialCostFunction.Jlon:  cost_functions.jerk_lon_cost,
+    PartialCostFunction.SA:  cost_functions.steering_angle_cost,
+    PartialCostFunction.SR:  cost_functions.steering_rate_cost,
+    PartialCostFunction.Y:  cost_functions.yaw_cost,
+    PartialCostFunction.LC:  cost_functions.lane_center_offset_cost,
+    PartialCostFunction.V:  cost_functions.velocity_offset_cost,
+    PartialCostFunction.Vlon:  cost_functions.longitudinal_velocity_offset_cost,
+    PartialCostFunction.O:  cost_functions.orientation_offset_cost,
+    PartialCostFunction.D:  cost_functions.distance_to_obstacle_cost,
+    PartialCostFunction.L:  cost_functions.lane_center_offset_cost,
+    PartialCostFunction.T:  cost_functions.time_cost,
+    PartialCostFunction.ID:  cost_functions.inverse_duration_cost,
+}
+
 
 
 class CostFunctionMapping(Enum):
-    JB1 = [(PartialCostFunction.T, 1.0)]
-    MW1 = [(PartialCostFunction.Jlat, 5.0), (PartialCostFunction.Jlon, 0.5), (PartialCostFunction.Vlon, 0.2),
-        (PartialCostFunction.ID, 1.0)]
-    SA1 = [(PartialCostFunction.SA, 0.1), (PartialCostFunction.SR, 0.1), (PartialCostFunction.D, 100000.0), ]
-    SM1 = [(PartialCostFunction.A, 50.0), (PartialCostFunction.SA, 50.0), (PartialCostFunction.SR, 50.0),
-        (PartialCostFunction.L, 1.0), (PartialCostFunction.V, 20.0), (PartialCostFunction.O, 50.0), ]
-    SM2 = [(PartialCostFunction.A, 50.0), (PartialCostFunction.SA, 50.0), (PartialCostFunction.SR, 50.0),
-        (PartialCostFunction.L, 1.0), (PartialCostFunction.O, 50.0), ]
-    SM3 = [(PartialCostFunction.A, 50.0), (PartialCostFunction.SA, 50.0), (PartialCostFunction.SR, 50.0),
-        (PartialCostFunction.V, 20.0), (PartialCostFunction.O, 50.0), ]
-    WX1 = [(PartialCostFunction.T, 10.0), (PartialCostFunction.V, 1.0), (PartialCostFunction.A, 0.1),
-        (PartialCostFunction.J, 0.1), (PartialCostFunction.D, 0.1), (PartialCostFunction.L, 10.0), ]
-    CR1 = [(PartialCostFunction.Jlon, 6.6e-3), (PartialCostFunction.SR, 6.6), (PartialCostFunction.D, 4.2),
-           (PartialCostFunction.LC, 0.4), ]
+    JB1 = [
+        (PartialCostFunction.T, 1.0)
+    ]
+    MW1 = [
+        (PartialCostFunction.Jlat, 5.0),
+        (PartialCostFunction.Jlon, 0.5),
+        (PartialCostFunction.Vlon, 0.2),
+        (PartialCostFunction.ID, 1.0)
+    ]
+    SA1 = [
+        (PartialCostFunction.SA, 0.1),
+        (PartialCostFunction.SR, 0.1),
+        (PartialCostFunction.D, 100000.0),
+    ]
+    SM1 = [
+        (PartialCostFunction.A, 50.0),
+        (PartialCostFunction.SA, 50.0),
+        (PartialCostFunction.SR, 50.0),
+        (PartialCostFunction.L, 1.0),
+        (PartialCostFunction.V, 20.0),
+        (PartialCostFunction.O, 50.0),
+    ]
+    SM2 = [
+        (PartialCostFunction.A, 50.0),
+        (PartialCostFunction.SA, 50.0),
+        (PartialCostFunction.SR, 50.0),
+        (PartialCostFunction.L, 1.0),
+        (PartialCostFunction.O, 50.0),
+    ]
+    SM3 = [
+        (PartialCostFunction.A, 50.0),
+        (PartialCostFunction.SA, 50.0),
+        (PartialCostFunction.SR, 50.0),
+        (PartialCostFunction.V, 20.0),
+        (PartialCostFunction.O, 50.0),
+    ]
+    WX1 = [
+        (PartialCostFunction.T, 10.0),
+        (PartialCostFunction.V, 1.0),
+        (PartialCostFunction.A, 0.1),
+        (PartialCostFunction.J, 0.1),
+        (PartialCostFunction.D, 0.1),
+        (PartialCostFunction.L, 10.0),
+    ]
+    CR1 = [
+        (PartialCostFunction.Jlon, 6.6e-3),
+        (PartialCostFunction.SR, 6.6),
+        (PartialCostFunction.D, 4.2),
+        (PartialCostFunction.LC, 0.4),
+    ]
 
 
 # additional attributes that need to be computed before evaluation
-required_properties = {PartialCostFunction.A: [], PartialCostFunction.J: [],
-    PartialCostFunction.Jlat: [SolutionProperties.LatJerk], PartialCostFunction.Jlon: [SolutionProperties.LonJerk],
-    PartialCostFunction.SA: [], PartialCostFunction.SR: [], PartialCostFunction.Y: [], PartialCostFunction.LC: [],
+required_properties = {
+    PartialCostFunction.A: [],
+    PartialCostFunction.J: [],
+    PartialCostFunction.Jlat: [SolutionProperties.LatJerk],
+    PartialCostFunction.Jlon: [SolutionProperties.LonJerk],
+    PartialCostFunction.SA: [],
+    PartialCostFunction.SR: [],
+    PartialCostFunction.Y: [],
+    PartialCostFunction.LC: [],
     PartialCostFunction.V: [],
     PartialCostFunction.Vlon: [SolutionProperties.LonVelocity, SolutionProperties.AllowedVelocityInterval],
-    PartialCostFunction.O: [], PartialCostFunction.D: [SolutionProperties.LonDistanceObstacles],
-    PartialCostFunction.L: [], PartialCostFunction.T: [], PartialCostFunction.ID: [], }
+    PartialCostFunction.O: [],
+    PartialCostFunction.D: [SolutionProperties.LonDistanceObstacles],
+    PartialCostFunction.L: [],
+    PartialCostFunction.T: [],
+    PartialCostFunction.ID: [], }
 
 
 class CostFunctionEvaluator:
