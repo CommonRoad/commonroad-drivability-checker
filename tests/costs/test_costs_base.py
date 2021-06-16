@@ -14,7 +14,10 @@ class TestSolutionEvaluationBase(unittest.TestCase):
         self.test_scenario_dir = os.path.join(self.test_ressources_dir, "scenarios")
         self.test_solutions_dir = os.path.join(self.test_ressources_dir, "example_solutions")
 
-        self.all_scenario_dir = "/home/klischat/GIT_REPOS/commonroad-scenarios-dev/scenarios"
+        self.all_scenario_dir = os.path.normpath(os.path.join(os.path.dirname(__file__),
+                                                              "../../../commonroad-scenarios/scenarios"))
+        assert os.path.isdir(self.all_scenario_dir), f"{self.all_scenario_dir} is not a directory. You need to clone" \
+                                                     f"https://gitlab.lrz.de/tum-cps/commonroad-scenarios!"
         self.cost_funcs = [CostFunction.JB1,
                            CostFunction.MW1,
                            CostFunction.SA1,
