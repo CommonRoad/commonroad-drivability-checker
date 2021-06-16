@@ -1,6 +1,6 @@
 import itertools
 from enum import Enum
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from commonroad.planning.planning_problem import PlanningProblem, PlanningProblemSet
 from commonroad.scenario.scenario import Scenario
@@ -68,59 +68,59 @@ PartialCostFunctionMapping = {
 }
 
 
-
-class CostFunctionMapping(Enum):
-    JB1 = [
-        (PartialCostFunction.T, 1.0)
-    ]
-    MW1 = [
-        (PartialCostFunction.Jlat, 5.0),
-        (PartialCostFunction.Jlon, 0.5),
-        (PartialCostFunction.Vlon, 0.2),
-        (PartialCostFunction.ID, 1.0)
-    ]
-    SA1 = [
-        (PartialCostFunction.SA, 0.1),
-        (PartialCostFunction.SR, 0.1),
-        (PartialCostFunction.D, 100000.0),
-    ]
-    SM1 = [
-        (PartialCostFunction.A, 50.0),
-        (PartialCostFunction.SA, 50.0),
-        (PartialCostFunction.SR, 50.0),
-        (PartialCostFunction.L, 1.0),
-        (PartialCostFunction.V, 20.0),
-        (PartialCostFunction.O, 50.0),
-    ]
-    SM2 = [
-        (PartialCostFunction.A, 50.0),
-        (PartialCostFunction.SA, 50.0),
-        (PartialCostFunction.SR, 50.0),
-        (PartialCostFunction.L, 1.0),
-        (PartialCostFunction.O, 50.0),
-    ]
-    SM3 = [
-        (PartialCostFunction.A, 50.0),
-        (PartialCostFunction.SA, 50.0),
-        (PartialCostFunction.SR, 50.0),
-        (PartialCostFunction.V, 20.0),
-        (PartialCostFunction.O, 50.0),
-    ]
-    WX1 = [
-        (PartialCostFunction.T, 10.0),
-        (PartialCostFunction.V, 1.0),
-        (PartialCostFunction.A, 0.1),
-        (PartialCostFunction.J, 0.1),
-        (PartialCostFunction.D, 0.1),
-        (PartialCostFunction.L, 10.0),
-    ]
-    CR1 = [
-        (PartialCostFunction.Jlon, 6.6e-3),
-        (PartialCostFunction.SR, 6.6),
-        (PartialCostFunction.D, 4.2),
-        (PartialCostFunction.LC, 0.4),
-    ]
-
+cost_function_mapping =\
+    {
+        CostFunction.JB1: [
+            (PartialCostFunction.T, 1.0)
+        ],
+        CostFunction.MW1: [
+            (PartialCostFunction.Jlat, 5.0),
+            (PartialCostFunction.Jlon, 0.5),
+            (PartialCostFunction.Vlon, 0.2),
+            (PartialCostFunction.ID, 1.0)
+        ],
+        CostFunction.SA1: [
+            (PartialCostFunction.SA, 0.1),
+            (PartialCostFunction.SR, 0.1),
+            (PartialCostFunction.D, 100000.0),
+        ],
+        CostFunction.SM1: [
+            (PartialCostFunction.A, 50.0),
+            (PartialCostFunction.SA, 50.0),
+            (PartialCostFunction.SR, 50.0),
+            (PartialCostFunction.L, 1.0),
+            (PartialCostFunction.V, 20.0),
+            (PartialCostFunction.O, 50.0),
+        ],
+        CostFunction.SM2: [
+            (PartialCostFunction.A, 50.0),
+            (PartialCostFunction.SA, 50.0),
+            (PartialCostFunction.SR, 50.0),
+            (PartialCostFunction.L, 1.0),
+            (PartialCostFunction.O, 50.0),
+        ],
+        CostFunction.SM3: [
+            (PartialCostFunction.A, 50.0),
+            (PartialCostFunction.SA, 50.0),
+            (PartialCostFunction.SR, 50.0),
+            (PartialCostFunction.V, 20.0),
+            (PartialCostFunction.O, 50.0),
+        ],
+        CostFunction.WX1: [
+            (PartialCostFunction.T, 10.0),
+            (PartialCostFunction.V, 1.0),
+            (PartialCostFunction.A, 0.1),
+            (PartialCostFunction.J, 0.1),
+            (PartialCostFunction.D, 0.1),
+            (PartialCostFunction.L, 10.0),
+        ],
+        CostFunction.TR1: [
+            (PartialCostFunction.Jlon, 0.01),
+            (PartialCostFunction.SR, 22),
+            (PartialCostFunction.D, 8),
+            (PartialCostFunction.LC, 0.5),
+        ]
+    }
 
 # additional attributes that need to be computed before evaluation
 required_properties = {
@@ -145,7 +145,7 @@ class CostFunctionEvaluator:
     def __init__(self, cost_function_id: CostFunction, vehicle_type: VehicleType):
         self.cost_function_id: CostFunction = cost_function_id
         self.vehicle_type = vehicle_type
-        self.partial_cost_funcs: CostFunctionMapping = CostFunctionMapping[self.cost_function_id.name]
+        self.partial_cost_funcs: List[Tuple[PartialCostFunction,float]] = cost_function_mapping[self.cost_function_id]
 
     @classmethod
     def init_from_solution(cls, solution: Solution):
@@ -154,7 +154,7 @@ class CostFunctionEvaluator:
 
     @property
     def required_properties(self):
-        return list(itertools.chain.from_iterable(required_properties[p] for p, _ in self.partial_cost_funcs.value))
+        return list(itertools.chain.from_iterable(required_properties[p] for p, _ in self.partial_cost_funcs))
 
     def evaluate_pp_solution(self, cr_scenario: Scenario, cr_pproblem: PlanningProblem, trajectory: Trajectory,
             draw_lanelet_path=False, debug_plot=False):
@@ -175,7 +175,7 @@ class CostFunctionEvaluator:
                                                                        required_properties=self.required_properties,
                                                                        draw_lanelet_path=draw_lanelet_path,
                                                                        debug_plot=debug_plot)
-        for pcf, weight in self.partial_cost_funcs.value:
+        for pcf, weight in self.partial_cost_funcs:
             pcf_func = PartialCostFunctionMapping[pcf]
             evaluation_result.add_partial_costs(pcf, pcf_func(cr_scenario, cr_pproblem, trajectory, properties), weight)
 

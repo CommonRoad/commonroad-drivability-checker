@@ -36,7 +36,7 @@ class TestCostFunctionEvaluator(TestSolutionEvaluationBase):
             CostFunction.SM1,
             CostFunction.SM2,
             CostFunction.SM3,
-            CostFunction.CR1
+            CostFunction.TR1
         ]
         for c in cost_funcs:
             # for vehicle_type in VehicleType.__members__:
@@ -70,7 +70,7 @@ class TestCostFunctionEvaluator(TestSolutionEvaluationBase):
             CostFunction.SM1,
             CostFunction.SM2,
             CostFunction.SM3,
-            CostFunction.CR1
+            CostFunction.TR1
         ]
         for s in list(glob.glob(os.path.join(self.test_solutions_dir, "*.xml"), recursive=True))[:10]:
             sol, sce, pp = self._open_solution_scenario(s)

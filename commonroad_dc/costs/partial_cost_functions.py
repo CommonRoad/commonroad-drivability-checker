@@ -329,7 +329,7 @@ def distance_to_obstacle_cost(
         min_dists = []
         for state in trajectory.state_list:
             min_dists.append(np.min(properties[SolutionProperties.LonDistanceObstacles][state.time_step]))
-        neg_min_dists = -0.1 * np.array(min_dists)
+        neg_min_dists = -0.2 * np.array(min_dists)
         exp_dists = np.array([np.math.exp(val) for val in neg_min_dists])
         cost = simps(exp_dists, dx=scenario.dt)
         return cost
