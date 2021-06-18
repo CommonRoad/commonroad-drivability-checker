@@ -9,6 +9,7 @@
 #include "collision/narrowphase/sphere.h"
 #include "collision/narrowphase/triangle.h"
 #include "collision/shape_group.h"
+#include "collision/truck.h"
 
 #include "collision/time_variant_collision_object.h"
 
@@ -1055,10 +1056,13 @@ void init_module_collision(py::module &m) {
 
       py::class_<collision::Truck, collision::ShapeGroup,
              std::shared_ptr<collision::Truck>>(m, "Truck")
-      .def(py::init<>())
+      .def(py::init([](double x, double y, std::vector<double> params)
+      {
+        return new collision::Truck(Eigen::Vector2d(x, y), params);
+      }))
       .def("collide",
-           [](std::shared_ptr<collision::ShapeGroup> &cc,
-              std::shared_ptr<collision::CollisionObject> &co) {
+           [](std::shared_ptr<collision::Truck> &cc,
+              std::shared_ptr<collision::ShapeGroup> &co) {
              return cc->collide(*co);
            })
       .def("draw",
@@ -1080,7 +1084,7 @@ void init_module_collision(py::module &m) {
             return pickle_object_out(obj);
           },
           [](py::tuple t) {  // __setstate__
-            return std::static_pointer_cast<collision::ShapeGroup>(
+            return std::static_pointer_cast<collision::Truck>(
                 pickle_object_in(t));
           }))
 #endif

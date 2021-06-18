@@ -75,7 +75,7 @@ def create_collision_object_polygon(polygon, params=None, collision_object_func=
         return pycrcc.Polygon(polygon.vertices.tolist(), list(), mesh)
 
 
-def create_collision_object_shape_group(shape_group, params=None, collision_object_func=None):
+def xcreate_collision_object_shape_group(shape_group, params=None, collision_object_func=None):
     sg = pycrcc.ShapeGroup()
     for shape in shape_group.shapes:
         co = commonroad_dc.collision.collision_detection.pycrcc_collision_dispatch.create_collision_object(

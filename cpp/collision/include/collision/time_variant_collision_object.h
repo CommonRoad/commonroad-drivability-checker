@@ -24,7 +24,7 @@ namespace collision {
 /*!
   \brief TimeVariantCollisionObject can contain a different CollisionObject or
   ShapeGroup at each time step
-
+h
 
 */
 class TimeVariantCollisionObject : public CollisionObjectEx {

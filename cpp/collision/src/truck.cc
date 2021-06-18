@@ -2,18 +2,9 @@
 
 namespace collision {
 
-    Truck(const Eigen::Vector2d &_center, const std::vector<double> params)
-    {
-        center_ = _center;
-        length_ = params[0];
-        width_ = params[1];
-        trailer_dist_ = params[2];
-        trailer_length_ = params[3];
-        orientation_ = params[4];
-        init();
-    }
 
-    void Truck::init()
+
+    void Truck::init_truck()
     {
         // Add the two shapes to the truck
         // we gotta count the distance yay?
@@ -40,5 +31,15 @@ namespace collision {
 
     void Truck::init_rotated()
     {}
+
+#if ENABLE_SERIALIZER
+namespace serialize {
+ICollisionObjectExport *exportObject(const collision::Truck &);
 }
 
+serialize::ICollisionObjectExport *Truck::exportThis(void) const {
+  return serialize::exportObject(*this);
+}
+#endif
+
+} // namespace collision

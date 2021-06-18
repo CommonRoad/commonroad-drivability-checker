@@ -10,7 +10,7 @@ enum CollisionObjectClass {
   OBJ_CLASS_TVOBSTACLE = 3
 };
 
-constexpr int COL_OBJECT_TYPES_COUNT = 9;
+constexpr int COL_OBJECT_TYPES_COUNT = 10;
 
 enum CollisionObjectType {
   OBJ_TYPE_UNKNOWN = 0,
@@ -21,6 +21,7 @@ enum CollisionObjectType {
   OBJ_TYPE_TRIANGLE = 5,
   OBJ_TYPE_POLYGON = 6,
   OBJ_TYPE_SHAPEGROUP = 7,
+  OBJ_TYPE_TRUCK = 8, // TODO check this out here
   OBJ_TYPE_TVOBSTACLE = COL_OBJECT_TYPES_COUNT - 1
 };
 
