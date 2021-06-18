@@ -251,6 +251,7 @@ draw_func_dict = {pycrcc.RectAABB: draw_collision_rectaabb,
                   pycrcc.TimeVariantCollisionObject:
                       draw_collision_timevariantcollisionobject,
                   pycrcc.ShapeGroup: draw_collision_shapegroup,
+                  pycrcc.Truck: draw_collision_shapegroup,
                   pycrcc.Polygon: draw_collision_polygon,
                   pycrcc.CollisionChecker:
                       draw_collision_collisionchecker,

@@ -79,6 +79,18 @@ class DummyDataGenerator:
         )
 
     @classmethod
+    def create_random_kst_state(cls, v_min=-2.78, v_max=22.22, steering_angle_max=0.55, time_step=0):
+        return State(
+            position=np.array([0,
+                               0]),
+            steering_angle=cls.create_random_float(-steering_angle_max, steering_angle_max),
+            velocity=cls.create_random_float(v_min, v_max),
+            orientation=cls.create_random_float(-np.math.pi, np.math.pi),
+            time_step=time_step,
+            hitch_angle=cls.create_random_float(-0.5, 0.5) # TODO just added this randomly, might need to change this
+        )
+
+    @classmethod
     def create_random_st_state(cls, v_min=-11.2, v_max=41.7, steering_angle_max=0.910, yaw_rate_max=0.4, time_step=0):
         return State(
             position=np.array([0,

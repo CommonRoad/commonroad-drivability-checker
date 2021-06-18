@@ -93,6 +93,15 @@ def draw_collision_shapegroup(obj, renderer: IRenderer,
     for o in obj.unpack():
         o.draw(renderer, draw_params, call_stack)
 
+def draw_collision_truck(obj, renderer: IRenderer,
+                              draw_params: Union[
+                                  ParamServer, dict, None] = None,
+                              call_stack: Optional[
+                                  Tuple[str, ...]] = tuple()) -> None:
+    call_stack = call_stack + ('truck',)
+    for o in obj.unpack():
+        o.draw(renderer, draw_params, call_stack)
+
 
 def draw_collision_polygon(obj, renderer: IRenderer,
                            draw_params: Union[ParamServer, dict, None] = None,
