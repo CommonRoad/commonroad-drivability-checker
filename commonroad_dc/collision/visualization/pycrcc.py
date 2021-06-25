@@ -203,6 +203,13 @@ def draw_collision_shapegroup(obj, plot_limits, ax, draw_params, draw_func, hand
                                                                         draw_func, handles, call_stack)
 
 
+def draw_collision_truck(obj, plot_limits, ax, draw_params, draw_func, handles, call_stack):
+    call_stack = tuple(list(call_stack) + ['truck'])
+    for o in obj.unpack():
+        commonroad_dc.collision.visualization.draw_dispatch.draw_object(o, plot_limits, ax, draw_params,
+                                                                        draw_func, handles, call_stack)
+
+
 def draw_collision_polygon(obj, plot_limits, ax, draw_params, draw_func, handles, call_stack):
     try:
         facecolor = commonroad_dc.collision.visualization.draw_dispatch._retrieve_alternate_value(
@@ -251,7 +258,6 @@ draw_func_dict = {pycrcc.RectAABB: draw_collision_rectaabb,
                   pycrcc.TimeVariantCollisionObject:
                       draw_collision_timevariantcollisionobject,
                   pycrcc.ShapeGroup: draw_collision_shapegroup,
-                  pycrcc.Truck: draw_collision_shapegroup,
                   pycrcc.Polygon: draw_collision_polygon,
                   pycrcc.CollisionChecker:
                       draw_collision_collisionchecker,

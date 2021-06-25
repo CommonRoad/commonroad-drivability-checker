@@ -51,6 +51,7 @@ class ShapeGroup : public CollisionObjectEx,
 
   virtual CollisionObjectType getCollisionObjectType() const {
     return CollisionObjectType::OBJ_TYPE_SHAPEGROUP;
+    return CollisionObjectType::OBJ_TYPE_SHAPEGROUP;
   }
   CollisionObjectClass getCollisionObjectClass() const {
     return CollisionObjectClass::OBJ_CLASS_SHAPEGROUP;

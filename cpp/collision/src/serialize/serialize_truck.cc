@@ -11,7 +11,7 @@ namespace serialize {
 ICollisionObjectExport *exportObject(const collision::Truck &tr) {
   return new TruckExport(tr);
 }
-TruckExport::TruckExport(const TruckExport &tr) {
+TruckExport::TruckExport(const Truck &tr) {
   for (auto &obj : tr.unpack()) {
     // warning: unsafe typecast
     m_children.push_back(static_cast<IShapeExport *>(obj->exportThis()));

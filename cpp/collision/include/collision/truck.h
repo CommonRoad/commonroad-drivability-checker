@@ -7,8 +7,12 @@
 
 namespace collision {
 
+typedef std::shared_ptr<Truck> TruckPtr;
+typedef std::shared_ptr<const Truck> TruckConstPtr;
+
 class Truck : public ShapeGroup {
 public:
+    Truck(){}
     Truck(const Eigen::Vector2d &center, const std::vector<double> params)
     : ShapeGroup()
     {
@@ -22,6 +26,11 @@ public:
         init_truck();
     }
     virtual ~Truck() {}
+    std::vector<TruckConstPtr> unpack() const;
+
+#if ENABLE_SERIALIZER
+    serialize::ICollisionObjectExport *exportThis(void) const;
+#endif
 
 private:
     Eigen::Vector2d center_;
@@ -35,6 +44,8 @@ private:
     void init_simple();
     void init_rotated();
 
+    Truck(const Truck &);
+    Truck &operator=(const Truck &) { return *this; };
 };
 
 } // namespace collision

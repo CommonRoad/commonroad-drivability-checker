@@ -1054,16 +1054,25 @@ void init_module_collision(py::module &m) {
 
       ;
 
-      py::class_<collision::Truck, collision::ShapeGroup,
-             std::shared_ptr<collision::Truck>>(m, "Truck")
+  py::class_<collision::Truck, collision::ShapeGroup, collision::CollisionObject,
+            std::shared_ptr<collision::Truck>>(m, "Truck")
       .def(py::init([](double x, double y, std::vector<double> params)
       {
         return new collision::Truck(Eigen::Vector2d(x, y), params);
       }))
       .def("collide",
            [](std::shared_ptr<collision::Truck> &cc,
-              std::shared_ptr<collision::ShapeGroup> &co) {
+              std::shared_ptr<collision::CollisionObject> &co) {
              return cc->collide(*co);
+           })
+      .def("unpack",
+           [](collision::Truck &obj) {
+             auto unpacked = obj.unpack();
+             py::list ret_list;
+             for (auto &i : unpacked) {
+               ret_list.append(py::cast(i));
+             }
+             return ret_list;
            })
       .def("draw",
            [](const std::shared_ptr<collision::ShapeGroup> &c,

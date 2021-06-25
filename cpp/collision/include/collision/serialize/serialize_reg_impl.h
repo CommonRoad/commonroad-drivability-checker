@@ -66,6 +66,12 @@
 #include <s11n.net/s11n/reg_s11n_traits.hpp>
 #undef S11N_BASE_TYPE
 
+#define S11N_TYPE collision::serialize::TruckExport
+#define S11N_TYPE_NAME "TruckExport"
+#define S11N_BASE_TYPE collision::serialize::ICollisionObjectExport_s11
+#include <s11n.net/s11n/reg_s11n_traits.hpp>
+#undef S11N_BASE_TYPE
+
 #define S11N_TYPE collision::serialize::TimeVariantCollisionObjectExport
 #define S11N_TYPE_NAME "TimeVariantCollisionObjectExport"
 #define S11N_BASE_TYPE collision::serialize::ICollisionObjectExport_s11

@@ -34,6 +34,7 @@ class TimeVariantCollisionObject;
 class CollisionObject;
 class ShapeGroup;
 class Polygon;
+class Truck;
 
 class ICollisionContainer;
 
