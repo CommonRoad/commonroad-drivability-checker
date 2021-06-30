@@ -122,10 +122,10 @@ def create_cosy_from_lanelet(lanelet):
 
 
 def create_cosy_from_vertices(center_vertices):
-    # try:
-    return CurvilinearCoordinateSystem(smoothen_polyline(extrapolate_polyline(center_vertices, 2.0)))
-    # except RuntimeError:
-    #     return None
+    try:
+        return CurvilinearCoordinateSystem(smoothen_polyline(extrapolate_polyline(center_vertices, 2.0)))
+    except RuntimeError:
+        return None
 
 
 def get_orientation_at_position(cosy, position):
