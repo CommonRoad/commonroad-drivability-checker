@@ -16,21 +16,22 @@ class PartialCostFunction(Enum):
     """
     See https://gitlab.lrz.de/tum-cps/commonroad-cost-functions/-/blob/master/costFunctions_commonRoad.pdf for more
     details.
-    A: Acceleration
-    J: Jerk
-    Jlat: Lateral Jerk
-    Jlon: Longitudinal Jerk
-    SA: Steering Angle
-    SR: Steering Rate
-    Y: Yaw Rate
-    LC: Lane Center Offset
-    V: Velocity Offset
-    Vlon: Longitudinal Velocity Offset
-    O: Orientation Offset
-    D: Distance to Obstacles
-    L: Path Length
-    T: Time
-    ID: Inverse Duration
+
+    A: Acceleration,
+    J: Jerk,
+    Jlat: Lateral Jerk,
+    Jlon: Longitudinal Jerk,
+    SA: Steering Angle,
+    SR: Steering Rate,
+    Y: Yaw Rate,
+    LC: Lane Center Offset,
+    V: Velocity Offset,
+    Vlon: Longitudinal Velocity Offset,
+    O: Orientation Offset,
+    D: Distance to Obstacles,
+    L: Path Length,
+    T: Time,
+    ID: Inverse Duration,
     """
     A = "A"
     J = "J"
@@ -160,6 +161,7 @@ class CostFunctionEvaluator:
             draw_lanelet_path=False, debug_plot=False):
         """
         Computes costs of one solution for cr_pproblem.
+
         :param cr_scenario: scenario
         :param cr_pproblem: planning problem that is solved by trajectory
         :param trajectory: solution trajectory
@@ -185,6 +187,7 @@ class CostFunctionEvaluator:
             -> "SolutionResult":
         """
         Computes costs for all solutions of a planning problem set.
+
         :param scenario: scenario that was solved
         :param cr_pproblems: planning problem set that was solved
         :param solution: Solution object that contains trajectories
@@ -203,6 +206,7 @@ class PlanningProblemCostResult:
     def __init__(self, cost_function_id: CostFunction, solution_id: int):
         """
         Contains results of a single solution of a planning problem.
+
         """
         self.cost_function_id = cost_function_id
         self.partial_costs: Dict[PartialCostFunction, float] = {}
@@ -232,6 +236,7 @@ class SolutionResult:
     def __init__(self, benchmark_id: str, pp_results: List[PlanningProblemCostResult] = ()):
         """
         Contains results of all solutions of a planning problem set.
+
         """
         self.benchmark_id: str = benchmark_id
         self.total_costs: float = 0.0
