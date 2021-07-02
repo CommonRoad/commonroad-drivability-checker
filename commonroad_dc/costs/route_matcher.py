@@ -1,14 +1,13 @@
 import math
 from collections import defaultdict
-from copy import deepcopy, copy
+from copy import deepcopy
 from enum import Enum
 from functools import lru_cache
-from typing import Dict, Tuple, Union, Any
+from typing import Union, Any
 
 import shapely
 import shapely.geometry
-from commonroad.common.solution import VehicleModel, VehicleType
-from commonroad.scenario.lanelet import LaneletNetwork, Lanelet
+from commonroad.common.solution import  VehicleType
 from commonroad.scenario.scenario import Scenario
 from commonroad.scenario.traffic_sign import SupportedTrafficSignCountry
 from commonroad.scenario.traffic_sign_interpreter import TrafficSigInterpreter
@@ -18,17 +17,14 @@ from scipy.signal import savgol_filter
 
 from commonroad_dc import pycrcc
 from commonroad_dc.collision.collision_detection.pycrcc_collision_dispatch import create_collision_object
-from commonroad_dc.collision.visualization.draw_dispatch import draw_object
 from commonroad_dc.feasibility.vehicle_dynamics import VehicleParameterMapping
 from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline
-# from commonroad_dc.lanelet_ccosy.lanelet_ccosy import LaneletCoordinateSystem
-from commonroad_dc.geometry.lanelet_ccosy import LaneletCoordinateSystem
-from commonroad_dc.pycrcc import CollisionObject, CollisionChecker, Point, Circle, RectAABB
+from commonroad_dc.pycrcc import CollisionObject, CollisionChecker, Circle, RectAABB
 
-from typing import List, Set, Dict, Tuple
+from typing import List, Dict, Tuple
 import numpy as np
 import matplotlib.pyplot as plt
-from commonroad.common.util import Interval, subtract_orientations, make_valid_orientation
+from commonroad.common.util import Interval, subtract_orientations
 
 from commonroad.scenario.lanelet import LaneletNetwork, Lanelet
 from commonroad.visualization.mp_renderer import MPRenderer
