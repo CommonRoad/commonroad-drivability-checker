@@ -26,7 +26,7 @@ public:
         init_truck();
     }
     virtual ~Truck() {}
-    std::vector<TruckConstPtr> unpack() const;
+    std::vector<ShapeConstPtr> unpack() const;
 
 #if ENABLE_SERIALIZER
     serialize::ICollisionObjectExport *exportThis(void) const;

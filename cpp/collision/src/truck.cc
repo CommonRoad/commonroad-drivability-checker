@@ -18,7 +18,7 @@ namespace collision {
 
     void Truck::init_simple()
     {
-        double head_length = (2 * length_ - trailer_length_ - trailer_dist_) / 2;
+        double head_length = (2 * length_ - 2 * trailer_length_ - trailer_dist_) / 2;
         Eigen::Vector2d head_center = center_ - Eigen::Vector2d(head_length - length_, 0);
         RectangleAABB head = RectangleAABB(head_length, width_, head_center);
 
@@ -32,7 +32,7 @@ namespace collision {
     void Truck::init_rotated()
     {}
 
-    std::vector<TruckConstPtr> Truck::unpack() const { return unpack(); }
+    std::vector<ShapeConstPtr> Truck::unpack() const { return ShapeGroup::unpack(); }
 
 #if ENABLE_SERIALIZER
 namespace serialize {

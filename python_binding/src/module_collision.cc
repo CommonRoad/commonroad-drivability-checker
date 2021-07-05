@@ -1080,7 +1080,7 @@ void init_module_collision(py::module &m) {
               py::object callstack) {
              py::object pycrcc = py::module::import(
                  "commonroad_dc.collision.visualization.drawing");
-             py::object draw = pycrcc.attr("draw_collision_shapegroup");
+             py::object draw = pycrcc.attr("draw_collision_truck");
              draw(c, renderer, draw_params, callstack);
            },
            py::arg("renderer"), py::arg("draw_params") = py::none(),
