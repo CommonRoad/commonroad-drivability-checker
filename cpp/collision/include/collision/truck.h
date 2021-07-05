@@ -12,17 +12,16 @@ typedef std::shared_ptr<const Truck> TruckConstPtr;
 
 class Truck : public ShapeGroup {
 public:
-    Truck(){}
-    Truck(const Eigen::Vector2d &center, const std::vector<double> params)
+    Truck(const Eigen::Vector2d &center=Eigen::Vector2d(0, 0), const std::map<std::string, double> params=std::map<std::string, double>())
     : ShapeGroup()
     {
         center_ = center;
-        length_ = params[0];
-        width_ = params[1];
-        trailer_dist_ = params[2];
-        trailer_length_ = params[3];
-        orientation_ = params[4];
-        hitch_angle_ = params[5];
+        length_ = params.count("length") ? params.at("length") : 7;
+        width_ = params.count("width") ? params.at("width") : 2;
+        trailer_dist_ = params.count("trailer_dist") ? params.at("trailer_dist") : 0.5;
+        trailer_length_ = params.count("trailer_length") ? params.at("trailer_length") : 5;
+        orientation_ = params.count("orientation") ? params.at("orientation") : 0;
+        hitch_angle_ = params.count("hitch") ? params.at("hitch") : 0;
         init_truck();
     }
     virtual ~Truck() {}
