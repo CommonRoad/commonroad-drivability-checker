@@ -7,7 +7,7 @@ from typing import Union, Any
 
 import shapely
 import shapely.geometry
-from commonroad.common.solution import  VehicleType
+from commonroad.common.solution import VehicleType
 from commonroad.scenario.scenario import Scenario
 from commonroad.scenario.traffic_sign import SupportedTrafficSignCountry
 from commonroad.scenario.traffic_sign_interpreter import TrafficSigInterpreter
@@ -462,9 +462,18 @@ class LaneletRouteMatcher:
         return l_seq, properties
 
     def compute_curvilinear_coordinates(self, trajectory: Trajectory, required_properties: List[SolutionProperties],
-                                        draw_lanelet_path=False, debug_plot=False) \
+                                        draw_lanelet_path=False, debug_plot=False,
+                                        lon_trajectory_smoothing_window = 13) \
             -> Tuple[Trajectory, List[int], Dict[SolutionProperties, Dict[int, Any]]]:
-
+        """
+        Converts trajectory to curvilinear coordinates
+        :param trajectory: trajectory in cartesian coordinates
+        :param required_properties: additional properties that should be retrieved
+        :param draw_lanelet_path: draw the lanelet path of the reference path on which the trajectory is mapped
+        :param debug_plot: create plots for debugging in case of projection errors
+        :param lon_trajectory_smoothing_window: number of time steps for smoothing filter of longitudinal positions
+        :return:
+        """
         lanelets, properties = self.find_lanelets_by_trajectory(trajectory, required_properties)
         cosys = []
         border_vertices = []
@@ -640,7 +649,10 @@ class LaneletRouteMatcher:
         positions_long = np.array([s.lon_position for s in curvilinear_states])
         positions_long = cleanup_discontinuities(positions_long, ds_0=trajectory.state_list[0].velocity, tol=1,
                                                  dt=self.scenario.dt)
-        positions_long = savgol_filter(positions_long, 13, 3)
+
+        if len(positions_long) > lon_trajectory_smoothing_window:
+            positions_long = savgol_filter(positions_long, lon_trajectory_smoothing_window, 3)
+
         velocities_long = np.gradient(positions_long, self.scenario.dt)
         accelerations_long = np.gradient(velocities_long, self.scenario.dt)
         jerks_long = np.gradient(accelerations_long, self.scenario.dt)
