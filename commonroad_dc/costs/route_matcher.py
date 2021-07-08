@@ -463,7 +463,7 @@ class LaneletRouteMatcher:
 
     def compute_curvilinear_coordinates(self, trajectory: Trajectory, required_properties: List[SolutionProperties],
                                         draw_lanelet_path=False, debug_plot=False,
-                                        lon_trajectory_smoothing_window = 13) \
+                                        trajectory_smoothing_window = 13) \
             -> Tuple[Trajectory, List[int], Dict[SolutionProperties, Dict[int, Any]]]:
         """
         Converts trajectory to curvilinear coordinates
@@ -471,7 +471,7 @@ class LaneletRouteMatcher:
         :param required_properties: additional properties that should be retrieved
         :param draw_lanelet_path: draw the lanelet path of the reference path on which the trajectory is mapped
         :param debug_plot: create plots for debugging in case of projection errors
-        :param lon_trajectory_smoothing_window: number of time steps for smoothing filter of longitudinal positions
+        :param trajectory_smoothing_window: number of time steps for smoothing filter of longitudinal positions
         :return:
         """
         lanelets, properties = self.find_lanelets_by_trajectory(trajectory, required_properties)
@@ -650,8 +650,8 @@ class LaneletRouteMatcher:
         positions_long = cleanup_discontinuities(positions_long, ds_0=trajectory.state_list[0].velocity, tol=1,
                                                  dt=self.scenario.dt)
 
-        if len(positions_long) > lon_trajectory_smoothing_window:
-            positions_long = savgol_filter(positions_long, lon_trajectory_smoothing_window, 3)
+        trajectory_smoothing_window = min(len(positions_long), trajectory_smoothing_window)
+        positions_long = savgol_filter(positions_long, trajectory_smoothing_window, 3)
 
         velocities_long = np.gradient(positions_long, self.scenario.dt)
         accelerations_long = np.gradient(velocities_long, self.scenario.dt)
@@ -663,7 +663,7 @@ class LaneletRouteMatcher:
         # interested in the closest center line:
         positions_lat_unwrapped = cleanup_discontinuities(positions_lat, ds_0=0.0, tol=0.5,
                                                  dt=self.scenario.dt)
-        positions_lat_unwrapped = savgol_filter(positions_lat_unwrapped, 13, 3)
+        positions_lat_unwrapped = savgol_filter(positions_lat_unwrapped, trajectory_smoothing_window, 3)
         velocities_lat = np.gradient(positions_lat_unwrapped, self.scenario.dt)
         accelerations_lat = np.gradient(positions_lat_unwrapped, self.scenario.dt)
         jerks_lat = np.gradient(positions_lat_unwrapped, self.scenario.dt)
