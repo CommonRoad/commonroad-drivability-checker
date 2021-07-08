@@ -650,8 +650,11 @@ class LaneletRouteMatcher:
         positions_long = cleanup_discontinuities(positions_long, ds_0=trajectory.state_list[0].velocity, tol=1,
                                                  dt=self.scenario.dt)
 
+        # ensure window does not exceed trajectory length and is odd
         trajectory_smoothing_window = min(len(positions_long), trajectory_smoothing_window)
-        positions_long = savgol_filter(positions_long, trajectory_smoothing_window, 3)
+        trajectory_smoothing_window -= trajectory_smoothing_window % 2
+        if trajectory_smoothing_window > 6:
+            positions_long = savgol_filter(positions_long, trajectory_smoothing_window, 3)
 
         velocities_long = np.gradient(positions_long, self.scenario.dt)
         accelerations_long = np.gradient(velocities_long, self.scenario.dt)
@@ -663,7 +666,8 @@ class LaneletRouteMatcher:
         # interested in the closest center line:
         positions_lat_unwrapped = cleanup_discontinuities(positions_lat, ds_0=0.0, tol=0.5,
                                                  dt=self.scenario.dt)
-        positions_lat_unwrapped = savgol_filter(positions_lat_unwrapped, trajectory_smoothing_window, 3)
+        if trajectory_smoothing_window > 6:
+            positions_lat_unwrapped = savgol_filter(positions_lat_unwrapped, trajectory_smoothing_window, 3)
         velocities_lat = np.gradient(positions_lat_unwrapped, self.scenario.dt)
         accelerations_lat = np.gradient(positions_lat_unwrapped, self.scenario.dt)
         jerks_lat = np.gradient(positions_lat_unwrapped, self.scenario.dt)
