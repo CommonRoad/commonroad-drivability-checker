@@ -40,8 +40,7 @@ private:
     double orientation_;
     double hitch_angle_;
     void init_truck();
-    void init_simple();
-    void init_rotated();
+    void init();
 
     Truck(const Truck &);
     Truck &operator=(const Truck &) { return *this; };
