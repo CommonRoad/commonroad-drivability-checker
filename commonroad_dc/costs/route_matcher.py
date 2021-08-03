@@ -3,7 +3,7 @@ from collections import defaultdict
 from copy import deepcopy
 from enum import Enum
 from functools import lru_cache
-from typing import Union, Any
+from typing import Union, Any, Optional
 
 import shapely
 import shapely.geometry
@@ -246,7 +246,7 @@ class LaneletRouteMatcher:
         return self._lanelet_cosys[lanelet_id]
 
     def _select_by_best_alignment(self, lanelets2states: Dict[int, List[State]],
-                                  successor_candidates: List[List[int]]) -> List[int]:
+                                  successor_candidates: List[List[int]]) -> Optional[List[int]]:
         """
         Computes mean square error of deviation of orientations compared to lanelets in successor_candidates
         :param obstacle
@@ -276,9 +276,11 @@ class LaneletRouteMatcher:
             # compute mean square error for deviation of tangent (only if tangent was feasible)
             if len(errors_tmp) > 0:
                 errors[i] = np.square(errors_tmp).mean(axis=0)
-
-
-        best_index = sorted(errors.keys(), key=errors.get)[0]
+        
+        try:
+            best_index = sorted(errors.keys(), key=errors.get)[0]
+        except IndexError:
+            return None
         return successor_candidates[best_index]
 
     def find_lanelets_by_trajectory(self, trajectory: Trajectory, required_properties: List[SolutionProperties],
@@ -389,14 +391,17 @@ class LaneletRouteMatcher:
                                     succ_candidates.append(c_path + path[:i_l+1])
 
                             if len(succ_candidates) > 0:
-                                candidate_paths_next.append(
-                                        self._select_by_best_alignment(lanelets2states, succ_candidates)[1:])
+                                best_path = self._select_by_best_alignment(lanelets2states, succ_candidates)
+                                if best_path:
+                                    candidate_paths_next.append(best_path[1:])
 
                     if len(candidate_paths_next) == 0:
                         # still no candidate -> add by best alignement
                         if candidate_paths:
-                            l_seq.extend(self._select_by_best_alignment(lanelets2states, candidate_paths)[1:])
-                        candidate_paths_next = [[None, l] for l in l_tmp]
+                            best_path = self._select_by_best_alignment(lanelets2states, candidate_paths)
+                            if best_path:
+                                l_seq.extend(best_path[1:])
+                                candidate_paths_next = [[None, l] for l in l_tmp]
 
                 if len(candidate_paths_next) == 1:
                     # only one candidate path left -> add to sequence and reset
@@ -428,7 +433,9 @@ class LaneletRouteMatcher:
 
         # check if there are candidates left and use best aligned candidate
         if candidate_paths_next:
-            l_seq.extend(self._select_by_best_alignment(lanelets2states, candidate_paths_next)[1:])
+            best_path = self._select_by_best_alignment(lanelets2states, candidate_paths_next)
+            if best_path:
+                l_seq.extend(best_path[1:])
 
         if exclude_oncoming_lanes and len(l_seq) > 1:
             # exclude oncoming lanes when switching back to previous lane
