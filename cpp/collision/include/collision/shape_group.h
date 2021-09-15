@@ -37,6 +37,8 @@ class ShapeGroup : public CollisionObjectEx,
   friend class collision::test::ShapeGroupTest;
 #endif
 
+    friend class Truck;
+
  public:
   virtual const ISolverEntity_FCL *getFclInterface() const override {
     return this;
@@ -99,6 +101,10 @@ class ShapeGroup : public CollisionObjectEx,
 
   int queryContainedObjectIndexList(const CollisionObject *,
                                     std::list<int> &retlist) const override;
+
+protected:
+    std::vector<ShapeConstPtr> getShapes();
+    std::unordered_map<const CollisionObject *, std::list<int>> getShapesMap();
 
  private:
   std::vector<ShapeConstPtr> shapes_;

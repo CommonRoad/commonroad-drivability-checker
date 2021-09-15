@@ -202,6 +202,10 @@ void ShapeGroup::addParentMap(
     shape->addParentMap(parent_map, shared_from_this());
   }
 }
+
+std::vector<ShapeConstPtr> ShapeGroup::getShapes() { return shapes_; }
+std::unordered_map<const CollisionObject *, std::list<int>> ShapeGroup::getShapesMap() { return shapes_map_; }
+
 #if ENABLE_SERIALIZER
 
 namespace serialize {

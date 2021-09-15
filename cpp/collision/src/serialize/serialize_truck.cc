@@ -38,7 +38,7 @@ bool TruckExport::operator()(const s11nlite::node_type &src) {
 }
 
 CollisionObject *TruckExport::loadObject(void) {
-  Truck *tr = new Truck();
+  auto tr = new Truck();
   for (auto obj : m_children) {
     CollisionObject *loaded_obj_ptr = obj->loadObject();
     if (!loaded_obj_ptr) {

@@ -1054,7 +1054,7 @@ void init_module_collision(py::module &m) {
 
       ;
 
-  py::class_<collision::Truck, collision::ShapeGroup, collision::CollisionObject,
+  py::class_<collision::Truck, collision::CollisionObject,
             std::shared_ptr<collision::Truck>>(m, "Truck")
       .def(py::init([](double x, double y, std::map<std::string, double> params)
       {
@@ -1083,7 +1083,7 @@ void init_module_collision(py::module &m) {
              return ret_list;
            })
       .def("draw",
-           [](const std::shared_ptr<collision::ShapeGroup> &c,
+           [](const std::shared_ptr<collision::Truck> &c,
               py::object renderer, py::object draw_params,
               py::object callstack) {
              py::object pycrcc = py::module::import(
