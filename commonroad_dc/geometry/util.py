@@ -85,14 +85,8 @@ def compute_curvature_from_polyline(polyline: np.ndarray) -> np.ndarray:
     """
     assert isinstance(polyline, np.ndarray) and polyline.ndim == 2 and len(
         polyline[:, 0]) > 2, 'Polyline malformed for curvature computation p={}'.format(polyline)
-    x_d = np.gradient(polyline[:, 0])
-    x_dd = np.gradient(x_d)
-    y_d = np.gradient(polyline[:, 1])
-    y_dd = np.gradient(y_d)
 
-    # compute curvature
-    curvature = (x_d * y_dd - x_dd * y_d) / ((x_d ** 2 + y_d ** 2) ** (3. / 2.))
-
+    curvature=pycrccosy.Util.compute_curvature(polyline)
     return curvature
 
 

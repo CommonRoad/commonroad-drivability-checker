@@ -183,7 +183,6 @@ PYBIND11_MODULE(pycrcc, m) {
 
         return ret_list;
       });
-
   mutil.def(
       "trajectories_enclosure_polygons_static_grid",
       [](py::list &trajectories,
@@ -388,6 +387,83 @@ PYBIND11_MODULE(pycrcc, m) {
         }
 
         return collision_index;
+      });
+
+  mutil.def(
+      "filter_trajectories_polygon_enclosure_first_timestep",
+      [](py::list trajectories, collision::ShapeGroup &obj) {
+        aligned_vector<const collision::TimeVariantCollisionObject *> traj_in;
+
+        if (preprocess_input_tvobstacles(trajectories, traj_in))
+          return py::list();
+
+        bool error = false;
+
+        py::list traj_out;
+
+        int cc1 = 0;
+
+        Eigen::MatrixXd traj_exported(trajectories.size(), 5);
+
+        for (auto traj : traj_in) {
+          auto rect_obj = traj->getFirstObstaclePtr();
+          if (rect_obj->getCollisionObjectType() ==
+              collision::OBJ_TYPE_OBB_BOX) {
+            auto obb_obj_ptr =
+                static_cast<const collision::RectangleOBB *>(rect_obj);
+
+            traj_exported(cc1, 0) = obb_obj_ptr->r_x();
+            traj_exported(cc1, 1) = obb_obj_ptr->r_y();
+            traj_exported(cc1, 2) = obb_obj_ptr->orientation();
+            auto center = obb_obj_ptr->center();
+            traj_exported(cc1, 3) = center[0];
+            traj_exported(cc1, 4) = center[1];
+          } else if (rect_obj->getCollisionObjectType() ==
+                     collision::OBJ_TYPE_AABB_BOX) {
+            auto aabb_obj_ptr =
+                static_cast<const collision::RectangleAABB *>(rect_obj);
+
+            traj_exported(cc1, 0) = aabb_obj_ptr->r_x();
+            traj_exported(cc1, 1) = aabb_obj_ptr->r_y();
+            traj_exported(cc1, 2) = 0;
+            auto center = aabb_obj_ptr->center();
+            traj_exported(cc1, 3) = center[0];
+            traj_exported(cc1, 4) = center[1];
+          } else {
+            throw std::invalid_argument(
+                "only trajectories containing obb boxes are currently "
+                "supported");
+          }
+
+          cc1++;
+        }
+        cc1 = 0;
+        for (auto traj : traj_in) {
+          int collision_index = -1;
+
+          const collision::RectangleOBB rect_cur(
+              traj_exported(cc1, 0), traj_exported(cc1, 1),
+              traj_exported(cc1, 2),
+              Eigen::Vector2d(traj_exported(cc1, 3), traj_exported(cc1, 4)));
+          bool loc_within = false;
+
+          int loc_err = collision::geometry_queries::test_polygon_enclosure(
+              obj, rect_cur, loc_within);
+          if (loc_err) {
+            error = true;
+          } else if (!loc_within) {
+            collision_index = 0;
+          }
+
+          if (collision_index == -1) {
+            traj_out.append(trajectories[cc1]);
+          }
+          cc1++;
+        }
+
+        if (error) throw std::invalid_argument("invalid polygon input");
+
+        return traj_out;
       });
 
   mutil.def(

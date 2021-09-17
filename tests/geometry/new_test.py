@@ -14,6 +14,7 @@ from commonroad_dc.boundary import boundary
 from commonroad_dc.boundary.boundary import create_road_boundary_obstacle
 
 from commonroad_dc.geometry import geometry
+from commonroad_dc.geometry import util
 
 import commonroad_dc.pycrcc as pycrcc
 import commonroad_dc.pycrccosy as pycrccosy
@@ -46,6 +47,20 @@ from functools import partial
 
 from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline
 
+
+def compute_curvature_old(polyline):
+    assert isinstance(polyline, np.ndarray) and polyline.ndim == 2 and len(
+        polyline[:, 0]) > 2, 'Polyline malformed for curvature computation p={}'.format(polyline)
+
+    x_d = np.gradient(polyline[:, 0])
+    x_dd = np.gradient(x_d)
+    y_d = np.gradient(polyline[:, 1])
+    y_dd = np.gradient(y_d)
+
+    # compute curvature
+    curvature = (x_d * y_dd - x_dd * y_d) / ((x_d ** 2 + y_d ** 2) ** (3. / 2.))
+    return curvature
+
 def collectMyResult(result):
     print("Got result {}".format(str(result)))
     res_dict[result[0]]=(result[1],)
@@ -74,6 +89,32 @@ def scenario_time(path,id):
             res = geometry.CurvilinearCoordinateSystem(ref_path, 20., 0.1, 1e-4)
         except(geometry.RefPathLengthException):
             print("Reference path length is invalid")
+
+            continue
+
+        curvature1=compute_curvature_old(np.asarray(res.reference_path()))
+        curvature2=util.compute_curvature_from_polyline(np.asarray(res.reference_path()))
+
+        if not (np.isclose(curvature1,curvature2).all() and (len(curvature1)==len(curvature2))):
+            print("Curvature computation error")
+
+            continue
+
+        import pickle
+        cosy_dumps1 = pickle.dumps(res)
+        obj2 = pickle.loads(cosy_dumps1)
+        cosy_dumps2 = pickle.dumps(obj2)
+        res.set_curvature(curvature2)
+        cosy_dumps3 = pickle.dumps(res)
+        obj2 = pickle.loads(cosy_dumps3)
+        cosy_dumps4 = pickle.dumps(obj2)
+        res.compute_and_set_curvature()
+        cosy_dumps5 = pickle.dumps(res)
+        obj2 = pickle.loads(cosy_dumps5)
+        cosy_dumps6 = pickle.dumps(obj2)
+
+        if not (cosy_dumps1==cosy_dumps2 and cosy_dumps3==cosy_dumps4 and cosy_dumps3==cosy_dumps5 and cosy_dumps3==cosy_dumps6):
+            print("Curvature pickle error")
 
             continue
 

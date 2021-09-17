@@ -144,8 +144,8 @@ def construct(scenario, build_order, boundary_margin=20):
 
 def construct_boundary_obstacle_triangulation(scenario: Scenario,
                                               build=['section_triangles', ('triangulation', {'max_area': '1'})],
-                                              submethod_return='triangulation'):
-    return construct(scenario, build)[submethod_return]
+                                              submethod_return='triangulation', boundary_margin=20):
+    return construct(scenario, build, boundary_margin)[submethod_return]
 
 
 def _convert_tristrips_to_triangles(tri_strips, bb, axis):
@@ -253,7 +253,7 @@ def _GPCToCollisionPolygons(GPC_polygons, triangulate=True):
     return sg_poly
 
 
-def construct_boundary_obstacle_obb_rectangles(scenario: Scenario, width=1e-5):
+def construct_boundary_obstacle_obb_rectangles(scenario: Scenario, width=1e-5, open_lane_ends=True):
     """
     In contrast to triangulation, this method creates a set of oriented rectangles that separates the road and the road boundary.
     To compute the set, we perform a polygon union operation for all lanelets and then use oriented rectangles to represent each line segment of the resulant polygons with holes.
@@ -264,8 +264,38 @@ def construct_boundary_obstacle_obb_rectangles(scenario: Scenario, width=1e-5):
 
     :param scenario: The input scenario to be triangulated.
     :param width: Width of the generated rectangles. Default: 1e-5.
+    :param open_lane_ends: Do not create the boundary for the beginning and the end of the lanelets that have no successor or predecessor.
     :return: ShapeGroup with the Collision Checker rectangle objects.
     """
+
+    def remove_border_rect(sg_rect):
+        midpoints = list()
+        sg_spheres = pycrcc.ShapeGroup()
+        lanelets = scenario.lanelet_network.lanelets
+        for ind, lanelet in enumerate(lanelets):
+            if len(lanelet.successor) == 0:
+                pt1 = (lanelet.right_vertices[-1])
+                pt2 = (lanelet.left_vertices[-1])
+                midpoints.append((pt1 + pt2) / 2)
+
+            if len(lanelet.predecessor) == 0:
+                pt1 = (lanelet.right_vertices[0])
+                pt2 = (lanelet.left_vertices[0])
+
+                midpoints.append((pt1 + pt2) / 2)
+
+        for el in midpoints:
+            sg_spheres.add_shape(pycrcc.Circle(1e-4, el[0], el[1]))
+
+        overlap_map = sg_rect.overlap_map(sg_spheres)
+
+        sg_rect_new = pycrcc.ShapeGroup()
+        shapes = sg_rect.unpack()
+
+        for el in overlap_map.keys():
+            if (len(overlap_map[el]) == 0):
+                sg_rect_new.add_shape(shapes[el])
+        return sg_rect_new
 
     def whole_polygon_setup(polylines):
         polygon = gpc.Polygon()
@@ -290,8 +320,10 @@ def construct_boundary_obstacle_obb_rectangles(scenario: Scenario, width=1e-5):
 
     sg_rectangles = polygon_contours_build_rectangles(sg_poly, width)
 
-    return sg_rectangles
-
+    if open_lane_ends:
+        return remove_border_rect(sg_rectangles)
+    else:
+        return sg_rectangles
 
 def postprocess_create_static_obstacle_triangles(scenario: Scenario, shape_group: pycrcc.ShapeGroup):
     initial_state = State(position=np.array([0, 0]), orientation=0.0, time_step=0)
