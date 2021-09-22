@@ -2,7 +2,7 @@ import commonroad_dc.pycrccosy as pycrccosy
 import numpy as np
 
 from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline, \
-    compute_curvature_from_polyline
+    compute_curvature_from_polyline, compute_polyline_length
 
 
 class RefPathLengthException(Exception):
@@ -14,7 +14,11 @@ class CurvilinearCoordinateSystem(pycrccosy.CurvilinearCoordinateSystem):
                  resample=True):
         if resample:
             ref_path = chaikins_corner_cutting(ref_path, 10)
-            ref_path = resample_polyline(ref_path, 2.0)
+            length = compute_polyline_length(ref_path)
+            if length > 6.0:
+                ref_path = resample_polyline(ref_path, 2.0)
+            else:
+                ref_path = resample_polyline(ref_path, length / 10.0)
 
         if len(ref_path) < 3:
             raise RefPathLengthException("Reference path length is invalid")
