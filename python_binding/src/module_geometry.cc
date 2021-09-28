@@ -126,8 +126,14 @@ void init_module_geometry(py::module &m) {
           "Currently, the curvature of the reference path is not computed "
           "automatically upon construction. "
           "The function sets the curvature information manually. "
-          "Note that the validity of the curvature is not checked, e.g., if it indeed corresponds to the reference path\
-		   of the curvilinear coordinate system. For an automatic version, please also refer to the member function compute_and_set_curvature. \n\n:param curvature: curvature of the reference path")
+          "Note that the validity of the curvature is not checked, e.g., if it indeed corresponds to the reference path"
+		  "of the curvilinear coordinate system. For an automatic version, please also refer to the member function compute_and_set_curvature. \n\n:param curvature: curvature of the reference path")
+
+      .def("get_curvature", &geometry::CurvilinearCoordinateSystem::curvatureVector,
+           "Returns the curvature of the reference path as a list."
+           "If the returned list is empty, please set the curvature first using"
+           "the member function compute_and_set_curvature().")
+
 
       .def("curvature_range",
            &geometry::CurvilinearCoordinateSystem::curvatureRange,
