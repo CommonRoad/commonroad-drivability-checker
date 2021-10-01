@@ -80,13 +80,19 @@ void init_module_geometry(py::module &m) {
           py::init<const geometry::EigenPolyline &, const double, const double,
                    const double>(),
 
-          "Creates a curvilinear coordinate system aligned to the given reference path.\n\
-    The unique projection domain along the reference path is automatically computed.\n\
-    The absolute value of the lateral distance of the projection domain border from the reference path is\n\
-    limited to default_projection_domain_limit.\n\
-    To account for numeric imprecisions, the parameter eps reduces the computed lateral distance of the\n\
-    projection domain border from the reference path.\n:param reference_path: 2D polyline in Cartesian coordinates\n:param default_projection_domain_limit: maximum absolute distance of the projection domain border from the reference path, defaults to 20\n:param eps: reduces the lateral distance of the projection domain border from the reference path, defaults to 0.1\n:param eps2: if nonzero, add additional segments to the beginning (3 segments) and the end (2 segments) of the reference path to enable the conversion of the points near the beginning and the end of the reference path, eps2 defaults to 1e-4."
-
+          "Creates a curvilinear coordinate system aligned to the given reference path."
+    "The unique projection domain along the reference path is automatically computed."
+    "The absolute value of the lateral distance of the projection domain border from the reference path is"
+    "limited to default_projection_domain_limit."
+    "To account for numeric imprecisions, the parameter eps reduces the computed lateral distance of the"
+    "projection domain border from the reference path."
+    "\n\n:param reference_path: 2D polyline in Cartesian coordinates"
+    "\n\n:param default_projection_domain_limit: maximum absolute distance of the projection domain border"
+    "from the reference path, defaults to 20"
+    "\n\n:param eps: reduces the lateral distance of the projection domain border from the reference path, defaults to 0.1"
+    "\n\n:param eps2: if nonzero, add additional segments to the beginning (3 segments) and the end (2 segments) of the"
+    "reference path to enable the conversion of the points near the beginning and the end of the reference path,"
+    "eps2 defaults to 1e-4."
           )
       .def("length", &geometry::CurvilinearCoordinateSystem::length,
            ":return: length of the reference path of the curvilinear "
@@ -132,7 +138,7 @@ void init_module_geometry(py::module &m) {
       .def("get_curvature", &geometry::CurvilinearCoordinateSystem::curvatureVector,
            "Returns the curvature of the reference path as a list."
            "If the returned list is empty, please set the curvature first using"
-           "the member function compute_and_set_curvature().")
+           "the member function compute_and_set_curvature(). \n\n:Returns: list with curvature of reference path")
 
 
       .def("curvature_range",

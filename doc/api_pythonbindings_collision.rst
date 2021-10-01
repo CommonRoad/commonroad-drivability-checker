@@ -60,7 +60,7 @@ Python Bindings pycrcc
    :special-members:
 
 ``OBBTrajectoryBatch`` class
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. autoclass:: OBBTrajectoryBatch
    :members:
    :special-members:
