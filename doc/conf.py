@@ -18,8 +18,8 @@ print('documentation root' + os.path.abspath(os.path.join(os.path.dirname(__file
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../commonroad_dc')))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../tutorials')))
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__) + '/../../third_party/commonroad-vehicle-models/Python'))
-#sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../commonroad-io')) # ToDo: change this
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__) + '/../../commonroad-vehicle-models/Python'))  # ToDo: change this
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../commonroad-io'))  # ToDo: change this
 import commonroad_dc.pycrcc as pycrcc
 
 
@@ -32,7 +32,7 @@ copyright = '2021, Technical University of Munich, Professorship Cyber-Physical 
 author = 'Technical University of Munich, Professorship Cyber-Physical Systems'
 
 # The full version, including alpha/beta/rc tags
-release = '2021.1'
+release = '2021.4'
 
 
 # -- General configuration ---------------------------------------------------

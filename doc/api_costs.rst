@@ -1,4 +1,4 @@
-.. _api_feasibility:
+.. _api_costs:
 
 Module costs
 ==================
