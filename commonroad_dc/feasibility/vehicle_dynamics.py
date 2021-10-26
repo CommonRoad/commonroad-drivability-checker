@@ -566,7 +566,7 @@ class KinematicSingleTrackTrailerDynamics(VehicleDynamics):
             getattr(state, 'steering_angle', steering_angle_default),  # not defined in initial state
             state.velocity,
             state.orientation,
-            getattr(state, 'hitch_angle', hitch_angle_default), # not defined in initial state
+            getattr(state, 'hitch_angle', hitch_angle_default) # not defined in initial state
         ]
         time_step = state.time_step
         return np.array(values), time_step

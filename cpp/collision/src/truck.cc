@@ -36,11 +36,11 @@ namespace collision {
     void Truck::init()
     {
         double head_length = (2 * length_ - 2 * trailer_length_ - trailer_dist_) / 2;
-        Eigen::Vector2d head_center = center_ + Eigen::Vector2d(abs(length_ - head_length), width_ * sin(orientation_));
+        Eigen::Vector2d head_center = center_ + (length_ - head_length) * Eigen::Vector2d(sin(orientation_), cos(orientation_));
         RectangleOBB head = RectangleOBB(head_length, width_, orientation_, head_center);
 
-        Eigen::Vector2d trailer_center = center_ - Eigen::Vector2d(abs(length_ - trailer_length_), -sin(orientation_) / width_ );
-        RectangleOBB trailer = RectangleOBB(trailer_length_, width_, 0, trailer_center);
+        Eigen::Vector2d trailer_center = center_ - (length_ - trailer_length_) * Eigen::Vector2d(cos(orientation_ + hitch_angle_), sin(orientation_ + hitch_angle_));
+        RectangleOBB trailer = RectangleOBB(trailer_length_, width_, orientation_ + hitch_angle_, trailer_center);
 
         shapeGroup_->addToGroup(std::make_shared<const RectangleOBB>(head));
         shapeGroup_->addToGroup(std::make_shared<const RectangleOBB>(trailer));

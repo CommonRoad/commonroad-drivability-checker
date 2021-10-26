@@ -15,6 +15,9 @@ class FeasibilityException(Exception):
 class StateTransitionException(FeasibilityException):
     pass
 
+#TODO: occupancy in commonroad-io
+#TODO: check if bounding boxes are constructed correctly for the truck model
+
 
 class FeasibilityObjectiveException(StateTransitionException):
     pass
