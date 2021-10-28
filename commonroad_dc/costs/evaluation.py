@@ -165,10 +165,9 @@ class CostFunctionEvaluator:
         :param cr_scenario: scenario
         :param cr_pproblem: planning problem that is solved by trajectory
         :param trajectory: solution trajectory
-        :param draw_lanelet_path: optionally visualize the detected lanelet path with respect to whose some
-        parameters for the cost computation are determined (only useful for development).
+        :param draw_lanelet_path: optionally visualize the detected lanelet path with respect to whose some parameters for the cost computation are determined (only useful for development).
         :param debug_plot: show plot in case a trajectory cannot be transformed to curvilinear coordinates.
-        :return:
+        :return: result of evaluation
         """
         evaluation_result = PlanningProblemCostResult(cost_function_id=self.cost_function_id,
                                                       solution_id=cr_pproblem.planning_problem_id)

@@ -33,6 +33,10 @@ class TimeVariantCollisionObject : public CollisionObjectEx {
   TimeVariantCollisionObject(int time_start_idx);
   CollisionObjectConstPtr getObstacleAtTime(int time_idx) const;
   const CollisionObject *getObstacleAtTimePtr(int time_idx) const;
+  const CollisionObject *getFirstObstaclePtr() const
+  {
+	  return *(collision_object_at_time_ptr_.begin());
+  };
 
   int appendObstacle(CollisionObjectConstPtr obstacle);
   virtual CollisionObjectConstPtr timeSlice(

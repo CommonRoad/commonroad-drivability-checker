@@ -1,21 +1,19 @@
 #ifndef SEGMENT_H
 #define SEGMENT_H
 
-#include <vector>
 #include <algorithm>
 #include <utility>
+#include <vector>
 
 #include <Eigen/Dense>
 
 #include "geometry/util.h"
 
-
 namespace geometry {
 
-class CurvilinearCoordinateSystem; // forward declaration
+class CurvilinearCoordinateSystem;  // forward declaration
 
 class Segment {
-
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -29,7 +27,8 @@ class Segment {
    * @param t_1 tangent vector at the start of the segment
    * @param t_2 tangent vector at the end of the segment
    */
-  Segment(Eigen::Vector2d pt_1, Eigen::Vector2d pt_2, Eigen::Vector2d t_1, Eigen::Vector2d t_2);
+  Segment(Eigen::Vector2d pt_1, Eigen::Vector2d pt_2, Eigen::Vector2d t_1,
+          Eigen::Vector2d t_2);
 
   /**
    * @return start point of segment in Cartesian coordinates
@@ -60,7 +59,8 @@ class Segment {
    *
    * Normal vector at a specific longitudinal coordinate
    *
-   * @param s_local longitudinal coordinate in local coordinate system of segment
+   * @param s_local longitudinal coordinate in local coordinate system of
+   * segment
    * @return normal vector
    */
   Eigen::Vector2d normal(double s_local) const;
@@ -69,7 +69,8 @@ class Segment {
    *
    * Tangent vector at a specific longitudinal coordinate
    *
-   * @param s_local longitudinal coordinate in local coordinate system of segment
+   * @param s_local longitudinal coordinate in local coordinate system of
+   * segment
    * @return tangent vector
    */
   Eigen::Vector2d tangent(double s_local) const;
@@ -85,7 +86,8 @@ class Segment {
   Eigen::Vector2d convertToCartesianCoords(double s, double l) const;
 
   /**
-   * Transforms a point in the global coordinate frame to the curvilinear coordinate frame.
+   * Transforms a point in the global coordinate frame to the curvilinear
+   * coordinate frame.
    *
    * @param x global x-coordinate of point
    * @param y global y-coordinate of point
@@ -96,17 +98,21 @@ class Segment {
   /**
    * Transforms a rectangle to the Cartesian coordinate frame.
    *
-   * @param s_lo_local minimum longitudinal coordinate of the rectangle in the local coordinate frame of the segment
-   * @param s_hi_local maximum longitudinal coordinate of the rectangle in the local coordinate frame of the segment
+   * @param s_lo_local minimum longitudinal coordinate of the rectangle in the
+   * local coordinate frame of the segment
+   * @param s_hi_local maximum longitudinal coordinate of the rectangle in the
+   * local coordinate frame of the segment
    * @param l_lo minimum lateral coordinate of the rectangle.
    * @param l_hi maximum lateral coordinate of the rectangle
-   * @return triangle mesh representing the transformed rectangle in cartesian coordinates.
- */
+   * @return triangle mesh representing the transformed rectangle in cartesian
+   * coordinates.
+   */
   std::vector<EigenPolyline> convertRectangleToCartesianCoords(
       double s_lo_local, double s_hi_local, double l_lo, double l_hi) const;
 
   /**
-   * Transforms multiple points in the global coordinate frame to the local coordinate frame of the segment.
+   * Transforms multiple points in the global coordinate frame to the local
+   * coordinate frame of the segment.
    *
    * @param[in] points in the global coordinate frame
    * @param[out] p_local points in the local frame of the segment
@@ -123,26 +129,30 @@ class Segment {
 
  private:
   /**
-   * Transforms a point in the global coordinate frame to the curvilinear coordinate frame and also
-   * returns the corresponding lambda.
+   * Transforms a point in the global coordinate frame to the curvilinear
+   * coordinate frame and also returns the corresponding lambda.
    *
    * @param[in] x global x-coordinate of point
    * @param[in] y global y-coordinate of point
    * @param[out] lambda
    * @return point in the curvilinear frame
    */
-  Eigen::Vector2d convertToCurvilinearCoords(double x, double y, double &lambda) const;
+  Eigen::Vector2d convertToCurvilinearCoords(double x, double y,
+                                             double &lambda) const;
 
   /**
-   * Computes the lambda for a given point in the local coordinate system of the segment.
+   * Computes the lambda for a given point in the local coordinate system of the
+   * segment.
    *
-   * @param s_local longitudinal coordinate in local coordinate system of segment
+   * @param s_local longitudinal coordinate in local coordinate system of
+   * segment
    * @return lambda
    */
   double computeLambda(Eigen::Vector2d p_local) const;
 
   /**
-   * Computes the lambda for a given longitudinal coordinate in the local coordinate system of the segment.
+   * Computes the lambda for a given longitudinal coordinate in the local
+   * coordinate system of the segment.
    *
    * @param p_local point in the local coordinate system of the segment
    * @return lambda
@@ -158,13 +168,15 @@ class Segment {
   Eigen::Vector2d computeBasePoint(double lambda) const;
 
   /**
-   * Computes the pseudo normal vector for a given base point and point given in the global coordinate frame.
+   * Computes the pseudo normal vector for a given base point and point given in
+   * the global coordinate frame.
    *
    * @param p_lambda base point
    * @param p point in the global coordinate frame
    * @return pseudo normal
    */
-  Eigen::Vector2d computePseudoNormal(Eigen::Vector2d p_lambda, Eigen::Vector2d p) const;
+  Eigen::Vector2d computePseudoNormal(Eigen::Vector2d p_lambda,
+                                      Eigen::Vector2d p) const;
 
   /**
    * Computes the pseudo tangent vector for a given lambda.
@@ -183,17 +195,20 @@ class Segment {
   Eigen::Vector2d computePseudoTangentGlobal(double lambda) const;
 
   /**
-   * Computes the signed pseudo distance of a point in the local coordinate system of the segment.
-   * Points on the left/right side of the segment have a positive/negative pseudo distance.
+   * Computes the signed pseudo distance of a point in the local coordinate
+   * system of the segment. Points on the left/right side of the segment have a
+   * positive/negative pseudo distance.
    *
    * @param pseudo_normal
    * @param p_local point in the local coordinate system of the segment
    * @return signed pseudo distance
    */
-  double computeSignedPseudoDistance(Eigen::Vector2d pseudo_normal, Eigen::Vector2d p_local) const;
+  double computeSignedPseudoDistance(Eigen::Vector2d pseudo_normal,
+                                     Eigen::Vector2d p_local) const;
 
   /**
-   * Transforms a point in the global coordinate frame to the local coordinate frame of the segment.
+   * Transforms a point in the global coordinate frame to the local coordinate
+   * frame of the segment.
    *
    * @param p point in the global coordinate frame
    * @return point in the local coordinate frame of the segment
@@ -201,7 +216,8 @@ class Segment {
   Eigen::Vector2d rotateToLocalFrame(Eigen::Vector2d p) const;
 
   /**
-   * Transforms a point in the local coordinate frame of the segment to the global coordinate frame.
+   * Transforms a point in the local coordinate frame of the segment to the
+   * global coordinate frame.
    *
    * @param p_local point in the local coordinate system of the segment
    * @return point in the global coordinate frame
@@ -244,6 +260,6 @@ class Segment {
   double length_;
 };
 
-}
+}  // namespace geometry
 
-#endif // SEGMENT_H
+#endif  // SEGMENT_H

@@ -137,7 +137,8 @@ set(LIB_CRCCOSY_SRC
         geometry/segment.cc
         geometry/curvilinear_coordinate_system.cc
         geometry/util.cc
-        
+        geometry/serialize/serialize_curvil_cs.cc
+        geometry/serialize/public/serialize_public.cc
         )
 
 set(LIB_CRCCOSY_INCLUDE ".")
@@ -148,6 +149,7 @@ target_compile_features(crccosy
         PUBLIC cxx_lambdas cxx_auto_type
         PRIVATE cxx_lambdas cxx_auto_type)
 set_property(TARGET crccosy PROPERTY POSITION_INDEPENDENT_CODE ON)
-target_include_directories(crccosy PUBLIC ${LIB_CRCCOSY_INCLUDE})
+target_include_directories(crccosy PUBLIC ${LIB_CRCCOSY_INCLUDE} ${COLLISION_INCLUDES} ${S11N_INCLUDES})
+target_link_libraries(crccosy PUBLIC ${S11N_LIBRARY})
 
 endif()

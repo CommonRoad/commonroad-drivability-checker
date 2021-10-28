@@ -45,6 +45,10 @@ PYBIND11_MODULE(pycrccosy, m) {
                    return ret;
                  });
 
+  mutil_geom.def("compute_curvature",
+                 &geometry::CurvilinearCoordinateSystem::computeCurvature,
+                 "Computes the curvature of a given polyline");
+
 #endif
 }
 
@@ -76,23 +80,35 @@ void init_module_geometry(py::module &m) {
           py::init<const geometry::EigenPolyline &, const double, const double,
                    const double>(),
 
-          "Creates a curvilinear coordinate system aligned to the given reference path.\n\
-    The unique projection domain along the reference path is automatically computed.\n\
-    The absolute value of the lateral distance of the projection domain border from the reference path is\n\
-    limited to default_projection_domain_limit.\n\
-    To account for numeric imprecisions, the parameter eps reduces the computed lateral distance of the\n\
-    projection domain border from the reference path.\n:param reference_path: 2D polyline in Cartesian coordinates\n:param default_projection_domain_limit: maximum absolute distance of the projection domain border from the reference path, defaults to 20\n:param eps: reduces the lateral distance of the projection domain border from the reference path, defaults to 0.1\n:param eps2: if nonzero, adds additional segments to the beginning (3 segments) and the end (2 segments) of the reference path to enable the conversion of the points near the beginning and the end of the reference path, defaults to 0, the recommended value is 0.000001"
-
+          "Creates a curvilinear coordinate system aligned to the given reference path."
+    "The unique projection domain along the reference path is automatically computed."
+    "The absolute value of the lateral distance of the projection domain border from the reference path is"
+    "limited to default_projection_domain_limit."
+    "To account for numeric imprecisions, the parameter eps reduces the computed lateral distance of the"
+    "projection domain border from the reference path."
+    "\n\n:param reference_path: 2D polyline in Cartesian coordinates"
+    "\n\n:param default_projection_domain_limit: maximum absolute distance of the projection domain border"
+    "from the reference path, defaults to 20"
+    "\n\n:param eps: reduces the lateral distance of the projection domain border from the reference path, defaults to 0.1"
+    "\n\n:param eps2: if nonzero, add additional segments to the beginning (3 segments) and the end (2 segments) of the"
+    "reference path to enable the conversion of the points near the beginning and the end of the reference path,"
+    "eps2 defaults to 1e-4."
           )
       .def("length", &geometry::CurvilinearCoordinateSystem::length,
            ":return: length of the reference path of the curvilinear "
            "coordinate system")
-      .def(
-          "reference_path",
-          &geometry::CurvilinearCoordinateSystem::referencePath,
-          "Returns the border of the unique projection domain of the "
-          "curvilinear coordinate system in Cartesian coordinates\n\n:Returns: "
-          "2D polyline representing the border of the projection domain")
+      .def("reference_path",
+           &geometry::CurvilinearCoordinateSystem::referencePath,
+           "Returns the reference path (extended in both directions by "
+           "default, please refer to the parameter of the class constructor "
+           "eps2 for more details)\n\n:Returns: "
+           "2D polyline representing the reference path (extended)")
+
+      .def("reference_path_original",
+           &geometry::CurvilinearCoordinateSystem::referencePathOriginal,
+           "Returns the initial reference path without its "
+           "extension\n\n:Returns: "
+           "2D polyline representing the reference path (original)")
       .def(
           "projection_domain",
           &geometry::CurvilinearCoordinateSystem::projectionDomainBorder,
@@ -113,9 +129,17 @@ void init_module_geometry(py::module &m) {
            "to the start point of each segment")
       .def(
           "set_curvature", &geometry::CurvilinearCoordinateSystem::setCurvature,
-          "Currently, the curvature of the reference path is not computed automatically and must be set.\
-		   Note that the validity of the curvature is not checked, e.g., if it indeed corresponds to the reference path\
-		   of the curvilinear coordinate system.\n\n:param curvature: curvature of the reference path")
+          "Currently, the curvature of the reference path is not computed "
+          "automatically upon construction. "
+          "The function sets the curvature information manually. "
+          "Note that the validity of the curvature is not checked, e.g., if it indeed corresponds to the reference path"
+		  "of the curvilinear coordinate system. For an automatic version, please also refer to the member function compute_and_set_curvature. \n\n:param curvature: curvature of the reference path")
+
+      .def("get_curvature", &geometry::CurvilinearCoordinateSystem::curvatureVector,
+           "Returns the curvature of the reference path as a list."
+           "If the returned list is empty, please set the curvature first using"
+           "the member function compute_and_set_curvature(). \n\n:Returns: list with curvature of reference path")
+
 
       .def("curvature_range",
            &geometry::CurvilinearCoordinateSystem::curvatureRange,
@@ -302,5 +326,49 @@ void init_module_geometry(py::module &m) {
            "Converts list of points to the curvilinear coordinate "
            "system.\n\n:param points: vector of points in the global "
            "coordinate frame\n\n:param num_omp_threads: number of OMP threads "
-           "for computation\n\n:return: transformed points");
+           "for computation\n\n:return: transformed points")
+
+      .def("compute_and_set_curvature",
+           &geometry::CurvilinearCoordinateSystem::computeAndSetCurvature,
+           "Automatically computes and sets the curvature information for the "
+           "reference path.")
+
+#if ENABLE_SERIALIZER
+      .def(py::pickle(
+          [](const geometry::CurvilinearCoordinateSystem
+                 &obj) {  // __getstate__
+            /* Return a tuple that fully encodes the state of the object */
+            py::list ret;
+            std::string dumped_obj;
+            std::ostringstream obj_dump;
+            obj.serialize(obj_dump);
+            dumped_obj = obj_dump.str();
+            ret.append(py::cast(dumped_obj));
+            return py::make_tuple(ret);
+          },
+          [](py::tuple t) {  // __setstate__
+                             /* Create a new C++ instance */
+            std::string str_in;
+            if (t.size() != 1)
+              throw std::invalid_argument("pickle error - invalid input");
+            py::list list_in;
+            list_in = py::object(t[0]);
+            if (list_in.size() != 1)
+              throw std::invalid_argument("pickle error - invalid input");
+            str_in = list_in[0].cast<std::string>();
+            std::istringstream stream_in(str_in);
+            geometry::CurvilinearCoordinateSystemConstPtr c =
+                geometry::CurvilinearCoordinateSystem::deserialize(stream_in);
+            if (c.get() == 0) {
+              throw std::invalid_argument("pickle error - invalid input");
+            } else {
+              geometry::CurvilinearCoordinateSystemPtr res =
+                  std::const_pointer_cast<
+                      geometry::CurvilinearCoordinateSystem>(c);
+              return res;
+            }
+          }))
+
+#endif
+      ;
 }

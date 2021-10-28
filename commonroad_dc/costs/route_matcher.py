@@ -1,14 +1,13 @@
 import math
 from collections import defaultdict
-from copy import deepcopy, copy
+from copy import deepcopy
 from enum import Enum
 from functools import lru_cache
-from typing import Dict, Tuple, Union, Any
+from typing import Union, Any, Optional
 
 import shapely
 import shapely.geometry
-from commonroad.common.solution import VehicleModel, VehicleType
-from commonroad.scenario.lanelet import LaneletNetwork, Lanelet
+from commonroad.common.solution import VehicleType
 from commonroad.scenario.scenario import Scenario
 from commonroad.scenario.traffic_sign import SupportedTrafficSignCountry
 from commonroad.scenario.traffic_sign_interpreter import TrafficSigInterpreter
@@ -18,17 +17,14 @@ from scipy.signal import savgol_filter
 
 from commonroad_dc import pycrcc
 from commonroad_dc.collision.collision_detection.pycrcc_collision_dispatch import create_collision_object
-from commonroad_dc.collision.visualization.draw_dispatch import draw_object
 from commonroad_dc.feasibility.vehicle_dynamics import VehicleParameterMapping
 from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline
-# from commonroad_dc.lanelet_ccosy.lanelet_ccosy import LaneletCoordinateSystem
-from commonroad_dc.geometry.lanelet_ccosy import LaneletCoordinateSystem
-from commonroad_dc.pycrcc import CollisionObject, CollisionChecker, Point, Circle, RectAABB
+from commonroad_dc.pycrcc import CollisionObject, CollisionChecker, Circle, RectAABB
 
-from typing import List, Set, Dict, Tuple
+from typing import List, Dict, Tuple
 import numpy as np
 import matplotlib.pyplot as plt
-from commonroad.common.util import Interval, subtract_orientations, make_valid_orientation
+from commonroad.common.util import Interval, subtract_orientations
 
 from commonroad.scenario.lanelet import LaneletNetwork, Lanelet
 from commonroad.visualization.mp_renderer import MPRenderer
@@ -250,7 +246,7 @@ class LaneletRouteMatcher:
         return self._lanelet_cosys[lanelet_id]
 
     def _select_by_best_alignment(self, lanelets2states: Dict[int, List[State]],
-                                  successor_candidates: List[List[int]]) -> List[int]:
+                                  successor_candidates: List[List[int]]) -> Optional[List[int]]:
         """
         Computes mean square error of deviation of orientations compared to lanelets in successor_candidates
         :param obstacle
@@ -280,9 +276,11 @@ class LaneletRouteMatcher:
             # compute mean square error for deviation of tangent (only if tangent was feasible)
             if len(errors_tmp) > 0:
                 errors[i] = np.square(errors_tmp).mean(axis=0)
-
-
-        best_index = sorted(errors.keys(), key=errors.get)[0]
+        
+        try:
+            best_index = sorted(errors.keys(), key=errors.get)[0]
+        except IndexError:
+            return None
         return successor_candidates[best_index]
 
     def find_lanelets_by_trajectory(self, trajectory: Trajectory, required_properties: List[SolutionProperties],
@@ -393,14 +391,17 @@ class LaneletRouteMatcher:
                                     succ_candidates.append(c_path + path[:i_l+1])
 
                             if len(succ_candidates) > 0:
-                                candidate_paths_next.append(
-                                        self._select_by_best_alignment(lanelets2states, succ_candidates)[1:])
+                                best_path = self._select_by_best_alignment(lanelets2states, succ_candidates)
+                                if best_path:
+                                    candidate_paths_next.append(best_path[1:])
 
                     if len(candidate_paths_next) == 0:
                         # still no candidate -> add by best alignement
                         if candidate_paths:
-                            l_seq.extend(self._select_by_best_alignment(lanelets2states, candidate_paths)[1:])
-                        candidate_paths_next = [[None, l] for l in l_tmp]
+                            best_path = self._select_by_best_alignment(lanelets2states, candidate_paths)
+                            if best_path:
+                                l_seq.extend(best_path[1:])
+                                candidate_paths_next = [[None, l] for l in l_tmp]
 
                 if len(candidate_paths_next) == 1:
                     # only one candidate path left -> add to sequence and reset
@@ -432,7 +433,9 @@ class LaneletRouteMatcher:
 
         # check if there are candidates left and use best aligned candidate
         if candidate_paths_next:
-            l_seq.extend(self._select_by_best_alignment(lanelets2states, candidate_paths_next)[1:])
+            best_path = self._select_by_best_alignment(lanelets2states, candidate_paths_next)
+            if best_path:
+                l_seq.extend(best_path[1:])
 
         if exclude_oncoming_lanes and len(l_seq) > 1:
             # exclude oncoming lanes when switching back to previous lane
@@ -466,9 +469,18 @@ class LaneletRouteMatcher:
         return l_seq, properties
 
     def compute_curvilinear_coordinates(self, trajectory: Trajectory, required_properties: List[SolutionProperties],
-                                        draw_lanelet_path=False, debug_plot=False) \
+                                        draw_lanelet_path=False, debug_plot=False,
+                                        trajectory_smoothing_window = 13) \
             -> Tuple[Trajectory, List[int], Dict[SolutionProperties, Dict[int, Any]]]:
-
+        """
+        Converts trajectory to curvilinear coordinates
+        :param trajectory: trajectory in cartesian coordinates
+        :param required_properties: additional properties that should be retrieved
+        :param draw_lanelet_path: draw the lanelet path of the reference path on which the trajectory is mapped
+        :param debug_plot: create plots for debugging in case of projection errors
+        :param trajectory_smoothing_window: number of time steps for smoothing filter of longitudinal positions
+        :return:
+        """
         lanelets, properties = self.find_lanelets_by_trajectory(trajectory, required_properties)
         cosys = []
         border_vertices = []
@@ -644,7 +656,13 @@ class LaneletRouteMatcher:
         positions_long = np.array([s.lon_position for s in curvilinear_states])
         positions_long = cleanup_discontinuities(positions_long, ds_0=trajectory.state_list[0].velocity, tol=1,
                                                  dt=self.scenario.dt)
-        positions_long = savgol_filter(positions_long, 13, 3)
+
+        # ensure window does not exceed trajectory length and is odd
+        trajectory_smoothing_window = min(math.floor(len(positions_long) / 1.5), trajectory_smoothing_window)
+        trajectory_smoothing_window -= trajectory_smoothing_window % 2 + 1
+        if trajectory_smoothing_window > 4:
+            positions_long = savgol_filter(positions_long, trajectory_smoothing_window, 3)
+
         velocities_long = np.gradient(positions_long, self.scenario.dt)
         accelerations_long = np.gradient(velocities_long, self.scenario.dt)
         jerks_long = np.gradient(accelerations_long, self.scenario.dt)
@@ -655,7 +673,8 @@ class LaneletRouteMatcher:
         # interested in the closest center line:
         positions_lat_unwrapped = cleanup_discontinuities(positions_lat, ds_0=0.0, tol=0.5,
                                                  dt=self.scenario.dt)
-        positions_lat_unwrapped = savgol_filter(positions_lat_unwrapped, 13, 3)
+        if trajectory_smoothing_window > 4:
+            positions_lat_unwrapped = savgol_filter(positions_lat_unwrapped, trajectory_smoothing_window, 3)
         velocities_lat = np.gradient(positions_lat_unwrapped, self.scenario.dt)
         accelerations_lat = np.gradient(positions_lat_unwrapped, self.scenario.dt)
         jerks_lat = np.gradient(positions_lat_unwrapped, self.scenario.dt)
