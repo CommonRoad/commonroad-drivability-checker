@@ -1,3 +1,4 @@
+import numpy as np
 import commonroad_dc.pycrccosy as pycrccosy
 from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline, compute_polyline_length
 
