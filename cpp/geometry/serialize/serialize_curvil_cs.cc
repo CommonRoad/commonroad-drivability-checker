@@ -2,8 +2,8 @@
 #include "geometry/serialize/serialize.h"
 #if ENABLE_SERIALIZER
 
-#include "collision/serialize/basic_types.h"  // redefines the stream operators for the module
-#include "collision/serialize/vector2d_export.h"  // redefines the stream operators for the module
+#include "geometry/serialize/basic_types.h"  // redefines the stream operators for the module
+#include "geometry/serialize/vector2d_export.h"  // redefines the stream operators for the module
 #include "geometry/curvilinear_coordinate_system.h"
 #include "geometry/serialize/icurvilinear_coordinate_system_export.h"
 
