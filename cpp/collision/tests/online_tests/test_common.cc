@@ -1,6 +1,6 @@
 #include "collision/application.h"
 #if ENABLE_COLLISION_TESTS
-#include "tests/collision/online_tests/test_common.h"
+#include "collision/tests/test_common.h"
 
 #include <fstream>
 

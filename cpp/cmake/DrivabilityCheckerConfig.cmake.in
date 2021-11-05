@@ -1,0 +1,17 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+# Ensure dependencies are available
+find_dependency(Eigen3)
+
+# crcc-specific dependencies
+if(@ADD_MODULE_COLLISION@)
+	find_dependency(fcl)
+	find_dependency(box2d)
+endif()
+
+# Add targets
+include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake")
+
+check_required_components("@PROJECT_NAME@")

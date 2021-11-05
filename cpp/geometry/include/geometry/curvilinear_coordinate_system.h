@@ -17,7 +17,6 @@
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
 
-#include "collision/application.h"
 #include "geometry/serialize/icurvilinear_coordinate_system_export.h"
 
 #include "geometry/segment.h"

@@ -7,11 +7,8 @@
 #include "collision/narrowphase/rectangle_aabb.h"
 
 #include "collision/solvers/fcl/fcl_collision_queries.h"
-#include "tests/collision/online_tests/broadphase_test.h"
-#include "tests/collision/online_tests/test_common.h"
 
 #include "collision/serialize/public/serialize_public.h"
-#include "tests/collision/online_tests/broadphase_failure.h"
 
 #include "collision/solvers/distance_queries.h"
 
@@ -19,6 +16,10 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
+#include "collision/tests/broadphase_test.h"
+#include "collision/tests/test_common.h"
+#include "collision/tests/broadphase_failure.h"
 
 namespace collision {
 namespace test {

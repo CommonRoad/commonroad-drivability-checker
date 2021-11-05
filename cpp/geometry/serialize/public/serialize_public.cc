@@ -1,5 +1,5 @@
 
-#include "collision/application_settings.h"
+#include <geometry/application_settings.h>
 #if ENABLE_SERIALIZER
 #include <stdlib.h>
 #include "geometry/serialize/curvilinear_coordinate_system_export.h"
