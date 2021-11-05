@@ -2,6 +2,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 .coverage
+/cmake-build-debug/
+/build-debug/
 
 # C extensions
 *.so
@@ -43,5 +45,3 @@ doctrees
 
 # macOS
 .DS_Store
-/cmake-build-debug/
-/build-debug/
