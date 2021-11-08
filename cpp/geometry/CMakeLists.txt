@@ -4,8 +4,8 @@ set(LIB_CRCCOSY_SRC
     src/segment.cc
     src/curvilinear_coordinate_system.cc
     src/util.cc
-    serialize/serialize_curvil_cs.cc
-    serialize/public/serialize_public.cc
+    src/serialize/serialize_curvil_cs.cc
+    src/serialize/public/serialize_public.cc
   )
 
 add_library(crccosy SHARED ${LIB_CRCCOSY_SRC})

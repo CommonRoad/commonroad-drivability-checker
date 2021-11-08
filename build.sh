@@ -100,8 +100,18 @@ function fetch_submodules() {
   (
     set -e
     print_progress "Fetching submodules..." -n
-    git submodule init
-    git submodule update
+    if git submodule init ; then
+        print_progress "Submodule init succeeded" -n
+    else
+	print_progress "Submodule init failed" -n
+        exit 1
+    fi
+    if git submodule update ; then
+        print_progress "Submodule update succeeded" -n
+    else
+	print_progress "Submodule update failed" -n
+        exit 1
+    fi
     print_progress "Done!" -n
   )
 }

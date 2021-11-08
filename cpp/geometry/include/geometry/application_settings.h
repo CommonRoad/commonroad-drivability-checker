@@ -1,7 +1,7 @@
 #pragma once
 
 #ifndef ENABLE_SERIALIZER
-#define ENABLE_SERIALIZER 0
+#define ENABLE_SERIALIZER 1
 #endif
 
 #if ENABLE_SERIALIZER

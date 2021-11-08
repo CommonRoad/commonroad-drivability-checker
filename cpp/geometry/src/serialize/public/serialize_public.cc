@@ -2,8 +2,8 @@
 #include <geometry/application_settings.h>
 #if ENABLE_SERIALIZER
 #include <stdlib.h>
-#include "geometry/serialize/curvilinear_coordinate_system_export.h"
 #include "geometry/curvilinear_coordinate_system.h"
+#include "geometry/serialize/curvilinear_coordinate_system_export.h"
 #include "geometry/serialize/public/serialize_public.h"
 #include "geometry/serialize/serialize_reg_impl.h"
 

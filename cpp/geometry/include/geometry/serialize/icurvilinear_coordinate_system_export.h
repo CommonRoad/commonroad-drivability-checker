@@ -11,4 +11,4 @@ class ICurvilinearCoordinateSystemExport {
   virtual ~ICurvilinearCoordinateSystemExport(){};
 };
 }  // namespace serialize
-}  // namespace collision
+}  // namespace geometry

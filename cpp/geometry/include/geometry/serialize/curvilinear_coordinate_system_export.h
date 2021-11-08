@@ -1,7 +1,7 @@
 #pragma once
 #include <s11n.net/s11n/s11nlite.hpp>  // s11nlite framework
-#include "export_structs/curvil_cs_export_struct.h"
 #include "geometry/curvilinear_coordinate_system.h"
+#include "geometry/serialize/export_structs/curvilinear_coordinate_system_export_struct.h"
 #include "geometry/serialize/icurvilinear_coordinate_system_export.h"
 
 namespace geometry {
