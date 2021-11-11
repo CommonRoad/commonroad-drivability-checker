@@ -72,14 +72,14 @@ ${COLLISION_SRC_ROOT}/narrowphase/sphere.cc
 ${COLLISION_SRC_ROOT}/narrowphase/detail/aabb.cc
 ${COLLISION_SRC_ROOT}/solvers/sat2d/sat2d_checks.cc
 
-tests/online_tests/broadphase_test.cc
-tests/online_tests/test_common.cc
+${COLLISION_SRC_ROOT}/tests/online_tests/broadphase_test.cc
+${COLLISION_SRC_ROOT}/tests/online_tests/test_common.cc
 )
 
 
 add_library(crcc SHARED ${COLLISION_SRC})
 
-target_compile_definitions(crcc PRIVATE -DENABLE_COLLISION_TESTS=1)
+#target_compile_definitions(crcc PRIVATE -DENABLE_COLLISION_TESTS=1)
 
 target_compile_features(crcc
     PUBLIC cxx_lambdas cxx_auto_type
