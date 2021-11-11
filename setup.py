@@ -5,6 +5,9 @@ import platform
 import subprocess
 import pathlib
 
+
+from sysconfig import get_paths
+
 from setuptools import setup, dist, find_packages, Extension
 from setuptools.command.build_ext import build_ext
 
@@ -34,17 +37,25 @@ class CMakeBuild(build_ext):
             self.build_extension(ext)
 
     def build_extension(self, ext):
+    
+        from find_libpython import find_libpython
         extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
 
         # required for auto-detection of auxiliary "native" libs
         if not extdir.endswith(os.path.sep):
             extdir += os.path.sep
 
+        
         cmake_args = [
             "-DADD_PYTHON_BINDINGS=TRUE",
             "-DADD_TESTS=OFF",
-            "-DBUILD_DOC=OFF"
+            "-DBUILD_DOC=OFF",
+            "-DPYTHON_INCLUDE_DIR="+get_paths()['include'],
+            "-DPYTHON_LIBRARY="+find_libpython(),
+            "-DPYTHON_EXECUTABLE="+sys.executable
           ]
+          
+        print(cmake_args)
 
         cfg = 'Debug' if self.debug else 'Release'
         build_args = ['--config', cfg]
@@ -99,6 +110,7 @@ setup(
 
     # Requirements
     python_requires='>=3.6',
+    setup_requires=['find_libpython'],
     install_requires=[
         'commonroad-io>=2020.3',
         'commonroad-vehicle-models>=1.0.0',

@@ -14,7 +14,30 @@ option(ADD_PYTHON_BINDINGS "add Python bindings" OFF)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMakeModules" ${CMAKE_MODULE_PATH})
 
 if(ADD_PYTHON_BINDINGS)
-    find_package(Python COMPONENTS Interpreter Development REQUIRED)
+    
+	message(STATUS ${PYTHON_INCLUDE_DIR})
+	message(STATUS ${PYTHON_LIBRARY})
+	message(STATUS ${PYTHON_EXECUTABLE})
+	
+	
+	if((NOT PYTHON_INCLUDE_DIR) OR (NOT PYTHON_LIBRARY) OR (NOT PYTHON_EXECUTABLE))
+		if((NOT PYTHON_VERSION) OR (NOT PATH_TO_PYTHON_ENVIRONMENT)) 
+			message( FATAL_ERROR "Python not found" )
+		endif()
+		if (${PYTHON_VERSION} GREATER_EQUAL 3.8)
+			set(PYTHON_INCLUDE_DIR ${PATH_TO_PYTHON_ENVIRONMENT}/include/python${PYTHON_VERSION})
+			set(PYTHON_LIBRARY ${PATH_TO_PYTHON_ENVIRONMENT}/lib/libpython${PYTHON_VERSION}.so)
+			set(PYTHON_EXECUTABLE ${PATH_TO_PYTHON_ENVIRONMENT}/bin/python${PYTHON_VERSION})
+		else()
+			set(PYTHON_INCLUDE_DIR ${PATH_TO_PYTHON_ENVIRONMENT}/include/python${PYTHON_VERSION}m)
+			set(PYTHON_LIBRARY ${PATH_TO_PYTHON_ENVIRONMENT}/lib/libpython${PYTHON_VERSION}m.so)
+			set(PYTHON_EXECUTABLE ${PATH_TO_PYTHON_ENVIRONMENT}/bin/python${PYTHON_VERSION}m)
+		endif()
+	endif()
+    #set(Python3_ROOT "$ENV{CONDA_PREFIX}")
+	#message(STATUS "python dir: ${Python3_ROOT}")
+    #find_package(Python3 3.8 EXACT COMPONENTS Interpreter Development REQUIRED)
+	#set 
 
     # Specific binary directory required here
     add_subdirectory(../third_party/pybind11 third_party/pybind11)
