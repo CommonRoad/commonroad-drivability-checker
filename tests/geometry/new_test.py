@@ -7,7 +7,6 @@ from commonroad.scenario.trajectory import State
 
 #commonroad-io
 from commonroad.common.file_reader import CommonRoadFileReader
-from commonroad_dc.collision.visualization.draw_dispatch import draw_object
 
 # commonroad-boundary
 from commonroad_dc.boundary import boundary

@@ -12,7 +12,6 @@ from commonroad.scenario.trajectory import State
 
 import commonroad_dc.pycrcc as pycrcc
 from commonroad_dc.boundary import triangle_builder, lanelet_bounds, scenario_bounds
-#from commonroad_dc.collision.visualization.draw_dispatch import draw_object
 
 
 def construct(scenario, build_order, boundary_margin=20):
