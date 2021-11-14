@@ -30,7 +30,7 @@ if(ADD_PYTHON_BINDINGS)
 		endif()
 	else()
 		if((NOT PYTHON_INCLUDE_DIR) OR (NOT PYTHON_LIBRARY) OR (NOT PYTHON_EXECUTABLE))
-			find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+			find_package(Python3 COMPONENTS Interpreter Development)
 		endif()
 	endif()
 	
