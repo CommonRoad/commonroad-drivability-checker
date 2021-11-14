@@ -38,7 +38,7 @@ class CMakeBuild(build_ext):
 
     def build_extension(self, ext):
     
-        from find_libpython import find_libpython
+        #from find_libpython import find_libpython
         extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
 
         # required for auto-detection of auxiliary "native" libs
@@ -46,7 +46,7 @@ class CMakeBuild(build_ext):
             extdir += os.path.sep
             
         default_python_include_dir=get_paths()['include']
-        default_python_library=find_libpython()
+        default_python_library=""#find_libpython()
         default_python_executable=sys.executable
 	
         if('PYTHON_INCLUDE_DIR' in os.environ):
@@ -92,6 +92,8 @@ class CMakeBuild(build_ext):
         dist_dir = os.path.abspath(os.path.join(self.build_temp, 'dist'))
         build_dir = os.path.abspath(os.path.join(self.build_temp, 'build'))
         lib_python_dir = os.path.join(dist_dir, 'lib', 'python')
+        if not os.exists(lib_python_dir):
+            lib_python_dir = os.path.join(dist_dir, 'lib64', 'python')
         install_dir = self.get_ext_fullpath(ext.name)
         extension_install_dir = pathlib.Path(install_dir).parent.joinpath(ext.name).resolve()
 
