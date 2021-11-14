@@ -10,7 +10,7 @@ set(LIB_CRCCOSY_SRC
     ${CRCCOSY_SRC_ROOT}/serialize/public/serialize_public.cc
   )
 
-add_library(crccosy SHARED ${LIB_CRCCOSY_SRC})
+add_library(crccosy STATIC ${LIB_CRCCOSY_SRC})
 
 set_property(TARGET crccosy PROPERTY POSITION_INDEPENDENT_CODE ON)
 
@@ -26,7 +26,6 @@ target_compile_features(crccosy
     PUBLIC
         cxx_lambdas cxx_auto_type
     )
-
 target_include_directories(crccosy
     PUBLIC
         $<INSTALL_INTERFACE:include>
@@ -40,6 +39,6 @@ if(NOT s11n_FOUND)
     target_compile_definitions(crccosy PRIVATE -DENABLE_SERIALIZER=0)
 else()
     message(STATUS "Serialization using s11n enabled for crccosy")
-    target_link_libraries(crccosy PUBLIC s11n)
+    target_link_libraries(crccosy PUBLIC s11n::s11n)
     target_compile_definitions(crccosy PRIVATE -DENABLE_SERIALIZER=1)
 endif()

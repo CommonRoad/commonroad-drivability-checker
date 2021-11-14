@@ -76,7 +76,7 @@ ${COLLISION_SRC_ROOT}/tests/online_tests/test_common.cc
 )
 
 
-add_library(crcc SHARED ${COLLISION_SRC})
+add_library(crcc STATIC ${COLLISION_SRC})
 
 #target_compile_definitions(crcc PRIVATE -DENABLE_COLLISION_TESTS=1)
 
@@ -104,7 +104,7 @@ if(NOT s11n_FOUND)
     target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=0)
 else()
     message(STATUS "Serialization using s11n enabled for crcc")
-    target_link_libraries(crcc PUBLIC ${S11N_LIBRARY})
+    target_link_libraries(crcc PUBLIC s11n::s11n)
     target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=1)
 endif()
 

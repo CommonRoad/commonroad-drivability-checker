@@ -91,11 +91,7 @@ class CMakeBuild(build_ext):
 
         dist_dir = os.path.abspath(os.path.join(self.build_temp, 'dist'))
         build_dir = os.path.abspath(os.path.join(self.build_temp, 'build'))
-        lib_dir=os.path.join(dist_dir, 'lib')
-        if not os.path.exists(lib_dir):
-            lib_dir=os.path.join(dist_dir, 'lib64')
-        lib_python_dir = os.path.join(lib_dir, 'python')
-        
+
         install_dir = self.get_ext_fullpath(ext.name)
         extension_install_dir = pathlib.Path(install_dir).parent.joinpath(ext.name).resolve()
 
@@ -117,10 +113,18 @@ class CMakeBuild(build_ext):
         subprocess.check_call(['cmake', ext.sourcedir] + cmake_args, cwd=build_dir)
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=build_dir)
 
+        lib_dir=os.path.join(dist_dir, 'lib')
+        if not os.path.exists(lib_dir):
+            lib_dir=os.path.join(dist_dir, 'lib64')
+        lib_python_dir = os.path.join(lib_dir, 'python')
+        
+
         for file in os.listdir(lib_python_dir):
             self.copy_file(os.path.join(lib_python_dir, file), extension_install_dir)
-
-        self.copy_file(os.path.join(lib_dir,'libs11n.so'), extension_install_dir)
+        try:
+            self.copy_file(os.path.join(lib_dir,'libs11n.so'), extension_install_dir)
+        except(Exception):
+            pass
 
 setup(
     name='commonroad-drivability-checker',

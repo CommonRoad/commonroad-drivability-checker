@@ -2,7 +2,7 @@
 project(DrivabilityChecker)
 cmake_minimum_required(VERSION 3.10)
 
-option(BUILD_SHARED_LIBS "Build s11n as a shared library" OFF)
+option(BUILD_SHARED_LIBS "Build dc as a shared library" OFF)
 
 option(ADD_TESTS "unit tests" OFF)
 option(BUILD_DOC "generate the doc target." OFF)
@@ -107,8 +107,8 @@ if(ADD_MODULE_COLLISION)
     set(COLLISION_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/collision)
     include(${CMAKE_CURRENT_SOURCE_DIR}/collision/CMakeLists.txt)
 
-    set(INSTALL_MODULES ${INSTALL_MODULES} crcc)
-    set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrcc crcc)
+    set(INSTALL_MODULES ${INSTALL_MODULES} crcc triangle)
+    set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrcc)
 endif(ADD_MODULE_COLLISION)
 
 ### Definition of crccosy
@@ -119,7 +119,7 @@ if(ADD_MODULE_GEOMETRY)
 
 
     set(INSTALL_MODULES ${INSTALL_MODULES} crccosy)
-    set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrccosy crccosy)
+    set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrccosy)
 endif(ADD_MODULE_GEOMETRY)
 
 if(ADD_PYTHON_BINDINGS)
