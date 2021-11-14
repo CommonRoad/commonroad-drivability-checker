@@ -6,6 +6,7 @@ find_package(ccd REQUIRED)
 
 find_package(box2d REQUIRED)
 
+
 set(COLLISION_SRC_ROOT ${COLLISION_ROOT}/src)
 
 set(COLLISION_SRC
@@ -103,7 +104,7 @@ if(NOT s11n_FOUND)
     target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=0)
 else()
     message(STATUS "Serialization using s11n enabled for crcc")
-    target_link_libraries(crcc PRIVATE s11n::s11n)
+    target_link_libraries(crcc PUBLIC ${S11N_LIBRARY})
     target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=1)
 endif()
 
