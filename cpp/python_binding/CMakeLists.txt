@@ -1,5 +1,13 @@
+set(PYBIND_SRC_ROOT ${PYBIND_ROOT}/src)
+
 if(ADD_MODULE_COLLISION)
-    pybind11_add_module(pycrcc src/module_collision.cc src/py_bind.cc)
+
+   set(PYBIND_SRC_COLLISION 
+        ${PYBIND_SRC_ROOT}/module_collision.cc
+        ${PYBIND_SRC_ROOT}/py_bind.cc
+       )
+
+    pybind11_add_module(pycrcc ${PYBIND_SRC_COLLISION})
 
     target_compile_definitions(pycrcc PRIVATE -DPY_WRAPPER_MODULE_COLLISION=1)
 
@@ -23,7 +31,13 @@ if(ADD_MODULE_COLLISION)
 endif(ADD_MODULE_COLLISION)
 
 if(ADD_MODULE_GEOMETRY)
-    pybind11_add_module(pycrccosy src/module_geometry.cc src/py_bind.cc)
+
+    set(PYBIND_SRC_GEOMETRY
+        ${PYBIND_SRC_ROOT}/module_geometry.cc
+        ${PYBIND_SRC_ROOT}/py_bind.cc
+       )
+
+    pybind11_add_module(pycrccosy ${PYBIND_SRC_GEOMETRY})
 
     target_compile_definitions(pycrccosy PRIVATE -DPY_WRAPPER_MODULE_GEOMETRY=1)
 

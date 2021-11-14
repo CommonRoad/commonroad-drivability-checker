@@ -44,15 +44,35 @@ class CMakeBuild(build_ext):
         # required for auto-detection of auxiliary "native" libs
         if not extdir.endswith(os.path.sep):
             extdir += os.path.sep
-
+            
+        default_python_include_dir=get_paths()['include']
+        default_python_library=find_libpython()
+        default_python_executable=sys.executable
+	
+        if('PYTHON_INCLUDE_DIR' in os.environ):
+            python_include_dir=os.environ['PYTHON_INCLUDE_DIR']
+        else:
+            python_include_dir=default_python_include_dir
+	    
+        if('PYTHON_LIBRARY' in os.environ):
+            python_library=os.environ['PYTHON_LIBRARY']
+        else:
+            python_library=default_python_library
+	   
+        if('PYTHON_EXECUTABLE' in os.environ):
+            python_executable=os.environ['PYTHON_EXECUTABLE']
+        else:
+            python_executable=default_python_executable
+	     
         
         cmake_args = [
             "-DADD_PYTHON_BINDINGS=TRUE",
             "-DADD_TESTS=OFF",
             "-DBUILD_DOC=OFF",
-            "-DPYTHON_INCLUDE_DIR="+get_paths()['include'],
-            "-DPYTHON_LIBRARY="+find_libpython(),
-            "-DPYTHON_EXECUTABLE="+sys.executable
+            "-DPYTHON_INCLUDE_DIR="+python_include_dir,
+            "-DPYTHON_LIBRARY="+python_library,
+            "-DPYTHON_EXECUTABLE="+python_executable,
+            
           ]
           
         print(cmake_args)
@@ -80,10 +100,18 @@ class CMakeBuild(build_ext):
                 os.makedirs(p)
 
         cmake_args += [ '-DCMAKE_INSTALL_PREFIX:PATH={}'.format(dist_dir) ]
+        
+        import multiprocessing
+        
+        build_args +=['--target','install']
+        
+        #install_args=build_args
+        
+        if('CMAKE_BUILD_PARALLEL_LEVEL' in os.environ):
+            build_args += ['--']+['-j']+[os.environ['CMAKE_BUILD_PARALLEL_LEVEL']]
 
         subprocess.check_call(['cmake', ext.sourcedir] + cmake_args, cwd=build_dir)
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=build_dir)
-        subprocess.check_call(['cmake', '--install', '.'] + build_args, cwd=build_dir)
 
         for file in os.listdir(lib_python_dir):
             self.copy_file(os.path.join(lib_python_dir, file), extension_install_dir)

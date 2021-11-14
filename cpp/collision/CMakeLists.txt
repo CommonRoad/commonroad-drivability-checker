@@ -6,9 +6,7 @@ find_package(ccd REQUIRED)
 
 find_package(box2d REQUIRED)
 
-
-
-set(COLLISION_SRC_ROOT "src")
+set(COLLISION_SRC_ROOT ${COLLISION_ROOT}/src)
 
 set(COLLISION_SRC
 ${COLLISION_SRC_ROOT}/raytrace_primitive.cc
@@ -91,9 +89,9 @@ set_property(TARGET crcc PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_include_directories(crcc
     PUBLIC
         $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${COLLISION_ROOT}/include>
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${COLLISION_ROOT}/include
     )
 
 if(OpenMP_CXX_FOUND)

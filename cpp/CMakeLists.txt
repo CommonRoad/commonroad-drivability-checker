@@ -1,6 +1,6 @@
 # CONF
 project(DrivabilityChecker)
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.10)
 
 option(BUILD_SHARED_LIBS "Build s11n as a shared library" OFF)
 
@@ -15,29 +15,30 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMakeModules" ${CMAKE_MODULE_PAT
 
 if(ADD_PYTHON_BINDINGS)
     
+
+	message(STATUS ${PYTHON_VER})
+	
+	if((PYTHON_VER) AND (PATH_TO_PYTHON_ENVIRONMENT)) 
+		if (${PYTHON_VER} GREATER_EQUAL 3.8)
+			set(PYTHON_INCLUDE_DIR ${PATH_TO_PYTHON_ENVIRONMENT}/include/python${PYTHON_VER})
+			set(PYTHON_LIBRARY ${PATH_TO_PYTHON_ENVIRONMENT}/lib/libpython${PYTHON_VER}.so)
+			set(PYTHON_EXECUTABLE ${PATH_TO_PYTHON_ENVIRONMENT}/bin/python${PYTHON_VER})
+		else()
+			set(PYTHON_INCLUDE_DIR ${PATH_TO_PYTHON_ENVIRONMENT}/include/python${PYTHON_VER}m)
+			set(PYTHON_LIBRARY ${PATH_TO_PYTHON_ENVIRONMENT}/lib/libpython${PYTHON_VER}m.so)
+			set(PYTHON_EXECUTABLE ${PATH_TO_PYTHON_ENVIRONMENT}/bin/python${PYTHON_VER}m)
+		endif()
+	else()
+		if((NOT PYTHON_INCLUDE_DIR) OR (NOT PYTHON_LIBRARY) OR (NOT PYTHON_EXECUTABLE))
+			find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+		endif()
+	endif()
+	
+
+	
 	message(STATUS ${PYTHON_INCLUDE_DIR})
 	message(STATUS ${PYTHON_LIBRARY})
 	message(STATUS ${PYTHON_EXECUTABLE})
-	
-	
-	if((NOT PYTHON_INCLUDE_DIR) OR (NOT PYTHON_LIBRARY) OR (NOT PYTHON_EXECUTABLE))
-		if((NOT PYTHON_VERSION) OR (NOT PATH_TO_PYTHON_ENVIRONMENT)) 
-			message( FATAL_ERROR "Python not found" )
-		endif()
-		if (${PYTHON_VERSION} GREATER_EQUAL 3.8)
-			set(PYTHON_INCLUDE_DIR ${PATH_TO_PYTHON_ENVIRONMENT}/include/python${PYTHON_VERSION})
-			set(PYTHON_LIBRARY ${PATH_TO_PYTHON_ENVIRONMENT}/lib/libpython${PYTHON_VERSION}.so)
-			set(PYTHON_EXECUTABLE ${PATH_TO_PYTHON_ENVIRONMENT}/bin/python${PYTHON_VERSION})
-		else()
-			set(PYTHON_INCLUDE_DIR ${PATH_TO_PYTHON_ENVIRONMENT}/include/python${PYTHON_VERSION}m)
-			set(PYTHON_LIBRARY ${PATH_TO_PYTHON_ENVIRONMENT}/lib/libpython${PYTHON_VERSION}m.so)
-			set(PYTHON_EXECUTABLE ${PATH_TO_PYTHON_ENVIRONMENT}/bin/python${PYTHON_VERSION}m)
-		endif()
-	endif()
-    #set(Python3_ROOT "$ENV{CONDA_PREFIX}")
-	#message(STATUS "python dir: ${Python3_ROOT}")
-    #find_package(Python3 3.8 EXACT COMPONENTS Interpreter Development REQUIRED)
-	#set 
 
     # Specific binary directory required here
     add_subdirectory(../third_party/pybind11 third_party/pybind11)
@@ -103,7 +104,8 @@ target_include_directories(triangle
 ### Definition of crcc
 
 if(ADD_MODULE_COLLISION)
-    add_subdirectory(collision)
+    set(COLLISION_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/collision)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/collision/CMakeLists.txt)
 
     set(INSTALL_MODULES ${INSTALL_MODULES} crcc)
     set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrcc crcc)
@@ -112,14 +114,18 @@ endif(ADD_MODULE_COLLISION)
 ### Definition of crccosy
 
 if(ADD_MODULE_GEOMETRY)
-    add_subdirectory(geometry)
+    set(CRCCOSY_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/geometry)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/geometry/CMakeLists.txt)
+
 
     set(INSTALL_MODULES ${INSTALL_MODULES} crccosy)
     set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrccosy crccosy)
 endif(ADD_MODULE_GEOMETRY)
 
 if(ADD_PYTHON_BINDINGS)
-    add_subdirectory(python_binding)
+    set(PYBIND_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/python_binding)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/python_binding/CMakeLists.txt)
+
 endif()
 
 if(ADD_TESTS)
