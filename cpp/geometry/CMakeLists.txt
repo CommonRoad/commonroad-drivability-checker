@@ -1,14 +1,16 @@
 ### Definition of crccosy
 
+set(CRCCOSY_SRC_ROOT ${CRCCOSY_ROOT}/src)
+
 set(LIB_CRCCOSY_SRC
-    src/segment.cc
-    src/curvilinear_coordinate_system.cc
-    src/util.cc
-    src/serialize/serialize_curvil_cs.cc
-    src/serialize/public/serialize_public.cc
+    ${CRCCOSY_SRC_ROOT}/segment.cc
+    ${CRCCOSY_SRC_ROOT}/curvilinear_coordinate_system.cc
+    ${CRCCOSY_SRC_ROOT}/util.cc
+    ${CRCCOSY_SRC_ROOT}/serialize/serialize_curvil_cs.cc
+    ${CRCCOSY_SRC_ROOT}/serialize/public/serialize_public.cc
   )
 
-add_library(crccosy SHARED ${LIB_CRCCOSY_SRC})
+add_library(crccosy STATIC ${LIB_CRCCOSY_SRC})
 
 set_property(TARGET crccosy PROPERTY POSITION_INDEPENDENT_CODE ON)
 
@@ -24,13 +26,12 @@ target_compile_features(crccosy
     PUBLIC
         cxx_lambdas cxx_auto_type
     )
-
 target_include_directories(crccosy
     PUBLIC
         $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CRCCOSY_ROOT}/include>
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CRCCOSY_ROOT}
     )
 
 if(NOT s11n_FOUND)
@@ -38,6 +39,6 @@ if(NOT s11n_FOUND)
     target_compile_definitions(crccosy PRIVATE -DENABLE_SERIALIZER=0)
 else()
     message(STATUS "Serialization using s11n enabled for crccosy")
-    target_link_libraries(crccosy PRIVATE s11n::s11n)
+    target_link_libraries(crccosy PUBLIC s11n::s11n)
     target_compile_definitions(crccosy PRIVATE -DENABLE_SERIALIZER=1)
 endif()

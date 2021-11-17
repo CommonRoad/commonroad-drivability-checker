@@ -5,6 +5,9 @@ import platform
 import subprocess
 import pathlib
 
+
+from sysconfig import get_paths
+
 from setuptools import setup, dist, find_packages, Extension
 from setuptools.command.build_ext import build_ext
 
@@ -34,17 +37,45 @@ class CMakeBuild(build_ext):
             self.build_extension(ext)
 
     def build_extension(self, ext):
+    
+        #from find_libpython import find_libpython
         extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
 
         # required for auto-detection of auxiliary "native" libs
         if not extdir.endswith(os.path.sep):
             extdir += os.path.sep
-
+            
+        default_python_include_dir=get_paths()['include']
+        default_python_library=""#find_libpython()
+        default_python_executable=sys.executable
+	
+        if('PYTHON_INCLUDE_DIR' in os.environ):
+            python_include_dir=os.environ['PYTHON_INCLUDE_DIR']
+        else:
+            python_include_dir=default_python_include_dir
+	    
+        if('PYTHON_LIBRARY' in os.environ):
+            python_library=os.environ['PYTHON_LIBRARY']
+        else:
+            python_library=default_python_library
+	   
+        if('PYTHON_EXECUTABLE' in os.environ):
+            python_executable=os.environ['PYTHON_EXECUTABLE']
+        else:
+            python_executable=default_python_executable
+	     
+        
         cmake_args = [
             "-DADD_PYTHON_BINDINGS=TRUE",
             "-DADD_TESTS=OFF",
-            "-DBUILD_DOC=OFF"
+            "-DBUILD_DOC=OFF",
+            "-DPYTHON_INCLUDE_DIR="+python_include_dir,
+            "-DPYTHON_LIBRARY="+python_library,
+            "-DPYTHON_EXECUTABLE="+python_executable,
+            
           ]
+          
+        print(cmake_args)
 
         cfg = 'Debug' if self.debug else 'Release'
         build_args = ['--config', cfg]
@@ -60,7 +91,7 @@ class CMakeBuild(build_ext):
 
         dist_dir = os.path.abspath(os.path.join(self.build_temp, 'dist'))
         build_dir = os.path.abspath(os.path.join(self.build_temp, 'build'))
-        lib_python_dir = os.path.join(dist_dir, 'lib', 'python')
+
         install_dir = self.get_ext_fullpath(ext.name)
         extension_install_dir = pathlib.Path(install_dir).parent.joinpath(ext.name).resolve()
 
@@ -69,15 +100,31 @@ class CMakeBuild(build_ext):
                 os.makedirs(p)
 
         cmake_args += [ '-DCMAKE_INSTALL_PREFIX:PATH={}'.format(dist_dir) ]
+        
+        import multiprocessing
+        
+        build_args +=['--target','install']
+        
+        #install_args=build_args
+        
+        if('CMAKE_BUILD_PARALLEL_LEVEL' in os.environ):
+            build_args += ['--']+['-j']+[os.environ['CMAKE_BUILD_PARALLEL_LEVEL']]
 
         subprocess.check_call(['cmake', ext.sourcedir] + cmake_args, cwd=build_dir)
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=build_dir)
-        subprocess.check_call(['cmake', '--install', '.'] + build_args, cwd=build_dir)
+
+        lib_dir=os.path.join(dist_dir, 'lib')
+        if not os.path.exists(lib_dir):
+            lib_dir=os.path.join(dist_dir, 'lib64')
+        lib_python_dir = os.path.join(lib_dir, 'python')
+        
 
         for file in os.listdir(lib_python_dir):
             self.copy_file(os.path.join(lib_python_dir, file), extension_install_dir)
-
-
+        try:
+            self.copy_file(os.path.join(lib_dir,'libs11n.so'), extension_install_dir)
+        except(Exception):
+            pass
 
 setup(
     name='commonroad-drivability-checker',
@@ -99,6 +146,7 @@ setup(
 
     # Requirements
     python_requires='>=3.6',
+    setup_requires=['find_libpython'],
     install_requires=[
         'commonroad-io>=2020.3',
         'commonroad-vehicle-models>=1.0.0',

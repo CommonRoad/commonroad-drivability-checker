@@ -7,8 +7,7 @@ find_package(ccd REQUIRED)
 find_package(box2d REQUIRED)
 
 
-
-set(COLLISION_SRC_ROOT "src")
+set(COLLISION_SRC_ROOT ${COLLISION_ROOT}/src)
 
 set(COLLISION_SRC
 ${COLLISION_SRC_ROOT}/raytrace_primitive.cc
@@ -72,14 +71,14 @@ ${COLLISION_SRC_ROOT}/narrowphase/sphere.cc
 ${COLLISION_SRC_ROOT}/narrowphase/detail/aabb.cc
 ${COLLISION_SRC_ROOT}/solvers/sat2d/sat2d_checks.cc
 
-tests/online_tests/broadphase_test.cc
-tests/online_tests/test_common.cc
+${COLLISION_SRC_ROOT}/tests/online_tests/broadphase_test.cc
+${COLLISION_SRC_ROOT}/tests/online_tests/test_common.cc
 )
 
 
-add_library(crcc SHARED ${COLLISION_SRC})
+add_library(crcc STATIC ${COLLISION_SRC})
 
-target_compile_definitions(crcc PRIVATE -DENABLE_COLLISION_TESTS=1)
+#target_compile_definitions(crcc PRIVATE -DENABLE_COLLISION_TESTS=1)
 
 target_compile_features(crcc
     PUBLIC cxx_lambdas cxx_auto_type
@@ -91,9 +90,9 @@ set_property(TARGET crcc PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_include_directories(crcc
     PUBLIC
         $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${COLLISION_ROOT}/include>
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${COLLISION_ROOT}/include
     )
 
 if(OpenMP_CXX_FOUND)
@@ -105,7 +104,7 @@ if(NOT s11n_FOUND)
     target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=0)
 else()
     message(STATUS "Serialization using s11n enabled for crcc")
-    target_link_libraries(crcc PRIVATE s11n::s11n)
+    target_link_libraries(crcc PUBLIC s11n::s11n)
     target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=1)
 endif()
 
