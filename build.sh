@@ -131,7 +131,7 @@ function build_dc() {
   (
     set -e
     print_progress "Building drivability checker..." -n
-    CMAKE_BUILD_PARALLEL_LEVEL="$JOBS" python setup.py build
+    BUILD_JOBS="$JOBS" python setup.py build
     print_progress "Done!" -n
     back_to_basedir
   )

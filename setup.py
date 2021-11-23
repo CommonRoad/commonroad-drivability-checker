@@ -106,8 +106,8 @@ class CMakeBuild(build_ext):
         
         #install_args=build_args
         
-        if('CMAKE_BUILD_PARALLEL_LEVEL' in os.environ):
-            build_args += ['--']+['-j']+[os.environ['CMAKE_BUILD_PARALLEL_LEVEL']]
+        if('BUILD_JOBS' in os.environ):
+            build_args += ['--']+['-j']+[os.environ['BUILD_JOBS']]
 
         subprocess.check_call(['cmake', ext.sourcedir] + cmake_args, cwd=build_dir)
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=build_dir)
@@ -151,7 +151,6 @@ setup(
 
     # Requirements
     python_requires='>=3.6',
-    setup_requires=['find_libpython'],
     install_requires=[
         'commonroad-io>=2020.3',
         'commonroad-vehicle-models>=1.0.0',

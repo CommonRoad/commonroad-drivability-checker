@@ -33,8 +33,6 @@ endif()
     # during installation.
     if(APPLE)
           set_property(TARGET pycrcc PROPERTY INSTALL_RPATH "@loader_path")
-    else()
-          set_property(TARGET pycrcc PROPERTY INSTALL_RPATH "{$ORIGIN}")
     endif()
     #set_property(TARGET pycrcc PROPERTY INSTALL_RPATH "{$ORIGIN}")
 
@@ -85,8 +83,6 @@ endif()
     # See note on $ORIGIN above
     if(APPLE)
           set_property(TARGET pycrccosy PROPERTY INSTALL_RPATH "@loader_path")
-    else()
-          set_property(TARGET pycrccosy PROPERTY INSTALL_RPATH "{$ORIGIN}")
     endif()
     message(STATUS "${PYTHON_INCLUDE_DIR}")
 endif(ADD_MODULE_GEOMETRY)
