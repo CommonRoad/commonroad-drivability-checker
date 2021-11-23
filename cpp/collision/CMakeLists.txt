@@ -6,6 +6,8 @@ find_package(ccd REQUIRED)
 
 find_package(box2d REQUIRED)
 
+find_package( Boost REQUIRED)
+
 
 set(COLLISION_SRC_ROOT ${COLLISION_ROOT}/src)
 
@@ -93,17 +95,14 @@ target_include_directories(crcc
         $<BUILD_INTERFACE:${COLLISION_ROOT}/include>
     PRIVATE
         ${COLLISION_ROOT}/include
+        ${Boost_INCLUDE_DIRS} 
     )
-
-if(OpenMP_CXX_FOUND)
-    target_link_libraries(crcc PRIVATE OpenMP::OpenMP_CXX)
-endif()
 
 if(NOT s11n_FOUND)
     message(STATUS "Serialization and pickling support have been disabled for crcc")
     target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=0)
 else()
-    message(STATUS "Serialization using s11n enabled for crcc")
+    message(STATUS "Serialization and pickling support have been enabled for crcc")
     target_link_libraries(crcc PUBLIC s11n::s11n)
     target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=1)
 endif()

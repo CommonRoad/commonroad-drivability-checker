@@ -71,8 +71,7 @@ class CMakeBuild(build_ext):
             "-DBUILD_DOC=OFF",
             "-DPYTHON_INCLUDE_DIR="+python_include_dir,
             "-DPYTHON_LIBRARY="+python_library,
-            "-DPYTHON_EXECUTABLE="+python_executable,
-            
+            "-DPYTHON_EXECUTABLE="+python_executable,	
           ]
           
         print(cmake_args)
@@ -107,8 +106,8 @@ class CMakeBuild(build_ext):
         
         #install_args=build_args
         
-        if('CMAKE_BUILD_PARALLEL_LEVEL' in os.environ):
-            build_args += ['--']+['-j']+[os.environ['CMAKE_BUILD_PARALLEL_LEVEL']]
+        if('BUILD_JOBS' in os.environ):
+            build_args += ['--']+['-j']+[os.environ['BUILD_JOBS']]
 
         subprocess.check_call(['cmake', ext.sourcedir] + cmake_args, cwd=build_dir)
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=build_dir)
@@ -122,9 +121,15 @@ class CMakeBuild(build_ext):
         for file in os.listdir(lib_python_dir):
             self.copy_file(os.path.join(lib_python_dir, file), extension_install_dir)
         try:
-            self.copy_file(os.path.join(lib_dir,'libs11n.so'), extension_install_dir)
+            self.copy_file(os.path.join(lib_dir,'libs11n.so'), extension_install_dir)      
         except(Exception):
             pass
+
+        try:
+            self.copy_file(os.path.join(lib_dir,'libs11n.dylib'), extension_install_dir)
+        except(Exception):
+            pass
+
 
 setup(
     name='commonroad-drivability-checker',
@@ -146,7 +151,6 @@ setup(
 
     # Requirements
     python_requires='>=3.6',
-    setup_requires=['find_libpython'],
     install_requires=[
         'commonroad-io>=2020.3',
         'commonroad-vehicle-models>=1.0.0',

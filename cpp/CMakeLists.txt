@@ -13,6 +13,34 @@ option(ADD_PYTHON_BINDINGS "add Python bindings" OFF)
 # Add modules for discovering Sphinx etc.
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMakeModules" ${CMAKE_MODULE_PATH})
 
+
+if(APPLE)
+   # do nothing
+else()
+
+message(STATUS "Using full rpaths")
+# use, i.e. don't skip the full RPATH for the build tree
+set(CMAKE_SKIP_BUILD_RPATH FALSE)
+
+# when building, don't use the install RPATH already
+# (but later on when installing)
+set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+
+# add the automatically determined parts of the RPATH
+# which point to directories outside the build tree to the install RPATH
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+# the RPATH to be used when installing, but only if it's not a system directory
+list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
+if("${isSystemDir}" STREQUAL "-1")
+    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+endif("${isSystemDir}" STREQUAL "-1")
+
+endif()
+
+
 if(ADD_PYTHON_BINDINGS)
     
 
@@ -30,7 +58,7 @@ if(ADD_PYTHON_BINDINGS)
 		endif()
 	else()
 		if((NOT PYTHON_INCLUDE_DIR) OR (NOT PYTHON_LIBRARY) OR (NOT PYTHON_EXECUTABLE))
-			find_package(Python3 COMPONENTS Interpreter Development)
+			#find_package(Python3 COMPONENTS Interpreter Development)
 		endif()
 	endif()
 	
@@ -69,12 +97,41 @@ else()
   set(COM_HAVE_EIGEN FALSE)
 endif()
 
-find_package(OpenMP)
+#find_package(OpenMP)
+
+OPTION (USE_OpenMP "Use OpenMP to enamble <omp.h>" ON)
+
+# Find OpenMP
+if(APPLE AND USE_OpenMP)
+    if(CMAKE_C_COMPILER_ID MATCHES "Clang")
+        set(OpenMP_C "${CMAKE_C_COMPILER}")
+        set(OpenMP_C_FLAGS "-Xclang -fopenmp")
+        set(OpenMP_C_LIB_NAMES "omp")
+        set(OpenMP_omp_LIBRARY ${OpenMP_C_LIB_NAMES})
+    endif()
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+      set(OpenMP_CXX "${CMAKE_CXX_COMPILER}")
+      set(OpenMP_CXX_FLAGS "-Xclang -fopenmp")
+      set(OpenMP_CXX_LIB_NAMES "omp")
+      set(OpenMP_omp_LIBRARY ${OpenMP_CXX_LIB_NAMES})
+    endif()
+endif()
+
+if(USE_OpenMP)
+  find_package(OpenMP REQUIRED)
+endif(USE_OpenMP)
+
+
+
+#if (OPENMP_FOUND)
+#    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+#    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+#endif(OPENMP_FOUND)
+
 
 # Targets/Python modules to be installed
 set(INSTALL_MODULES "")
 set(INSTALL_PYTHON_MODULES "")
-
 
 # Provides configure_package_config_file
 include(CMakePackageConfigHelpers)

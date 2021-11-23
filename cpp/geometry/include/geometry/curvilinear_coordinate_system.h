@@ -17,10 +17,14 @@
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
 
+#include "geometry/application_settings.h"
+
 #include "geometry/serialize/icurvilinear_coordinate_system_export.h"
 
 #include "geometry/segment.h"
 #include "geometry/util.h"
+
+
 
 namespace geometry {
 
@@ -563,7 +567,7 @@ class CurvilinearCoordinateSystem
    * Given a list of coordinates projected to the corresponding projection axis
    * of a segment, the function returns the indices of the points which may be
    * inside the segment.
-   *
+*
    * @param segment_idx ID of the segment
    * @param pair_projected_coord_and_id projected coordinates to the projection
    * axis of the segment with ID segment_idx

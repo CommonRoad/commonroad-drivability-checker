@@ -1,12 +1,17 @@
-
-#include "geometry/serialize/serialize.h"
+#include "geometry/application_settings.h"
 #if ENABLE_SERIALIZER
 
-#include "geometry/curvilinear_coordinate_system.h"
-#include "geometry/serialize/basic_types.h"  // redefines the stream operators for the module
-#include "geometry/serialize/icurvilinear_coordinate_system_export.h"
-#include "geometry/serialize/vector2d_export.h"  // redefines the stream operators for the module
+#include <Eigen/Dense>
+#include <istream>
 
+#include "geometry/serialize/vector2d_export_streams.h" // redefines the stream operators for the module
+
+#include "geometry/serialize/serialize.h"
+
+#include "geometry/curvilinear_coordinate_system.h"
+#include "geometry/serialize/basic_types.h"
+#include "geometry/serialize/icurvilinear_coordinate_system_export.h"
+#include "geometry/serialize/vector2d_export.h"
 #include <s11n.net/s11n/proxy/std/vector.hpp>
 #include <s11n.net/s11n/s11nlite.hpp>
 
