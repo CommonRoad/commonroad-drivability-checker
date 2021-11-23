@@ -3,7 +3,6 @@
 #include "geometry/util.h"
 
 #if ENABLE_SERIALIZER
-#include "geometry/application_settings.h"
 #include "geometry/serialize/public/serialize_public.h"
 #endif
 

@@ -10,17 +10,18 @@ set(LIB_CRCCOSY_SRC
     ${CRCCOSY_SRC_ROOT}/serialize/public/serialize_public.cc
   )
 
+
+find_package( Boost REQUIRED)
+
 add_library(crccosy STATIC ${LIB_CRCCOSY_SRC})
 
 set_property(TARGET crccosy PROPERTY POSITION_INDEPENDENT_CODE ON)
 
-if(OpenMP_CXX_FOUND)
-    target_link_libraries(crccosy PRIVATE OpenMP::OpenMP_CXX)
-endif()
 
 target_link_libraries(crccosy
     PUBLIC
-        Eigen3::Eigen)
+        Eigen3::Eigen
+	OpenMP::OpenMP_CXX)
 
 target_compile_features(crccosy
     PUBLIC
@@ -32,13 +33,15 @@ target_include_directories(crccosy
         $<BUILD_INTERFACE:${CRCCOSY_ROOT}/include>
     PRIVATE
         ${CRCCOSY_ROOT}
+        ${Boost_INCLUDE_DIRS} 
     )
+
+
 
 if(NOT s11n_FOUND)
     message(STATUS "Serialization and pickling support have been disabled for crccosy")
     target_compile_definitions(crccosy PRIVATE -DENABLE_SERIALIZER=0)
 else()
-    message(STATUS "Serialization using s11n enabled for crccosy")
-    target_link_libraries(crccosy PUBLIC s11n::s11n)
+    message(STATUS "Serialization and pickling support have been enabled for crccosy")
     target_compile_definitions(crccosy PRIVATE -DENABLE_SERIALIZER=1)
 endif()

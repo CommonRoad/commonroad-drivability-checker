@@ -67,7 +67,7 @@ function remove_folder() {
 }
 
 function osx_command() {
-  if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [[ "	" == "darwin"* ]]; then
     "${@}"
   fi
 }

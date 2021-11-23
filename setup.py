@@ -71,8 +71,7 @@ class CMakeBuild(build_ext):
             "-DBUILD_DOC=OFF",
             "-DPYTHON_INCLUDE_DIR="+python_include_dir,
             "-DPYTHON_LIBRARY="+python_library,
-            "-DPYTHON_EXECUTABLE="+python_executable,
-            
+            "-DPYTHON_EXECUTABLE="+python_executable,	
           ]
           
         print(cmake_args)
@@ -122,9 +121,15 @@ class CMakeBuild(build_ext):
         for file in os.listdir(lib_python_dir):
             self.copy_file(os.path.join(lib_python_dir, file), extension_install_dir)
         try:
-            self.copy_file(os.path.join(lib_dir,'libs11n.so'), extension_install_dir)
+            self.copy_file(os.path.join(lib_dir,'libs11n.so'), extension_install_dir)      
         except(Exception):
             pass
+
+        try:
+            self.copy_file(os.path.join(lib_dir,'libs11n.dylib'), extension_install_dir)
+        except(Exception):
+            pass
+
 
 setup(
     name='commonroad-drivability-checker',
