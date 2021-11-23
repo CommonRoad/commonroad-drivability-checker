@@ -133,7 +133,7 @@ class CMakeBuild(build_ext):
 
 setup(
     name='commonroad-drivability-checker',
-    version='2021.3',
+    version='2021.4',
     description='Drivability checker for CommonRoad scenarios.',
     url='https://commonroad.in.tum.de/',
     author='Technical University of Munich',
