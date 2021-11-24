@@ -13,7 +13,7 @@
 
 #if ENABLE_COLLISION_TESTS == 1
 
-#include "tests/collision/online_tests/collision_tests.h"
+#include "collision/tests/collision_tests.h"
 
 #endif
 
@@ -41,8 +41,8 @@ static void tim(int a) {
 #define TIMER_polygon_enclosure 17
 
 #if TIME_PROFILE_ENABLED
-#define TIMER_START(x) test::start_timer(x);
-#define TIMER_STOP(x) test::stop_timer(x);
+#define TIMER_START(x) ::test::start_timer(x);
+#define TIMER_STOP(x)  ::test::stop_timer(x);
 #else
 #define TIMER_START(x)
 #define TIMER_STOP(x)

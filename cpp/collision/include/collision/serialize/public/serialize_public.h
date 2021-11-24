@@ -4,7 +4,7 @@
 #include "collision/collision_checker.h"
 #include "collision/collision_object.h"
 
-#include "tests/collision/online_tests/broadphase_failure.h"
+#include "collision/tests/broadphase_failure.h"
 
 namespace collision {
 namespace serialize {

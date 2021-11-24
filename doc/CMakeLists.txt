@@ -38,7 +38,7 @@ set(SPHINX_INDEX_FILE ${SPHINX_BUILD}/index.html)
 # - The Sphinx config has been updated
 #python bindings have been updated
 add_custom_command(OUTPUT ${SPHINX_INDEX_FILE}
-                   COMMAND 
+                   COMMAND
                      ${SPHINX_EXECUTABLE} -b html
                      # Tell Breathe where to find the Doxygen output
                      -Dbreathe_projects.crcc=${DOXYGEN_OUTPUT_DIR}/xml
@@ -48,8 +48,8 @@ add_custom_command(OUTPUT ${SPHINX_INDEX_FILE}
                    # Other docs files you want to track should go here (or in some variable)
                    ${CMAKE_CURRENT_SOURCE_DIR}
                    ${DOXYGEN_INDEX_FILE}
-		   pycrcc
-		   pycrccosy
+                   pycrcc
+                   pycrccosy
                    MAIN_DEPENDENCY ${SPHINX_SOURCE}/conf.py
                    COMMENT "Generating documentation with Sphinx")
 
@@ -58,5 +58,5 @@ add_custom_target(Sphinx ALL DEPENDS ${SPHINX_INDEX_FILE} pycrcc pycrccosy)
 
 # Add an install target to install the docs
 # include(GNUInstallDirs)
-# install(DIRECTORY ${SPHINX_BUILD}
-# DESTINATION ${CMAKE_INSTALL_DOCDIR})
+install(DIRECTORY ${SPHINX_BUILD}
+  DESTINATION ${CMAKE_INSTALL_DOCDIR})

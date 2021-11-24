@@ -1,93 +1,132 @@
-project(crcc)
-cmake_minimum_required(VERSION 3.0)
+project(DrivabilityChecker)
+cmake_minimum_required(VERSION 3.10)
 
+# Flags for enabling superbuild
+option(BUILD_LIBCCD "build vendored libccd" ON)
+option(BUILD_FCL "build vendored fcl" ON)
+option(BUILD_S11N "build vendored s11n" ON)
+option(BUILD_BOX2D "build vendored box2d" ON)
+
+# commonroad_dc flags
 option(ADD_TESTS "unit tests" OFF)
 option(BUILD_DOC "generate the doc target." OFF)
 option(ADD_MODULE_GEOMETRY "add geometry module" ON)
 option(ADD_MODULE_COLLISION "add collision module" ON)
+option(ADD_PYTHON_BINDINGS "add Python bindings" OFF)
 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../commonroad_dc/)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../commonroad_dc/)
-
-find_package(Eigen3 3.0.5 QUIET CONFIG)
-
-# If Eigen3Config.cmake is not found, use the FindEigen3.cmake module
-if(NOT Eigen3_FOUND)
-  find_package(Eigen3 3.0.5 QUIET MODULE)
-  set(Eigen3_FOUND ON)
+if("${CMAKE_BINARY_DIR}" EQUAL "${PROJECT_SOURCE_DIR}/build")
+  message(WARNING
+    "The 'build' directory inside the project root directory is also used by the Python build system!\n"
+    "While the file and directory names used by CMake and setuptools/Python normally don't clash "
+    "you should still consider using a different build directory.\n"
+    "CMAKE_BINARY_DIR is set to ${CMAKE_BINARY_DIR}"
+    )
 endif()
 
-if(Eigen3_FOUND)
-  set(COM_HAVE_EIGEN TRUE)
-else()
-  message(SEND_ERROR "EIGEN3 (>= 3.0.5) is required by the CollisionChecker")
-  set(COM_HAVE_EIGEN FALSE)
+include(ExternalProject)
+
+set(SUPERBUILD_PREFIX_DIR  ${CMAKE_CURRENT_BINARY_DIR}/superbuild)
+set(SUPERBUILD_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/install)
+set_directory_properties(PROPERTIES EP_BASE ${SUPERBUILD_PREFIX_DIR})
+
+set(DEPEND_LIBCCD "")
+if(BUILD_LIBCCD)
+  set(DEPEND_LIBCCD libccd)
+  ExternalProject_Add(libccd
+      SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/third_party/libccd"
+      INSTALL_DIR       "${SUPERBUILD_INSTALL_DIR}"
+      CMAKE_ARGS
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+        -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+        -DBUILD_DOCUMENTATION:BOOL=OFF
+        -DBUILD_TESTING:BOOL=OFF
+        -DBUILD_SHARED_LIBS:BOOL=OFF
+        -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
+        -DENABLE_DOUBLE_PRECISION:BOOL=ON
+
+  )
 endif()
 
-
-if(ADD_MODULE_GEOMETRY)
-
-find_library(S11N_LIBRARY s11n HINTS ${PC_S11N_LIBRARY} )
-
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Wno-ignored-attributes)
-
-if(APPLE)
-    if(CMAKE_C_COMPILER_ID MATCHES "Clang\$")
-        set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp -lomp -I/usr/local/opt/libomp/include -L/usr/local/opt/libomp/lib")
-        set(OpenMP_C_LIB_NAMES "omp")
-        set(OpenMP_omp_LIBRARY /usr/local/opt/libomp/lib/libomp.dylib)
-    endif()
-    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang\$")
-        set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -lomp -I/usr/local/opt/libomp/include -L/usr/local/opt/libomp/lib")
-        set(OpenMP_CXX_LIB_NAMES "omp")
-        set(OpenMP_omp_LIBRARY /usr/local/opt/libomp/lib/libomp.dylib)
-    endif()
+set(DEPEND_FCL "")
+if(BUILD_FCL)
+  set(DEPEND_FCL fcl)
+  ExternalProject_Add(fcl
+      SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/third_party/fcl"
+      INSTALL_DIR       "${SUPERBUILD_INSTALL_DIR}"
+      CMAKE_ARGS
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+        -DCMAKE_PREFIX_PATH=${SUPERBUILD_PREFIX_DIR}
+        -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+        -DBUILD_TESTING:BOOL=OFF
+        -DFCL_STATIC_LIBRARY:BOOL=ON
+        -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON	
+      DEPENDS ${DEPEND_LIBCCD}
+  )
 endif()
 
-find_package(OpenMP)
-if (OPENMP_FOUND)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
-endif ()
-
-include_directories(${EIGEN3_INCLUDE_DIR})
-
+set(DEPEND_S11N "")
+if(BUILD_S11N)
+  set(DEPEND_S11N s11n)
+  ExternalProject_Add(s11n
+      SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/third_party/libs11n"
+      INSTALL_DIR       "${SUPERBUILD_INSTALL_DIR}"
+      CMAKE_ARGS
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+        -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+        -DBUILD_SHARED_LIBS:BOOL=ON
+        -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
+  )
 endif()
 
-if(ADD_MODULE_COLLISION)
-find_library(S11N_LIBRARY s11n HINTS ${PC_S11N_LIBRARY} )
-
-if(ADD_TESTS)
-  add_subdirectory(cpp/tests)
+set(DEPEND_BOX2D "")
+if(BUILD_BOX2D)
+  set(DEPEND_BOX2D box2d)
+  ExternalProject_Add(box2d
+      SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/third_party/box2d"
+      INSTALL_DIR       "${SUPERBUILD_INSTALL_DIR}"
+      CMAKE_ARGS
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+        -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+        -DBOX2D_BUILD_TESTBED:BOOL=OFF
+        -DBOX2D_BUILD_DOCS:BOOL=OFF
+        -DBOX2D_BUILD_UNIT_TESTS:BOOL=OFF
+        -DBUILD_SHARED_LIBS:BOOL=OFF
+        -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
+  )
 endif()
 
-endif()
+ExternalProject_Add(commonroad_dc
+    SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/cpp"
+    INSTALL_DIR       "${SUPERBUILD_INSTALL_DIR}"
+    CMAKE_ARGS
+      -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+      -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
+      -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+      -DBUILD_SHARED_LIBS:BOOL=OFF
+      -DBUILD_DOC:BOOL=${BUILD_DOC}
+      -DADD_TESTS:BOOL=${ADD_TESTS}
+      -DADD_MODULE_COLLISION:BOOL=${ADD_MODULE_COLLISION}
+      -DADD_MODULE_GEOMETRY:BOOL=${ADD_MODULE_GEOMETRY}
+      -DADD_PYTHON_BINDINGS:BOOL=${ADD_PYTHON_BINDINGS}
+      -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
+      -DPYTHON_LIBRARY:PATH=${PYTHON_LIBRARY}
+      -DPYTHON_EXECUTABLE:PATH=${PYTHON_EXECUTABLE}
+      -DPATH_TO_PYTHON_ENVIRONMENT:PATH=${PATH_TO_PYTHON_ENVIRONMENT}
+      -DPYTHON_VER=${PYTHON_VER}
+      -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+      -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+      
+    DEPENDS ${DEPEND_BOX2D} ${DEPEND_S11N} ${DEPEND_FCL}
+    BUILD_ALWAYS TRUE
+)
 
-if(ADD_PYTHON_BINDINGS)
-    if (${PYTHON_VERSION} GREATER_EQUAL 3.8)
-        set(PYTHON_INCLUDE_DIR ${PATH_TO_PYTHON_ENVIRONMENT}/include/python${PYTHON_VERSION})
-        set(PYTHON_LIBRARY ${PATH_TO_PYTHON_ENVIRONMENT}/lib/libpython${PYTHON_VERSION}.so)
-        set(PYTHON_EXECUTABLE ${PATH_TO_PYTHON_ENVIRONMENT}/bin/python${PYTHON_VERSION})
-    else()
-        set(PYTHON_INCLUDE_DIR ${PATH_TO_PYTHON_ENVIRONMENT}/include/python${PYTHON_VERSION}m)
-        set(PYTHON_LIBRARY ${PATH_TO_PYTHON_ENVIRONMENT}/lib/libpython${PYTHON_VERSION}m.so)
-        set(PYTHON_EXECUTABLE ${PATH_TO_PYTHON_ENVIRONMENT}/bin/python${PYTHON_VERSION}m)
-    endif()
-    add_subdirectory(third_party/pybind11)
-    add_subdirectory(python_binding)
-endif()
+# Note: commonroad_dc and its dependencies will be installed to the SUPERBUILD_INSTALL_DIR
+# during the build. This directory is only intended for internal usage.
+#
+# After the internal build completes, the whole internal install tree is installed
+# using the usual CMake install command below (honoring CMAKE_INSTALL_PREFIX etc.).
 
-add_subdirectory(cpp)
-
-if(ADD_MODULE_COLLISION)
-if (BUILD_DOC)
-  set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules" ${CMAKE_MODULE_PATH})
-  add_subdirectory(doc)
-endif ()
-endif()
-
+install(
+  DIRECTORY ${SUPERBUILD_INSTALL_DIR}/
+  DESTINATION "."
+  )

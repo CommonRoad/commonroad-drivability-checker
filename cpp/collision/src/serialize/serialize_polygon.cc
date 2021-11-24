@@ -1,9 +1,15 @@
-
-#include "collision/serialize/serialize.h"
+#include "collision/application_settings.h"
 #if ENABLE_SERIALIZER
 
+#include <Eigen/Dense>
+#include <istream>
+
+#include "collision/serialize/vector2d_export_streams.h" // redefines the stream operators for the module
+
+#include "collision/serialize/serialize.h"
+
 #include "collision/narrowphase/polygon.h"
-#include "collision/serialize/vector2d_export.h"  // redefines the stream operators for the module
+#include "collision/serialize/vector2d_export.h"
 
 #include <s11n.net/s11n/proxy/std/vector.hpp>
 #include <s11n.net/s11n/s11nlite.hpp>
