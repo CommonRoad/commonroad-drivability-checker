@@ -44,7 +44,7 @@ The **-i** option on the build command will install the drivability checker to t
 
 #. Open your console in the root folder of the CommonRoad Drivability Checker.
 
-#. Activate your conda environment with the following command if you didn't before
+#. Activate your conda environment with the following command if you didn't do it before
 
     .. code-block:: bash
 
