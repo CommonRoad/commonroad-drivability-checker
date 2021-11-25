@@ -142,7 +142,8 @@ function install_dc() {
   (
     set -e
     print_progress "Installing as python package..." -n
-    python setup.py install
+    #python setup.py install - bad way to install, may download beta packages
+    python -m pip install . --use-feature=in-tree-build
     print_progress "Done!" -n
   )
 }
