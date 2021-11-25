@@ -117,7 +117,7 @@ After installing all essential third party libraries and packages, you can now i
 
         .. code-block:: bash
 
-            $ cmake -DCMAKE_INSTALL_PREFIX=/install/prefix/see/note/above -DCMAKE_BUILD_TYPE=Debug ..
+            $ cmake -DCMAKE_INSTALL_PREFIX=/install/prefix/see/note/above -DCMAKE_BUILD_TYPE=Release ..
             $ cmake --build . -- -j JOB_COUNT
         
         **Note that you have to replace**
