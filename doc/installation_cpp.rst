@@ -122,7 +122,7 @@ After installing all essential third party libraries and packages, you can now i
         
         **Note that you have to replace**
          - *JOB_COUNT*  with the number of jobs you are willing to allocate to cmake, for example *-j 2*.
-           Each job (possibly) will use a core, so specify this number according to your system and free 
+           Each job (possibly) will use a core, so specify this number according to your system and free cores. 
 
 
 #. Install the CommonRoad Drivability Checker library by running
