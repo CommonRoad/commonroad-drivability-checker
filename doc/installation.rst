@@ -85,7 +85,7 @@ We assume that the following libraries are already installed on your system:
 * `OpenMP <https://www.openmp.org/>`_ (for the geometry submodule support)
 
 For the documentation, we require the libraries `Pandoc <https://pandoc.org>`__ and `Doxygen <http://www.doxygen.nl>`_.
-All aforementioned libraries can be installed on Ubunutu via apt-get and on macOS via brew install (see homebrew).
+All aforementioned libraries can be installed on Ubunutu via apt-get.
 
 Installation of Essential Third Party Libraries and Packages
 ************************************************************
@@ -107,6 +107,8 @@ Installation on macOS using `Homebrew <https://brew.sh/>`_:
 .. code-block:: bash
 
     $ brew install eigen
+
+On macOS, it is also necessary to install the OpenMP library manually. The version of the library must correspond to the version of the Apple C++ compiler installed on your Mac (g++ --version). One can download the corresponding version of the library from https://mac.r-project.org/openmp/
 
 
 The following third party libraries are included as submodules:
