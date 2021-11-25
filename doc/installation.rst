@@ -56,13 +56,13 @@ The **-i** option on the build command will install the drivability checker to t
 
         .. code-block:: bash
 
-            $ bash build.sh -i
+            $ bash build.sh -i -j JOB_COUNT
 
         **(SUGGESTED) Full installation:**
 
         .. code-block:: bash
 
-            $ bash build.sh --cgal --serializer -i
+            $ bash build.sh --cgal --serializer -i -j JOB_COUNT
 
         **Note that you have to replace**
          - *JOB_COUNT*  with the number of jobs you are willing to allocate to cmake, for example *-j 2*.
@@ -173,18 +173,12 @@ After installing all essential third party libraries and packages, you can now i
 #. Compile and Install the CommonRoad Drivability Checker library by running
 
         .. code-block:: bash
+            
+            $ BUILD_JOBS=8 python setup.py build
+            $ pip install . --use-feature=in-tree-build
 
-            $ pip install .
-
-   **Note:** pip will automatically build all C++ dependencies of the CommonRoad
-   Drivability Checker. This can take several minutes during which pip won't output
-   any progress messages by default.
-   You can follow along the build process by adding ``-v`` to the pip invocation,
-   for example:
-
-        .. code-block:: bash
-
-            $ pip install -v .
+   **Note:** This will automatically build all C++ dependencies of the CommonRoad
+   Drivability Checker. The number 8 in this example indicates the number of CPU cores to be used for the compilation.
 
   Canceling the build and then restarting it should generally be safe,
   however make sure that the Python environment you activated stays the same.
