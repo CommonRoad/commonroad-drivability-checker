@@ -62,7 +62,7 @@ The **-i** option on the build command will install the drivability checker to t
 
         .. code-block:: bash
 
-            $ bash build.sh --cgal -j JOB_COUNT -i
+            $ bash build.sh -j JOB_COUNT --cgal -i
 
         **Note that you have to replace**
          - *JOB_COUNT*  with the number of jobs you are willing to allocate to cmake, for example *-j 2*.
