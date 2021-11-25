@@ -118,7 +118,11 @@ After installing all essential third party libraries and packages, you can now i
         .. code-block:: bash
 
             $ cmake -DCMAKE_INSTALL_PREFIX=/install/prefix/see/note/above -DCMAKE_BUILD_TYPE=Debug ..
-            $ cmake --build .
+            $ cmake --build . -- -j JOB_COUNT
+        
+        **Note that you have to replace**
+         - *JOB_COUNT*  with the number of jobs you are willing to allocate to cmake, for example *-j 2*.
+           Each job (possibly) will use a core, so specify this number according to your system and free 
 
 
 #. Install the CommonRoad Drivability Checker library by running
