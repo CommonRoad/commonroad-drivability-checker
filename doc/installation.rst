@@ -52,17 +52,17 @@ The **-i** option on the build command will install the drivability checker to t
 
 #. Run the build script
 
-        **Basic installation without CGAL and s11n:**
+        **Basic installation without CGAL**
 
         .. code-block:: bash
 
-            $ bash build.sh -i -j JOB_COUNT
+            $ bash build.sh -j JOB_COUNT -i
 
         **(SUGGESTED) Full installation:**
 
         .. code-block:: bash
 
-            $ bash build.sh --cgal --serializer -i -j JOB_COUNT
+            $ bash build.sh --cgal -j JOB_COUNT -i
 
         **Note that you have to replace**
          - *JOB_COUNT*  with the number of jobs you are willing to allocate to cmake, for example *-j 2*.
@@ -178,7 +178,7 @@ After installing all essential third party libraries and packages, you can now i
             $ pip install . --use-feature=in-tree-build
 
    **Note:** This will automatically build all C++ dependencies of the CommonRoad
-   Drivability Checker. The number 8 in this example indicates the number of CPU cores to be used for the compilation.
+   Drivability Checker. The number 8 in this example indicates the number of CPU cores to be used for the compilation. Each job (possibly) will use a core, so specify this number according to your system and free cores.
 
   Canceling the build and then restarting it should generally be safe,
   however make sure that the Python environment you activated stays the same.
