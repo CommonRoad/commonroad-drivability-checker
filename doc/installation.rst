@@ -106,9 +106,9 @@ Installation on macOS using `Homebrew <https://brew.sh/>`_:
 
 .. code-block:: bash
 
-    $ brew install eigen
+    $ brew install eigen cmake eigen boost
 
-On macOS, it is also necessary to install the OpenMP library manually. The version of the library must correspond to the version of the Apple C++ compiler installed on your Mac (g++ --version). One can download the corresponding version of the library from https://mac.r-project.org/openmp/
+On macOS, it is also necessary to install the OpenMP library manually. The version of the OpenMP library must correspond to the version of the Apple C++ compiler currently installed on your Mac (g++ --version). One can download the corresponding version of the library from https://mac.r-project.org/openmp/ and follow the installation instructions.
 
 
 The following third party libraries are included as submodules:
