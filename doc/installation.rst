@@ -100,7 +100,7 @@ Installation on Linux (e.g. using apt-get for Debian derivatives):
 
 .. code-block:: bash
 
-    $ sudo apt-get install libboost-dev libboost-thread-dev libboost-test-dev libboost-filesystem-dev libeigen3-dev
+    $ sudo apt-get install build-essential cmake git wget unzip libboost-dev libboost-thread-dev libboost-test-dev libboost-filesystem-dev libeigen3-dev libomp-dev
 
 Installation on macOS using `Homebrew <https://brew.sh/>`_:
 
