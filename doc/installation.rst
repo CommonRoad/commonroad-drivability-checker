@@ -44,7 +44,7 @@ The **-i** option on the build command will install the drivability checker to t
 
 #. Open your console in the root folder of the CommonRoad Drivability Checker.
 
-#. Activate your conda environment with the following command if you didn't before
+#. Activate your conda environment with the following command (if not already activated)
 
     .. code-block:: bash
 
@@ -52,17 +52,17 @@ The **-i** option on the build command will install the drivability checker to t
 
 #. Run the build script
 
-        **Basic installation without CGAL and s11n:**
+        **Basic installation without CGAL**
 
         .. code-block:: bash
 
-            $ bash build.sh -i
+            $ bash build.sh -j JOB_COUNT -i
 
         **(SUGGESTED) Full installation:**
 
         .. code-block:: bash
 
-            $ bash build.sh --cgal --serializer -i
+            $ bash build.sh -j JOB_COUNT --cgal -i
 
         **Note that you have to replace**
          - *JOB_COUNT*  with the number of jobs you are willing to allocate to cmake, for example *-j 2*.
@@ -85,7 +85,7 @@ We assume that the following libraries are already installed on your system:
 * `OpenMP <https://www.openmp.org/>`_ (for the geometry submodule support)
 
 For the documentation, we require the libraries `Pandoc <https://pandoc.org>`__ and `Doxygen <http://www.doxygen.nl>`_.
-All aforementioned libraries can be installed on Ubunutu via apt-get and on macOS via brew install (see homebrew).
+All aforementioned libraries can be installed on Ubunutu via apt-get.
 
 Installation of Essential Third Party Libraries and Packages
 ************************************************************
@@ -100,13 +100,15 @@ Installation on Linux (e.g. using apt-get for Debian derivatives):
 
 .. code-block:: bash
 
-    $ sudo apt-get install libboost-dev libboost-thread-dev libboost-test-dev libboost-filesystem-dev libeigen3-dev
+    $ sudo apt-get install build-essential cmake git wget unzip libboost-dev libboost-thread-dev libboost-test-dev libboost-filesystem-dev libeigen3-dev libomp-dev
 
 Installation on macOS using `Homebrew <https://brew.sh/>`_:
 
 .. code-block:: bash
 
-    $ brew install eigen
+    $ brew install cmake eigen boost
+
+On macOS, it is also necessary to install the OpenMP library manually. The version of the OpenMP library must correspond to the version of the Apple C++ compiler currently installed on your Mac (g++ --version). One can download the corresponding version of the library from https://mac.r-project.org/openmp/ and follow the installation instructions.
 
 
 The following third party libraries are included as submodules:
@@ -173,18 +175,12 @@ After installing all essential third party libraries and packages, you can now i
 #. Compile and Install the CommonRoad Drivability Checker library by running
 
         .. code-block:: bash
+            
+            $ BUILD_JOBS=8 python setup.py build
+            $ pip install . --use-feature=in-tree-build
 
-            $ pip install .
-
-   **Note:** pip will automatically build all C++ dependencies of the CommonRoad
-   Drivability Checker. This can take several minutes during which pip won't output
-   any progress messages by default.
-   You can follow along the build process by adding ``-v`` to the pip invocation,
-   for example:
-
-        .. code-block:: bash
-
-            $ pip install -v .
+   **Note:** This will automatically build all C++ dependencies of the CommonRoad
+   Drivability Checker. The number 8 in this example indicates the number of CPU cores to be used for the compilation. Each job (possibly) will use a core, so specify this number according to your system and free cores.
 
   Canceling the build and then restarting it should generally be safe,
   however make sure that the Python environment you activated stays the same.
