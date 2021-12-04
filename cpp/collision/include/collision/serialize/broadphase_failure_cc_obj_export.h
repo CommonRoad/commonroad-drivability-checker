@@ -1,7 +1,7 @@
 #pragma once
 #include <s11n.net/s11n/s11nlite.hpp>  // s11nlite framework
 #include "collision/serialize/serialize.h"
-#include "tests/collision/online_tests/broadphase_failure.h"
+#include "collision/tests/broadphase_failure.h"
 
 namespace collision {
 namespace serialize {

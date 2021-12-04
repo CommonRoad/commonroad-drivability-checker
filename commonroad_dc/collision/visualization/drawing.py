@@ -6,6 +6,7 @@ import numpy as np
 from commonroad.visualization.param_server import ParamServer
 from commonroad.visualization.renderer import IRenderer
 
+
 def draw_collision_point(obj, renderer: IRenderer,
                             draw_params: Union[ParamServer, dict, None] = None,
                             call_stack: Optional[

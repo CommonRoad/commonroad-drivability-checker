@@ -8,6 +8,11 @@ from commonroad_dc.pycrcc.Util import \
     trajectory_enclosure_polygons_static as pycrcc_trajectory_enclosure_polygons_static
 from commonroad_dc.pycrcc.Util import obb_enclosure_polygons_static as pycrcc_obb_enclosure_polygons_static
 
+
+class OBBSumException(Exception):
+    pass
+
+
 trajectories_collision_static_obstacles_function_dict = \
     {
         'grid': trajectories_collision_static_obstacles_grid,
@@ -191,6 +196,8 @@ def trajectory_preprocess_obb_sum(trajectory: pycrcc.TimeVariantCollisionObject)
     :return: postprocessed trajectory (pycrcc.TimeVariantCollisionObject). Its length is one step smaller compared to the input trajectory.
 
     """
+    if trajectory.time_end_idx() - trajectory.time_start_idx() <= 0:
+        raise OBBSumException("Invalid input for trajectory_preprocess_obb_sum: Input trajectory must consists of at least two time steps")
 
     return pycrcc.Util.trajectory_preprocess_obb_sum(trajectory)
 

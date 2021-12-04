@@ -7,24 +7,21 @@ from commonroad.scenario.trajectory import State
 
 #commonroad-io
 from commonroad.common.file_reader import CommonRoadFileReader
-from commonroad_dc.collision.visualization.draw_dispatch import draw_object
+from commonroad.visualization.mp_renderer import MPRenderer
 
 # commonroad-boundary
 from commonroad_dc.boundary import boundary
-from commonroad_dc.boundary.boundary import create_road_boundary_obstacle
-
-import commonroad_dc.pycrcc as pycrcc
 
 from time import time
-import numpy as np
+import os
+import pickle
+import multiprocessing as mp
+from multiprocessing.dummy import Pool as ThreadPool
+from functools import partial
 
-import random
-import math
 
-viz_enable=False
+viz_enable = False
 
-
-import matplotlib.pyplot as plt
 
 def open_scenario(scenario_filename):
 
@@ -33,13 +30,6 @@ def open_scenario(scenario_filename):
     scenario, planning_problem_set = crfr.open()
     return scenario, planning_problem_set
 
-import os
-
-import pickle
-
-import multiprocessing as mp
-from multiprocessing.dummy import Pool as ThreadPool
-from functools import partial
 
 def collectMyResult(result):
     print("Got result {}".format(str(result)))
@@ -54,20 +44,17 @@ def scenario_time(path,id):
 
     scenario, planning_problem_set = open_scenario(path)
 
-    viz_enable=True
+    viz_enable = True
 
     #if(id>134):
     #    viz_enable = True
 
     if(viz_enable):
         # plot the scenario
-        fig=plt.figure(figsize=(25, 10))
-        draw_object(scenario)
-        draw_object(planning_problem_set)
-        plt.autoscale()
-        plt.gca().set_aspect('equal')
-        fig.savefig('plots/' + sc_el + '_scenario.png')
-        plt.close(fig)
+        rnd = MPRenderer(figsize=(25, 10))
+        scenario.draw(rnd)
+        planning_problem_set.draw(rnd)
+        rnd.render(filename=('plots/' + sc_el + '_scenario.png'))
 
     road_boundary_aa_triangulation=boundary.create_road_boundary_obstacle(scenario, method="aligned_triangulation", return_scenario_obstacle=False)
     road_boundary_rectangles=boundary.create_road_boundary_obstacle(scenario, method="obb_rectangles", return_scenario_obstacle=False)
@@ -77,14 +64,11 @@ def scenario_time(path,id):
 
     def save_boundary(road_boundary, method):
         # draw the road boundary
-        fig = plt.figure(figsize=(25, 10))
-        draw_object(road_boundary)
-        plt.autoscale()
-        plt.gca().set_aspect('equal')
-        fig.savefig('plots/' + sc_el + '_boundary_' + method + '.png')
+        rnd = MPRenderer(figsize=(25, 10))
+        road_boundary.draw(rnd)
+        rnd.render(filename=('plots/' + sc_el + '_boundary_' + method + '.png'))
         with open('pickle/' + sc_el + '_boundary_' + method + '.pickle', 'wb') as f:
             pickle.dump(road_boundary, f)
-        plt.close(fig)
 
     if(viz_enable):
         save_boundary(road_boundary_aa_triangulation,'aligned_triangulation')
@@ -107,6 +91,7 @@ def scenario_time(path,id):
 
     return (path, time()-time_start)
 
+
 def abortable_worker(func, *args, **kwargs):
     timeout = kwargs.get('timeout', None)
     p = ThreadPool(1)
@@ -119,8 +104,8 @@ def abortable_worker(func, *args, **kwargs):
         p.terminate()
         return (args[0],'timeout', -1)
 
-if(__name__=='__main__'):
 
+if __name__=='__main__':
     procs=list()
 
     res_dict=dict()
@@ -135,11 +120,9 @@ if(__name__=='__main__'):
     paths = [x for x in paths if "DEU_Gar-3_2_T-1.xml" not in x]
     print(len(paths))
     #files=os.listdir(dirname)
-    multiCore=True
+    multiCore = True
 
-    if(multiCore):
-
-
+    if multiCore:
         pool = mp.Pool(8)
 
         tasksize= len(paths)
