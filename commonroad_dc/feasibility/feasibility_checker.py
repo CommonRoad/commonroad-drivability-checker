@@ -123,6 +123,10 @@ def position_orientation_objective(u: np.array, x0: np.array, x1: np.array, dt: 
         orient_diff = _angle_diff(x1_adjusted[4], x1_sim[4])
         diff = np.append(pos_diff, np.array([vel_diff, orient_diff]))
         cost = np.linalg.norm(diff)
+        if not isinstance(vehicle_dynamics, PointMassDynamics):
+            diff_tmp = diff[:3]
+            if np.any(np.greater(np.abs(diff_tmp), e) ):
+                cost += np.linalg.norm(np.abs(diff_tmp[np.greater(np.abs(diff_tmp), e)]) - e[np.greater(np.abs(diff_tmp), e)])
         return cost
 
     except VehicleDynamicsException as ex:

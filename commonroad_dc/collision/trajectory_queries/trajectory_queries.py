@@ -8,6 +8,11 @@ from commonroad_dc.pycrcc.Util import \
     trajectory_enclosure_polygons_static as pycrcc_trajectory_enclosure_polygons_static
 from commonroad_dc.pycrcc.Util import obb_enclosure_polygons_static as pycrcc_obb_enclosure_polygons_static
 
+
+class OBBSumException(Exception):
+    pass
+
+
 trajectories_collision_static_obstacles_function_dict = \
     {
         'grid': trajectories_collision_static_obstacles_grid,
@@ -191,8 +196,23 @@ def trajectory_preprocess_obb_sum(trajectory: pycrcc.TimeVariantCollisionObject)
     :return: postprocessed trajectory (pycrcc.TimeVariantCollisionObject). Its length is one step smaller compared to the input trajectory.
 
     """
+    if trajectory.time_end_idx() - trajectory.time_start_idx() <= 0:
+        raise OBBSumException("Invalid input for trajectory_preprocess_obb_sum: Input trajectory must consists of at least two time steps")
 
     return pycrcc.Util.trajectory_preprocess_obb_sum(trajectory)
+
+def filter_trajectories_polygon_enclosure_first_timestep(trajectories, road_polygons):
+    """
+    Selects trajectories that have the vehicle fully within the union of the road polygons at their first time step.
+
+    :param trajectories: input list of trajectories for filtering (list of pycrcc.TimeVariantCollisionObject). Only trajectories containing OBB and AABB boxes are supported.
+
+    :param road_polygons: pycrcc.ShapeGroup containing road polygons.
+
+    :return: List of trajectories fully within the road at their first time step.
+
+    """
+    return pycrcc.Util.filter_trajectories_polygon_enclosure_first_timestep(trajectories,road_polygons)
 
 
 # Trajectory queries for 1 trajectory (in numpy format):

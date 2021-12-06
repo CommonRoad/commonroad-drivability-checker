@@ -3,8 +3,6 @@ import commonroad_dc.pycrcc as pycrcc
 import numpy as np
 from random_object_creator import RandomObjectCreator
 
-import matplotlib.pyplot as plt
-from commonroad_dc.collision.visualization.draw_dispatch import draw_object
 
 creator = RandomObjectCreator(-20, 20, -20, 20, 500, 500)
 

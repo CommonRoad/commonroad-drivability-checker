@@ -55,6 +55,13 @@ def create_collision_object_polygon(polygon, params=None, collision_object_func=
             vertices = polygon.vertices[:-1]
         else:
             vertices = polygon.vertices
+
+        # Randomly appearing segfault in triangle library if duplicate vertices
+        # https://github.com/drufat/triangle/issues/2#issuecomment-583812662
+        _, ind = np.unique(vertices, axis=0, return_index=True)
+        ind.sort()
+        vertices = vertices[ind]
+
         number_of_vertices = len(vertices)
         segments = list(zip(range(0, number_of_vertices - 1), range(1, number_of_vertices)))
         segments.append((0, number_of_vertices - 1))

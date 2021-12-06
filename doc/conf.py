@@ -12,18 +12,35 @@
 #
 import os
 import sys
+from pathlib import Path
 
-print('documentation root' + os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+current_file_dir = Path(__file__).parent
+root_dir = current_file_dir.parent
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../commonroad_dc')))
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../tutorials')))
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__) + '/../../third_party/commonroad-vehicle-models/Python'))
+print('documentation root {}'.format(os.path.abspath(root_dir)))
+
+# NOTE: If you want to use the Python files in the source directory (instead of the
+# installed source files), you need to copy/symlink the built Python modules
+# into the commonroad_dc directory!
+# Example: If your Python version is 3.8, then (after running python setup.py build) copy
+#   build/lib.linux-x86_64-3.8/commonroad_dc/pycrcc.cpython-38-x86_64-linux-gnu.so
+# and
+#   build/lib.linux-x86_64-3.8/commonroad_dc/pycrccosy.cpython-38-x86_64-linux-gnu.so
+# to
+#   commonroad_dc/
+#
+# The exact paths depend on your environment (operating system, Python version etc.)
+
+# If you uncommented these lines and get an import error: See note above
+#sys.path.insert(0, root_dir.resolve())
+#sys.path.insert(0, (root_dir / 'commonroad_dc').resolve())
+#sys.path.insert(0, (root_dir / 'tutorials').resolve())
+#sys.path.insert(0, (root_dir.parent / 'third_party' / 'commonroad-vehicle-models' / 'Python').resolve())
 #sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../commonroad-io')) # ToDo: change this
-import commonroad_dc.pycrcc as pycrcc
 
-
-print("building documentation for the library {}".format(pycrcc.__file__))
+# If you get an import error in the following line: See note above
+# import commonroad_dc.pycrcc as pycrcc
+# print("building documentation for the library {}".format(pycrcc.__file__))
 
 # -- Project information -----------------------------------------------------
 
@@ -32,7 +49,7 @@ copyright = '2021, Technical University of Munich, Professorship Cyber-Physical 
 author = 'Technical University of Munich, Professorship Cyber-Physical Systems'
 
 # The full version, including alpha/beta/rc tags
-release = '2021.1'
+release = '2021.4'
 
 
 # -- General configuration ---------------------------------------------------
@@ -40,8 +57,8 @@ release = '2021.1'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [ 
-    'breathe', 
+extensions = [
+    'breathe',
     'nbsphinx',
     'nbsphinx_link',
     'sphinx.ext.autodoc',

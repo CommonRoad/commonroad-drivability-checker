@@ -29,3 +29,4 @@ The following code examples are available as Jupyter Notebooks in tutorials/. To
     04_feasibility_checker.nblink
     05_collision_checks_dynamic_obstacles.nblink
     06_curvilinear_coordinate_system.nblink
+    07_cost_functions.nblink

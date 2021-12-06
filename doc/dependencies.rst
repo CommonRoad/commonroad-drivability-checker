@@ -23,7 +23,7 @@ Third-party libraries
 * `Boost <https://www.boost.org/>`_
 * `pybind11 <https://github.com/pybind/pybind11>`_
 * `OpenMP <https://www.openmp.org/>`_ (for the geometry submodule)
-* `Pandoc <https://pandoc.org>`_ (for the documentation)
+* `Pandoc <https://pandoc.org>`__ (for the documentation)
 * `Doxygen <http://www.doxygen.nl>`_ (for the documentation)
 
 Python packages (see also requirements file)
@@ -36,7 +36,7 @@ Python packages (see also requirements file)
 * `Jupyter <https://pypi.org/project/jupyter/>`_ (>=1.0.0, for the tutorials)
 * `Triangle <https://pypi.org/project/triangle/>`_ (>=20200424)
 * `scipy <https://pypi.org/project/scipy/>`_ (>=1.4.1)
-* `pandoc <https://pypi.org/project/pandoc/>`_ (>=1.0.2)
+* `pandoc <https://pypi.org/project/pandoc/>`__ (>=1.0.2)
 * `sphinx_rtd_theme <https://pypi.org/project/sphinx-rtd-theme/>`_ (>=0.4.3)
 * `sphinx <https://pypi.org/project/Sphinx/>`_ (>=3.0.3)
 * `nbsphinx_link <https://pypi.org/project/nbsphinx-link/>`_ (>=1.3.0)

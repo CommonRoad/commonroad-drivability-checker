@@ -1,7 +1,12 @@
 .. _installation:
 
-Installation
------------------
+Installation of the Python interface
+------------------------------------
+
+**Note:**
+The following steps are necessary if you intend to use the CommonRoad Drivability
+Checker from Python. They are *not* necessary if you only intend to use
+the CommonRoad Drivability Checker from C++.
 
 In order to install CommonRoad Drivability Checker, we first need to install essential third party libraries,
 followed by installation of optional third party libraries, and finally the installation of CommonRoad Drivability
@@ -29,8 +34,8 @@ environment with python3.6m (dev version), and activate you environment.
 Method 1: Automatic Installation via Bash Script
 ################################################
 
-**Note: The installation script only works on Ubuntu based distributions. If your operating system is not Ubuntu
-based, please refer to Method 2, which is described below.**
+**Note:** The installation script only works on Ubuntu based distributions. If your operating system is not Ubuntu
+based, please refer to :ref:`method2_manual`, which is described below.
 
 We have provided a build script for easy installation. You still need to activate your conda environment
 (or virtual environment if you like). Full installation option will install third party libraries (suggested).
@@ -39,7 +44,7 @@ The **-i** option on the build command will install the drivability checker to t
 
 #. Open your console in the root folder of the CommonRoad Drivability Checker.
 
-#. Activate your conda environment with the following command if you didn't before
+#. Activate your conda environment with the following command (if not already activated)
 
     .. code-block:: bash
 
@@ -47,25 +52,25 @@ The **-i** option on the build command will install the drivability checker to t
 
 #. Run the build script
 
-        **Basic installation without CGAL and s11n:**
+        **Basic installation without CGAL**
 
         .. code-block:: bash
 
-            $ bash build.sh -e /path/to/your/anaconda3/envs/commonroad-py36 -v 3.6 -i -j JOB_COUNT
+            $ bash build.sh -j JOB_COUNT -i
 
         **(SUGGESTED) Full installation:**
 
         .. code-block:: bash
 
-            $ bash build.sh -e /path/to/your/anaconda3/envs/commonroad-py36 -v 3.6 --cgal --serializer -i -j JOB_COUNT
+            $ bash build.sh -j JOB_COUNT --cgal -i
 
         **Note that you have to replace**
-         - */path/to/your/anaconda3/envs/commonroad-py36* with the path to your Anaconda environment (or virtualenv);
-         - *3.6*  with the Python version of your Anaconda environment.
-         - *JOB_COUNT*  with the number of jobs you are willing to allocate to cmake, for example *-j 2*. Each job (possibly) will use a core, so specify this number according to your system and free cores.
+         - *JOB_COUNT*  with the number of jobs you are willing to allocate to cmake, for example *-j 2*.
+           Each job (possibly) will use a core, so specify this number according to your system and free cores.
 
         For additional options, please run **bash build.sh -h** command to view them.
 
+.. _method2_manual:
 
 Method 2: Manual Installation
 #############################
@@ -80,12 +85,33 @@ We assume that the following libraries are already installed on your system:
 * `OpenMP <https://www.openmp.org/>`_ (for the geometry submodule support)
 
 For the documentation, we require the libraries `Pandoc <https://pandoc.org>`__ and `Doxygen <http://www.doxygen.nl>`_.
-All aforementioned libraries can be installed on Ubunutu via apt-get and on macOS via brew install (see homebrew).
+All aforementioned libraries can be installed on Ubunutu via apt-get.
 
 Installation of Essential Third Party Libraries and Packages
 ************************************************************
 
-Following third party libraries are included as submodules:
+The following dependencies are *not* included in this repository and need to
+be installed externally, e.g. by using a package manager:
+
+* `Boost <https://www.boost.org/>`_ (only `Boost.Thread`, `Boost.Test`, `Boost.Filesystem`)
+* `Eigen <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_
+
+Installation on Linux (e.g. using apt-get for Debian derivatives):
+
+.. code-block:: bash
+
+    $ sudo apt-get install build-essential cmake git wget unzip libboost-dev libboost-thread-dev libboost-test-dev libboost-filesystem-dev libeigen3-dev libomp-dev
+
+Installation on macOS using `Homebrew <https://brew.sh/>`_:
+
+.. code-block:: bash
+
+    $ brew install cmake eigen boost
+
+On macOS, it is also necessary to install the OpenMP library manually. The version of the OpenMP library must correspond to the version of the Apple C++ compiler currently installed on your Mac (g++ --version). One can download the corresponding version of the library from https://mac.r-project.org/openmp/ and follow the installation instructions.
+
+
+The following third party libraries are included as submodules:
 
 * `Box2D <https://github.com/erincatto/box2d>`_
 * `FCL -- The Flexible Collision Library <https://github.com/flexible-collision-library/fcl>`_
@@ -93,38 +119,12 @@ Following third party libraries are included as submodules:
 * `pybind11 <https://github.com/pybind/pybind11>`_
 * `Triangle <https://pypi.org/project/triangle/>`_ (for the C++ library)
 
-To download the libraries, run the following commands in the root folder of the CommonRoad Drivability Checker:
+In order to initialize the bundled submodules,
+run the following commands in the root folder of the CommonRoad Drivability Checker:
 
-    .. code-block:: bash
-    
-            $ git submodule init
-            $ git submodule update
+.. code-block:: bash
 
-#. Install `libccd <https://github.com/danfis/libccd>`_:
-
-    .. code-block:: bash
-
-            $ cd third_party/libccd
-            $ mkdir build && cd build
-            $ cmake -G "Unix Makefiles" -DENABLE_DOUBLE_PRECISION=ON -DBUILD_SHARED_LIBS=ON .. 
-            $ make
-            $ sudo make install
- 
-#. Install `FCL -- The Flexible Collision Library <https://github.com/flexible-collision-library/fcl>`_: 
-  
-    .. code-block:: bash
-
-            $ cd third_party/fcl
-
-            linux: $ sudo apt-get install libboost-dev libboost-thread-dev libboost-test-dev libboost-filesystem-dev libeigen3-dev
-            macOS: $ brew install eigen
-
-    .. code-block:: bash
-
-            $ mkdir build && cd build
-            $ cmake ..
-            $ make
-            $ sudo make install
+        $ git submodule update --init
 
 
 Following packages are available via `PyPi <https://pypi.org/>`_:
@@ -134,7 +134,7 @@ Following packages are available via `PyPi <https://pypi.org/>`_:
 * `matplotlib <https://pypi.org/project/matplotlib/>`_
 * `Shapely <https://pypi.org/project/Shapely/>`_
 * `numpy <https://pypi.org/project/numpy/>`_
-* `Jupyter <https://pypi.org/project/jupyter/>`_ 
+* `Jupyter <https://pypi.org/project/jupyter/>`_
 * `Triangle <https://pypi.org/project/triangle/>`_ (Python bindings)
 * `Scipy <https://pypi.org/project/scipy/>`_
 * `Pandoc <https://pypi.org/project/pandoc/>`_
@@ -152,20 +152,12 @@ They can be installed with the following command:
 
       $ pip3 install -r requirements.txt
 
+**N.B.** If you are using Conda, make sure your environment is activated!
+
 Installation of Optional Third Party Libraries
 **********************************************
 
 For the installation of CGAL, please refer to `their website <https://github.com/CGAL/cgal>`_.
-
-To use the pickle feature of the collision checker, install s11n.net library by running:
-
-    .. code-block:: bash
-
-        $ cd third_party/libs11n
-        $ mkdir build && cd build
-        $ cmake .. -DCMAKE_BUILD_TYPE=Release
-        $ make
-        $ sudo make install
 
 Installation of the CommonRoad Drivability Checker
 **************************************************
@@ -179,41 +171,17 @@ After installing all essential third party libraries and packages, you can now i
     .. code-block:: bash
 
             $ conda activate commonroad-py36
-   
-#. Compile the CommonRoad Drivability Checker library by running
-    
-        .. code-block:: bash
-           
-            $ mkdir build
-            $ cd build
-            $ cmake -DADD_PYTHON_BINDINGS=TRUE -DPATH_TO_PYTHON_ENVIRONMENT="/path/to/your/anaconda3/envs/commonroad-py36" -DPYTHON_VERSION="3.6" -DCMAKE_BUILD_TYPE=Release ..
-            
-        Note that with Python 3.8 you might have to use:
 
-        .. code-block:: bash
-
-            $ cmake -DADD_PYTHON_BINDINGS=TRUE -DPYTHON_EXECUTABLE=$(which python) -DCMAKE_BUILD_TYPE=Release ..
-
-        The next line refers only to users of Mac OS X 10+:
-
-        .. code-block:: bash
-
-            $ sed -i '' 's!-lccd!/usr/local/lib/libccd.2.0.dylib!' python_binding/CMakeFiles/pycrcc.dir/link.txt
+#. Compile and Install the CommonRoad Drivability Checker library by running
 
         .. code-block:: bash
             
-            $ make
+            $ BUILD_JOBS=8 python setup.py build
+            $ pip install . --use-feature=in-tree-build
 
-        **Note that you have to replace** 
-         - *"/path/to/your/anaconda3/envs/commonroad-py36"* with the path to your Anaconda environment;
-         - *"3.6"*  with the Python version of your Anaconda environment.
+   **Note:** This will automatically build all C++ dependencies of the CommonRoad
+   Drivability Checker. The number 8 in this example indicates the number of CPU cores to be used for the compilation. Each job (possibly) will use a core, so specify this number according to your system and free cores.
 
-        
-#. (Optional) Install the CommonRoad Drivability Checker with
-
-    .. code-block:: bash
-        
-            $ cd ..
-            $ python setup.py install
-    
-    **OR** add the root folder of the CommonRoad Drivability Checker to your Python-Interpreter. 
+  Canceling the build and then restarting it should generally be safe,
+  however make sure that the Python environment you activated stays the same.
+  In case of any errors, try deleting the ```build`` folder and running pip again.
