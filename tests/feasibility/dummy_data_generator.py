@@ -87,7 +87,7 @@ class DummyDataGenerator:
             velocity=cls.create_random_float(v_min, v_max),
             orientation=cls.create_random_float(-np.math.pi, np.math.pi),
             time_step=time_step,
-            hitch_angle=cls.create_random_float(-0.5, 0.5) # TODO just added this randomly, might need to change this
+            hitch_angle=cls.create_random_float(-0.5, 0.5)
         )
 
     @classmethod
