@@ -35,7 +35,7 @@ namespace collision {
 
     void Truck::init()
     {
-        double head_length = (2 * length_ - 2 * trailer_length_ - trailer_dist_) / 2;
+        double head_length = (2 * length_ - 2 * trailer_length_) / 2;
         Eigen::Vector2d head_center = center_ + (length_ - head_length) * Eigen::Vector2d(sin(orientation_), cos(orientation_));
         RectangleOBB head = RectangleOBB(head_length, width_, orientation_, head_center);
 

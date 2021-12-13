@@ -22,7 +22,6 @@ public:
         center_ = center;
         length_ = params.count("length") ? params.at("length") : 7;
         width_ = params.count("width") ? params.at("width") : 2;
-        trailer_dist_ = params.count("trailer_dist") ? params.at("trailer_dist") : 0.5;
         trailer_length_ = params.count("trailer_length") ? params.at("trailer_length") : 5;
         orientation_ = params.count("orientation") ? params.at("orientation") : 0;
         hitch_angle_ = params.count("hitch") ? params.at("hitch") : 0;
@@ -48,7 +47,6 @@ private:
     Eigen::Vector2d center_;
     double length_;
     double width_;
-    double trailer_dist_;
     double trailer_length_;
     double orientation_;
     double hitch_angle_;
