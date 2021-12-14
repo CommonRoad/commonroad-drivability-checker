@@ -12,6 +12,7 @@ from scipy.optimize import Bounds
 from vehiclemodels.parameters_vehicle1 import parameters_vehicle1
 from vehiclemodels.parameters_vehicle2 import parameters_vehicle2
 from vehiclemodels.parameters_vehicle3 import parameters_vehicle3
+from vehiclemodels.parameters_vehicle4 import parameters_vehicle4
 from vehiclemodels.vehicle_dynamics_ks import vehicle_dynamics_ks
 from vehiclemodels.vehicle_dynamics_mb import vehicle_dynamics_mb
 from vehiclemodels.vehicle_dynamics_st import vehicle_dynamics_st
@@ -47,6 +48,7 @@ class VehicleParameterMapping(Enum):
     FORD_ESCORT = parameters_vehicle1()
     BMW_320i = parameters_vehicle2()
     VW_VANAGON = parameters_vehicle3()
+    TRUCK = parameters_vehicle4()
 
     @classmethod
     def from_vehicle_type(cls, vehicle_type: VehicleType) -> VehicleParameters:
@@ -60,6 +62,7 @@ class VehicleDynamics(ABC):
     List of currently implemented vehicle models
      - Point-Mass Model (PM)
      - Kinematic Single-Track Model (KS)
+     - Kinematic Single-Track Trailer Model (KST)
      - Single-Track Model (ST)
      - Multi-Body Model (MB)
 
@@ -126,7 +129,7 @@ class VehicleDynamics(ABC):
         """
         Creates a KinematicSingleTrackTrailerDynamics VehicleDynamics model.
 
-        :param vehicle_type: VehicleType, i.e. VehileType.FORD_ESCORT
+        :param vehicle_type: VehicleType, i.e. VehicleType.FORD_ESCORT
         :return: KinematicSingleTrackTrailerDynamics instance with the given vehicle type.
         """
         return KinematicSingleTrackTrailerDynamics(vehicle_type)
@@ -566,7 +569,7 @@ class KinematicSingleTrackTrailerDynamics(VehicleDynamics):
             getattr(state, 'steering_angle', steering_angle_default),  # not defined in initial state
             state.velocity,
             state.orientation,
-            getattr(state, 'hitch_angle', hitch_angle_default) # not defined in initial state
+            getattr(state, 'hitch', hitch_angle_default) # not defined in initial state
         ]
         time_step = state.time_step
         return np.array(values), time_step
@@ -578,7 +581,7 @@ class KinematicSingleTrackTrailerDynamics(VehicleDynamics):
             'steering_angle': x[2],
             'velocity': x[3],
             'orientation': x[4],
-            'hitch_angle': x[5]
+            'hitch': x[5]
         }
         state = State(**values, time_step=time_step)
         return state
