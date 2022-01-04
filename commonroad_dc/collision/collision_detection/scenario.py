@@ -125,7 +125,6 @@ def create_collision_object_prediction(prediction, params=None, collision_object
 
 collision_object_func_dict = {
     commonroad.geometry.shape.ShapeGroup: create_collision_object_shape_group,
-    commonroad.geometry.shape.Truck: create_collision_object_shape_group,
     commonroad.geometry.shape.Polygon: create_collision_object_polygon,
     commonroad.geometry.shape.Circle: create_collision_object_circle,
     commonroad.geometry.shape.Rectangle: create_collision_object_rectangle,
