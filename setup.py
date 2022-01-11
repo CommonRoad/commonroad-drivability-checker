@@ -66,13 +66,28 @@ class CMakeBuild(build_ext):
 	     
         
         cmake_args = [
-            "-DADD_PYTHON_BINDINGS=TRUE",
-            "-DADD_TESTS=OFF",
-            "-DBUILD_DOC=OFF",
             "-DPYTHON_INCLUDE_DIR="+python_include_dir,
             "-DPYTHON_LIBRARY="+python_library,
             "-DPYTHON_EXECUTABLE="+python_executable,	
           ]
+
+        # build documentation
+        if 'BUILD_DOC' in os.environ:
+            cmake_args += ['-DBUILD_DOC=' + os.environ['BUILD_DOC']]
+        else:
+            cmake_args += ['-DBUILD_DOC=OFF']
+
+        # add tests
+        if 'ADD_TESTS' in os.environ:
+            cmake_args += ['DADD_TESTS=' + os.environ['ADD_TESTS']]
+        else:
+            cmake_args += ['-DADD_TESTS=OFF']
+
+        # add python bindings
+        if 'ADD_PYTHON_BINDINGS' in os.environ:
+            cmake_args += ['-DADD_PYTHON_BINDINGS=' + os.environ['ADD_PYTHON_BINDINGS']]
+        else:
+            cmake_args += ['-DADD_PYTHON_BINDINGS=TRUE']
           
         print(cmake_args)
 
