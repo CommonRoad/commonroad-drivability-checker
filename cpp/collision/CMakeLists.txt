@@ -112,6 +112,7 @@ target_link_libraries(crcc
     triangle
   PUBLIC
     fcl
+    ccd
     Eigen3::Eigen
     box2d::box2d
     )
