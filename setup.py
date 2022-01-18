@@ -8,7 +8,7 @@ import pathlib
 
 from sysconfig import get_paths
 
-from setuptools import setup, dist, find_packages, Extension
+from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 
 from distutils.version import LooseVersion
@@ -135,6 +135,7 @@ class CMakeBuild(build_ext):
 
         for file in os.listdir(lib_python_dir):
             self.copy_file(os.path.join(lib_python_dir, file), extension_install_dir)
+            self.copy_file(os.path.join(lib_python_dir, file), os.path.join(os.getcwd(), 'commonroad_dc'))
         try:
             self.copy_file(os.path.join(lib_dir,'libs11n.so'), extension_install_dir)      
         except(Exception):
@@ -144,6 +145,12 @@ class CMakeBuild(build_ext):
             self.copy_file(os.path.join(lib_dir,'libs11n.dylib'), extension_install_dir)
         except(Exception):
             pass
+
+        # copy to commonroad_dc/
+        self.copy_file(os.path.join(lib_dir, 'libcrcc.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
+        self.copy_file(os.path.join(lib_dir, 'libcrccosy.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
+        self.copy_file(os.path.join(lib_dir, 'libtriangle.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
+
 
 
 setup(
