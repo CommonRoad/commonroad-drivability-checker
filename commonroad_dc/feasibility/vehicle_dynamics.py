@@ -485,8 +485,8 @@ class KinematicSingleTrackDynamics(VehicleDynamics):
     def _state_to_array(self, state: State, steering_angle_default=0.0) -> Tuple[np.array, int]:
         """ Implementation of the VehicleDynamics abstract method. """
         values = [
-            state.position[0],
-            state.position[1],
+            state.position[0] - self.parameters.b * np.cos(state.orientation),
+            state.position[1] - self.parameters.b * np.sin(state.orientation),
             getattr(state, 'steering_angle', steering_angle_default),  # not defined in initial state
             state.velocity,
             state.orientation
@@ -497,7 +497,8 @@ class KinematicSingleTrackDynamics(VehicleDynamics):
     def _array_to_state(self, x: np.array, time_step: int) -> State:
         """ Implementation of the VehicleDynamics abstract method. """
         values = {
-            'position': np.array([x[0], x[1]]),
+            'position': np.array([x[0] + self.parameters.b * np.cos(x[4]),
+                                  x[1] + self.parameters.b * np.sin(x[4])]),
             'steering_angle': x[2],
             'velocity': x[3],
             'orientation': x[4],
