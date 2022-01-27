@@ -22,7 +22,7 @@ trajectory_queries
 visualization
 -------------
 
-.. automodule:: commonroad_dc.collision.visualization.draw_dispatch
+.. automodule:: commonroad_dc.collision.visualization.drawing
    :members:
    :undoc-members:
    :member-order: bysource
