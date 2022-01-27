@@ -20,9 +20,14 @@ The following code examples are available as Jupyter Notebooks in tutorials/. To
     - commonroad-py36 with the name of your Anaconda environment.
     - name_of_notebook, e.g., with 01_python_wrapper.ipynb.
 
+The **basic tutorial** (**Tutorial 00: Drivability Checker - Getting Started**) contains the most important
+information to get started with our tool. For a more in-depth demonstration of the different features, see our
+**advanced tutorials** (**Tutorial 01 - 07**).
+
 .. toctree::
     :includehidden:
     
+    00_getting_started.nblink
     01_python_wrapper.nblink
     02_commonroad_interface.nblink
     03_road_compliance_checking.nblink

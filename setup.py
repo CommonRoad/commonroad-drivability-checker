@@ -8,7 +8,7 @@ import pathlib
 
 from sysconfig import get_paths
 
-from setuptools import setup, dist, find_packages, Extension
+from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 
 from distutils.version import LooseVersion
@@ -66,14 +66,29 @@ class CMakeBuild(build_ext):
 	     
         
         cmake_args = [
-            "-DADD_PYTHON_BINDINGS=TRUE",
-            "-DADD_TESTS=OFF",
-            "-DBUILD_DOC=OFF",
             "-DPYTHON_INCLUDE_DIR="+python_include_dir,
             "-DPYTHON_LIBRARY="+python_library,
             "-DPYTHON_EXECUTABLE="+python_executable,	
           ]
-          
+
+        # build documentation
+        if 'BUILD_DOC' in os.environ:
+            cmake_args += ['-DBUILD_DOC=' + os.environ['BUILD_DOC']]
+        else:
+            cmake_args += ['-DBUILD_DOC=OFF']
+
+        # add tests
+        if 'ADD_TESTS' in os.environ:
+            cmake_args += ['DADD_TESTS=' + os.environ['ADD_TESTS']]
+        else:
+            cmake_args += ['-DADD_TESTS=OFF']
+
+        # add python bindings
+        if 'ADD_PYTHON_BINDINGS' in os.environ:
+            cmake_args += ['-DADD_PYTHON_BINDINGS=' + os.environ['ADD_PYTHON_BINDINGS']]
+        else:
+            cmake_args += ['-DADD_PYTHON_BINDINGS=TRUE']
+
         print(cmake_args)
 
         cfg = 'Debug' if self.debug else 'Release'
@@ -120,6 +135,7 @@ class CMakeBuild(build_ext):
 
         for file in os.listdir(lib_python_dir):
             self.copy_file(os.path.join(lib_python_dir, file), extension_install_dir)
+            self.copy_file(os.path.join(lib_python_dir, file), os.path.join(os.getcwd(), 'commonroad_dc'))
         try:
             self.copy_file(os.path.join(lib_dir,'libs11n.so'), extension_install_dir)      
         except(Exception):
@@ -129,6 +145,12 @@ class CMakeBuild(build_ext):
             self.copy_file(os.path.join(lib_dir,'libs11n.dylib'), extension_install_dir)
         except(Exception):
             pass
+
+        # copy to commonroad_dc/
+        self.copy_file(os.path.join(lib_dir, 'libcrcc.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
+        self.copy_file(os.path.join(lib_dir, 'libcrccosy.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
+        self.copy_file(os.path.join(lib_dir, 'libtriangle.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
+
 
 
 setup(

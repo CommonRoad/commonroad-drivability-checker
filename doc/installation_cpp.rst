@@ -1,4 +1,4 @@
-.. _installation:
+.. _installation_cpp:
 
 Installation of the C++ interface
 ---------------------------------

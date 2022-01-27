@@ -7,14 +7,14 @@
 #include <Eigen/Dense>
 #include <istream>
 
-std::istream &operator>>(std::istream &in, Eigen::Vector2d &vec) {
+inline std::istream &operator>>(std::istream &in, Eigen::Vector2d &vec) {
   in >> vec[0];
   in >> vec[1];
 
   return in;
 }
 
-std::ostream &operator<<(std::ostream &out, const Eigen::Vector2d &vec) {
+inline std::ostream &operator<<(std::ostream &out, const Eigen::Vector2d &vec) {
   out << vec[0];
   out << " ";
   out << vec[1];

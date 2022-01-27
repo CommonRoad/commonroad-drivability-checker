@@ -32,15 +32,15 @@ print('documentation root {}'.format(os.path.abspath(root_dir)))
 # The exact paths depend on your environment (operating system, Python version etc.)
 
 # If you uncommented these lines and get an import error: See note above
-#sys.path.insert(0, root_dir.resolve())
-#sys.path.insert(0, (root_dir / 'commonroad_dc').resolve())
-#sys.path.insert(0, (root_dir / 'tutorials').resolve())
-#sys.path.insert(0, (root_dir.parent / 'third_party' / 'commonroad-vehicle-models' / 'Python').resolve())
-#sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../commonroad-io')) # ToDo: change this
+sys.path.insert(0, root_dir.resolve())
+sys.path.insert(0, (root_dir / 'commonroad_dc').resolve())
+sys.path.insert(0, (root_dir / 'tutorials').resolve())
+sys.path.insert(0, (root_dir.parent / 'commonroad-vehicle-models' / 'Python').resolve())
+sys.path.insert(0, (root_dir.parent / 'commonroad-io').resolve())
 
 # If you get an import error in the following line: See note above
-# import commonroad_dc.pycrcc as pycrcc
-# print("building documentation for the library {}".format(pycrcc.__file__))
+import commonroad_dc.pycrcc as pycrcc
+print("building documentation for the library {}".format(pycrcc.__file__))
 
 # -- Project information -----------------------------------------------------
 
