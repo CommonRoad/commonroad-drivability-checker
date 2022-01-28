@@ -87,7 +87,7 @@ class TestCostFunctionEvaluator(TestSolutionEvaluationBase):
 
     def test_valid_solutions(self):
         """
-        Tests 100+ solutions and visualizes matched routes for inspection
+        Tests the validity check on 100+ solutions.
         :return:
         """
         vt = VehicleType.FORD_ESCORT
