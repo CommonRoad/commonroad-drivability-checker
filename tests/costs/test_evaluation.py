@@ -5,7 +5,7 @@ from commonroad.visualization.mp_renderer import MPRenderer
 from test_costs_base import TestSolutionEvaluationBase
 
 from commonroad_dc.feasibility.feasibility_checker import input_vector_feasibility
-from commonroad_dc.feasibility.solution_checker import valid_solution
+from commonroad_dc.feasibility.solution_checker import valid_solution, SolutionCheckerException
 from commonroad_dc.feasibility.vehicle_dynamics import PointMassDynamics
 
 matplotlib.use('TkAgg')
@@ -84,6 +84,40 @@ class TestCostFunctionEvaluator(TestSolutionEvaluationBase):
                     ce.evaluate_pp_solution(cr_scenario=sce,
                                             cr_pproblem=pp.planning_problem_dict[pp_sol.planning_problem_id],
                                             trajectory=pp_sol.trajectory, draw_lanelet_path=False)
+
+    def test_valid_solutions(self):
+        """
+        Tests 100+ solutions and visualizes matched routes for inspection
+        :return:
+        """
+        vt = VehicleType.FORD_ESCORT
+        cost_funcs = [
+            CostFunction.JB1,
+            CostFunction.MW1,
+            CostFunction.SA1,
+            CostFunction.WX1,
+            CostFunction.SM1,
+            CostFunction.SM2,
+            CostFunction.SM3,
+            CostFunction.TR1
+        ]
+        invalid = 0
+        valid = 0
+        for s in list(glob.glob(os.path.join(self.test_solutions_dir, "*.xml"), recursive=True))[:50]:
+            try:
+                sol, sce, pp = self._open_solution_scenario(s)
+            except:
+                continue
+            print(sce.scenario_id)
+            try:
+                valid_solution(sce,pp,sol)
+            except SolutionCheckerException as e:
+                print(e)
+                invalid += 1
+            else:
+                valid += 1
+
+        print(f"{invalid} out of {invalid+valid}")
 
     def test_pm_input_solution(self):
         cost_funcs = [
