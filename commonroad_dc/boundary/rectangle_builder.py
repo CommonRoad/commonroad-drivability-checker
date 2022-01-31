@@ -1,4 +1,7 @@
 import numpy as np
+#import ./home/marcel/CommonRoadIO/commonroad-io/commonroad_drivability_checker/commonroad_dc.pycrcc as pycrcc
+#from commonroad_drivability_checker.commonroad_dc import pycrcc
+
 import commonroad_dc.pycrcc as pycrcc
 
 
