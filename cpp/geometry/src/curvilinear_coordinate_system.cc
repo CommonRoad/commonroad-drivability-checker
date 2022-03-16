@@ -9,7 +9,7 @@
 namespace geometry {
 
 CurvilinearCoordinateSystem::CurvilinearCoordinateSystem(
-    EigenPolyline reference_path, double default_projection_domain_limit,
+    const EigenPolyline& reference_path, double default_projection_domain_limit,
     double eps, double eps2) {
   this->length_ = 0.0;
   this->segment_longitudinal_coord_.push_back(0.0);
@@ -818,10 +818,10 @@ CurvilinearCoordinateSystem::polygonWithinProjectionDomain(
   return polygons_within_projection_domain;
 }
 
-void CurvilinearCoordinateSystem::createSegment(Eigen::Vector2d pt_1,
-                                                Eigen::Vector2d pt_2,
-                                                Eigen::Vector2d t_1,
-                                                Eigen::Vector2d t_2) {
+void CurvilinearCoordinateSystem::createSegment(const Eigen::Vector2d& pt_1,
+                                                const Eigen::Vector2d& pt_2,
+                                                const Eigen::Vector2d& t_1,
+                                                const Eigen::Vector2d& t_2) {
   this->segment_list_.push_back(
       std::make_unique<Segment>(pt_1, pt_2, t_1, t_2));
   this->length_ = this->length_ + this->segment_list_.back()->length();
