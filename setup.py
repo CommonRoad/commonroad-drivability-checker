@@ -13,6 +13,10 @@ from setuptools.command.build_ext import build_ext
 
 from distutils.version import LooseVersion
 
+this_directory = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(this_directory, 'README.md'), 'r', encoding='utf-8') as f:
+    readme = f.read()
+
 
 class CMakeExtension(Extension):
     def __init__(self, name, sourcedir=''):
@@ -157,10 +161,18 @@ setup(
     name='commonroad-drivability-checker',
     version='2021.4',
     description='Drivability checker for CommonRoad scenarios.',
-    url='https://commonroad.in.tum.de/',
+    long_description_content_type='text/markdown',
+    long_description=readme,
+    url='https://commonroad.in.tum.de/drivability-checker',
+    project_urls={
+        'Documentation': 'https://commonroad.in.tum.de/docs/commonroad-drivability-checker/sphinx/',
+        'Forum': 'https://commonroad.in.tum.de/forum/c/commonroad-drivability-checker/',
+        'Source': 'https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker',
+    },
+
     author='Technical University of Munich',
     author_email='commonroad@lists.lrz.de',
-    license='BSD',
+    license='GNU General Public License v3.0',
     data_files=[('.', ['LICENSE'])],
 
     # Source
@@ -189,7 +201,8 @@ setup(
         "Programming Language :: C++",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
-        "License :: OSI Approved :: BSD License",
+        "Programming Language :: Python :: 3.8",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: POSIX :: Linux",
         "Operating System :: MacOS",
     ],
