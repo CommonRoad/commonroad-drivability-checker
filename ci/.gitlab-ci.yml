@@ -22,7 +22,7 @@ before_script:
 .python-prepare: &python-prepare
   - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.lrz.de/".insteadOf "git@gitlab.lrz.de:"
   - pip install -r ./requirements.txt
-#  - pip install -r ./test_requirements.txt
+  - pip install -r ./test_requirements.txt
 
 .copy-cpp-dist: &copy-cpp-dist
   - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.lrz.de/".insteadOf "git@gitlab.lrz.de:"
@@ -108,7 +108,7 @@ build-run-coverage:
     expire_in: 30 minutes
 
 ## tests ###
-test:
+test: # Failed
   stage: test
   script:
     - build/env_model_test --gtest_output="xml:report.xml"
@@ -138,7 +138,8 @@ build-test-python-38:
     - *python-prepare
   script:
     #    - bash ./build.sh -j 4 -i  # don't know why bash command is necessary???
-    - python setup.py install
+#    - python setup.py install
+    - bash ./build.sh -j 4 --cgal -i
     - python -m pytest tests/python
   needs: []
 
@@ -148,8 +149,9 @@ build-test-python-39:
     - source activate cr39
     - *python-prepare
   script:
-    - python setup.py install
+#    - python setup.py install
     #    - bash ./build.sh -j 4 -i  # don't know why bash command is necessary???
+    - bash ./build.sh -j 4 --cgal -i
     - python -m pytest tests/python
   needs: []
 
@@ -219,22 +221,12 @@ build-test-python-39:
 ### static test ###
 clang-format:
   stage: static-test
-  script: ./ci/clang-format.sh
+  script: bash ./ci/clang-format.sh
   needs: []
 
 clang-tidy:
   stage: static-test
-  script: ./ci/clang-tidy.sh
-  needs:
-    - job: build-compile-commands
-      artifacts: true
-
-cppcheck:
-  stage: static-test
-  script:
-    cppcheck
-    --project=build/compile_commands.json
-    -i"$(pwd)/external"
+  script: bash ./ci/clang-tidy.sh
   needs:
     - job: build-compile-commands
       artifacts: true
