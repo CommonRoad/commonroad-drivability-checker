@@ -1,6 +1,6 @@
 stages:
-  - compile
-  - test
+  - compile # Done
+  - test # Done but a few tests take forever
   #  - coverage
   - static-test # Done
   - build-wheels # Done
@@ -12,12 +12,6 @@ image: $CI_REGISTRY/cps/rapid-prototyping-setup/ci:1.0
 
 before_script:
   - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.lrz.de/".insteadOf "git@gitlab.lrz.de:"
-#  - cd ..
-#  - ls commonroad-drivability-checker
-#  - cd ..
-#  - ls cps
-#  - cd ..
-#  - ls commonroad   <--- HERE IS THE DIST DIRECTORY (3 directories up)
 
 .python-prepare: &python-prepare
   - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.lrz.de/".insteadOf "git@gitlab.lrz.de:"
@@ -33,11 +27,8 @@ build-compile-commands:
   stage: compile
   script:
     # run CMake in order to get compile_commands.json
-    - ls
-    - ls cpp
-    - cmake --version
     - mkdir build-debug && cd build-debug
-    - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON  ..
+    - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
     - cd ..
   needs: []
   artifacts:
@@ -48,7 +39,6 @@ build-compile-commands:
 build-clang:
   stage: compile
   script:
-    #    - *copy-cpp-dist
     - export CC=clang
     - export CXX=clang++
     - mkdir build-debug && cd build-debug
@@ -59,7 +49,6 @@ build-clang:
 build-gcc:
   stage: compile
   script:
-    #    - *copy-cpp-dist
     - git submodule update --init
     - export CC=gcc
     - export CXX=g++
@@ -71,7 +60,6 @@ build-gcc:
 build-standalone:
   stage: compile
   script:
-    #    - *copy-cpp-dist
     - mkdir build-debug && cd build-debug
     - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist/ -DCMAKE_BUILD_TYPE=Release ..
     - cmake --build . -- -j 4
@@ -80,7 +68,6 @@ build-standalone:
 build-test:
   stage: compile
   script:
-    #    - *copy-cpp-dist
     - mkdir build-debug && cd build-debug
     - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist/ -DCMAKE_BUILD_TYPE=Debug ..
     - cmake --build . -- -j 4
@@ -94,7 +81,6 @@ build-test:
 build-run-coverage:
   stage: compile
   script:
-    #    - *copy-cpp-dist
     - mkdir build-debug && cd build-debug
     - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist/ -DCMAKE_BUILD_TYPE=Debug -DENV_MODEL_BUILD_CODE_COVERAGE=ON -DCMAKE_CXX_FLAGS=--coverage ..
     - cmake --build . -- -j 4
@@ -216,7 +202,7 @@ clang-tidy:
 ### build wheels ####
 build-wheels-py-39:
   stage: build-wheels
-  image: ge28hoc/wheels-reqs
+  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
   script:
     # Prepare build
     - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
@@ -235,7 +221,7 @@ build-wheels-py-39:
 
 build-wheels-py-38:
   stage: build-wheels
-  image: ge28hoc/wheels-reqs
+  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
   script:
     # Prepare build
     - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
@@ -254,7 +240,7 @@ build-wheels-py-38:
 
 build-wheels-py-37:
   stage: build-wheels
-  image: ge28hoc/wheels-reqs
+  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
   script:
     # Prepare build
     - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
@@ -273,7 +259,7 @@ build-wheels-py-37:
 
 build-wheels-py-36:
   stage: build-wheels
-  image: ge28hoc/wheels-reqs
+  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
   script:
     # Prepare build
     - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
@@ -293,7 +279,7 @@ build-wheels-py-36:
 ### deploy wheels ###
 deploy-wheels:
   stage: deploy
-  image: ge28hoc/wheels-reqs
+  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
   script:
     - cd commonroad-drivability-checker
     - /opt/python/cp39-cp39/bin/python -m pip install twine
