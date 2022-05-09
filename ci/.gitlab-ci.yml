@@ -100,8 +100,6 @@ build-test-python-37:
     - source activate cr37
     - *python-prepare
   script:
-    #    - bash ./build.sh -j 4 -i  # don't know why bash command is necessary???
-    #    - python setup.py install
     - bash ./build.sh -j 4 --cgal -i
     - python tests/run_tests.py
 #    - python -m pytest tests/python
@@ -113,8 +111,6 @@ build-test-python-38:
     - source activate cr38
     - *python-prepare
   script:
-    #    - bash ./build.sh -j 4 -i  # don't know why bash command is necessary???
-#    - python setup.py install
     - bash ./build.sh -j 4 --cgal -i
     - python tests/run_tests.py
 #    - python -m pytest tests/python
@@ -126,8 +122,6 @@ build-test-python-39:
     - source activate cr39
     - *python-prepare
   script:
-#    - python setup.py install
-    #    - bash ./build.sh -j 4 -i  # don't know why bash command is necessary???
     - bash ./build.sh -j 4 --cgal -i
     - python tests/run_tests.py
 #    - python -m pytest tests/python
@@ -214,7 +208,6 @@ build-wheels-py-39:
     - cd dist
     - auditwheel show *.whl
     - auditwheel repair *.whl
-    # Deploy wheel
   artifacts:
     paths:
       - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
@@ -233,7 +226,6 @@ build-wheels-py-38:
     - cd dist
     - auditwheel show *.whl
     - auditwheel repair *.whl
-    # Deploy wheel
   artifacts:
     paths:
       - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
@@ -252,7 +244,6 @@ build-wheels-py-37:
     - cd dist
     - auditwheel show *.whl
     - auditwheel repair *.whl
-    # Deploy wheel
   artifacts:
     paths:
       - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
@@ -271,7 +262,6 @@ build-wheels-py-36:
     - cd dist
     - auditwheel show *.whl
     - auditwheel repair *.whl
-    # Deploy wheel
   artifacts:
     paths:
       - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
@@ -284,12 +274,6 @@ deploy-wheels:
     - cd commonroad-drivability-checker
     - /opt/python/cp39-cp39/bin/python -m pip install twine
     - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token /opt/python/cp39-cp39/bin/python -m twine upload --skip-existing --repository-url https://gitlab.lrz.de/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/wheelhouse/* dist/commonroad-drivability-checker-*.tar.gz --verbose
-  #    - /opt/python/cp38-cp38/bin/python -m pip install twine
-  #    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token /opt/python/cp38-cp38/bin/python -m twine upload --skip-existing --repository-url https://gitlab.lrz.de/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/wheelhouse/* dist/commonroad-drivability-checker-*.tar.gz --verbose
-  #    - /opt/python/cp37-cp37m/bin/python -m pip install twine
-  #    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token /opt/python/cp37-cp37m/bin/python -m twine upload --skip-existing --repository-url https://gitlab.lrz.de/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/wheelhouse/* dist/commonroad-drivability-checker-*.tar.gz --verbose
-  #    - /opt/python/cp36-cp36m/bin/python -m pip install twine
-  #    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token /opt/python/cp36-cp36m/bin/python -m twine upload --skip-existing --repository-url https://gitlab.lrz.de/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/wheelhouse/* dist/commonroad-drivability-checker-*.tar.gz --verbose
   needs:
     - job: build-wheels-py-39
       artifacts: true
