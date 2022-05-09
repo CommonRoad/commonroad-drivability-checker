@@ -121,6 +121,7 @@ if __name__=='__main__':
     print(len(paths))
     #files=os.listdir(dirname)
     multiCore = True
+    iter_max = 5000
 
     if multiCore:
         pool = mp.Pool(8)
@@ -135,7 +136,7 @@ if __name__=='__main__':
         with open('res_dict.txt','wb') as fout:
             pickle.dump(res_dict,fout)
     else:
-        while(True):
+        for i in range(iter_max):
             for id,path in enumerate(paths):
                 print(scenario_time(path,id))
             print("cycle done \n")

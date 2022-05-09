@@ -207,11 +207,11 @@ if(__name__=='__main__'):
     print(len(paths))
     #files=os.listdir(dirname)
     multiCore=True
+    iter_max = 5000
 
     if(multiCore):
 
         pool = mp.Pool(8)
-
         tasksize= len(paths)
         for id,path in enumerate(paths):
             abortable_func = partial(abortable_worker, scenario_time, timeout=500)
@@ -219,10 +219,10 @@ if(__name__=='__main__'):
         pool.close()
         pool.join()
 
-        with open('res_dict.txt','wb') as fout:
-            pickle.dump(res_dict,fout)
+        with open('res_dict.txt', 'wb') as fout:
+            pickle.dump(res_dict, fout)
     else:
-        while(True):
-            for id,path in enumerate(paths):
-                print(scenario_time(path,id))
+        for i in range(iter_max):
+            for id, path in enumerate(paths):
+                print(scenario_time(path, id))
             print("cycle done \n")

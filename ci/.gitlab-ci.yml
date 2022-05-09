@@ -1,10 +1,10 @@
 stages:
-  - compile # Done
-  - test # Done but a few tests take forever
+  - compile
+  - test
   #  - coverage
-  - static-test # Done
-  - build-wheels # Done
-  - deploy # Done
+  - static-test
+  - build-wheels
+  - deploy
 #  - docs
 #  - publish
 
@@ -103,7 +103,7 @@ build-test-python-37:
     #    - bash ./build.sh -j 4 -i  # don't know why bash command is necessary???
     #    - python setup.py install
     - bash ./build.sh -j 4 --cgal -i
-#    - python tests/run_tests.py # Some tests take forever / Uncomment
+    - python tests/run_tests.py
 #    - python -m pytest tests/python
   needs: []
 
@@ -116,7 +116,7 @@ build-test-python-38:
     #    - bash ./build.sh -j 4 -i  # don't know why bash command is necessary???
 #    - python setup.py install
     - bash ./build.sh -j 4 --cgal -i
-#    - python tests/run_tests.py # Some tests take forever / Uncomment
+    - python tests/run_tests.py
 #    - python -m pytest tests/python
   needs: []
 
@@ -129,7 +129,7 @@ build-test-python-39:
 #    - python setup.py install
     #    - bash ./build.sh -j 4 -i  # don't know why bash command is necessary???
     - bash ./build.sh -j 4 --cgal -i
-#    - python tests/run_tests.py # Some tests take forever / Uncomment
+    - python tests/run_tests.py
 #    - python -m pytest tests/python
   needs: []
 

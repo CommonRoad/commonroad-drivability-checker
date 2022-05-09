@@ -156,8 +156,8 @@ tvo2.append_obstacle(pycrcc.RectOBB(2, 1, 1.5, 6.0, 7))  # time step 10
 i = 0
 
 creat = RandomObjectCreator(-20, 20, -20, 20, 500, 500)
-
-while True:
+i_max = 5000
+while i <= i_max:
     i = i + 1
     if i % 100 == 0:
         print(i)
