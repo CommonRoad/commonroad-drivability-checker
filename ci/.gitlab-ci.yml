@@ -101,7 +101,8 @@ build-test-python-37:
     - *python-prepare
   script:
     - bash ./build.sh -j 4 --cgal -i
-    - python tests/run_tests.py
+    - cd tests
+    - python run_tests.py
 #    - python -m pytest tests/python
   needs: []
 
@@ -112,7 +113,8 @@ build-test-python-38:
     - *python-prepare
   script:
     - bash ./build.sh -j 4 --cgal -i
-    - python tests/run_tests.py
+    - cd tests
+    - python run_tests.py
 #    - python -m pytest tests/python
   needs: []
 
@@ -123,7 +125,8 @@ build-test-python-39:
     - *python-prepare
   script:
     - bash ./build.sh -j 4 --cgal -i
-    - python tests/run_tests.py
+    - cd tests
+    - python run_tests.py
 #    - python -m pytest tests/python
   needs: []
 
