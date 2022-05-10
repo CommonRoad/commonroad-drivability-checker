@@ -200,6 +200,7 @@ clang-tidy:
 build-wheels-py-39:
   stage: build-wheels
   image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
+  when: manual
   script:
     # Prepare build
     - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
@@ -218,6 +219,7 @@ build-wheels-py-39:
 build-wheels-py-38:
   stage: build-wheels
   image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
+  when: manual
   script:
     # Prepare build
     - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
@@ -236,6 +238,7 @@ build-wheels-py-38:
 build-wheels-py-37:
   stage: build-wheels
   image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
+  when: manual
   script:
     # Prepare build
     - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
@@ -254,6 +257,7 @@ build-wheels-py-37:
 build-wheels-py-36:
   stage: build-wheels
   image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
+  when: manual
   script:
     # Prepare build
     - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git

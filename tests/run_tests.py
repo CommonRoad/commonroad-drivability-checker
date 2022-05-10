@@ -7,7 +7,6 @@ if __name__ == "__main__":
     errors = 0
     failures = 0
     tests = 0
-    print('Current CWD: '+os.getcwd())
     for x in os.walk(os.getcwd()):
         # TODO costs tests need to be fixed and are currently excluded in CI
         if not '__' in x[0] and not '.' in x[0] and not 'costs' in x[0]:
