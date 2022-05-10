@@ -7,6 +7,7 @@ if __name__ == "__main__":
     errors = 0
     failures = 0
     tests = 0
+    print('Current CWD: '+os.getcwd())
     for x in os.walk(os.getcwd()):
         if not '__' in x[0] and not '.' in x[0]:
             print(x[0])
