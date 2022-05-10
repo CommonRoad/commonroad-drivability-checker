@@ -31,8 +31,12 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
         plt.show()
 
     def test_transform_line_segment_to_cartesian_coords(self):
-        with open("reference_path_b.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
         reference_path = data_set['reference_path']
 
         cosy = pycrccosy.CurvilinearCoordinateSystem(reference_path)
@@ -52,8 +56,12 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
         plt.show()
 
     def test_transform_line_segment_to_curvilinear_coords(self):
-        with open("reference_path_b.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
         reference_path = data_set['reference_path']
 
         cosy = pycrccosy.CurvilinearCoordinateSystem(reference_path)
@@ -80,8 +88,12 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
 
     def test_convert_to_curvilinear_coordinates_and_back(self):
         # load reference path
-        with open("reference_path_b.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
         reference_path = data_set['reference_path']
 
         cosy = pycrccosy.CurvilinearCoordinateSystem(reference_path)
@@ -121,8 +133,12 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
         # plt.show()
 
         # load points
-        with open("segment_coordinate_system_reference_path_b_points_a.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("segment_coordinate_system_reference_path_b_points_a.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/segment_coordinate_system_reference_path_b_points_a.pic", "rb") as f:
+                data_set = pickle.load(f)
         x = data_set['x']
         y = data_set['y']
 
@@ -162,8 +178,12 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
 
     def test_convert_to_curvilinear_coordinates_and_back(self):
         # load reference path
-        with open("reference_path_b.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
         reference_path = data_set['reference_path']
 
         max_curvature = 0.4
@@ -209,8 +229,12 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
         # plt.show()
 
         # load points
-        with open("segment_coordinate_system_reference_path_b_smoothed_points_a.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("segment_coordinate_system_reference_path_b_points_a.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/segment_coordinate_system_reference_path_b_points_a.pic", "rb") as f:
+                data_set = pickle.load(f)
         x = data_set['x']
         y = data_set['y']
 
@@ -251,8 +275,12 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
 
     def test_determine_subset_of_polygon_in_projection_domain(self):
         # load reference path
-        with open("reference_path_b.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
         reference_path = data_set['reference_path']
 
         cosy = pycrccosy.CurvilinearCoordinateSystem(reference_path)
@@ -276,8 +304,12 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
 
     def test_determine_subsets_of_multi_polygons_within_projection_domain(self):
         # load reference path
-        with open("reference_path_b.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
         reference_path = data_set['reference_path']
 
         cosy = pycrccosy.CurvilinearCoordinateSystem(reference_path)
