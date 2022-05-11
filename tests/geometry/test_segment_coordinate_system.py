@@ -243,6 +243,7 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
         p = cosy.convert_list_of_points_to_curvilinear_coords(cart_points, 4)
         number_of_failed_data_points = 0
         for i in range(0, len(x)):
+            print('Number of iterations: '+str(len(x)))
             print("\nid:{} ".format(i))
             try:
                 x_, y_ = cosy.convert_to_cartesian_coords(p[i][0], p[i][1])
