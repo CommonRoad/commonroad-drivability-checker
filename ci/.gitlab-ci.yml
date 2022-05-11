@@ -1,0 +1,321 @@
+stages:
+  - compile
+  - test
+  #  - coverage
+  - static-test
+  - build-wheels
+  - deploy
+#  - docs
+#  - publish
+
+image: $CI_REGISTRY/cps/rapid-prototyping-setup/ci:1.0
+
+before_script:
+  - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.lrz.de/".insteadOf "git@gitlab.lrz.de:"
+
+.python-prepare: &python-prepare
+  - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.lrz.de/".insteadOf "git@gitlab.lrz.de:"
+  - pip install -r ./requirements.txt
+  - pip install -r ./test_requirements.txt
+
+.copy-cpp-dist: &copy-cpp-dist
+  - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.lrz.de/".insteadOf "git@gitlab.lrz.de:"
+  - mv ./commonroad/dist/include/ /commonroad/dist/
+
+### building project ###
+build-compile-commands:
+  stage: compile
+  script:
+    # run CMake in order to get compile_commands.json
+    - mkdir build-debug && cd build-debug
+    - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
+    - cd ..
+  needs: []
+  artifacts:
+    paths:
+      - ./build/compile_commands.json
+    expire_in: 20 minutes
+
+build-clang:
+  stage: compile
+  script:
+    - export CC=clang
+    - export CXX=clang++
+    - mkdir build-debug && cd build-debug
+    - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist/ -DCMAKE_BUILD_TYPE=Release ..
+    - cmake --build . -- -j 4
+  needs: []
+
+build-gcc:
+  stage: compile
+  script:
+    - git submodule update --init
+    - export CC=gcc
+    - export CXX=g++
+    - mkdir build-debug && cd build-debug
+    - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist/ -DCMAKE_BUILD_TYPE=Release ..
+    - cmake --build . -- -j 4
+  needs: []
+
+build-standalone:
+  stage: compile
+  script:
+    - mkdir build-debug && cd build-debug
+    - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist/ -DCMAKE_BUILD_TYPE=Release ..
+    - cmake --build . -- -j 4
+  needs: []
+
+build-test:
+  stage: compile
+  script:
+    - mkdir build-debug && cd build-debug
+    - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist/ -DCMAKE_BUILD_TYPE=Debug ..
+    - cmake --build . -- -j 4
+  needs: []
+  artifacts:
+    paths:
+      - ./build/
+      - ./dist/
+    expire_in: 30 minutes
+
+build-run-coverage:
+  stage: compile
+  script:
+    - mkdir build-debug && cd build-debug
+    - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist/ -DCMAKE_BUILD_TYPE=Debug -DENV_MODEL_BUILD_CODE_COVERAGE=ON -DCMAKE_CXX_FLAGS=--coverage ..
+    - cmake --build . -- -j 4
+  after_script:
+    - mv /commonroad/dist/ ./
+  needs: []
+  artifacts:
+    paths:
+      - ./build/
+      - ./dist/
+    expire_in: 30 minutes
+
+## tests ###
+build-test-python-37:
+  stage: test
+  before_script:
+    - source activate cr37
+    - *python-prepare
+  script:
+    - bash ./build.sh -j 4 --cgal -i
+    - cd tests
+    - python run_tests.py
+#    - python -m pytest tests/python
+  needs: []
+
+build-test-python-38:
+  stage: test
+  before_script:
+    - source activate cr38
+    - *python-prepare
+  script:
+    - bash ./build.sh -j 4 --cgal -i
+    - cd tests
+    - python run_tests.py
+#    - python -m pytest tests/python
+  needs: []
+
+build-test-python-39:
+  stage: test
+  before_script:
+    - source activate cr39
+    - *python-prepare
+  script:
+    - bash ./build.sh -j 4 --cgal -i
+    - cd tests
+    - python run_tests.py
+#    - python -m pytest tests/python
+  needs: []
+
+### coverage ###
+#coverage-analyze:
+#  stage: coverage
+#  before_script:
+#    - *copy-cpp-dist
+#  script:
+#    - gcovr --version
+#    - gcovr
+#      -f src/
+#      -e src/commonroad_cpp/interfaces/standalone/main.cpp
+#      -e src/commonroad_cpp/geometry/shape.h
+#      -e src/commonroad_cpp/interfaces/pybind/
+#      -e /commonroad/dist/include/yaml-cpp/
+#      --print-summary
+#      --exclude-unreachable-branches
+#      --output coverage.xml
+#      --xml
+#  needs:
+#    - job: build-run-coverage
+#      artifacts: true
+#  coverage: /^\s*lines:\s*\d+.\d+\%/
+#  artifacts:
+#    reports:
+#      cobertura: coverage.xml
+#
+#coverage-report:
+#  stage: coverage
+#  before_script:
+#    - *copy-cpp-dist
+#  script:
+#    - gcovr --version
+#    - gcovr
+#      -f src/
+#      -e src/commonroad_cpp/interfaces/standalone/main.cpp
+#      -e src/commonroad_cpp/geometry/shape.h
+#      -e src/commonroad_cpp/interfaces/pybind/
+#      -e /commonroad/dist/include/yaml-cpp/
+#      --print-summary
+#      --exclude-unreachable-branches
+#      --output coverage.html
+#      --html
+#      --html-details
+#    - mkdir coverage
+#    - mv coverage*.html coverage
+#  needs:
+#    - job: build-run-coverage
+#      artifacts: true
+#  artifacts:
+#    paths:
+#      - coverage
+#    expose_as: 'Coverage Report'
+#    expire_in: 30 minutes
+
+### static test ###
+#clang-format:  # Test must be applied in a clean state
+#  stage: static-test
+#  script: bash ./ci/clang-format.sh
+#  needs: []
+
+clang-tidy:
+  stage: static-test
+  script: bash ./ci/clang-tidy.sh
+  needs:
+    - job: build-compile-commands
+      artifacts: true
+
+### build wheels ####
+build-wheels-py-39:
+  stage: build-wheels
+  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
+  when: manual
+  script:
+    # Prepare build
+    - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
+    - cd commonroad-drivability-checker
+    - git submodule update --init
+    # Preparing PyPi
+    - /opt/python/cp39-cp39/bin/python setup.py sdist
+    - /opt/python/cp39-cp39/bin/python setup.py bdist_wheel
+    - cd dist
+    - auditwheel show *.whl
+    - auditwheel repair *.whl
+  artifacts:
+    paths:
+      - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
+
+build-wheels-py-38:
+  stage: build-wheels
+  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
+  when: manual
+  script:
+    # Prepare build
+    - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
+    - cd commonroad-drivability-checker
+    - git submodule update --init
+    # Preparing PyPi
+    - /opt/python/cp38-cp38/bin/python setup.py sdist
+    - /opt/python/cp38-cp38/bin/python setup.py bdist_wheel
+    - cd dist
+    - auditwheel show *.whl
+    - auditwheel repair *.whl
+  artifacts:
+    paths:
+      - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
+
+build-wheels-py-37:
+  stage: build-wheels
+  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
+  when: manual
+  script:
+    # Prepare build
+    - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
+    - cd commonroad-drivability-checker
+    - git submodule update --init
+    # Preparing PyPi
+    - /opt/python/cp37-cp37m/bin/python setup.py sdist
+    - /opt/python/cp37-cp37m/bin/python setup.py bdist_wheel
+    - cd dist
+    - auditwheel show *.whl
+    - auditwheel repair *.whl
+  artifacts:
+    paths:
+      - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
+
+build-wheels-py-36:
+  stage: build-wheels
+  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
+  when: manual
+  script:
+    # Prepare build
+    - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
+    - cd commonroad-drivability-checker
+    - git submodule update --init
+    # Preparing PyPi
+    - /opt/python/cp36-cp36m/bin/python setup.py sdist
+    - /opt/python/cp36-cp36m/bin/python setup.py bdist_wheel
+    - cd dist
+    - auditwheel show *.whl
+    - auditwheel repair *.whl
+  artifacts:
+    paths:
+      - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
+
+### deploy wheels ###
+deploy-wheels:
+  stage: deploy
+  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
+  script:
+    - cd commonroad-drivability-checker
+    - /opt/python/cp39-cp39/bin/python -m pip install twine
+    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token /opt/python/cp39-cp39/bin/python -m twine upload --skip-existing --repository-url https://gitlab.lrz.de/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/wheelhouse/* dist/commonroad-drivability-checker-*.tar.gz --verbose
+  needs:
+    - job: build-wheels-py-39
+      artifacts: true
+    - job: build-wheels-py-38
+      artifacts: true
+    - job: build-wheels-py-37
+      artifacts: true
+    - job: build-wheels-py-36
+      artifacts: true
+
+### create documentation ###
+#docs:
+#  stage: docs
+#  script:
+#    - mkdir -p build && cd build
+#    - cmake -DCMAKE_PREFIX_PATH=/commonroad/dist -DCMAKE_BUILD_TYPE=Debug -DBUILD_DOC=ON  ..
+#    - make doc_doxygen ..
+#  dependencies: []
+#  artifacts:
+#    paths:
+#      - build/doc_doxygen/html/
+#    expose_as: 'Doxygen Documentation'
+#    expire_in: 30 minutes
+
+### publish ###
+#pages:
+#  stage: publish
+#  script:
+#    - mv build/doc_doxygen/html public
+#  needs:
+#    - job: docs
+#      artifacts: true
+#  artifacts:
+#    paths:
+#      - public
+#    expire_in: 20 minutes
+#  rules:
+#    - if: '$CI_COMMIT_BRANCH == "master"'
