@@ -620,16 +620,6 @@ class CurvilinearCoordinateSystem
 
   void removeSegment(int ind);
 
-  /**
-   * Boolean function to check whether a point is in a straight line or not.
-   * @param x first coordinate of the point
-   * @param y second coordinate of the point
-   * @param m slope of the line
-   * @param b y-intersection of the line
-   * @return true: if the point is in the line, false: otherwise
-   */
-  bool isInLine(double x, double y, double m, double b, double errorThreshold) const;
-
  private:
   EigenPolyline reference_path_original_;
   EigenPolyline reference_path_;
