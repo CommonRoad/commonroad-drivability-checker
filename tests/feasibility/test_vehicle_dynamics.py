@@ -518,20 +518,20 @@ class TestVehicleDynamics(unittest.TestCase):
         self.zero_mb_init_state.yaw_rate = self.mb_dynamics.parameters.steering.v_max
         assert self.mb_dynamics.violates_friction_circle(self.zero_mb_init_state, max_input)
 
-    # def _test_for_inputs(self, vehicle, inputs, init_state):
-    #     x, x_ts = vehicle.state_to_array(init_state)
-    #     for inp in inputs:
-    #         u, u_ts = vehicle.input_to_array(inp)
-    #
-    #         if vehicle.violates_friction_circle(x, u):
-    #             continue
-    #
-    #         expected_x1 = odeint(vehicle.dynamics, x, [0.0, self.dt],
-    #                              args=(u,), tfirst=True)[1]
-    #         x1 = vehicle.forward_simulation(x, u, self.dt)
-    #
-    #         for idx in range(len(x1)):
-    #             assert x1[idx] == expected_x1[idx]
+    def _test_for_inputs(self, vehicle, inputs, init_state):
+        x, x_ts = vehicle.state_to_array(init_state)
+        for inp in inputs:
+            u, u_ts = vehicle.input_to_array(inp)
+
+            if vehicle.violates_friction_circle(x, u):
+                continue
+
+            expected_x1 = odeint(vehicle.dynamics, x, [0.0, self.dt],
+                                 args=(u,), tfirst=True)[1]
+            x1 = vehicle.forward_simulation(x, u, self.dt)
+
+            for idx in range(len(x1)):
+                assert x1[idx] == expected_x1[idx]
 
     def test_forward_simulation_pm(self):
         if self.disable_pm_tests: return
@@ -755,108 +755,108 @@ class TestVehicleDynamics(unittest.TestCase):
         self.assertAlmostEqual(sim_state[27], 0.0)  # delta_y_f
         self.assertAlmostEqual(sim_state[28], 0.0)  # delta_y_r
 
-    # def test_simulate_next_state_pm(self):
-    #     if self.disable_pm_tests: return
-    #
-    #     while self.pm_dynamics.violates_friction_circle(self.zero_pm_init_state, self.random_pm_input):
-    #         self.random_pm_input = DummyDataGenerator.create_random_pm_input()
-    #
-    #     x, x_ts = self.pm_dynamics.state_to_array(self.zero_pm_init_state)
-    #     u, u_ts = self.pm_dynamics.input_to_array(self.random_pm_input)
-    #
-    #     x1 = odeint(self.pm_dynamics.dynamics, x, [0.0, self.dt], args=(u,), tfirst=True)[1]
-    #     next_state = self.pm_dynamics.simulate_next_state(self.zero_pm_init_state, self.random_pm_input, self.dt)
-    #
-    #     assert x1[0] == next_state.position[0]
-    #     assert x1[1] == next_state.position[1]
-    #     assert x1[2] == next_state.velocity
-    #     assert x1[3] == next_state.velocity_y
-    #     assert x_ts + 1 == next_state.time_step
+    def test_simulate_next_state_pm(self):
+        if self.disable_pm_tests: return
 
-    # def test_simulate_next_state_ks(self):
-    #     if self.disable_ks_tests: return
-    #
-    #     while self.ks_dynamics.violates_friction_circle(self.zero_ks_init_state, self.random_input):
-    #         self.random_input = DummyDataGenerator.create_random_input()
-    #
-    #     x, x_ts = self.ks_dynamics.state_to_array(self.zero_ks_init_state)
-    #     u, u_ts = self.ks_dynamics.input_to_array(self.random_input)
-    #
-    #     x1 = odeint(self.ks_dynamics.dynamics, x, [0.0, self.dt], args=(u,), tfirst=True)[1]
-    #     x1_state = self.ks_dynamics.array_to_state(x1, time_step=1)
-    #
-    #     next_state = self.ks_dynamics.simulate_next_state(self.zero_ks_init_state, self.random_input, self.dt)
-    #
-    #     assert x1_state.position[0] == next_state.position[0]
-    #     assert x1_state.position[1] == next_state.position[1]
-    #     assert x1_state.steering_angle == next_state.steering_angle
-    #     assert x1_state.velocity == next_state.velocity
-    #     assert x1_state.orientation == next_state.orientation
-    #     assert x_ts + 1 == next_state.time_step
+        while self.pm_dynamics.violates_friction_circle(self.zero_pm_init_state, self.random_pm_input):
+            self.random_pm_input = DummyDataGenerator.create_random_pm_input()
 
-    # def test_simulate_next_state_st(self):
-    #     if self.disable_st_tests: return
-    #
-    #     while self.st_dynamics.violates_friction_circle(self.zero_st_init_state, self.random_input):
-    #         self.random_input = DummyDataGenerator.create_random_input()
-    #
-    #     x, x_ts = self.st_dynamics.state_to_array(self.zero_st_init_state)
-    #     u, u_ts = self.st_dynamics.input_to_array(self.random_input)
-    #
-    #     x1 = odeint(self.st_dynamics.dynamics, x, [0.0, self.dt], args=(u,), tfirst=True)[1]
-    #     next_state = self.st_dynamics.simulate_next_state(self.zero_st_init_state, self.random_input, self.dt)
-    #
-    #     assert x1[0] == next_state.position[0]
-    #     assert x1[1] == next_state.position[1]
-    #     assert x1[2] == next_state.steering_angle
-    #     assert x1[3] == next_state.velocity
-    #     assert x1[4] == next_state.orientation
-    #     assert x1[5] == next_state.yaw_rate
-    #     assert x1[6] == next_state.slip_angle
-    #     assert x_ts + 1 == next_state.time_step
+        x, x_ts = self.pm_dynamics.state_to_array(self.zero_pm_init_state)
+        u, u_ts = self.pm_dynamics.input_to_array(self.random_pm_input)
 
-    # def test_simulate_next_state_mb(self):
-    #     if self.disable_mb_tests: return
-    #
-    #     while self.mb_dynamics.violates_friction_circle(self.zero_mb_init_state, self.random_input):
-    #         self.random_input = DummyDataGenerator.create_random_input()
-    #
-    #     x, x_ts = self.mb_dynamics.state_to_array(self.zero_mb_init_state)
-    #     u, u_ts = self.mb_dynamics.input_to_array(self.random_input)
-    #
-    #     x1 = odeint(self.mb_dynamics.dynamics, x, [0.0, self.dt], args=(u, self.mb_dynamics.parameters), tfirst=True)[1]
-    #     next_state = self.mb_dynamics.simulate_next_state(self.zero_mb_init_state, self.random_input, self.dt)
-    #
-    #     assert x1[0] == next_state.position[0]
-    #     assert x1[1] == next_state.position[1]
-    #     assert x1[2] == next_state.steering_angle
-    #     assert x1[3] == next_state.velocity
-    #     assert x1[4] == next_state.orientation
-    #     assert x1[5] == next_state.yaw_rate
-    #     assert x1[6] == next_state.roll_angle
-    #     assert x1[7] == next_state.roll_rate
-    #     assert x1[8] == next_state.pitch_angle
-    #     assert x1[9] == next_state.pitch_rate
-    #     assert x1[10] == next_state.velocity_y
-    #     assert x1[11] == next_state.position_z
-    #     assert x1[12] == next_state.velocity_z
-    #     assert x1[13] == next_state.roll_angle_front
-    #     assert x1[14] == next_state.roll_rate_front
-    #     assert x1[15] == next_state.velocity_y_front
-    #     assert x1[16] == next_state.position_z_front
-    #     assert x1[17] == next_state.velocity_z_front
-    #     assert x1[18] == next_state.roll_angle_rear
-    #     assert x1[19] == next_state.roll_rate_rear
-    #     assert x1[20] == next_state.velocity_y_rear
-    #     assert x1[21] == next_state.position_z_rear
-    #     assert x1[22] == next_state.velocity_z_rear
-    #     assert x1[23] == next_state.left_front_wheel_angular_speed
-    #     assert x1[24] == next_state.right_front_wheel_angular_speed
-    #     assert x1[25] == next_state.left_rear_wheel_angular_speed
-    #     assert x1[26] == next_state.right_rear_wheel_angular_speed
-    #     assert x1[27] == next_state.delta_y_f
-    #     assert x1[28] == next_state.delta_y_r
-    #     assert x_ts + 1 == next_state.time_step
+        x1 = odeint(self.pm_dynamics.dynamics, x, [0.0, self.dt], args=(u,), tfirst=True)[1]
+        next_state = self.pm_dynamics.simulate_next_state(self.zero_pm_init_state, self.random_pm_input, self.dt)
+
+        assert x1[0] == next_state.position[0]
+        assert x1[1] == next_state.position[1]
+        assert x1[2] == next_state.velocity
+        assert x1[3] == next_state.velocity_y
+        assert x_ts + 1 == next_state.time_step
+
+    def test_simulate_next_state_ks(self):
+        if self.disable_ks_tests: return
+
+        while self.ks_dynamics.violates_friction_circle(self.zero_ks_init_state, self.random_input):
+            self.random_input = DummyDataGenerator.create_random_input()
+
+        x, x_ts = self.ks_dynamics.state_to_array(self.zero_ks_init_state)
+        u, u_ts = self.ks_dynamics.input_to_array(self.random_input)
+
+        x1 = odeint(self.ks_dynamics.dynamics, x, [0.0, self.dt], args=(u,), tfirst=True)[1]
+        x1_state = self.ks_dynamics.array_to_state(x1, time_step=1)
+
+        next_state = self.ks_dynamics.simulate_next_state(self.zero_ks_init_state, self.random_input, self.dt)
+
+        assert x1_state.position[0] == next_state.position[0]
+        assert x1_state.position[1] == next_state.position[1]
+        assert x1_state.steering_angle == next_state.steering_angle
+        assert x1_state.velocity == next_state.velocity
+        assert x1_state.orientation == next_state.orientation
+        assert x_ts + 1 == next_state.time_step
+
+    def test_simulate_next_state_st(self):
+        if self.disable_st_tests: return
+
+        while self.st_dynamics.violates_friction_circle(self.zero_st_init_state, self.random_input):
+            self.random_input = DummyDataGenerator.create_random_input()
+
+        x, x_ts = self.st_dynamics.state_to_array(self.zero_st_init_state)
+        u, u_ts = self.st_dynamics.input_to_array(self.random_input)
+
+        x1 = odeint(self.st_dynamics.dynamics, x, [0.0, self.dt], args=(u,), tfirst=True)[1]
+        next_state = self.st_dynamics.simulate_next_state(self.zero_st_init_state, self.random_input, self.dt)
+
+        assert x1[0] == next_state.position[0]
+        assert x1[1] == next_state.position[1]
+        assert x1[2] == next_state.steering_angle
+        assert x1[3] == next_state.velocity
+        assert x1[4] == next_state.orientation
+        assert x1[5] == next_state.yaw_rate
+        assert x1[6] == next_state.slip_angle
+        assert x_ts + 1 == next_state.time_step
+
+    def test_simulate_next_state_mb(self):
+        if self.disable_mb_tests: return
+
+        while self.mb_dynamics.violates_friction_circle(self.zero_mb_init_state, self.random_input):
+            self.random_input = DummyDataGenerator.create_random_input()
+
+        x, x_ts = self.mb_dynamics.state_to_array(self.zero_mb_init_state)
+        u, u_ts = self.mb_dynamics.input_to_array(self.random_input)
+
+        x1 = odeint(self.mb_dynamics.dynamics, x, [0.0, self.dt], args=(u, self.mb_dynamics.parameters), tfirst=True)[1]
+        next_state = self.mb_dynamics.simulate_next_state(self.zero_mb_init_state, self.random_input, self.dt)
+
+        assert x1[0] == next_state.position[0]
+        assert x1[1] == next_state.position[1]
+        assert x1[2] == next_state.steering_angle
+        assert x1[3] == next_state.velocity
+        assert x1[4] == next_state.orientation
+        assert x1[5] == next_state.yaw_rate
+        assert x1[6] == next_state.roll_angle
+        assert x1[7] == next_state.roll_rate
+        assert x1[8] == next_state.pitch_angle
+        assert x1[9] == next_state.pitch_rate
+        assert x1[10] == next_state.velocity_y
+        assert x1[11] == next_state.position_z
+        assert x1[12] == next_state.velocity_z
+        assert x1[13] == next_state.roll_angle_front
+        assert x1[14] == next_state.roll_rate_front
+        assert x1[15] == next_state.velocity_y_front
+        assert x1[16] == next_state.position_z_front
+        assert x1[17] == next_state.velocity_z_front
+        assert x1[18] == next_state.roll_angle_rear
+        assert x1[19] == next_state.roll_rate_rear
+        assert x1[20] == next_state.velocity_y_rear
+        assert x1[21] == next_state.position_z_rear
+        assert x1[22] == next_state.velocity_z_rear
+        assert x1[23] == next_state.left_front_wheel_angular_speed
+        assert x1[24] == next_state.right_front_wheel_angular_speed
+        assert x1[25] == next_state.left_rear_wheel_angular_speed
+        assert x1[26] == next_state.right_rear_wheel_angular_speed
+        assert x1[27] == next_state.delta_y_f
+        assert x1[28] == next_state.delta_y_r
+        assert x_ts + 1 == next_state.time_step
 
     def _simulate_trajectory(self, vehicle, init_state, inp_generator):
         """ Try to create a random valid trajectory """

@@ -89,7 +89,7 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
             plt.axis('equal')
             plt.show()
 
-    def test_convert_to_curvilinear_coordinates_and_back(self):
+    def test_convert_group_of_points_from_cartesian_to_cv_and_back(self):
         # load reference path
         try:
             with open("reference_path_b.pic", "rb") as f:
@@ -118,15 +118,21 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
         x = data_set['x']
         y = data_set['y']
 
-        cart_points = np.array(list(zip(x, y)))
-        p = cosy.convert_list_of_points_to_curvilinear_coords(cart_points, 4)
+        cartesian_points = np.array(list(zip(x, y)))
+        # Convert points to Curvilinear
+        p_curvilinear = cosy.convert_list_of_points_to_curvilinear_coords(cartesian_points, 4)
 
+        # Convert points back to Cartesian
+        p_cartesian = cosy.convert_list_of_points_to_cartesian_coords(p_curvilinear, 4)
+
+        # Compare
         number_of_failed_data_points = 0
         for i in range(0, len(x)):
             print('Number of iterations: '+str(len(x)))
             print("\nid:{} ".format(i))
             try:
-                x_, y_ = cosy.convert_to_cartesian_coords(p[i][0], p[i][1])
+                # Points to be tested x_, y_
+                x_, y_ = p_cartesian[i][0], p_cartesian[i][1]
             except Exception as e:
                 plt.plot(reference_path[:, 0], reference_path[:, 1])
                 plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
@@ -134,6 +140,8 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
                 print(e)
                 break
             try:
+                # We test x_, y_ against original dataset x and y
+                print('Calculated: (', x_, ', ', y_, ') - Real: (', x[i], ', ', y[i], ')')
                 np.testing.assert_allclose(x_, x[i], atol=1e-3, rtol=0)
                 np.testing.assert_allclose(y_, y[i], atol=1e-3, rtol=0)
             except Exception as e:
@@ -147,85 +155,12 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
         print("Number of failed data points: {} -> {}%".format(number_of_failed_data_points,
                                                                (number_of_failed_data_points*100)/len(x)))
 
-        self.show_plots = True
         if self.show_plots:
+            #draw_object_ccosy(cosy.get_segment_list())
             plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
             plt.autoscale()
             plt.axis('equal')
             plt.show()
-
-    # def test_convert_group_of_points_from_cartesian_to_cv_and_back(self):
-    #     # load reference path
-    #     try:
-    #         with open("reference_path_b.pic", "rb") as f:
-    #             data_set = pickle.load(f)
-    #     except FileNotFoundError:
-    #         with open("geometry/reference_path_b.pic", "rb") as f:
-    #             data_set = pickle.load(f)
-    #     reference_path = data_set['reference_path']
-    #
-    #     max_curvature = 0.4
-    #     while max_curvature > 0.2:
-    #         reference_path = np.array(chaikins_corner_cutting(reference_path))
-    #         reference_path = resample_polyline(reference_path, 1.0)
-    #         max_curvature = max(abs(compute_curvature_from_polyline(reference_path)))
-    #
-    #     cosy = pycrccosy.CurvilinearCoordinateSystem(reference_path)
-    #     projection_domain = np.array(cosy.projection_domain())
-    #
-    #     # load points
-    #     try:
-    #         with open("segment_coordinate_system_reference_path_b_points_a.pic", "rb") as f:
-    #             data_set = pickle.load(f)
-    #     except FileNotFoundError:
-    #         with open("geometry/segment_coordinate_system_reference_path_b_points_a.pic", "rb") as f:
-    #             data_set = pickle.load(f)
-    #     x = data_set['x']
-    #     y = data_set['y']
-    #
-    #     cartesian_points = np.array(list(zip(x, y)))
-    #     # Convert points to Curvilinear
-    #     p_curvilinear = cosy.convert_list_of_points_to_curvilinear_coords(cartesian_points, 4)
-    #
-    #     # Convert points back to Cartesian
-    #     p_cartesian = cosy.convert_list_of_points_to_cartesian_coords(p_curvilinear, 4)
-    #
-    #     # Compare
-    #     number_of_failed_data_points = 0
-    #     for i in range(0, len(x)):
-    #         print('Number of iterations: '+str(len(x)))
-    #         print("\nid:{} ".format(i))
-    #         try:
-    #             # Points to be tested x_, y_
-    #             x_, y_ = p_cartesian[i][0], p_cartesian[i][1]
-    #         except Exception as e:
-    #             plt.plot(reference_path[:, 0], reference_path[:, 1])
-    #             plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-    #             plt.plot(x[i], y[i], '*k', linewidth=5)
-    #             print(e)
-    #             break
-    #         try:
-    #             # We test x_, y_ against original dataset x and y
-    #             print('Calculated: (', x_, ', ', y_, ') - Real: (', x[i], ', ', y[i], ')')
-    #             np.testing.assert_allclose(x_, x[i], atol=1e-3, rtol=0)
-    #             np.testing.assert_allclose(y_, y[i], atol=1e-3, rtol=0)
-    #         except Exception as e:
-    #             print(e)
-    #             plt.plot(reference_path[:, 0], reference_path[:, 1])
-    #             plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-    #             plt.plot(x[i], y[i], '*g', linewidth=5)
-    #             plt.plot(x_, y_, '*r', linewidth=5)
-    #             number_of_failed_data_points += 1
-    #
-    #     print("Number of failed data points: {} -> {}%".format(number_of_failed_data_points,
-    #                                                            (number_of_failed_data_points*100)/len(x)))
-    #
-    #     if self.show_plots:
-    #         #draw_object_ccosy(cosy.get_segment_list())
-    #         plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-    #         plt.autoscale()
-    #         plt.axis('equal')
-    #         plt.show()
 
     def test_determine_subset_of_polygon_in_projection_domain(self):
         # load reference path
