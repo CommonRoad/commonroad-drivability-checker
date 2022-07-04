@@ -267,6 +267,17 @@ class CurvilinearCoordinateSystem
       const EigenPolyline &points, int num_omp_threads) const;
 
   /**
+   * Converts list of points to the cartesian coordinate system
+   *
+   * @param points vector of points in the curvilinear coordinate system
+   * @param num_omp_threads number of OMP threads for computation
+   * @return transformed points
+   */
+  EigenPolyline convertListOfPointsToCartesianCoords(
+          const EigenPolyline &points, int num_omp_threads) const;
+
+
+  /**
    * Transforms a polygon to the curvilinear coordinate system.
    *
    * @param[in] polygon
@@ -351,6 +362,7 @@ class CurvilinearCoordinateSystem
   std::vector<EigenPolyline>
   determineSubsetOfPolygonWithinCurvilinearProjectionDomain(
       const EigenPolyline &polygon) const;
+
 
   /**
    * Computes the parts of different multipolygons which are inside the unique
@@ -608,6 +620,16 @@ class CurvilinearCoordinateSystem
 
   void removeSegment(int ind);
 
+  /**
+   * Boolean function to check whether a point is in a straight line or not.
+   * @param x first coordinate of the point
+   * @param y second coordinate of the point
+   * @param m slope of the line
+   * @param b y-intersection of the line
+   * @return true: if the point is in the line, false: otherwise
+   */
+  bool isInLine(double x, double y, double m, double b, double errorThreshold) const;
+
  private:
   EigenPolyline reference_path_original_;
   EigenPolyline reference_path_;
@@ -631,8 +653,8 @@ class CurvilinearCoordinateSystem
   double min_curvature_;
   /// curvature value at longitudinal positions of reference path
   std::map<double, double> curvature_;
-  double default_projection_domain_limit_;
-  double eps_;
+  double default_projection_domain_limit_;  //25 m
+  double eps_; // reduction
   double eps2_;
 
   std::vector<double> curvature_vec_;
