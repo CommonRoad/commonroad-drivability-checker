@@ -28,8 +28,6 @@ extern "C" {
 
 extern "C" {
 
-#define fscanf_s fscanf
-
 #include "gpc.h"
 }
 

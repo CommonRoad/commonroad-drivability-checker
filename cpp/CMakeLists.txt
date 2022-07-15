@@ -159,9 +159,8 @@ target_include_directories(triangle
 # Static library for gpc sources
 
 add_library(gpc STATIC
-    "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc/gpc.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../cpp/collision/src/plugins/triangulation/gpc_wrapper.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc/gpc.h")
-
 
 set_property(TARGET gpc PROPERTY POSITION_INDEPENDENT_CODE ON)
 
