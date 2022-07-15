@@ -110,6 +110,7 @@ endif()
 target_link_libraries(crcc
   PRIVATE
     triangle
+    gpc
   PUBLIC
     fcl
     ccd

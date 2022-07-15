@@ -94,7 +94,9 @@ class CMakeBuild(build_ext):
             cmake_args += ['-DADD_PYTHON_BINDINGS=TRUE']
 
         print(cmake_args)
-
+        
+        self.Debug=False
+        
         cfg = 'Debug' if self.debug else 'Release'
         build_args = ['--config', cfg]
 

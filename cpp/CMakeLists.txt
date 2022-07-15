@@ -156,6 +156,21 @@ target_include_directories(triangle
         ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c
     )
 
+# Static library for gpc sources
+
+add_library(gpc STATIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc/gpc.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc/gpc.h")
+
+
+set_property(TARGET gpc PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+target_include_directories(gpc
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc
+    )
 
 
 ### Definition of crcc
@@ -164,7 +179,7 @@ if(ADD_MODULE_COLLISION)
     set(COLLISION_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/collision)
     include(${CMAKE_CURRENT_SOURCE_DIR}/collision/CMakeLists.txt)
 
-    set(INSTALL_MODULES ${INSTALL_MODULES} crcc triangle)
+    set(INSTALL_MODULES ${INSTALL_MODULES} crcc triangle gpc)
     set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrcc)
 endif(ADD_MODULE_COLLISION)
 

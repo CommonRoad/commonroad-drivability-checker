@@ -23,6 +23,16 @@ extern "C" {
 }
 
 #include "string.h"
+
+#elif ENABLE_GPC
+
+extern "C" {
+
+#define fscanf_s fscanf
+
+#include "gpc.h"
+}
+
 #endif
 
 namespace collision {
@@ -240,8 +250,96 @@ int do_triangulateQuality(
   return 0;
 }
 
+#elif ENABLE_GPC
+
+
+gpc_polygon * gpc_poly_new() {
+  gpc_polygon *poly = (gpc_polygon *)malloc(sizeof(gpc_polygon));
+  if (poly) {
+	  poly->num_contours = 0;
+	  poly->contour = NULL;
+	  poly->hole = NULL;
+  }
+  return poly;
+}
+
+
+int do_triangulate(std::vector<Eigen::Vector2d> vertices,
+                   std::vector<collision::TriangleConstPtr> &triangles_out) {
+
+
+  gpc_polygon* gpc_p=gpc_poly_new();
+
+  gpc_vertex_list vl;
+
+  auto gpc_vertices=new gpc_vertex[vertices.size()];
+
+  vl.num_vertices=vertices.size();
+  vl.vertex=gpc_vertices;
+
+  int cc1=0;
+
+  for(auto el:vertices)
+  {
+	  vl.vertex[cc1].x=el[0];
+	  vl.vertex[cc1].y=el[1];
+
+	  cc1++;
+  }
+
+  gpc_add_contour(gpc_p, &vl, 0);
+
+
+  gpc_tristrip *t = (gpc_tristrip *)alloca(sizeof(gpc_tristrip));
+
+  t->num_strips = 0;
+  t->strip = NULL;
+
+
+
+  gpc_polygon_to_tristrip(gpc_p, t);
+
+  Eigen::Matrix<double, 2, 3> verts;
+
+  for(int cc1=0; cc1<t->num_strips; cc1++)
+  {
+	  for(int cc2=0; cc2<t->strip[cc1].num_vertices-2; cc2++)
+	  {
+		  auto vert=t->strip[cc1].vertex[cc2];
+		  verts.col(0) = Eigen::Vector2d(vert.x,vert.y);
+
+		  vert=t->strip[cc1].vertex[cc2+1];
+		  verts.col(1) = Eigen::Vector2d(vert.x,vert.y);
+
+		  vert=t->strip[cc1].vertex[cc2+2];
+		  verts.col(2) = Eigen::Vector2d(vert.x,vert.y);
+
+		    triangles_out.push_back(std::make_shared<const collision::Triangle>(
+		    		verts.col(0), verts.col(1), verts.col(2)));
+
+	  }
+  }
+
+  gpc_free_tristrip(t);
+
+  delete gpc_vertices;
+  gpc_free_polygon(gpc_p);
+
+  return 0;
+}
+
+int do_triangulateQuality(
+    std::vector<Eigen::Vector2d> vertices,
+    std::vector<collision::TriangleConstPtr> &triangles_out,
+    TriangulationQuality qual)
+{
+	return do_triangulate(vertices, triangles_out);
+}
+
+
 #endif
 
 }  // namespace triangulation
 }  // namespace collision
+
 #endif
