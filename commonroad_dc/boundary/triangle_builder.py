@@ -1,6 +1,11 @@
 import numpy as np
 import commonroad_dc.pycrcc as pycrcc
-import triangle
+import sys
+
+try:
+    import triangle
+except:
+    pass
 
 from commonroad_dc.boundary import lanelet_bounds
 
@@ -55,6 +60,8 @@ def triangulate(bounds, vertices, input_triangles, output_triangles, params):
         Step 3: Read the triangles, construct them as collision objects, remove triangles that are in the road
 
     """
+    if 'triangle' not in sys.modules:
+        raise Exception('This operation requires a non-free third-party python package triangle to be installed. It can be installed using pip (pip install triangle). Please refer to its license agreement for more details.')
 
     # steiner_ratio: determines the maximum amount of steiner points based on the number of vertices of the input
     # eg: steiner_ratio = 0.1, 100 vertices => 0.1*100 = 10 steiner points allowed at most
