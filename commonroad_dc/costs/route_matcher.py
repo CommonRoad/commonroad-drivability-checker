@@ -174,7 +174,7 @@ class SolutionProperties(Enum):
     LonVelocity = "LAT_VELOCITY"
     LatJerk = "LAT_JERK"
     LatVelocity = "LAT_VELOCITY"
-    LonDistanceObstacles = "LON_DISTANCE_OBCSTACLES"
+    LonDistanceObstacles = "LON_DISTANCE_OBSTACLES"
     DeltaOrientation = "DELTA_ORIENTATION"
 
 
