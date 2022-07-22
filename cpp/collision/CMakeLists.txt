@@ -14,6 +14,7 @@ set(COLLISION_SRC_ROOT ${COLLISION_ROOT}/src)
 set(COLLISION_SRC
 ${COLLISION_SRC_ROOT}/raytrace_primitive.cc
 ${COLLISION_SRC_ROOT}/shape_group.cc
+${COLLISION_SRC_ROOT}/truck.cc
 ${COLLISION_SRC_ROOT}/collision_object.cc
 ${COLLISION_SRC_ROOT}/collision_checker.cc
 ${COLLISION_SRC_ROOT}/primitive_collision_checker.cc
@@ -59,6 +60,7 @@ ${COLLISION_SRC_ROOT}/serialize/serialize_container_cc_obj.cc
 ${COLLISION_SRC_ROOT}/serialize/serialize_container_obj_obj.cc
 ${COLLISION_SRC_ROOT}/serialize/serialize_polygon.cc
 ${COLLISION_SRC_ROOT}/serialize/serialize_shape_group.cc
+${COLLISION_SRC_ROOT}/serialize/serialize_truck.cc
 ${COLLISION_SRC_ROOT}/serialize/serialize.cc
 ${COLLISION_SRC_ROOT}/serialize/serialize_sphere.cc
 ${COLLISION_SRC_ROOT}/serialize/public/serialize_public.cc
