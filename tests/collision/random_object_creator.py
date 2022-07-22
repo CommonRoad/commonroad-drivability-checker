@@ -7,12 +7,12 @@ class RandomObjectCreator:
         assert (x_steps == int(x_steps) and x_steps > 0)
         assert (y_steps == int(y_steps) and y_steps > 0)
         self.object_creator = dict()
-        self.object_creator[0] = self.create_random_sphere;
-        self.object_creator[1] = self.create_random_aabb;
-        self.object_creator[2] = self.create_random_obb;
-        self.object_creator[3] = self.create_random_sphere;
-        self.object_creator[4] = self.create_random_triangle;
-        self.object_creator[5] = self.create_random_polygon;
+        self.object_creator[0] = self.create_random_sphere
+        self.object_creator[1] = self.create_random_aabb
+        self.object_creator[2] = self.create_random_obb
+        self.object_creator[3] = self.create_random_sphere
+        self.object_creator[4] = self.create_random_triangle
+        self.object_creator[5] = self.create_random_polygon
         self.grid_x_start = grid_x_start
         self.grid_x_end = grid_x_end
         self.grid_y_start = grid_y_start

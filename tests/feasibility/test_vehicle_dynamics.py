@@ -109,8 +109,10 @@ class TestVehicleDynamics(unittest.TestCase):
     def test_state_to_array_ks(self):
         state_values, ts = self.ks_dynamics.state_to_array(self.random_ks_state)
 
-        assert state_values[0] == self.random_ks_state.position[0]
-        assert state_values[1] == self.random_ks_state.position[1]
+        assert state_values[0] == self.random_ks_state.position[0] - self.ks_dynamics.parameters.b * \
+               math.cos(self.random_ks_state.orientation)
+        assert state_values[1] == self.random_ks_state.position[1] - self.ks_dynamics.parameters.b * \
+               math.sin(self.random_ks_state.orientation)
         assert state_values[2] == self.random_ks_state.steering_angle
         assert state_values[3] == self.random_ks_state.velocity
         assert state_values[4] == self.random_ks_state.orientation
@@ -188,8 +190,10 @@ class TestVehicleDynamics(unittest.TestCase):
     def test_initial_state_to_array_ks(self):
         state_values, ts = self.ks_dynamics.state_to_array(self.random_init_state)
 
-        assert state_values[0] == self.random_init_state.position[0]
-        assert state_values[1] == self.random_init_state.position[1]
+        assert state_values[0] == self.random_init_state.position[0] - self.ks_dynamics.parameters.b * \
+               math.cos(self.random_init_state.orientation)
+        assert state_values[1] == self.random_init_state.position[1] - self.ks_dynamics.parameters.b * \
+               math.sin(self.random_init_state.orientation)
         assert state_values[2] == 0.0  # state.steering_angle
         assert state_values[3] == self.random_init_state.velocity
         assert state_values[4] == self.random_init_state.orientation
@@ -801,13 +805,15 @@ class TestVehicleDynamics(unittest.TestCase):
         x, x_ts = self.ks_dynamics.state_to_array(self.zero_ks_init_state)
         u, u_ts = self.ks_dynamics.input_to_array(inp)
 
-        sim_state = self.ks_dynamics.forward_simulation(x, u, self.dt)
+        sim_state_array = self.ks_dynamics.forward_simulation(x, u, self.dt)
 
-        self.assertAlmostEqual(sim_state[0], 0.05)  # x position
-        self.assertAlmostEqual(sim_state[1], 0.0)  # y position
-        self.assertEqual(sim_state[2], 0.0)  # steering_angle
-        self.assertEqual(sim_state[3], 1)  # velocity
-        self.assertEqual(sim_state[4], 0.0)  # orientation
+        sim_state = self.ks_dynamics.array_to_state(sim_state_array, time_step=1)
+
+        self.assertAlmostEqual(sim_state.position[0], 0.05)  # x position
+        self.assertAlmostEqual(sim_state.position[1], 0.0)  # y position
+        self.assertEqual(sim_state.steering_angle, 0.0)  # steering_angle
+        self.assertEqual(sim_state.velocity, 1)  # velocity
+        self.assertEqual(sim_state.orientation, 0.0)  # orientation
 
     def test_forward_simulation_kst_sanity_check(self):
         if self.disable_kst_tests: return
@@ -906,13 +912,15 @@ class TestVehicleDynamics(unittest.TestCase):
         u, u_ts = self.ks_dynamics.input_to_array(self.random_ks_input)
 
         x1 = odeint(self.ks_dynamics.dynamics, x, [0.0, self.dt], args=(u,), tfirst=True)[1]
+        x1_state = self.ks_dynamics.array_to_state(x1, time_step=1)
+
         next_state = self.ks_dynamics.simulate_next_state(self.zero_ks_init_state, self.random_ks_input, self.dt)
 
-        assert x1[0] == next_state.position[0]
-        assert x1[1] == next_state.position[1]
-        assert x1[2] == next_state.steering_angle
-        assert x1[3] == next_state.velocity
-        assert x1[4] == next_state.orientation
+        assert x1_state.position[0] == next_state.position[0]
+        assert x1_state.position[1] == next_state.position[1]
+        assert x1_state.steering_angle == next_state.steering_angle
+        assert x1_state.velocity == next_state.velocity
+        assert x1_state.orientation == next_state.orientation
         assert x_ts + 1 == next_state.time_step
 
     def test_simulate_next_state_kst(self):

@@ -16,7 +16,7 @@ cosy2 = pickle.loads(cosy_dump)
 
 cosy_dump2 = pickle.dumps(cosy2)
 
-if(cosy_dump==cosy_dump2):
+if(cosy_dump == cosy_dump2):
     print("test passed")
 else:
     print("test failed")

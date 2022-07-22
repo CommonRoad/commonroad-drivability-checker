@@ -71,7 +71,7 @@ class CurvilinearCoordinateSystem
    * path and two segments to the end, with length eps2, to enable the
    * conversion of points near the beginning and the end of the reference path
    */
-  CurvilinearCoordinateSystem(EigenPolyline reference_path,
+  CurvilinearCoordinateSystem(const EigenPolyline& reference_path,
                               double default_projection_domain_limit = 20.,
                               double eps = 0.1, double eps2 = 1e-4);
 
@@ -430,8 +430,8 @@ class CurvilinearCoordinateSystem
    * @param t_1 tangent vector at the start of the segment
    * @param t_2 tangent vector at the end of the segment
    */
-  void createSegment(Eigen::Vector2d pt_1, Eigen::Vector2d pt_2,
-                     Eigen::Vector2d t_1, Eigen::Vector2d t_2);
+  void createSegment(const Eigen::Vector2d& pt_1, const Eigen::Vector2d& pt_2,
+                     const Eigen::Vector2d& t_1,  const Eigen::Vector2d& t_2);
 
   /**
    * Approximates the unique projection domain of the coordinate system.

@@ -1,10 +1,20 @@
+import copy
+import math
+import time
 import timeit
+import random
+
 import numpy as np
 import unittest
-from commonroad.common.solution import VehicleType
+from commonroad.common.solution import VehicleType, Solution, PlanningProblemSolution, VehicleModel, CostFunction
+from commonroad.common.util import Interval
+from commonroad.planning.goal import GoalRegion
+from commonroad.planning.planning_problem import PlanningProblemSet, PlanningProblem
+from commonroad.scenario.scenario import ScenarioID
 from commonroad.scenario.trajectory import State, Trajectory
 
 import commonroad_dc.feasibility.feasibility_checker as feasibility_checker
+from commonroad_dc.feasibility.solution_checker import starts_at_correct_state, SolutionCheckerException
 from commonroad_dc.feasibility.vehicle_dynamics import VehicleDynamics
 from dummy_data_generator import DummyDataGenerator
 
@@ -105,6 +115,79 @@ class TestFeasibilityChecker(unittest.TestCase):
                 for velocity in cls.velocities
             }
 
+    @staticmethod
+    def create_random_float(lower, upper):
+        return random.uniform(lower, upper)
+
+    @classmethod
+    def create_random_pm_state(cls, time_step=0):
+        return State(
+            position=np.array([cls.create_random_float(-100, 100),
+                               cls.create_random_float(-100, 100)]),
+            velocity=cls.create_random_float(0, 5),
+            velocity_y=cls.create_random_float(-5, 5),
+            time_step=time_step
+        )
+
+    @classmethod
+    def create_random_ks_state(cls, time_step=0):
+        return State(
+            position=np.array([cls.create_random_float(-100, 100),
+                               cls.create_random_float(-100, 100)]),
+            steering_angle=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            velocity=cls.create_random_float(-5, 5),
+            orientation=cls.create_random_float(-np.math.pi, np.math.pi),
+            time_step=time_step
+        )
+
+    @classmethod
+    def create_random_st_state(cls, time_step=0):
+        return State(
+            position=np.array([cls.create_random_float(-100, 100),
+                               cls.create_random_float(-100, 100)]),
+            steering_angle=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            velocity=cls.create_random_float(-5, 5),
+            orientation=cls.create_random_float(-np.math.pi, np.math.pi),
+            yaw_rate=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            slip_angle=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            time_step=time_step
+        )
+
+    @classmethod
+    def create_random_mb_state(cls, time_step=0):
+        return State(
+            position=np.array([cls.create_random_float(-100, 100),
+                               cls.create_random_float(-100, 100)]),
+            steering_angle=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            velocity=cls.create_random_float(-5, 5),
+            orientation=cls.create_random_float(-np.math.pi, np.math.pi),
+            yaw_rate=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            roll_angle=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            roll_rate=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            pitch_angle=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            pitch_rate=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            velocity_y=cls.create_random_float(-5, 5),
+            position_z=cls.create_random_float(-10, 10),
+            velocity_z=cls.create_random_float(-5, 5),
+            roll_angle_front=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            roll_rate_front=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            velocity_y_front=cls.create_random_float(-5, 5),
+            position_z_front=cls.create_random_float(-10, 10),
+            velocity_z_front=cls.create_random_float(-5, 5),
+            roll_angle_rear=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            roll_rate_rear=cls.create_random_float(-np.math.pi / 10, np.math.pi / 10),
+            velocity_y_rear=cls.create_random_float(-5, 5),
+            position_z_rear=cls.create_random_float(-10, 10),
+            velocity_z_rear=cls.create_random_float(-5, 5),
+            left_front_wheel_angular_speed=cls.create_random_float(-5, 5),
+            right_front_wheel_angular_speed=cls.create_random_float(-5, 5),
+            left_rear_wheel_angular_speed=cls.create_random_float(-5, 5),
+            right_rear_wheel_angular_speed=cls.create_random_float(-5, 5),
+            delta_y_f=cls.create_random_float(-10, 10),
+            delta_y_r=cls.create_random_float(-10, 10),
+            time_step=time_step
+        )
+
     def setUp(self):
         self.zero_pm_init_state = self.pm_dynamics.convert_initial_state(self.zero_init_state)
         self.zero_ks_init_state = self.ks_dynamics.convert_initial_state(self.zero_init_state)
@@ -130,6 +213,104 @@ class TestFeasibilityChecker(unittest.TestCase):
                       f'Init State: {init_state}\n'
                       f'Input: {inp}\n'
                       f'Reconstructed Input: {reconst_inp}\n')
+
+    def test_starts_at_correct_state(self):
+        # correct state
+        init_state = self.create_random_st_state()
+        init_state_solution = copy.deepcopy(init_state)
+        traj = Trajectory(0, state_list=[init_state_solution])
+        pp_sol = PlanningProblemSolution(1, VehicleModel.KS, VehicleType.FORD_ESCORT, cost_function=CostFunction.SM1,
+                                      trajectory=traj)
+
+        solution = Solution(ScenarioID(), [pp_sol])
+        pp = PlanningProblem(planning_problem_id=1,
+                             initial_state=init_state,
+                             goal_region=GoalRegion([State(time_step=Interval(0, 10))]))
+        pp_set = PlanningProblemSet([pp])
+        starts_at_correct_state(solution, pp_set)
+
+        # alter position
+        init_state = self.create_random_st_state()
+        init_state_solution = copy.deepcopy(init_state)
+        init_state_solution.position[0] = 1000
+        traj = Trajectory(0, state_list=[init_state_solution])
+        pp_sol = PlanningProblemSolution(1, VehicleModel.KS, VehicleType.FORD_ESCORT, cost_function=CostFunction.SM1,
+                                      trajectory=traj)
+
+        solution = Solution(ScenarioID(), [pp_sol])
+        pp = PlanningProblem(planning_problem_id=1,
+                             initial_state=init_state,
+                             goal_region=GoalRegion([State(time_step=Interval(0, 10))]))
+        pp_set = PlanningProblemSet([pp])
+        try:
+            starts_at_correct_state(solution, pp_set)
+            exc_raised = False
+        except SolutionCheckerException:
+            exc_raised = True
+        self.assertTrue(exc_raised)
+
+        # alter velocity
+        init_state = self.create_random_st_state()
+        init_state_solution = copy.deepcopy(init_state)
+        init_state_solution.velocity = 1000
+        traj = Trajectory(0, state_list=[init_state_solution])
+        pp_sol = PlanningProblemSolution(1, VehicleModel.KS, VehicleType.FORD_ESCORT, cost_function=CostFunction.SM1,
+                                      trajectory=traj)
+
+        solution = Solution(ScenarioID(), [pp_sol])
+        pp = PlanningProblem(planning_problem_id=1,
+                             initial_state=init_state,
+                             goal_region=GoalRegion([State(time_step=Interval(0, 10))]))
+        pp_set = PlanningProblemSet([pp])
+        try:
+            starts_at_correct_state(solution, pp_set)
+            exc_raised = False
+        except SolutionCheckerException:
+            exc_raised = True
+        self.assertTrue(exc_raised)
+
+        # PM model no exception
+        init_state = self.create_random_st_state()
+        init_state.velocity = abs(init_state.velocity)
+        init_state_solution = State(position=init_state.position,
+                                    time_step=init_state.time_step,
+                                    velocity=  init_state.velocity * math.cos(init_state.orientation),
+                                    velocity_y=init_state.velocity * math.sin(init_state.orientation))
+
+        traj = Trajectory(0, state_list=[init_state_solution])
+        pp_sol = PlanningProblemSolution(1, VehicleModel.PM, VehicleType.FORD_ESCORT,
+                                         cost_function=CostFunction.JB1,
+                                         trajectory=traj)
+
+        solution = Solution(ScenarioID(), [pp_sol])
+        pp = PlanningProblem(planning_problem_id=1,
+                             initial_state=init_state,
+                             goal_region=GoalRegion([State(time_step=Interval(0, 10))]))
+        pp_set = PlanningProblemSet([pp])
+        starts_at_correct_state(solution, pp_set)
+
+        # PM model exception
+        init_state = self.create_random_st_state()
+        init_state.velocity = abs(init_state.velocity)
+        init_state_solution = State(position=init_state.position, time_step=init_state.time_step,
+                                    velocity=init_state.velocity * math.cos(init_state.orientation),
+                                    velocity_y=init_state.velocity * math.sin(init_state.orientation) + 0.2)
+
+        traj = Trajectory(0, state_list=[init_state_solution])
+        pp_sol = PlanningProblemSolution(1, VehicleModel.PM, VehicleType.FORD_ESCORT, cost_function=CostFunction.JB1,
+                                         trajectory=traj)
+
+        solution = Solution(ScenarioID(), [pp_sol])
+        pp = PlanningProblem(planning_problem_id=1, initial_state=init_state,
+                             goal_region=GoalRegion([State(time_step=Interval(0, 10))]))
+        pp_set = PlanningProblemSet([pp])
+        try:
+            starts_at_correct_state(solution, pp_set)
+
+        except SolutionCheckerException as e:
+            print(e)
+            exc_raised = True
+        self.assertTrue(exc_raised)
 
     def _test_next_states(self, vehicle, init_state, next_states, inputs):
         for idx, next_state in enumerate(next_states):

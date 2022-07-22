@@ -79,7 +79,7 @@ def draw_collision_timevariantcollisionobject(obj, renderer: IRenderer,
     call_stack = call_stack + ('time_variant_obstacle',)
     for i in range(obj.time_start_idx(), obj.time_end_idx() + 1):
         tmp = obj.obstacle_at_time(i)
-        if "time_to_color" in draw_params.keys():
+        if draw_params is not None and "time_to_color" in draw_params.keys():
             draw_params = draw_params.copy()
             draw_params['color'] = draw_params["time_to_color"].to_rgba(i)
         tmp.draw(renderer, draw_params, call_stack)
