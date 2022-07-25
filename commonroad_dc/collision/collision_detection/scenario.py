@@ -51,17 +51,18 @@ def create_collision_object_polygon(polygon, params=None, collision_object_func=
                                polygon.vertices[1][0], polygon.vertices[1][1],
                                polygon.vertices[2][0], polygon.vertices[2][1])
     else:
+        """
         if all(np.equal(polygon.vertices[0], polygon.vertices[-1])):
             vertices = polygon.vertices[:-1]
         else:
             vertices = polygon.vertices
 
-        # Randomly appearing segfault in triangle library if duplicate vertices
-        # https://github.com/drufat/triangle/issues/2#issuecomment-583812662
+         Randomly appearing segfault in triangle library if duplicate vertices
+         https://github.com/drufat/triangle/issues/2#issuecomment-583812662
         _, ind = np.unique(vertices, axis=0, return_index=True)
         ind.sort()
         vertices = vertices[ind]
-        """
+        
         number_of_vertices = len(vertices)
         segments = list(zip(range(0, number_of_vertices - 1), range(1, number_of_vertices)))
         segments.append((0, number_of_vertices - 1))
@@ -81,7 +82,7 @@ def create_collision_object_polygon(polygon, params=None, collision_object_func=
                                             v2[0], v2[1]))
         """
         #return pycrcc.Polygon(polygon.vertices.tolist(), list(), mesh)
-        return pycrcc.Polygon(polygon.vertices.tolist(), 0,0)
+        return pycrcc.Polygon(polygon.vertices.tolist())
 
 
 def create_collision_object_shape_group(shape_group, params=None, collision_object_func=None):

@@ -1161,16 +1161,27 @@ void init_module_collision(py::module &m) {
            py::arg("outer_boundary"), py::arg("holes"),
            py::arg("triangle mesh"))
 #if ENABLE_TRIANGULATION
-      .def(py::init([](std::vector<std::array<double, 2>> outer_boundary,
-                       double mesh_quality_triangle, double mesh_quality_cgal) {
+
+	  .def(py::init([](std::vector<std::array<double, 2>> outer_boundary) {
+		std::vector<Eigen::Vector2d> vertices;
+		for (const auto &vertex : outer_boundary) {
+		  vertices.push_back(Eigen::Vector2d(vertex[0], vertex[1]));
+		}
+
+		return new collision::Polygon(
+			vertices, 0, collision::triangulation::TriangulationQuality());
+	  }))
+
+      .def(py::init([](std::vector<std::array<double, 2>> outer_boundary, int triangulation_method,
+                       double mesh_quality) {
         std::vector<Eigen::Vector2d> vertices;
         for (const auto &vertex : outer_boundary) {
           vertices.push_back(Eigen::Vector2d(vertex[0], vertex[1]));
         }
 
         return new collision::Polygon(
-            vertices, collision::triangulation::TriangulationQuality(
-                          mesh_quality_cgal, mesh_quality_triangle));
+            vertices, triangulation_method, collision::triangulation::TriangulationQuality(
+                          mesh_quality));
       }))
 #endif
       .def("collide",

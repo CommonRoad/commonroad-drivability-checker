@@ -171,7 +171,6 @@ target_include_directories(gpc
         ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc
     )
 
-
 ### Definition of crcc
 
 if(ADD_MODULE_COLLISION)

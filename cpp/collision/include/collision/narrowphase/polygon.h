@@ -36,11 +36,11 @@ class Polygon : public Shape, solvers::solverBoost::IBoostCollisionObject {
           const Eigen::Vector2d &_center = Eigen::Vector2d(0, 0));
 #if ENABLE_TRIANGULATION
   Polygon(std::vector<Eigen::Vector2d> &vertices,
-          std::vector<std::vector<Eigen::Vector2d>> &hole_vertices,
+          std::vector<std::vector<Eigen::Vector2d>> &hole_vertices, int triangulation_method,
           triangulation::TriangulationQuality qual =
               triangulation::TriangulationQuality(),
           const Eigen::Vector2d &_center = Eigen::Vector2d(0, 0));
-  Polygon(std::vector<Eigen::Vector2d> &vertices,
+  Polygon(std::vector<Eigen::Vector2d> &vertices, int triangulation_method,
           triangulation::TriangulationQuality qual =
               triangulation::TriangulationQuality(),
           const Eigen::Vector2d &_center = Eigen::Vector2d(0, 0));
