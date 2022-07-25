@@ -1178,7 +1178,6 @@ void init_module_collision(py::module &m) {
         for (const auto &vertex : outer_boundary) {
           vertices.push_back(Eigen::Vector2d(vertex[0], vertex[1]));
         }
-
         return new collision::Polygon(
             vertices, triangulation_method, collision::triangulation::TriangulationQuality(
                           mesh_quality));

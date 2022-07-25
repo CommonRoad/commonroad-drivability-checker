@@ -4,6 +4,8 @@ import sys
 import platform
 import subprocess
 import pathlib
+import shutil
+from setup_options import setup_options_dict
 
 
 from sysconfig import get_paths
@@ -53,18 +55,18 @@ class CMakeBuild(build_ext):
         default_python_library=""#find_libpython()
         default_python_executable=sys.executable
 	
-        if('PYTHON_INCLUDE_DIR' in os.environ):
-            python_include_dir=os.environ['PYTHON_INCLUDE_DIR']
+        if(setup_options_dict['PYTHON_INCLUDE_DIR']!=''):
+            python_include_dir=setup_options_dict['PYTHON_INCLUDE_DIR']
         else:
             python_include_dir=default_python_include_dir
-	    
-        if('PYTHON_LIBRARY' in os.environ):
-            python_library=os.environ['PYTHON_LIBRARY']
+        
+        if(setup_options_dict['PYTHON_LIBRARY']!=''):
+            python_library=setup_options_dict['PYTHON_LIBRARY']
         else:
             python_library=default_python_library
-	   
-        if('PYTHON_EXECUTABLE' in os.environ):
-            python_executable=os.environ['PYTHON_EXECUTABLE']
+	
+        if(setup_options_dict['PYTHON_EXECUTABLE']!=''):
+            python_executable=setup_options_dict['PYTHON_EXECUTABLE']
         else:
             python_executable=default_python_executable
 	     
@@ -76,26 +78,38 @@ class CMakeBuild(build_ext):
           ]
 
         # build documentation
-        if 'BUILD_DOC' in os.environ:
-            cmake_args += ['-DBUILD_DOC=' + os.environ['BUILD_DOC']]
+        if(setup_options_dict['BUILD_DOC']!=''):
+            cmake_args += ['-DBUILD_DOC=' + setup_options_dict['BUILD_DOC']]
         else:
             cmake_args += ['-DBUILD_DOC=OFF']
 
         # add tests
-        if 'ADD_TESTS' in os.environ:
-            cmake_args += ['DADD_TESTS=' + os.environ['ADD_TESTS']]
+        if(setup_options_dict['ADD_TESTS']!=''):
+            cmake_args += ['-DADD_TESTS=' + setup_options_dict['ADD_TESTS']]
         else:
             cmake_args += ['-DADD_TESTS=OFF']
-
-        # add python bindings
-        if 'ADD_PYTHON_BINDINGS' in os.environ:
-            cmake_args += ['-DADD_PYTHON_BINDINGS=' + os.environ['ADD_PYTHON_BINDINGS']]
+            
+        # Enable the non-free Triangle library
+        
+        
+        if(setup_options_dict['ADD_TRIANGLE']!=''):
+            cmake_args += ['-DADD_TRIANGLE=' + setup_options_dict['ADD_TRIANGLE']]
         else:
-            cmake_args += ['-DADD_PYTHON_BINDINGS=TRUE']
+            cmake_args += ['-DADD_TRIANGLE=OFF']
+            
+        # add python bindings
+        if(setup_options_dict['ADD_PYTHON_BINDINGS']!=''):
+            cmake_args += ['-DADD_PYTHON_BINDINGS=' + setup_options_dict['ADD_PYTHON_BINDINGS']]
+        else:
+            cmake_args += ['-DADD_PYTHON_BINDINGS=ON']
 
         print(cmake_args)
         
-        self.Debug=False
+        
+        if(setup_options_dict['DEBUG']!=''):
+            self.debug=setup_options_dict['DEBUG']
+        else:
+            self.debug=False
         
         cfg = 'Debug' if self.debug else 'Release'
         build_args = ['--config', cfg]
@@ -153,9 +167,11 @@ class CMakeBuild(build_ext):
             pass
 
         # copy to commonroad_dc/
-        self.copy_file(os.path.join(lib_dir, 'libcrcc.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
-        self.copy_file(os.path.join(lib_dir, 'libcrccosy.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
-        self.copy_file(os.path.join(lib_dir, 'libtriangle.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
+        shutil.copy(os.path.join(lib_dir, 'libcrcc.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
+        shutil.copy(os.path.join(lib_dir, 'libcrccosy.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
+        
+        #self.copy_file(os.path.join(lib_dir, 'libcrcc.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
+        #self.copy_file(os.path.join(lib_dir, 'libcrccosy.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
 
 
 
