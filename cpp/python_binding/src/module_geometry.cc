@@ -49,6 +49,7 @@ PYBIND11_MODULE(pycrccosy, m) {
                  &geometry::CurvilinearCoordinateSystem::computeCurvature,
                  "Computes the curvature of a given polyline");
 
+
 #endif
 }
 
@@ -327,7 +328,13 @@ void init_module_geometry(py::module &m) {
            "system.\n\n:param points: vector of points in the global "
            "coordinate frame\n\n:param num_omp_threads: number of OMP threads "
            "for computation\n\n:return: transformed points")
-
+      .def("convert_list_of_points_to_cartesian_coords",
+           &geometry::CurvilinearCoordinateSystem::
+               convertListOfPointsToCartesianCoords,
+           "Converts list of points to the cartesian coordinate system."
+           "\n\n:param points: vector of points in the curvilinear coordinate frame"
+           "\n\n:param num_omp_threads: number of OMP threads for computation"
+           "\n\n:return: transformed points")
       .def("compute_and_set_curvature",
            &geometry::CurvilinearCoordinateSystem::computeAndSetCurvature,
            "Automatically computes and sets the curvature information for the "
