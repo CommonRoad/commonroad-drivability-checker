@@ -40,10 +40,11 @@ class Polygon : public Shape, solvers::solverBoost::IBoostCollisionObject {
           triangulation::TriangulationQuality qual =
               triangulation::TriangulationQuality(),
           const Eigen::Vector2d &_center = Eigen::Vector2d(0, 0));
-  Polygon(std::vector<Eigen::Vector2d> &vertices, int triangulation_method,
+  /*Polygon(std::vector<Eigen::Vector2d> &vertices, int triangulation_method,
           triangulation::TriangulationQuality qual =
               triangulation::TriangulationQuality(),
           const Eigen::Vector2d &_center = Eigen::Vector2d(0, 0));
+	*/
 #endif
 
   Polygon(const Polygon &copy);

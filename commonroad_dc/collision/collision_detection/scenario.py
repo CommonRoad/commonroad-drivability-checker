@@ -7,8 +7,13 @@ import commonroad.scenario.obstacle
 import matplotlib.pyplot as plt
 import numpy as np
 import commonroad_dc.pycrcc as pycrcc
-#import triangle
 from commonroad.scenario.scenario import Scenario
+import sys
+
+try:
+    import triangle
+except:
+    pass
 
 import commonroad_dc.collision.collision_detection.pycrcc_collision_dispatch
 
@@ -51,38 +56,46 @@ def create_collision_object_polygon(polygon, params=None, collision_object_func=
                                polygon.vertices[1][0], polygon.vertices[1][1],
                                polygon.vertices[2][0], polygon.vertices[2][1])
     else:
-        """
-        if all(np.equal(polygon.vertices[0], polygon.vertices[-1])):
-            vertices = polygon.vertices[:-1]
-        else:
-            vertices = polygon.vertices
 
-         Randomly appearing segfault in triangle library if duplicate vertices
-         https://github.com/drufat/triangle/issues/2#issuecomment-583812662
-        _, ind = np.unique(vertices, axis=0, return_index=True)
-        ind.sort()
-        vertices = vertices[ind]
-        
-        number_of_vertices = len(vertices)
-        segments = list(zip(range(0, number_of_vertices - 1), range(1, number_of_vertices)))
-        segments.append((0, number_of_vertices - 1))
-        triangles = triangle.triangulate({'vertices': vertices, 'segments': segments}, opts='pqS2.4')
-        mesh = list()
-        if not 'triangles' in triangles:
-            warnings.warn(f"Triangulation of polygon with vertices\n {polygon.vertices} \n not successful.",
-                          stacklevel=1)
-            return None
+        if (type(params) is dict and params.get('triangulation_method','gpc')=='triangle'):
+
+            if 'triangle' not in sys.modules:
+                raise Exception(
+                    'This operation requires a non-free third-party python package triangle to be installed. It can be installed using pip (pip install triangle). Please refer to its license agreement for more details.')
+
+            if all(np.equal(polygon.vertices[0], polygon.vertices[-1])):
+                vertices = polygon.vertices[:-1]
+            else:
+                vertices = polygon.vertices
+
+            #Randomly appearing segfault in triangle library if duplicate vertices
+            #https://github.com/drufat/triangle/issues/2#issuecomment-583812662
+
+            _, ind = np.unique(vertices, axis=0, return_index=True)
+            ind.sort()
+            vertices = vertices[ind]
+
+            number_of_vertices = len(vertices)
+            segments = list(zip(range(0, number_of_vertices - 1), range(1, number_of_vertices)))
+            segments.append((0, number_of_vertices - 1))
+            triangles = triangle.triangulate({'vertices': vertices, 'segments': segments}, opts='pqS2.4')
+            mesh = list()
+            if not 'triangles' in triangles:
+                warnings.warn(f"Triangulation of polygon with vertices\n {polygon.vertices} \n not successful.",
+                              stacklevel=1)
+                return None
+            else:
+                for t in triangles['triangles']:
+                    v0 = triangles['vertices'][t[0]]
+                    v1 = triangles['vertices'][t[1]]
+                    v2 = triangles['vertices'][t[2]]
+                    mesh.append(pycrcc.Triangle(v0[0], v0[1],
+                                                v1[0], v1[1],
+                                                v2[0], v2[1]))
+
+            return pycrcc.Polygon(polygon.vertices.tolist(), list(), mesh)
         else:
-            for t in triangles['triangles']:
-                v0 = triangles['vertices'][t[0]]
-                v1 = triangles['vertices'][t[1]]
-                v2 = triangles['vertices'][t[2]]
-                mesh.append(pycrcc.Triangle(v0[0], v0[1],
-                                            v1[0], v1[1],
-                                            v2[0], v2[1]))
-        """
-        #return pycrcc.Polygon(polygon.vertices.tolist(), list(), mesh)
-        return pycrcc.Polygon(polygon.vertices.tolist())
+            return pycrcc.Polygon(polygon.vertices.tolist(), list())
 
 
 def create_collision_object_shape_group(shape_group, params=None, collision_object_func=None):

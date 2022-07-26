@@ -42,7 +42,7 @@ Polygon::Polygon(std::vector<Eigen::Vector2d> &vertices,
   }
   invalidateCollisionEntityCache();
 }
-
+/*
 Polygon::Polygon(std::vector<Eigen::Vector2d> &vertices, int triangulation_method,
                  triangulation::TriangulationQuality qual,
                  const Eigen::Vector2d &_center)
@@ -59,6 +59,7 @@ Polygon::Polygon(std::vector<Eigen::Vector2d> &vertices, int triangulation_metho
   }
   invalidateCollisionEntityCache();
 }
+*/
 #endif
 
 bool Polygon::rayTrace(const Eigen::Vector2d &point1,
