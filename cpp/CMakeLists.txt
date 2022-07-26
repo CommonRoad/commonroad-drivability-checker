@@ -12,6 +12,7 @@ option(ADD_MODULE_COLLISION "add collision module" ON)
 option(ADD_PYTHON_BINDINGS "add Python bindings" OFF)
 option(ADD_TRIANGLE "Use a non-free Triangle library" OFF)
 
+
 # Add modules for discovering Sphinx etc.
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMakeModules" ${CMAKE_MODULE_PATH})
 

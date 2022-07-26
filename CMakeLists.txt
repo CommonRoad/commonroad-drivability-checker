@@ -15,6 +15,7 @@ option(ADD_MODULE_COLLISION "add collision module" ON)
 option(ADD_PYTHON_BINDINGS "add Python bindings" OFF)
 option(ADD_TRIANGLE "Use a non-free Triangle library" OFF)
 
+
 if("${CMAKE_BINARY_DIR}" EQUAL "${PROJECT_SOURCE_DIR}/build")
   message(WARNING
     "The 'build' directory inside the project root directory is also used by the Python build system!\n"
