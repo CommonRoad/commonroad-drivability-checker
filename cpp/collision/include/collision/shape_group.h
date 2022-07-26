@@ -37,7 +37,6 @@ class ShapeGroup : public CollisionObjectEx,
   friend class collision::test::ShapeGroupTest;
 #endif
 
-    friend class Truck;
 
  public:
   virtual const ISolverEntity_FCL *getFclInterface() const override {

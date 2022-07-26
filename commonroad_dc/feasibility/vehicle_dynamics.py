@@ -13,7 +13,6 @@ from vehiclemodels.parameters_vehicle1 import parameters_vehicle1
 from vehiclemodels.parameters_vehicle2 import parameters_vehicle2
 from vehiclemodels.parameters_vehicle3 import parameters_vehicle3
 from vehiclemodels.parameters_vehicle4 import parameters_vehicle4
-from vehiclemodels.parameters_vehicle_MAN import parameters_vehicle_MAN
 from vehiclemodels.vehicle_dynamics_ks import vehicle_dynamics_ks
 from vehiclemodels.vehicle_dynamics_mb import vehicle_dynamics_mb
 from vehiclemodels.vehicle_dynamics_st import vehicle_dynamics_st
@@ -50,7 +49,6 @@ class VehicleParameterMapping(Enum):
     BMW_320i = parameters_vehicle2()
     VW_VANAGON = parameters_vehicle3()
     TRUCK = parameters_vehicle4()
-    TRUCK_MAN = parameters_vehicle_MAN()
 
     @classmethod
     def from_vehicle_type(cls, vehicle_type: VehicleType) -> VehicleParameters:

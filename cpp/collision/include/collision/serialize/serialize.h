@@ -25,8 +25,6 @@
 
 #include "collision/serialize/shape_group_export.h"
 
-#include "collision/serialize/truck_export.h"
-
 #include "collision/serialize/collision_checker_export.h"
 
 #include "collision/serialize/broadphase_failure_export.h"

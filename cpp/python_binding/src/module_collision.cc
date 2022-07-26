@@ -9,7 +9,6 @@
 #include "collision/narrowphase/sphere.h"
 #include "collision/narrowphase/triangle.h"
 #include "collision/shape_group.h"
-#include "collision/truck.h"
 
 #include "collision/time_variant_collision_object.h"
 
@@ -1124,60 +1123,6 @@ void init_module_collision(py::module &m) {
           },
           [](py::tuple t) {  // __setstate__
             return std::static_pointer_cast<collision::ShapeGroup>(
-                pickle_object_in(t));
-          }))
-#endif
-
-      ;
-
-  py::class_<collision::Truck, collision::CollisionObject,
-            std::shared_ptr<collision::Truck>>(m, "Truck")
-      .def(py::init([](double x, double y, std::map<std::string, double> params)
-      {
-        return new collision::Truck(Eigen::Vector2d(x, y), params);
-      }))
-      .def(py::init([](double x, double y)
-      {
-        return new collision::Truck(Eigen::Vector2d(x, y));
-      }))
-      .def(py::init([]()
-      {
-        return new collision::Truck();
-      }))
-      .def("collide",
-           [](std::shared_ptr<collision::Truck> &cc,
-              std::shared_ptr<collision::CollisionObject> &co) {
-             return cc->collide(*co);
-           })
-      .def("unpack",
-           [](collision::Truck &obj) {
-             auto unpacked = obj.unpack();
-             py::list ret_list;
-             for (auto &i : unpacked) {
-               ret_list.append(py::cast(i));
-             }
-             return ret_list;
-           })
-      .def("draw",
-           [](const std::shared_ptr<collision::Truck> &c,
-              py::object renderer, py::object draw_params,
-              py::object callstack) {
-             py::object pycrcc = py::module::import(
-                 "commonroad_dc.collision.visualization.drawing");
-             py::object draw = pycrcc.attr("draw_collision_truck");
-             draw(c, renderer, draw_params, callstack);
-           },
-           py::arg("renderer"), py::arg("draw_params") = py::none(),
-           py::arg("callstack") = py::tuple())
-
-#if ENABLE_SERIALIZER
-      .def(py::pickle(
-          [](const collision::CollisionObject &obj) {  // __getstate__
-            /* Return a tuple that fully encodes the state of the object */
-            return pickle_object_out(obj);
-          },
-          [](py::tuple t) {  // __setstate__
-            return std::static_pointer_cast<collision::Truck>(
                 pickle_object_in(t));
           }))
 #endif

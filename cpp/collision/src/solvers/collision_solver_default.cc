@@ -103,8 +103,6 @@ CollisionFunctionMatrix::CollisionFunctionMatrix(
       solvers::solverFCL::collide_obj_obj;
   m_collide_bool_function[OBJ_TYPE_AABB_BOX][OBJ_TYPE_SHAPEGROUP] =
       solvers::solverFCL::collide_obj_shape_group;
-  m_collide_bool_function[OBJ_TYPE_AABB_BOX][OBJ_TYPE_TRUCK] =
-      solvers::solverFCL::collide_obj_shape_group;
   m_collide_bool_function[OBJ_TYPE_AABB_BOX][OBJ_TYPE_TVOBSTACLE] =
       solvers::solverFCL::collide_obj_tvobst;
 
@@ -121,8 +119,6 @@ CollisionFunctionMatrix::CollisionFunctionMatrix(
   m_collide_bool_function[OBJ_TYPE_OBB_BOX][OBJ_TYPE_POLYGON] =
       solvers::solverFCL::collide_obj_obj;
   m_collide_bool_function[OBJ_TYPE_OBB_BOX][OBJ_TYPE_SHAPEGROUP] =
-      solvers::solverFCL::collide_obj_shape_group;
-  m_collide_bool_function[OBJ_TYPE_OBB_BOX][OBJ_TYPE_TRUCK] =
       solvers::solverFCL::collide_obj_shape_group;
   m_collide_bool_function[OBJ_TYPE_OBB_BOX][OBJ_TYPE_TVOBSTACLE] =
       solvers::solverFCL::collide_obj_tvobst;
@@ -141,8 +137,6 @@ CollisionFunctionMatrix::CollisionFunctionMatrix(
       solvers::solverFCL::collide_obj_obj;
   m_collide_bool_function[OBJ_TYPE_SPHERE][OBJ_TYPE_SHAPEGROUP] =
       solvers::solverFCL::collide_obj_shape_group;
-  m_collide_bool_function[OBJ_TYPE_SPHERE][OBJ_TYPE_TRUCK] =
-      solvers::solverFCL::collide_obj_shape_group;
   m_collide_bool_function[OBJ_TYPE_SPHERE][OBJ_TYPE_TVOBSTACLE] =
       solvers::solverFCL::collide_obj_tvobst;
 
@@ -159,8 +153,6 @@ CollisionFunctionMatrix::CollisionFunctionMatrix(
   m_collide_bool_function[OBJ_TYPE_TRIANGLE][OBJ_TYPE_POLYGON] =
       solvers::solverFCL::collide_obj_obj;
   m_collide_bool_function[OBJ_TYPE_TRIANGLE][OBJ_TYPE_SHAPEGROUP] =
-      solvers::solverFCL::collide_obj_shape_group;
-  m_collide_bool_function[OBJ_TYPE_TRIANGLE][OBJ_TYPE_TRUCK] =
       solvers::solverFCL::collide_obj_shape_group;
   m_collide_bool_function[OBJ_TYPE_TRIANGLE][OBJ_TYPE_TVOBSTACLE] =
       solvers::solverFCL::collide_obj_tvobst;
@@ -179,8 +171,6 @@ CollisionFunctionMatrix::CollisionFunctionMatrix(
       solvers::solverFCL::collide_obj_obj;
   m_collide_bool_function[OBJ_TYPE_POINT][OBJ_TYPE_SHAPEGROUP] =
       solvers::solverFCL::collide_obj_shape_group;
-  m_collide_bool_function[OBJ_TYPE_POINT][OBJ_TYPE_TRUCK] =
-      solvers::solverFCL::collide_obj_shape_group;
   m_collide_bool_function[OBJ_TYPE_POINT][OBJ_TYPE_TVOBSTACLE] =
       solvers::solverFCL::collide_obj_tvobst;
 
@@ -197,8 +187,6 @@ CollisionFunctionMatrix::CollisionFunctionMatrix(
   m_collide_bool_function[OBJ_TYPE_POLYGON][OBJ_TYPE_POLYGON] =
       solvers::solverFCL::collide_obj_obj;
   m_collide_bool_function[OBJ_TYPE_POLYGON][OBJ_TYPE_SHAPEGROUP] =
-      solvers::solverFCL::collide_obj_shape_group;
-  m_collide_bool_function[OBJ_TYPE_POLYGON][OBJ_TYPE_TRUCK] =
       solvers::solverFCL::collide_obj_shape_group;
   m_collide_bool_function[OBJ_TYPE_POLYGON][OBJ_TYPE_TVOBSTACLE] =
       solvers::solverFCL::collide_obj_tvobst;
@@ -217,8 +205,6 @@ CollisionFunctionMatrix::CollisionFunctionMatrix(
       solvers::solverFCL::collide_shape_group_obj;
   m_collide_bool_function[OBJ_TYPE_SHAPEGROUP][OBJ_TYPE_SHAPEGROUP] =
       solvers::solverFCL::collide_shape_group_shape_group;
-  m_collide_bool_function[OBJ_TYPE_SHAPEGROUP][OBJ_TYPE_TRUCK] =
-      solvers::solverFCL::collide_shape_group_shape_group;
   m_collide_bool_function[OBJ_TYPE_SHAPEGROUP][OBJ_TYPE_TVOBSTACLE] =
       solvers::solverFCL::collide_obj_tvobst;
 
@@ -235,8 +221,6 @@ CollisionFunctionMatrix::CollisionFunctionMatrix(
   m_collide_bool_function[OBJ_TYPE_TVOBSTACLE][OBJ_TYPE_POLYGON] =
       solvers::solverFCL::collide_tvobst_obj;
   m_collide_bool_function[OBJ_TYPE_TVOBSTACLE][OBJ_TYPE_SHAPEGROUP] =
-      solvers::solverFCL::collide_tvobst_obj;
-  m_collide_bool_function[OBJ_TYPE_TVOBSTACLE][OBJ_TYPE_TRUCK] =
       solvers::solverFCL::collide_tvobst_obj;
   m_collide_bool_function[OBJ_TYPE_TVOBSTACLE][OBJ_TYPE_TVOBSTACLE] =
       solvers::solverFCL::collide_tvobst_tvobst;
