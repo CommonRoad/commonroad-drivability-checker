@@ -27,6 +27,7 @@ build-compile-commands:
   stage: compile
   script:
     # run CMake in order to get compile_commands.json
+    - git submodule update --init
     - mkdir build-debug && cd build-debug
     - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
     - cd ..
@@ -39,6 +40,7 @@ build-compile-commands:
 build-clang:
   stage: compile
   script:
+    - git submodule update --init
     - export CC=clang
     - export CXX=clang++
     - mkdir build-debug && cd build-debug
@@ -60,6 +62,7 @@ build-gcc:
 build-standalone:
   stage: compile
   script:
+    - git submodule update --init
     - mkdir build-debug && cd build-debug
     - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist/ -DCMAKE_BUILD_TYPE=Release ..
     - cmake --build . -- -j 4
@@ -68,6 +71,7 @@ build-standalone:
 build-test:
   stage: compile
   script:
+    - git submodule update --init
     - mkdir build-debug && cd build-debug
     - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist/ -DCMAKE_BUILD_TYPE=Debug ..
     - cmake --build . -- -j 4
@@ -81,6 +85,7 @@ build-test:
 build-run-coverage:
   stage: compile
   script:
+    - git submodule update --init
     - mkdir build-debug && cd build-debug
     - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist/ -DCMAKE_BUILD_TYPE=Debug -DENV_MODEL_BUILD_CODE_COVERAGE=ON -DCMAKE_CXX_FLAGS=--coverage ..
     - cmake --build . -- -j 4
