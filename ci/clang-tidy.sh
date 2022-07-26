@@ -8,7 +8,7 @@ exit_flag=false
 clang_tidy_version='10'
 clang_tidy="clang-tidy-$clang_tidy_version"
 
-target_branch="master"
+target_branch="origin master"
 
 # Retrieve list of cpp-files that were changed in source branch with respect to master (target branch)
 filelist=($(git diff ${target_branch}... --name-only | grep ".cpp"))
