@@ -11,7 +11,7 @@ clang_tidy="clang-tidy-$clang_tidy_version"
 target_branch="master"
 
 # Retrieve list of cpp-files that were changed in source branch with respect to master (target branch)
-filelist=($(git diff origin/${target_branch} --name-only | grep ".cpp"))
+filelist=($(git diff ${target_branch}... --name-only | grep ".cpp"))
 
 
 if [[ "${#filelist[@]}" -eq "0" ]]; then
