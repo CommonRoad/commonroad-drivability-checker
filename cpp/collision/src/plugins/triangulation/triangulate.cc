@@ -322,9 +322,11 @@ int do_triangulate_gpc(std::vector<Eigen::Vector2d> vertices,
   }
 
   gpc_free_tristrip(t);
-
+  
+  
   delete gpc_vertices;
   gpc_free_polygon(gpc_p);
+  free(gpc_p);
 
   return 0;
 }
