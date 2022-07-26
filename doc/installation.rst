@@ -177,7 +177,7 @@ After installing all essential third party libraries and packages, you can now i
         .. code-block:: bash
             
             $ BUILD_JOBS=8 python setup.py build
-            $ pip install . --use-feature=in-tree-build
+            $ pip install .
 
    **Note:** This will automatically build all C++ dependencies of the CommonRoad
    Drivability Checker. The number 8 in this example indicates the number of CPU cores to be used for the compilation. Each job (possibly) will use a core, so specify this number according to your system and free cores.
