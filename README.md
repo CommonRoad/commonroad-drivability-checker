@@ -48,15 +48,3 @@ Fulltext is available on [mediaTUM](https://mediatum.ub.tum.de/doc/1546126/).
 	abstract = "Collision avoidance, kinematic feasibility, and road-compliance must be validated to ensure the drivability of planned motions for autonomous vehicles. Although these tasks are highly repetitive, computationally efficient toolboxes are still unavailable. The CommonRoad Drivability Checker— an open-source toolbox—unifies these mentioned checks. It is compatible with the CommonRoad benchmark suite, which additionally facilitates the development of motion planners. Our toolbox drastically reduces the effort of developing and validating motion planning algorithms. Numerical experiments show that our toolbox is real-time capable and can be used in real test vehicles."
 }
 ```
-
-
-Licensing note
---------------
-Please note, that the drivability checker contains a dependency to the third party library [Triangle](https://www.cs.cmu.edu/~quake/triangle.html)
-which states:
-```
-Please note that although Triangle is freely available, it is copyrighted by the author and may 
-not be sold or included in commercial products without a license.
-```
-Please be aware of that when using the drivability checker in your projects. See the original [licensing conditions](https://github.com/wo80/Triangle/blob/master/src/Triangle/README) 
-of the Triangle library as well as the [Triangle website](https://www.cs.cmu.edu/~quake/triangle.html) for details.
