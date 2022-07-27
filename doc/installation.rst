@@ -163,7 +163,8 @@ Installation of Optional Third Party Libraries
       $ pip3 install triangle
       
 Please note that although Triangle is freely available, it is copyrighted by its author and may 
-not be sold or included in commercial products without a license.
+not be sold or included in commercial products without a license. See the original `licensing conditions <https://github.com/wo80/Triangle/blob/master/src/Triangle/README>`_ 
+of the Triangle library as well as the `Triangle website <https://www.cs.cmu.edu/~quake/triangle.html>`_ for details.
 
 It is possible to modify Drivability Checker to support CGAL. For the installation of CGAL, please refer to `their website <https://github.com/CGAL/cgal>`_.
 
@@ -180,7 +181,7 @@ After installing all essential third party libraries and packages, you can now i
 
             $ conda activate commonroad-py36
             
-#. Make sure that the latest pip version is installed. Otherwise, the next installation step would not work.
+#. Please make sure that the latest pip version is installed. Otherwise, the next installation step would not work.
 
     .. code-block:: bash
 
