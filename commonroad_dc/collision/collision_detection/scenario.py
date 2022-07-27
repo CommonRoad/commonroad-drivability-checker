@@ -57,7 +57,7 @@ def create_collision_object_polygon(polygon, params=None, collision_object_func=
                                polygon.vertices[2][0], polygon.vertices[2][1])
     else:
 
-        if (type(params) is dict and params.get('triangulation_method','gpc')=='triangle'):
+        if (type(params) is dict and params.get('triangulation_method', 'gpc') == 'triangle'):
 
             if 'triangle' not in sys.modules:
                 raise Exception(
@@ -68,8 +68,8 @@ def create_collision_object_polygon(polygon, params=None, collision_object_func=
             else:
                 vertices = polygon.vertices
 
-            #Randomly appearing segfault in triangle library if duplicate vertices
-            #https://github.com/drufat/triangle/issues/2#issuecomment-583812662
+            # Randomly appearing segfault in triangle library if duplicate vertices
+            # https://github.com/drufat/triangle/issues/2#issuecomment-583812662
 
             _, ind = np.unique(vertices, axis=0, return_index=True)
             ind.sort()
