@@ -190,7 +190,7 @@ setup(
 
     author='Technical University of Munich',
     author_email='commonroad@lists.lrz.de',
-    license='GNU General Public License v3.0',
+    license='BSD',
     data_files=[('.', ['LICENSE'])],
 
     # Source
