@@ -1,5 +1,5 @@
 setup_options_dict = {
-    'BUILD_DOC': 'ON',
+    'BUILD_DOC': 'OFF',
     'ADD_TESTS': 'OFF',
     'ADD_PYTHON_BINDINGS': 'ON',
     'ADD_TRIANGLE': 'OFF',  # the Triangle library is non-free
