@@ -1,9 +1,13 @@
-Permission is hereby granted to use the commonroad-drivability-checker under the terms of the Modified BSD license provided that the license requirements for optional plugins and dependencies are also met.
+Permission is hereby granted to use the commonroad-drivability-checker under the terms of the Modified BSD-3 license provided that the license requirements for optional plugins and dependencies are also met.
 
-Running 'git submodule update' or 'bash build.sh' begins the download of the third-party Triangle library. Please note that the Triangle library can not be used for commercial projects. See license conditions for the Triangle library at https://github.com/libigl/triangle/blob/master/triangle.c  or https://www.cs.cmu.edu/~quake/triangle.html for details. However, by default the DrivabilityChecker is built without support for the Triangle library. Some optional triangulation functionality is dependent on the Triangle python package, which can be installed by running pip install triangle. The package contains the previously mentioned Triangle library.
+Running 'git submodule update' or 'bash build.sh' begins the download of the third-party Triangle library. Please note that the Triangle library can not be used for commercial projects.
+See license conditions for the Triangle library at https://github.com/libigl/triangle/blob/master/triangle.c  or https://www.cs.cmu.edu/~quake/triangle.html for details.
+However, by default the DrivabilityChecker is built without support for the Triangle library. Some optional triangulation functionality is dependent on the Triangle python package,
+which can be installed by running pip install triangle. The package contains the previously mentioned Triangle library.
 
-The project uses the General Polygon Clipper library, available at https://github.com/rickbrew/GeneralPolygonClipper. Please see its license details. Installing the library begins the download of the third-party Polygon3 python package. Please see its license details at https://www.j-raedler.de/projects/polygon/
+The project uses the General Polygon Clipper library, available at https://github.com/rickbrew/GeneralPolygonClipper. Please see its license details.
+Installing the library begins the download of the third-party Polygon3 python package. Please see its license details at https://www.j-raedler.de/projects/polygon/
 
 You could optionally modify the library to use a plugin for fast triangulation of polygons which uses the CGAL library (https://www.cgal.org/). Please see its license details.
 
-Other third-party dependencies can be found in the third_party folder (C++ libraries) and the setup.py file (python packages).
+Other third-party dependencies are included as submodules in the third_party folder (C++ libraries); dependencies to other Python packages are listed in the requirements.txt file.
