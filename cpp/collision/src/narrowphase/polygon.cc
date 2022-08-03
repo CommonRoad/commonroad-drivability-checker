@@ -25,7 +25,7 @@ Polygon::Polygon(std::vector<Eigen::Vector2d> &vertices,
 }
 #if ENABLE_TRIANGULATION
 Polygon::Polygon(std::vector<Eigen::Vector2d> &vertices,
-                 std::vector<std::vector<Eigen::Vector2d>> &hole_vertices,
+                 std::vector<std::vector<Eigen::Vector2d>> &hole_vertices, int triangulation_method,
                  triangulation::TriangulationQuality qual,
                  const Eigen::Vector2d &_center)
     : Shape(_center) {
@@ -35,15 +35,15 @@ Polygon::Polygon(std::vector<Eigen::Vector2d> &vertices,
     triangulation::do_triangulate_aabb(vertices, mesh_triangles_);
   } else {
     if (!qual.use_quality) {
-      triangulation::do_triangulate(vertices, mesh_triangles_);
+      triangulation::do_triangulate(vertices, mesh_triangles_, triangulation_method);
     } else {
-      triangulation::do_triangulateQuality(vertices, mesh_triangles_, qual);
+      triangulation::do_triangulateQuality(vertices, mesh_triangles_, triangulation_method, qual);
     }
   }
   invalidateCollisionEntityCache();
 }
-
-Polygon::Polygon(std::vector<Eigen::Vector2d> &vertices,
+/*
+Polygon::Polygon(std::vector<Eigen::Vector2d> &vertices, int triangulation_method,
                  triangulation::TriangulationQuality qual,
                  const Eigen::Vector2d &_center)
     : Shape(_center) {
@@ -52,13 +52,14 @@ Polygon::Polygon(std::vector<Eigen::Vector2d> &vertices,
     triangulation::do_triangulate_aabb(vertices, mesh_triangles_);
   } else {
     if (!qual.use_quality) {
-      triangulation::do_triangulate(vertices, mesh_triangles_);
+      triangulation::do_triangulate(vertices, mesh_triangles_, triangulation_method);
     } else {
-      triangulation::do_triangulateQuality(vertices, mesh_triangles_, qual);
+      triangulation::do_triangulateQuality(vertices, mesh_triangles_, triangulation_method, qual);
     }
   }
   invalidateCollisionEntityCache();
 }
+*/
 #endif
 
 bool Polygon::rayTrace(const Eigen::Vector2d &point1,

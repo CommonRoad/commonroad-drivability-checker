@@ -4,11 +4,14 @@ cmake_minimum_required(VERSION 3.10)
 
 option(BUILD_SHARED_LIBS "Build dc as a shared library" OFF)
 
+
 option(ADD_TESTS "unit tests" OFF)
 option(BUILD_DOC "generate the doc target." OFF)
 option(ADD_MODULE_GEOMETRY "add geometry module" ON)
 option(ADD_MODULE_COLLISION "add collision module" ON)
 option(ADD_PYTHON_BINDINGS "add Python bindings" OFF)
+option(ADD_TRIANGLE "Use a non-free Triangle library" OFF)
+
 
 # Add modules for discovering Sphinx etc.
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMakeModules" ${CMAKE_MODULE_PATH})
@@ -139,13 +142,17 @@ include(CMakePackageConfigHelpers)
 # Includes sane defaults for installation paths (CMAKE_INSTALL_LIBDIR, CMAKE_INSTALL_BINDIR etc.)
 include(GNUInstallDirs)
 
-# Static library for triangle sources
+if(ADD_TRIANGLE)
+  # Static library for triangle sources
+  
+message(STATUS "Building with support for triangulation using a non-free Triangle library")
 
 add_library(triangle STATIC
     "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c/triangle.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c/triangle.h")
 
 target_compile_definitions(triangle PRIVATE -DANSI_DECLARATORS=1 -DTRILIBRARY=1 -DREAL=double -DVOID=int)
+
 
 set_property(TARGET triangle PROPERTY POSITION_INDEPENDENT_CODE ON)
 
@@ -155,16 +162,35 @@ target_include_directories(triangle
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c
     )
+else()
+	message(STATUS "The non-free Triangle library is excluded from build.")
+endif()
 
 
+# Static library for gpc sources
+
+add_library(gpc STATIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/../cpp/collision/src/plugins/triangulation/gpc_wrapper.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc/gpc.h")
+
+set_property(TARGET gpc PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+target_include_directories(gpc
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc
+    )
 
 ### Definition of crcc
 
 if(ADD_MODULE_COLLISION)
     set(COLLISION_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/collision)
     include(${CMAKE_CURRENT_SOURCE_DIR}/collision/CMakeLists.txt)
-
-    set(INSTALL_MODULES ${INSTALL_MODULES} crcc triangle)
+    set(INSTALL_MODULES ${INSTALL_MODULES} crcc gpc)
+    if(ADD_TRIANGLE)
+        set(INSTALL_MODULES ${INSTALL_MODULES} triangle)
+    endif()
     set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrcc)
 endif(ADD_MODULE_COLLISION)
 
