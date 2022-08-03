@@ -3,7 +3,15 @@
 System Requirements
 -------------------
 
-The software is written in Python 3.6 and tested on MacOs and Linux. The usage of the Anaconda_ Python distribution is strongly recommended. The requirements are a C++11 compiler and CMake. The requirements for the Python wrapper are C++11 compiler, CMake, and Python 3.6 with development headers. If you are a Mac user, we recommend you to use Homebrew_, allowing you to install required dependencies such as Eigen. 
+The software is written in Python 3.6/3.7 and tested on MacOs and Linux. The usage of the Anaconda_ Python distribution
+is strongly recommended. The requirements are a C++11 compiler and CMake. The requirements for the Python wrapper
+are C++11 compiler, CMake, and min. Python 3.6 with development headers. The following minimum versions of CMake and pip
+are required:
+
+* **CMake**: version 3.10 or above
+* **Pip**: version 21.3 or above
+
+If you are a Mac user, we additionally recommend you to use Homebrew_, allowing you to install required dependencies such as Eigen.
 
 .. _Anaconda: http://www.anaconda.com/download/#download
 .. _Homebrew: https://brew.sh

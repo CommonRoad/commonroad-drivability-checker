@@ -33,8 +33,8 @@ def verify_tolerance(obj1, obj2):
 
     return tol_res[0]
 
-
-while True:
+iter_max = 5000
+while iter <= iter_max:
     iter = iter + 1
     sg_boxes = pycrcc.ShapeGroup()
     for i in range(num_boxes):

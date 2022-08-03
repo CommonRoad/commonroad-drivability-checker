@@ -71,7 +71,7 @@ class CurvilinearCoordinateSystem
    * path and two segments to the end, with length eps2, to enable the
    * conversion of points near the beginning and the end of the reference path
    */
-  CurvilinearCoordinateSystem(EigenPolyline reference_path,
+  CurvilinearCoordinateSystem(const EigenPolyline& reference_path,
                               double default_projection_domain_limit = 20.,
                               double eps = 0.1, double eps2 = 1e-4);
 
@@ -267,6 +267,17 @@ class CurvilinearCoordinateSystem
       const EigenPolyline &points, int num_omp_threads) const;
 
   /**
+   * Converts list of points to the cartesian coordinate system
+   *
+   * @param points vector of points in the curvilinear coordinate system
+   * @param num_omp_threads number of OMP threads for computation
+   * @return transformed points
+   */
+  EigenPolyline convertListOfPointsToCartesianCoords(
+          const EigenPolyline &points, int num_omp_threads) const;
+
+
+  /**
    * Transforms a polygon to the curvilinear coordinate system.
    *
    * @param[in] polygon
@@ -352,6 +363,7 @@ class CurvilinearCoordinateSystem
   determineSubsetOfPolygonWithinCurvilinearProjectionDomain(
       const EigenPolyline &polygon) const;
 
+
   /**
    * Computes the parts of different multipolygons which are inside the unique
    * projection domain of the curvilinear coordinate system.
@@ -430,8 +442,8 @@ class CurvilinearCoordinateSystem
    * @param t_1 tangent vector at the start of the segment
    * @param t_2 tangent vector at the end of the segment
    */
-  void createSegment(Eigen::Vector2d pt_1, Eigen::Vector2d pt_2,
-                     Eigen::Vector2d t_1, Eigen::Vector2d t_2);
+  void createSegment(const Eigen::Vector2d& pt_1, const Eigen::Vector2d& pt_2,
+                     const Eigen::Vector2d& t_1,  const Eigen::Vector2d& t_2);
 
   /**
    * Approximates the unique projection domain of the coordinate system.
@@ -631,8 +643,8 @@ class CurvilinearCoordinateSystem
   double min_curvature_;
   /// curvature value at longitudinal positions of reference path
   std::map<double, double> curvature_;
-  double default_projection_domain_limit_;
-  double eps_;
+  double default_projection_domain_limit_;  //25 m
+  double eps_; // reduction
   double eps2_;
 
   std::vector<double> curvature_vec_;

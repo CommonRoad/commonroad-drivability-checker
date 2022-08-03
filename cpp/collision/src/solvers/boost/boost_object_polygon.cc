@@ -114,7 +114,7 @@ collision::PolygonConstPtr BoostPolygon::toPolygon(
   }
 
   collision::PolygonConstPtr ret =
-      std::make_shared<const collision::Polygon>(vertices, hole_vertices, qual);
+      std::make_shared<const collision::Polygon>(vertices, hole_vertices, 0, qual);
 
   return ret;
 }

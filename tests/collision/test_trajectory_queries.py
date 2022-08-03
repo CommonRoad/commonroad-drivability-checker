@@ -95,8 +95,9 @@ def generate_random_trajectory():
     return tvobst
 
 
+iter_max = 5000
 iter = 0
-while True:
+while iter <= iter_max:
     iter = iter + 1
     traj_list = list()
     for i in range(10):

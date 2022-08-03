@@ -11,8 +11,9 @@
 #include <CGAL/Delaunay_mesher_2.h>
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/Polygon_2.h>
+#endif
 
-#elif ENABLE_TRIANGLE
+#if ENABLE_TRIANGLE
 
 #define REAL double
 #define VOID int
@@ -23,6 +24,15 @@ extern "C" {
 }
 
 #include "string.h"
+
+#endif
+#if ENABLE_GPC
+
+extern "C" {
+
+#include "gpc.h"
+}
+
 #endif
 
 namespace collision {
@@ -56,7 +66,7 @@ int do_triangulate_aabb(
 
 #if ENABLE_CGAL
 
-int do_triangulate(std::vector<Eigen::Vector2d> vertices,
+int do_triangulate_cgal(std::vector<Eigen::Vector2d> vertices,
                    std::vector<collision::TriangleConstPtr> &triangles_out) {
   typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
   typedef CGAL::Exact_predicates_tag Itag;
@@ -84,7 +94,7 @@ int do_triangulate(std::vector<Eigen::Vector2d> vertices,
   return 0;
 }
 
-int do_triangulateQuality(
+int do_triangulateQuality_cgal(
     std::vector<Eigen::Vector2d> vertices,
     std::vector<collision::TriangleConstPtr> &triangles_out,
     TriangulationQuality qual) {
@@ -98,11 +108,6 @@ int do_triangulateQuality(
   typedef CDT::Point Point;
   typedef CGAL::Polygon_2<K> Polygon_2;
 
-  if (qual.repr_type == MESH_QUALITY_REPRESENTATION_TRIANGLE) {
-          double sinangle=sin(qual.quality_triangle/90*M_PI));
-          qual.quality_b_cgal = sinangle * sinangle;
-  }
-
   Polygon_2 polygon1;
   for (auto &el : vertices) {
     polygon1.push_back(Point(el[0], el[1]));
@@ -111,7 +116,7 @@ int do_triangulateQuality(
   cdt.insert_constraint(polygon1.vertices_begin(), polygon1.vertices_end(),
                         true);
 
-  CGAL::refine_Delaunay_mesh_2(cdt, Criteria(quality_b, 0));
+  CGAL::refine_Delaunay_mesh_2(cdt, Criteria(qual.mesh_quality, 0));
 
   for (CDT::Finite_faces_iterator fit = cdt.finite_faces_begin();
        fit != cdt.finite_faces_end(); ++fit) {
@@ -123,8 +128,9 @@ int do_triangulateQuality(
 
   return 0;
 }
+#endif
 
-#elif ENABLE_TRIANGLE
+#if ENABLE_TRIANGLE
 
 #define FREE_IF_NONZERO(x) \
   {                        \
@@ -213,34 +219,194 @@ int triangulate_helper(std::vector<Eigen::Vector2d> vertices,
   return 0;
 }
 
-int do_triangulate(std::vector<Eigen::Vector2d> vertices,
+int do_triangulate_triangle(std::vector<Eigen::Vector2d> vertices,
                    std::vector<collision::TriangleConstPtr> &triangles_out) {
   triangulate_helper(vertices, triangles_out, (char *)("pzQ"));
   return 0;
 }
 
-int do_triangulateQuality(
+int do_triangulateQuality_triangle(
     std::vector<Eigen::Vector2d> vertices,
     std::vector<collision::TriangleConstPtr> &triangles_out,
     TriangulationQuality qual) {
   // preconditions: qual.quality_b_cgal is positive
   if (qual.use_quality) {
-    if (qual.repr_type == triangulation::MESH_QUALITY_REPRESENTATION_CGAL) {
-      qual.quality_triangle =
-          asin(sqrt(abs(qual.quality_b_cgal))) / M_PI * 90;  // abs is redundant
-    }
     char buffer[64];
     int ret =
-        snprintf(buffer, sizeof buffer, "pzQq%.0f", qual.quality_triangle);
+        snprintf(buffer, sizeof buffer, "pzQq%.0f", qual.mesh_quality);
     buffer[63] = 0;
     triangulate_helper(vertices, triangles_out, buffer);
   } else {
-    do_triangulate(vertices, triangles_out);
+    do_triangulate_triangle(vertices, triangles_out);
   }
   return 0;
 }
+#endif
+#if ENABLE_GPC
+
+
+gpc_polygon * gpc_poly_new() {
+  gpc_polygon *poly = (gpc_polygon *)malloc(sizeof(gpc_polygon));
+  if (poly) {
+	  poly->num_contours = 0;
+	  poly->contour = NULL;
+	  poly->hole = NULL;
+  }
+  return poly;
+}
+
+
+int do_triangulate_gpc(std::vector<Eigen::Vector2d> vertices,
+                   std::vector<collision::TriangleConstPtr> &triangles_out) {
+
+
+  gpc_polygon* gpc_p=gpc_poly_new();
+
+  if(!gpc_p)
+	  throw;
+
+  gpc_vertex_list vl;
+
+  auto gpc_vertices=new gpc_vertex[vertices.size()];
+
+  if(!gpc_vertices)
+	  throw;
+
+  vl.num_vertices=vertices.size();
+  vl.vertex=gpc_vertices;
+
+  int cc1=0;
+
+  for(auto el:vertices)
+  {
+	  vl.vertex[cc1].x=el[0];
+	  vl.vertex[cc1].y=el[1];
+
+	  cc1++;
+  }
+
+  gpc_add_contour(gpc_p, &vl, 0);
+
+
+  gpc_tristrip *t = (gpc_tristrip *)alloca(sizeof(gpc_tristrip));
+
+  if(!t)
+	  throw;
+
+  t->num_strips = 0;
+  t->strip = NULL;
+
+
+
+  gpc_polygon_to_tristrip(gpc_p, t);
+
+  Eigen::Matrix<double, 2, 3> verts;
+
+  for(int cc1=0; cc1<t->num_strips; cc1++)
+  {
+	  for(int cc2=0; cc2<t->strip[cc1].num_vertices-2; cc2++)
+	  {
+		  auto vert=t->strip[cc1].vertex[cc2];
+		  verts.col(0) = Eigen::Vector2d(vert.x,vert.y);
+
+		  vert=t->strip[cc1].vertex[cc2+1];
+		  verts.col(1) = Eigen::Vector2d(vert.x,vert.y);
+
+		  vert=t->strip[cc1].vertex[cc2+2];
+		  verts.col(2) = Eigen::Vector2d(vert.x,vert.y);
+
+		    triangles_out.push_back(std::make_shared<const collision::Triangle>(
+		    		verts.col(0), verts.col(1), verts.col(2)));
+
+	  }
+  }
+
+  gpc_free_tristrip(t);
+  
+  
+  delete gpc_vertices;
+  gpc_free_polygon(gpc_p);
+  free(gpc_p);
+
+  return 0;
+}
+
+int do_triangulateQuality_gpc(
+    std::vector<Eigen::Vector2d> vertices,
+    std::vector<collision::TriangleConstPtr> &triangles_out,
+    TriangulationQuality qual)
+{
+	return do_triangulate_gpc(vertices, triangles_out);
+}
+
 
 #endif
+
+int do_triangulate(std::vector<Eigen::Vector2d> vertices,
+                   std::vector<collision::TriangleConstPtr> &triangles_out, int method) {
+
+	switch(method)
+	{
+	case TRIANGULATION_GPC:
+		#if ENABLE_GPC
+			return do_triangulate_gpc(vertices,triangles_out);
+		#else
+			throw std::runtime_error("The drivability checker library was compiled without General Polygon Clipper support.");
+		#endif
+		break;
+
+	case TRIANGULATION_TRIANGLE:
+		#if ENABLE_TRIANGLE
+			return do_triangulate_triangle(vertices,triangles_out);
+		#else
+			throw std::runtime_error("The drivability checker library was compiled without Triangle support.");
+		#endif
+		break;
+
+	case TRIANGULATION_CGAL:
+			#if ENABLE_CGAL
+				return do_triangulate_cgal(vertices,triangles_out);
+			#else
+				throw std::runtime_error("The drivability checker library was compiled without CGAL support.");
+			#endif
+			break;
+	}
+	return 0;
+}
+
+int do_triangulateQuality(
+    std::vector<Eigen::Vector2d> vertices,
+    std::vector<collision::TriangleConstPtr> &triangles_out, int method,
+    TriangulationQuality qual)
+{
+	switch(method)
+	{
+	case TRIANGULATION_GPC:
+		#if ENABLE_GPC
+			return do_triangulateQuality_gpc(vertices,triangles_out, qual);
+		#else
+			throw std::runtime_error("The drivability checker library was compiled without General Polygon Clipper support.");
+		#endif
+		break;
+
+	case TRIANGULATION_TRIANGLE:
+		#if ENABLE_TRIANGLE
+			return do_triangulateQuality_triangle(vertices,triangles_out, qual);
+		#else
+			throw std::runtime_error("The drivability checker library was compiled without Triangle support.");
+		#endif
+		break;
+
+	case TRIANGULATION_CGAL:
+			#if ENABLE_CGAL
+				return do_triangulateQuality_cgal(vertices,triangles_out, qual);
+			#else
+				throw std::runtime_error("The drivability checker library was compiled without CGAL support.");
+			#endif
+			break;
+	}
+	return 0;
+}
 
 }  // namespace triangulation
 }  // namespace collision

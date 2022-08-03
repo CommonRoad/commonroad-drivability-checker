@@ -27,8 +27,8 @@ class Segment {
    * @param t_1 tangent vector at the start of the segment
    * @param t_2 tangent vector at the end of the segment
    */
-  Segment(Eigen::Vector2d pt_1, Eigen::Vector2d pt_2, Eigen::Vector2d t_1,
-          Eigen::Vector2d t_2);
+  Segment(const Eigen::Vector2d& pt_1, const Eigen::Vector2d& pt_2, const Eigen::Vector2d& t_1,
+          const Eigen::Vector2d& t_2);
 
   /**
    * @return start point of segment in Cartesian coordinates
@@ -148,7 +148,7 @@ class Segment {
    * segment
    * @return lambda
    */
-  double computeLambda(Eigen::Vector2d p_local) const;
+  double computeLambda(const Eigen::Vector2d& p_local) const;
 
   /**
    * Computes the lambda for a given longitudinal coordinate in the local
@@ -175,8 +175,8 @@ class Segment {
    * @param p point in the global coordinate frame
    * @return pseudo normal
    */
-  Eigen::Vector2d computePseudoNormal(Eigen::Vector2d p_lambda,
-                                      Eigen::Vector2d p) const;
+  Eigen::Vector2d computePseudoNormal(const Eigen::Vector2d& p_lambda,
+                                      const Eigen::Vector2d& p) const;
 
   /**
    * Computes the pseudo tangent vector for a given lambda.
@@ -203,8 +203,8 @@ class Segment {
    * @param p_local point in the local coordinate system of the segment
    * @return signed pseudo distance
    */
-  double computeSignedPseudoDistance(Eigen::Vector2d pseudo_normal,
-                                     Eigen::Vector2d p_local) const;
+  double computeSignedPseudoDistance(const Eigen::Vector2d& pseudo_normal,
+                                     const Eigen::Vector2d& p_local) const;
 
   /**
    * Transforms a point in the global coordinate frame to the local coordinate
@@ -213,7 +213,7 @@ class Segment {
    * @param p point in the global coordinate frame
    * @return point in the local coordinate frame of the segment
    */
-  Eigen::Vector2d rotateToLocalFrame(Eigen::Vector2d p) const;
+  Eigen::Vector2d rotateToLocalFrame(const Eigen::Vector2d& p) const;
 
   /**
    * Transforms a point in the local coordinate frame of the segment to the
@@ -222,7 +222,7 @@ class Segment {
    * @param p_local point in the local coordinate system of the segment
    * @return point in the global coordinate frame
    */
-  Eigen::Vector2d rotateToGlobalFrame(Eigen::Vector2d p_local) const;
+  Eigen::Vector2d rotateToGlobalFrame(const Eigen::Vector2d& p_local) const;
 
  private:
   /// start point of segment

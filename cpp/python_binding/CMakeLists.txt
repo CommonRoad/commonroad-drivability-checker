@@ -78,7 +78,7 @@ if(s11n_FOUND)
 else()
     target_compile_definitions(pycrccosy PRIVATE -DENABLE_SERIALIZER=0)
 endif()
-
+	
 
     # See note on $ORIGIN above
     if(APPLE)

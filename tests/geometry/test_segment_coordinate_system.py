@@ -1,5 +1,5 @@
 import unittest
-from commonroad_dc import pycrcc
+# from commonroad_dc import pycrcc
 from commonroad_dc import pycrccosy
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,7 +10,7 @@ from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyli
 
 class TestCurvilinearCoordinateSystem(unittest.TestCase):
     def setUp(self):
-        pass
+        self.show_plots = False
 
     def test_create_aa_collision_object_1(self):
         reference_path = np.array([[-1.2, 0.0],
@@ -23,16 +23,21 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
             0.5, 5.5, -2.0, 3.0)
         boundary = np.array(boundary)
 
-        fig = plt.figure()
-        ax1 = fig.add_subplot(2, 1, 1, adjustable='box', aspect=1.0)
-        plt.plot(boundary[:, 0], boundary[:, 1], '*-g', zorder=50)
-        plt.plot(reference_path[:, 0], reference_path[:, 1], '-r')
-        plt.autoscale()
-        plt.show()
+        if self.show_plots:
+            fig = plt.figure()
+            ax1 = fig.add_subplot(2, 1, 1, adjustable='box', aspect=1.0)
+            plt.plot(boundary[:, 0], boundary[:, 1], '*-g', zorder=50)
+            plt.plot(reference_path[:, 0], reference_path[:, 1], '-r')
+            plt.autoscale()
+            plt.show()
 
     def test_transform_line_segment_to_cartesian_coords(self):
-        with open("reference_path_b.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
         reference_path = data_set['reference_path']
 
         cosy = pycrccosy.CurvilinearCoordinateSystem(reference_path)
@@ -45,15 +50,20 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
             s_, l_ = cosy.convert_to_cartesian_coords(x_, y)
             s.append(s_)
             l.append(l_)
-        plt.plot(s, l, '*-r', linewidth=2)
-        plt.plot(reference_path[:, 0], reference_path[:, 1])
-        plt.autoscale()
-        plt.axis('equal')
-        plt.show()
+        if self.show_plots:
+            plt.plot(s, l, '*-r', linewidth=2)
+            plt.plot(reference_path[:, 0], reference_path[:, 1])
+            plt.autoscale()
+            plt.axis('equal')
+            plt.show()
 
     def test_transform_line_segment_to_curvilinear_coords(self):
-        with open("reference_path_b.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
         reference_path = data_set['reference_path']
 
         cosy = pycrccosy.CurvilinearCoordinateSystem(reference_path)
@@ -73,97 +83,20 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
             s_, l_ = cosy.convert_to_curvilinear_coords(x_, y)
             s.append(s_)
             l.append(l_)
-        plt.plot(s, l, '*-r', linewidth=2)
-        plt.autoscale()
-        plt.axis('equal')
-        plt.show()
+        if self.show_plots:
+            plt.plot(s, l, '*-r', linewidth=2)
+            plt.autoscale()
+            plt.axis('equal')
+            plt.show()
 
-    def test_convert_to_curvilinear_coordinates_and_back(self):
+    def test_convert_group_of_points_from_cartesian_to_cv_and_back(self):
         # load reference path
-        with open("reference_path_b.pic", "rb") as f:
-            data_set = pickle.load(f)
-        reference_path = data_set['reference_path']
-
-        cosy = pycrccosy.CurvilinearCoordinateSystem(reference_path)
-        projection_domain = np.array(cosy.get_projection_domain())
-
-        # # create new dataset
-        # x_min = min(reference_path[:, 0])
-        # x_max = max(reference_path[:, 0])
-        # y_min = min(reference_path[:, 1])
-        # y_max = max(reference_path[:, 1])
-        #
-        # dx = 20
-        # dy = 20
-        # l = 20000
-        #
-        # x = list()
-        # y = list()
-        # while l > 0:
-        #     x_ = np.random.uniform(x_min-dx, x_max+dx)
-        #     y_ = np.random.uniform(y_min-dy, y_max+dy)
-        #     if cosy.cartesian_point_inside_projection_domain(x_, y_):
-        #         l -= 1;
-        #         x.append(x_)
-        #         y.append(y_)
-        #
-        # PICFILE = 'segment_coordinate_system_reference_path_b_points_a.pic'
-        # file = open(PICFILE, 'wb')
-        # pickle.dump({
-        #     'x': np.array(x),
-        #     'y': np.array(y),
-        # }, file)
-        # file.close()
-        #
-        # plt.plot(reference_path[:, 0], reference_path[:, 1])
-        # plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-        # plt.plot(x, y, '*y', alpha=0.7, linewidth=5)
-        # plt.show()
-
-        # load points
-        with open("segment_coordinate_system_reference_path_b_points_a.pic", "rb") as f:
-            data_set = pickle.load(f)
-        x = data_set['x']
-        y = data_set['y']
-
-        number_of_failed_data_points = 0
-        for i in range(0, len(x)):
-            print("\nid:{} ".format(i))
-            try:
-                p, idx = cosy.convert_to_curvilinear_coords_and_get_segment_idx(x[i], y[i])
-                x_, y_ = cosy.convert_to_cartesian_coords(p[0], p[1])
-                x_ref = x[i]
-                y_ref = y[i]
-            except Exception as e:
-                plt.plot(reference_path[:, 0], reference_path[:, 1])
-                plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-                plt.plot(x[i], y[i], '*k', linewidth=5)
-                print(e)
-                continue
-            # p_prime = (cosy.get_segment_list()[idx]).convert_to_cartesian_coords(
-            #     p[0] - cosy.get_longitudinal_segment_positions()[idx], p[1])
-            try:
-                np.testing.assert_allclose(x_, x[i], atol=1e-3, rtol=0)
-                np.testing.assert_allclose(y_, y[i], atol=1e-3, rtol=0)
-            except Exception as e:
-                print(e)
-                plt.plot(reference_path[:, 0], reference_path[:, 1])
-                plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-                plt.plot(x[i], y[i], '*g', linewidth=5)
-                plt.plot(x_, y_, '*r', linewidth=5)
-                number_of_failed_data_points += 1
-
-        print("Number of failed data points: {} -> {}%".format(number_of_failed_data_points,
-                                                               (number_of_failed_data_points*100)/len(x)))
-        #draw_object_ccosy(cosy.get_segment_list())
-        plt.autoscale()
-        plt.axis('equal')
-        plt.show()
-
-    def test_convert_to_curvilinear_coordinates_and_back(self):
-        # load reference path
-        with open("reference_path_b.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
         reference_path = data_set['reference_path']
 
         max_curvature = 0.4
@@ -175,62 +108,40 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
         cosy = pycrccosy.CurvilinearCoordinateSystem(reference_path)
         projection_domain = np.array(cosy.projection_domain())
 
-        # # create new dataset
-        # x_min = min(reference_path[:, 0])
-        # x_max = max(reference_path[:, 0])
-        # y_min = min(reference_path[:, 1])
-        # y_max = max(reference_path[:, 1])
-        #
-        # dx = 20
-        # dy = 20
-        # l = 20000
-        #
-        # x = list()
-        # y = list()
-        # while l > 0:
-        #     x_ = np.random.uniform(x_min-dx, x_max+dx)
-        #     y_ = np.random.uniform(y_min-dy, y_max+dy)
-        #     if cosy.cartesian_point_inside_projection_domain(x_, y_):
-        #         l -= 1;
-        #         x.append(x_)
-        #         y.append(y_)
-        #
-        # PICFILE = 'segment_coordinate_system_reference_path_b_smoothed_points_a.pic'
-        # file = open(PICFILE, 'wb')
-        # pickle.dump({
-        #     'x': np.array(x),
-        #     'y': np.array(y),
-        # }, file)
-        # file.close()
-        #
-        # plt.plot(reference_path[:, 0], reference_path[:, 1])
-        # plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-        # plt.plot(x, y, '*y', alpha=0.7, linewidth=5)
-        # plt.show()
-
         # load points
-        with open("segment_coordinate_system_reference_path_b_smoothed_points_a.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("segment_coordinate_system_reference_path_b_points_a.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/segment_coordinate_system_reference_path_b_points_a.pic", "rb") as f:
+                data_set = pickle.load(f)
         x = data_set['x']
         y = data_set['y']
 
-        cart_points = np.array(list(zip(x, y)))
+        cartesian_points = np.array(list(zip(x, y)))
+        # Convert points to Curvilinear
+        p_curvilinear = cosy.convert_list_of_points_to_curvilinear_coords(cartesian_points, 4)
 
-        p = cosy.convert_list_of_points_to_curvilinear_coords(cart_points, 4)
+        # Convert points back to Cartesian
+        p_cartesian = cosy.convert_list_of_points_to_cartesian_coords(p_curvilinear, 4)
+
+        # Compare
         number_of_failed_data_points = 0
         for i in range(0, len(x)):
+            print('Number of iterations: '+str(len(x)))
             print("\nid:{} ".format(i))
             try:
-                x_, y_ = cosy.convert_to_cartesian_coords(p[i][0], p[i][1])
+                # Points to be tested x_, y_
+                x_, y_ = p_cartesian[i][0], p_cartesian[i][1]
             except Exception as e:
                 plt.plot(reference_path[:, 0], reference_path[:, 1])
                 plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
                 plt.plot(x[i], y[i], '*k', linewidth=5)
                 print(e)
                 break
-            # p_prime = (cosy.get_segment_list()[idx]).convert_to_cartesian_coords(
-            #     p[0] - cosy.get_longitudinal_segment_positions()[idx], p[1])
             try:
+                # We test x_, y_ against original dataset x and y
+                print('Calculated: (', x_, ', ', y_, ') - Real: (', x[i], ', ', y[i], ')')
                 np.testing.assert_allclose(x_, x[i], atol=1e-3, rtol=0)
                 np.testing.assert_allclose(y_, y[i], atol=1e-3, rtol=0)
             except Exception as e:
@@ -243,16 +154,22 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
 
         print("Number of failed data points: {} -> {}%".format(number_of_failed_data_points,
                                                                (number_of_failed_data_points*100)/len(x)))
-        #draw_object_ccosy(cosy.get_segment_list())
-        plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-        plt.autoscale()
-        plt.axis('equal')
-        plt.show()
+
+        if self.show_plots:
+            #draw_object_ccosy(cosy.get_segment_list())
+            plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
+            plt.autoscale()
+            plt.axis('equal')
+            plt.show()
 
     def test_determine_subset_of_polygon_in_projection_domain(self):
         # load reference path
-        with open("reference_path_b.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
         reference_path = data_set['reference_path']
 
         cosy = pycrccosy.CurvilinearCoordinateSystem(reference_path)
@@ -266,18 +183,24 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
 
         res = cosy.determine_subset_of_polygon_within_projection_domain(aabb)
         res = np.concatenate(res)
-        plt.plot(reference_path[:, 0], reference_path[:, 1])
-        plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-        plt.plot(aabb[:, 0], aabb[:, 1], '-r')
-        plt.plot(res[:, 0], res[:, 1], '-g')
-        plt.autoscale()
-        plt.axis('equal')
-        plt.show()
+
+        if self.show_plots:
+            plt.plot(reference_path[:, 0], reference_path[:, 1])
+            plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
+            plt.plot(aabb[:, 0], aabb[:, 1], '-r')
+            plt.plot(res[:, 0], res[:, 1], '-g')
+            plt.autoscale()
+            plt.axis('equal')
+            plt.show()
 
     def test_determine_subsets_of_multi_polygons_within_projection_domain(self):
         # load reference path
-        with open("reference_path_b.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            with open("reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
+        except FileNotFoundError:
+            with open("geometry/reference_path_b.pic", "rb") as f:
+                data_set = pickle.load(f)
         reference_path = data_set['reference_path']
 
         cosy = pycrccosy.CurvilinearCoordinateSystem(reference_path)
@@ -303,18 +226,19 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
         clipped_polygon_all, clipped_polygon_groups_all = cosy.determine_subsets_of_multi_polygons_within_projection_domain(
             polygons, polygon_groups, 4)
 
-        plt.plot(reference_path[:, 0], reference_path[:, 1])
-        plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-        plt.plot(aabb[:, 0], aabb[:, 1], '-r')
-        plt.plot(poly[:, 0], poly[:, 1], '-r')
+        if self.show_plots:
+            plt.plot(reference_path[:, 0], reference_path[:, 1])
+            plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
+            plt.plot(aabb[:, 0], aabb[:, 1], '-r')
+            plt.plot(poly[:, 0], poly[:, 1], '-r')
 
-        for r in clipped_polygon_all:
-            r_array = np.array(r)
-            plt.plot(r_array[:, 0], r_array[:, 1], '-g')
+            for r in clipped_polygon_all:
+                r_array = np.array(r)
+                plt.plot(r_array[:, 0], r_array[:, 1], '-g')
 
-        plt.autoscale()
-        plt.axis('equal')
-        plt.show()
+            plt.autoscale()
+            plt.axis('equal')
+            plt.show()
 
 
 if __name__ == '__main__':
