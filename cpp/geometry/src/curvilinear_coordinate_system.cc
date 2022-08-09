@@ -356,7 +356,9 @@ int num_omp_threads) const {
 #pragma omp parallel
     {
 #pragma omp for nowait
-        for (const auto &point: points) {
+    for (int point_index = 0; point_index < points.size();
+         point_index++) {
+	    auto point=points[point_index];
             // get for each point the coordinates
             omp_set_lock(&writelock);
             double s_coordinate = point.x();
