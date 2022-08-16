@@ -13,6 +13,8 @@ option(BUILD_DOC "generate the doc target." OFF)
 option(ADD_MODULE_GEOMETRY "add geometry module" ON)
 option(ADD_MODULE_COLLISION "add collision module" ON)
 option(ADD_PYTHON_BINDINGS "add Python bindings" OFF)
+option(ADD_TRIANGLE "Use a non-free Triangle library" OFF)
+
 
 if("${CMAKE_BINARY_DIR}" EQUAL "${PROJECT_SOURCE_DIR}/build")
   message(WARNING
@@ -108,6 +110,7 @@ ExternalProject_Add(commonroad_dc
       -DADD_MODULE_COLLISION:BOOL=${ADD_MODULE_COLLISION}
       -DADD_MODULE_GEOMETRY:BOOL=${ADD_MODULE_GEOMETRY}
       -DADD_PYTHON_BINDINGS:BOOL=${ADD_PYTHON_BINDINGS}
+      -DADD_TRIANGLE:BOOL=${ADD_TRIANGLE}
       -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
       -DPYTHON_LIBRARY:PATH=${PYTHON_LIBRARY}
       -DPYTHON_EXECUTABLE:PATH=${PYTHON_EXECUTABLE}

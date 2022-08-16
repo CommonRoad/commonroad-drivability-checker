@@ -1,6 +1,7 @@
 #include <fcl/math/bv/OBB.h>
 #include "collision/narrowphase/polygon.h"
 #include "collision/narrowphase/rectangle_obb.h"
+#include "collision/narrowphase/sphere.h"
 #include "collision/shape_group.h"
 #include "collision/solvers/boost/boost_collision_queries.h"
 
@@ -93,10 +94,10 @@ RectangleOBBConstPtr ccd_merge_entities(const RectangleOBB* first,
 
 /**
  * @brief merges two ShapeGroups by merging their shapes pairwise; if one ShapeGroup has more shapes than the other one, their additional shapes are also included in the result.
- * 
- * @param first 
- * @param second 
- * @return ShapeGroupConstPtr 
+ *
+ * @param first
+ * @param second
+ * @return ShapeGroupConstPtr
  */
 ShapeGroupConstPtr ccd_merge_entities(const ShapeGroup* first,
                                         const ShapeGroup* second) {
@@ -134,6 +135,27 @@ ShapeGroupConstPtr ccd_merge_entities(const ShapeGroup* first,
   return ShapeGroupConstPtr(result);
 }
 
+bool cmpd(double A, double B, double epsilon = 1e-7)
+{
+    return (fabs(A - B) < epsilon);
+}
+
+int ccd_merge_entities(const Sphere* first,
+                                        const Sphere* second, ShapeGroupPtr ret)
+{
+	if(!cmpd(first->radius(),second->radius(), 1e-7))
+	{
+		return -1;
+	}
+	ret->addToGroup(std::static_pointer_cast<const collision::Shape>(first->shared_from_this()));
+	ret->addToGroup(std::static_pointer_cast<const collision::Shape>(second->shared_from_this()));
+
+	auto rect=collision::geometry_queries::create_rectangle_obb_from_points(first->center(), second->center(),first->radius()*2);
+	ret->addToGroup(rect);
+
+	return 0;
+}
+
 
 OBB merge_obbs(const OBB& first, const OBB& second) {
   OBB obb_merged;
@@ -163,6 +185,8 @@ inline RectangleOBBConstPtr obb_from_aabb(const RectangleAABB* aabb) {
 
 }  // namespace geometry_queries
 }  // namespace detail
+
+
 namespace geometry_queries {
 CollisionObjectConstPtr ccd_merge_entities(const CollisionObject* first,
                                            const CollisionObject* second) {
@@ -192,12 +216,24 @@ CollisionObjectConstPtr ccd_merge_entities(const CollisionObject* first,
         static_cast<const RectangleOBB*>(second));
   }
 
-  if (first->getCollisionObjectType() == OBJ_TYPE_SHAPEGROUP && 
+  if (first->getCollisionObjectType() == OBJ_TYPE_SHAPEGROUP &&
       second->getCollisionObjectType() == OBJ_TYPE_SHAPEGROUP) {
         return detail::geometry_queries::ccd_merge_entities(
           static_cast<const ShapeGroup*>(first),
           static_cast<const ShapeGroup*>(second));
   }
+  if(first->getCollisionObjectType()==OBJ_TYPE_SPHERE &&
+       second->getCollisionObjectType()==OBJ_TYPE_SPHERE)
+       {
+	  	  ShapeGroupPtr sg_merge_res(new ShapeGroup());
+	  	  int ret_merge=detail::geometry_queries::ccd_merge_entities(
+	  	        static_cast<const Sphere*>(first),
+	  	        static_cast<const Sphere*>(second),sg_merge_res);
+	  	  if(ret_merge)
+	  		  return nullptr;
+	  	  else
+	  		  return sg_merge_res;
+       }
   /*
             else if(first->getCollisionObjectType()==OBJ_TYPE_POLYGON &&
      second->getCollisionObjectType()==OBJ_TYPE_POLYGON)

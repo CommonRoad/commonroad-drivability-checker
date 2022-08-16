@@ -135,7 +135,6 @@ Following packages are available via `PyPi <https://pypi.org/>`_:
 * `Shapely <https://pypi.org/project/Shapely/>`_
 * `numpy <https://pypi.org/project/numpy/>`_
 * `Jupyter <https://pypi.org/project/jupyter/>`_
-* `Triangle <https://pypi.org/project/triangle/>`_ (Python bindings)
 * `Scipy <https://pypi.org/project/scipy/>`_
 * `Pandoc <https://pypi.org/project/pandoc/>`_
 * `Sphinx_rtd_theme <https://pypi.org/project/sphinx-rtd-theme/>`_
@@ -157,7 +156,17 @@ They can be installed with the following command:
 Installation of Optional Third Party Libraries
 **********************************************
 
-For the installation of CGAL, please refer to `their website <https://github.com/CGAL/cgal>`_.
+(Recommended) Some optional functions for polygon triangulation require a third-party library Triangle to be installed. To do so, run
+
+  .. code-block:: bash
+
+      $ pip3 install triangle
+      
+Please note that although Triangle is freely available, it is copyrighted by its author and may 
+not be sold or included in commercial products without a license. See the original `licensing conditions <https://github.com/wo80/Triangle/blob/master/src/Triangle/README>`_ 
+of the Triangle library as well as the `Triangle website <https://www.cs.cmu.edu/~quake/triangle.html>`_ for details.
+
+It is possible to modify Drivability Checker to support CGAL. For the installation of CGAL, please refer to `their website <https://github.com/CGAL/cgal>`_.
 
 Installation of the CommonRoad Drivability Checker
 **************************************************
@@ -171,16 +180,22 @@ After installing all essential third party libraries and packages, you can now i
     .. code-block:: bash
 
             $ conda activate commonroad-py36
+            
+#. Please make sure that the latest pip version is installed. Otherwise, the next installation step would not work.
+
+    .. code-block:: bash
+
+            $ python -m pip install --upgrade pip
 
 #. Compile and Install the CommonRoad Drivability Checker library by running
 
         .. code-block:: bash
             
             $ BUILD_JOBS=8 python setup.py build
-            $ pip install . --use-feature=in-tree-build
+            $ pip install .
 
    **Note:** This will automatically build all C++ dependencies of the CommonRoad
-   Drivability Checker. The number 8 in this example indicates the number of CPU cores to be used for the compilation. Each job (possibly) will use a core, so specify this number according to your system and free cores.
+   Drivability Checker. The number 8 in this example indicates the number of CPU cores to be used for the compilation. Each job (possibly) will use a core, so specify this number according to your system and free cores. Advanced build settings can be modified in the file setup_options.py.
 
   Canceling the build and then restarting it should generally be safe,
   however make sure that the Python environment you activated stays the same.
