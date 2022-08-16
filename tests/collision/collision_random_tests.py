@@ -11,9 +11,9 @@ from time import sleep
 print('performing random collision stress-tests')
 creat = RandomObjectCreator(-20, 20, -20, 20, 500, 500)
 loopc = 0
-
+loopc_max = 5000
 obj_0 = creat.create_random_shape()
-while (True):
+while (loopc <= loopc_max):
     loopc = loopc + 1
     if (loopc % 10 == 0):
         print(loopc)

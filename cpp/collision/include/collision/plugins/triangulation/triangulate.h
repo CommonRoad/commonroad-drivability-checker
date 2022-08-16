@@ -8,35 +8,32 @@
 namespace collision {
 namespace triangulation {
 
-enum MESH_QUALITY_REPRESENTATION {
-  MESH_QUALITY_REPRESENTATION_TRIANGLE = 0,
-  MESH_QUALITY_REPRESENTATION_CGAL = 1
+enum TRIANGULATION_METHOD
+{
+	TRIANGULATION_GPC=0,
+	TRIANGULATION_TRIANGLE,
+	TRIANGULATION_CGAL
 };
 
 class TriangulationQuality {
  public:
   TriangulationQuality(void) {
     use_quality = true;
-    repr_type = MESH_QUALITY_REPRESENTATION_TRIANGLE;
-    quality_b_cgal = 0.125;
-    quality_triangle = 20;
+
+    mesh_quality = 20;
     bb_only = false;
   }
 
-  TriangulationQuality(double cgal_quality_b, double triangle_quality) {
+  TriangulationQuality(double mesh_quality) {
     use_quality = true;
-    repr_type = MESH_QUALITY_REPRESENTATION_TRIANGLE;
-    this->quality_b_cgal = cgal_quality_b;
-    quality_triangle = triangle_quality;
+
+    this->mesh_quality = mesh_quality;
     bb_only = false;
   }
 
   bool bb_only;
   bool use_quality;
-  MESH_QUALITY_REPRESENTATION repr_type;
-  double quality_b_cgal;
-  double quality_triangle;
-  // double quality_b = 0.125
+  double mesh_quality;
 };
 
 int do_triangulate_aabb(
@@ -44,10 +41,10 @@ int do_triangulate_aabb(
     std::vector<collision::TriangleConstPtr> &triangles_out);
 
 int do_triangulate(std::vector<Eigen::Vector2d> vertices,
-                   std::vector<collision::TriangleConstPtr> &triangles_out);
+                   std::vector<collision::TriangleConstPtr> &triangles_out, int method);
 int do_triangulateQuality(
     std::vector<Eigen::Vector2d> vertices,
-    std::vector<collision::TriangleConstPtr> &triangles_out,
+    std::vector<collision::TriangleConstPtr> &triangles_out, int method,
     TriangulationQuality qual);
 }  // namespace triangulation
 }  // namespace collision

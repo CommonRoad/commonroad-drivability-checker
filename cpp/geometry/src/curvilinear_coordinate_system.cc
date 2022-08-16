@@ -9,7 +9,7 @@
 namespace geometry {
 
 CurvilinearCoordinateSystem::CurvilinearCoordinateSystem(
-    EigenPolyline reference_path, double default_projection_domain_limit,
+    const EigenPolyline& reference_path, double default_projection_domain_limit,
     double eps, double eps2) {
   this->length_ = 0.0;
   this->segment_longitudinal_coord_.push_back(0.0);
@@ -88,10 +88,8 @@ EigenPolyline CurvilinearCoordinateSystem::referencePathOriginal() const {
 
 EigenPolyline CurvilinearCoordinateSystem::projectionDomainBorder() const {
   EigenPolyline border;
-  for (auto it = boost::begin(
-           boost::geometry::exterior_ring(this->projection_domain_));
-       it !=
-       boost::end(boost::geometry::exterior_ring(this->projection_domain_));
+  for (auto it = boost::begin(boost::geometry::exterior_ring(this->projection_domain_));
+       it != boost::end(boost::geometry::exterior_ring(this->projection_domain_));
        ++it) {
     double x = boost::geometry::get<0>(*it);
     double y = boost::geometry::get<1>(*it);
@@ -104,10 +102,8 @@ EigenPolyline CurvilinearCoordinateSystem::projectionDomainBorder() const {
 EigenPolyline CurvilinearCoordinateSystem::curvilinearProjectionDomainBorder()
     const {
   EigenPolyline border;
-  for (auto it = boost::begin(boost::geometry::exterior_ring(
-           this->curvilinear_projection_domain_));
-       it != boost::end(boost::geometry::exterior_ring(
-                 this->curvilinear_projection_domain_));
+  for (auto it = boost::begin(boost::geometry::exterior_ring(this->curvilinear_projection_domain_));
+       it != boost::end(boost::geometry::exterior_ring(this->curvilinear_projection_domain_));
        ++it) {
     double x = boost::geometry::get<0>(*it);
     double y = boost::geometry::get<1>(*it);
@@ -319,29 +315,72 @@ CurvilinearCoordinateSystem::convertToCurvilinearCoordsAndGetSegmentIdx(
          Eigen::Vector2d(this->segment_longitudinal_coord_[segment_idx], 0.);
 }
 
+
 EigenPolyline
 CurvilinearCoordinateSystem::convertListOfPointsToCurvilinearCoords(
-    const EigenPolyline &points, int num_omp_threads) const {
-  std::vector<EigenPolyline> points_in(1);
-  for (const auto p : points) {
-    if (this->cartesianPointInProjectionDomain(p.x(), p.y())) {
-      points_in[0].push_back(p);
+        const EigenPolyline &points, int num_omp_threads) const {
+    std::vector<EigenPolyline> points_in(1);
+    for (const auto p : points) {
+        if (this->cartesianPointInProjectionDomain(p.x(), p.y())) {
+            points_in[0].push_back(p);
+        }
     }
-  }
 
-  std::vector<std::vector<std::tuple<int, double, double>>>
-      transformed_coordinates_and_segment_idx;
-  transformed_coordinates_and_segment_idx =
-      this->convertToCurvilinearCoords(points_in, num_omp_threads);
+    std::vector<std::vector<std::tuple<int, double, double>>>
+            transformed_coordinates_and_segment_idx;
+    transformed_coordinates_and_segment_idx =
+            this->convertToCurvilinearCoords(points_in, num_omp_threads);
 
-  EigenPolyline transformed_points;
-  if (transformed_coordinates_and_segment_idx.size() == 1) {
-    for (const auto p : transformed_coordinates_and_segment_idx[0]) {
-      transformed_points.push_back(
-          Eigen::Vector2d(std::get<1>(p), std::get<2>(p)));
+    EigenPolyline transformed_points;
+    if (transformed_coordinates_and_segment_idx.size() == 1) {
+        for (const auto p : transformed_coordinates_and_segment_idx[0]) {
+            transformed_points.push_back(
+                    Eigen::Vector2d(std::get<1>(p), std::get<2>(p)));
+        }
     }
-  }
-  return transformed_points;
+    return transformed_points;
+}
+
+EigenPolyline CurvilinearCoordinateSystem::convertListOfPointsToCartesianCoords(const EigenPolyline &points,
+int num_omp_threads) const {
+
+    // settings for OMP
+    omp_set_dynamic(0);
+    omp_set_num_threads(num_omp_threads);
+    omp_lock_t writelock;
+    omp_init_lock(&writelock);
+
+    EigenPolyline reference_path = this->reference_path_;
+    // for each point in the polyline
+    EigenPolyline group_of_cartesian_points;
+#pragma omp parallel
+    {
+#pragma omp for nowait
+        for (const auto &point: points) {
+            // get for each point the coordinates
+            omp_set_lock(&writelock);
+            double s_coordinate = point.x();
+            double l_coordinate = point.y();
+            bool within_projection_domain = this->curvilinearPointInProjectionDomain(s_coordinate, l_coordinate);
+            if (!within_projection_domain) {
+                throw std::invalid_argument("<CurvilinearCoordinateSystem/convertListOfPointsToCartesianCoords> "
+                                            "Coordinate outside of projection domain.");
+            }
+            int segment_index = this->findSegmentIndex(s_coordinate);
+            if (segment_index < 0) {
+                throw std::invalid_argument("<CurvilinearCoordinateSystem/convertListOfPointsToCartesianCoords> "
+                                            "Found no corresponding segment to project.");
+            }
+            Eigen::Vector2d cartesian_coord = this->segment_list_[segment_index]->convertToCartesianCoords(
+                    s_coordinate - this->segment_longitudinal_coord_[segment_index], l_coordinate);
+
+            group_of_cartesian_points.push_back(cartesian_coord);
+            omp_unset_lock(&writelock);
+        }
+    }
+    omp_destroy_lock(&writelock);
+
+    return group_of_cartesian_points;
 }
 
 EigenPolyline CurvilinearCoordinateSystem::convertRectangleToCartesianCoords(
@@ -818,10 +857,10 @@ CurvilinearCoordinateSystem::polygonWithinProjectionDomain(
   return polygons_within_projection_domain;
 }
 
-void CurvilinearCoordinateSystem::createSegment(Eigen::Vector2d pt_1,
-                                                Eigen::Vector2d pt_2,
-                                                Eigen::Vector2d t_1,
-                                                Eigen::Vector2d t_2) {
+void CurvilinearCoordinateSystem::createSegment(const Eigen::Vector2d& pt_1,
+                                                const Eigen::Vector2d& pt_2,
+                                                const Eigen::Vector2d& t_1,
+                                                const Eigen::Vector2d& t_2) {
   this->segment_list_.push_back(
       std::make_unique<Segment>(pt_1, pt_2, t_1, t_2));
   this->length_ = this->length_ + this->segment_list_.back()->length();
@@ -1212,6 +1251,9 @@ CurvilinearCoordinateSystem::convertToCurvilinearCoords(
   }
 
   // restructure incoming points
+//  [x1 x2 x3 ... xN
+//   y1 y2 y3 ... yN]
+// We need these to find the candidate points (the closest segment to the point/s)
   Eigen::Matrix2Xd points_in(2, number_of_points_in_all_groups);
   std::vector<std::pair<double, int>> pairs_in_x;
   std::vector<std::pair<double, int>> pairs_in_y;
@@ -1229,8 +1271,11 @@ CurvilinearCoordinateSystem::convertToCurvilinearCoords(
 
   // rotate points 45 degree
   Eigen::Matrix2d rot_axis_matr;
+//   [ cosA -sinA
+//     sinA cosA ]
   rot_axis_matr << sqrt(2) / 2, sqrt(2) / 2, -sqrt(2) / 2, sqrt(2) / 2;
   Eigen::MatrixXd points_in_rotated;
+  // Rot(A) * Points_In
   points_in_rotated = rot_axis_matr * points_in.eval();
   for (int i = 0; i < number_of_points_in_all_groups; i++) {
     pairs_in_x_rotated.push_back(std::make_pair(points_in_rotated(0, i), i));
@@ -1371,6 +1416,7 @@ CurvilinearCoordinateSystem::convertToCurvilinearCoords(
   return groups_of_curvil_points;
 }
 
+
 #if ENABLE_SERIALIZER
 
 int CurvilinearCoordinateSystem::serialize(std::ostream &output_stream) const {
@@ -1398,7 +1444,6 @@ serialize::ICurvilinearCoordinateSystemExport *
 CurvilinearCoordinateSystem::exportThis(void) const {
   return serialize::exportObject(*this);
 }
-
 #endif
 
 }  // namespace geometry

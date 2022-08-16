@@ -95,8 +95,8 @@ def sg_test():
 
 
 iter = 0
-
-while True:
+iter_max = 5000
+while iter <= iter_max:
     iter = iter + 1
     passed = True
     passed = passed and obb_obb_test()

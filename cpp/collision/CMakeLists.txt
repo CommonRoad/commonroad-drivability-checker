@@ -107,11 +107,20 @@ else()
     target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=1)
 endif()
 
+if(ADD_TRIANGLE)
+    target_compile_definitions(crcc PUBLIC ENABLE_TRIANGLE=1)
+endif()
+
 target_link_libraries(crcc
   PRIVATE
-    triangle
+    gpc
   PUBLIC
     fcl
+    ccd
     Eigen3::Eigen
     box2d::box2d
-    )
+)
+
+if(ADD_TRIANGLE)
+    target_link_libraries(crcc PRIVATE triangle)
+endif()

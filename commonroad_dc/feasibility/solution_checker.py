@@ -1,7 +1,8 @@
+import math
 from typing import Tuple, Dict
 
 import numpy as np
-from commonroad.common.solution import PlanningProblemSolution, TrajectoryType, Solution
+from commonroad.common.solution import PlanningProblemSolution, TrajectoryType, Solution, VehicleModel
 from commonroad.geometry.shape import Polygon, ShapeGroup
 from commonroad.planning.planning_problem import PlanningProblemSet
 from commonroad.prediction.prediction import TrajectoryPrediction
@@ -256,13 +257,13 @@ def solved_all_problems(planning_problem_set: PlanningProblemSet, solution: Solu
     return True
 
 
-def starts_at_correct_ts(solution: Solution, planning_problem_set: PlanningProblemSet) -> bool:
+def starts_at_correct_state(solution: Solution, planning_problem_set: PlanningProblemSet) -> bool:
     """
-    Checks whether the given solution trajectories or input vectors start at correct time step.
+    Checks whether the given solution trajectories or input vectors start at the correct state/time step.
 
     Expected time steps are:
     - Equal to planning problem's initial time step, if input vector solution
-    - Planning problem's initial time step + 1, if trajectory solution
+    - Planning problem's initial state, if trajectory solution
 
     :param solution: Solution
     :param planning_problem_set: PlanningProblemSet
@@ -271,16 +272,42 @@ def starts_at_correct_ts(solution: Solution, planning_problem_set: PlanningProbl
     for pp_solution in solution.planning_problem_solutions:
         planning_problem = planning_problem_set.planning_problem_dict[pp_solution.planning_problem_id]
         is_input_vector = pp_solution.trajectory_type in [TrajectoryType.Input, TrajectoryType.PMInput]
-        initial_state = planning_problem.initial_state
-        ts = pp_solution.trajectory.state_list[0].time_step
-        expected_ts = [initial_state.time_step] if is_input_vector else [initial_state.time_step,
-                                                                         initial_state.time_step + 1]
+        initial_state_pp = planning_problem.initial_state
+        initial_state_sol = pp_solution.trajectory.state_list[0]
+        ts = initial_state_sol.time_step
+        expected_ts = [initial_state_pp.time_step]
 
-        if ts not in expected_ts:
-            msg = f'Planning Problem Solution {"input vector" if is_input_vector else "trajectory"} does not ' \
-                  f'start at correct time step!\nPlanning Problem ID: {pp_solution.planning_problem_id}' \
-                  f'\nExpected time step: {expected_ts}\nActual time step: {ts}'
-            raise SolutionCheckerException(msg)
+        if is_input_vector:
+            if ts not in expected_ts:
+                msg = f'Planning Problem Solutionn with input vector does not ' \
+                      f'start at correct time step!\nPlanning Problem ID: {pp_solution.planning_problem_id}' \
+                      f'\nExpected time step: {expected_ts}\nActual time step: {ts}'
+                raise SolutionCheckerException(msg)
+        else:
+            for attr in initial_state_pp.attributes:
+                if not hasattr(initial_state_sol, attr):
+                    continue
+
+                solution_attr_tmp = getattr(initial_state_sol, attr)
+                if pp_solution.vehicle_model == VehicleModel.PM:
+                    if attr == "orientation":
+                        solution_attr_tmp = math.atan2(initial_state_sol.velocity_y, initial_state_sol.velocity)
+                    elif attr == "velocity":
+                        solution_attr_tmp = math.sqrt(initial_state_sol.velocity_y**2 + initial_state_sol.velocity**2)
+
+                if attr == "velocity":
+                    # tolerance required for motion primitives
+                    atol = 2.0
+                else:
+                    atol = 0.1
+
+                if not np.allclose(getattr(initial_state_pp, attr), solution_attr_tmp, atol=atol):
+                    msg = f'Planning Problem Solution trajectory does not ' \
+                          f'start at the initial_state of the planning problem with ID: ' \
+                          f'{pp_solution.planning_problem_id}' \
+                          f'\nExpected {attr}={getattr(initial_state_pp, attr)}\n' \
+                          f'Received {attr}={solution_attr_tmp}'
+                    raise SolutionCheckerException(msg)
 
     return True
 
@@ -314,7 +341,7 @@ def valid_solution(scenario: Scenario,
     valid = all([
         solved_all_problems(planning_problem_set, solution),
         goal_reached(scenario, planning_problem_set, solution),
-        starts_at_correct_ts(solution, planning_problem_set),
+        starts_at_correct_state(solution, planning_problem_set),
         not obstacle_collision(scenario, planning_problem_set, solution),
         not boundary_collision(scenario, planning_problem_set, solution),
         not ego_collision(scenario, planning_problem_set, solution)

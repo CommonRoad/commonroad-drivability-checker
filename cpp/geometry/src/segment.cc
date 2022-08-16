@@ -4,8 +4,8 @@
 
 namespace geometry {
 
-Segment::Segment(Eigen::Vector2d pt_1, Eigen::Vector2d pt_2,
-                 Eigen::Vector2d t_1, Eigen::Vector2d t_2) {
+Segment::Segment(const Eigen::Vector2d& pt_1, const Eigen::Vector2d& pt_2,
+                 const Eigen::Vector2d& t_1,  const Eigen::Vector2d& t_2) {
   this->pt_1_ = pt_1;
   this->pt_2_ = pt_2;
   this->t_1_ = t_1.normalized();
@@ -136,7 +136,7 @@ Eigen::RowVectorXd Segment::computePseudoDistance(
 
 double Segment::computeLambda(double s) const { return s / this->length_; }
 
-double Segment::computeLambda(Eigen::Vector2d p_local) const {
+double Segment::computeLambda(const Eigen::Vector2d& p_local) const {
   double lambda = -1;
   double devider = this->length_ - p_local[1] * (this->m_2_ - this->m_1_);
   if (std::isgreater(std::abs(devider), 0.)) {
@@ -149,8 +149,8 @@ Eigen::Vector2d Segment::computeBasePoint(double lambda) const {
   return lambda * this->pt_2_ + (1. - lambda) * this->pt_1_;
 }
 
-Eigen::Vector2d Segment::computePseudoNormal(Eigen::Vector2d p_lambda,
-                                             Eigen::Vector2d p) const {
+Eigen::Vector2d Segment::computePseudoNormal(const Eigen::Vector2d& p_lambda,
+                                             const Eigen::Vector2d& p) const {
   return p - p_lambda;
 }
 
@@ -163,8 +163,8 @@ Eigen::Vector2d Segment::computePseudoTangentGlobal(double lambda) const {
   return (lambda * this->t_2_ + (1. - lambda) * this->t_1_).normalized();
 }
 
-double Segment::computeSignedPseudoDistance(Eigen::Vector2d pseudo_normal,
-                                            Eigen::Vector2d p_local) const {
+double Segment::computeSignedPseudoDistance(const Eigen::Vector2d& pseudo_normal,
+                                            const Eigen::Vector2d& p_local) const {
   double pseudo_distance = pseudo_normal.norm();
   if (std::isless(p_local[1], 0.)) {
     pseudo_distance = -pseudo_distance;
@@ -172,13 +172,13 @@ double Segment::computeSignedPseudoDistance(Eigen::Vector2d pseudo_normal,
   return pseudo_distance;
 }
 
-Eigen::Vector2d Segment::rotateToLocalFrame(Eigen::Vector2d p) const {
+Eigen::Vector2d Segment::rotateToLocalFrame(const Eigen::Vector2d& p) const {
   Eigen::Matrix2d R;
   R << this->tangent_[0], this->tangent_[1], this->normal_[0], this->normal_[1];
   return R * p;
 }
 
-Eigen::Vector2d Segment::rotateToGlobalFrame(Eigen::Vector2d p_local) const {
+Eigen::Vector2d Segment::rotateToGlobalFrame(const Eigen::Vector2d& p_local) const {
   Eigen::Matrix2d R;
   R << this->tangent_[0], this->normal_[0], this->tangent_[1], this->normal_[1];
   return R * p_local;
