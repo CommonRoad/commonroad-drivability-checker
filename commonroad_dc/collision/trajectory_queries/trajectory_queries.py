@@ -188,8 +188,14 @@ def trajectories_collision_dynamic_obstacles(trajectories: list, dynamic_obstacl
 
 def trajectory_preprocess_obb_sum(trajectory: pycrcc.TimeVariantCollisionObject):
     """
-    Preprocess a trajectory using OBB sum hull (for continuous collision detection). The input trajectory must consist of one oriented rectangle per time step.
-    The occupancies of the OBB boxes for two subsequent states are overapproximated with a tightly fitting OBB box.
+    Preprocess a trajectory using OBB sum hull (for continuous collision detection). The input trajectory must in each
+    time step consist of
+        - one oriented rectangle, or
+        - a shape group with several oriented rectangles
+
+    The occupancies of the shapes for two subsequent states are overapproximated with a tightly fitting OBB box; in the
+    case of a shape group, each included shape is overapproximated together with the corresponding same shape of the
+    next time step (e.g. the 1st shape is grouped with the 1st shape of the next time step, and so on).
 
     :param trajectory: trajectory for preprocessing (pycrcc.TimeVariantCollisionObject)
 

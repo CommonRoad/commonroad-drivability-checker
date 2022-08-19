@@ -26,7 +26,7 @@ information to get started with our tool. For a more in-depth demonstration of t
 
 .. toctree::
     :includehidden:
-    
+
     00_getting_started.nblink
     01_python_wrapper.nblink
     02_commonroad_interface.nblink

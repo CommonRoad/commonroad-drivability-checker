@@ -27,6 +27,7 @@ class TestFeasibilityChecker(unittest.TestCase):
         cls.disable_ks_tests = False
         cls.disable_st_tests = True
         cls.disable_mb_tests = True  # ATTENTION: TAKES TOO LONG (MB)
+        cls.disable_kst_tests = False
 
         cls.dt = 0.1
         cls.input_range_sample = 10  # Lower if you want to test less samples (less time)
@@ -36,6 +37,7 @@ class TestFeasibilityChecker(unittest.TestCase):
         cls.ks_dynamics = VehicleDynamics.KS(VehicleType.FORD_ESCORT)
         cls.st_dynamics = VehicleDynamics.ST(VehicleType.FORD_ESCORT)
         cls.mb_dynamics = VehicleDynamics.MB(VehicleType.FORD_ESCORT)
+        cls.kst_dynamics = VehicleDynamics.KST(VehicleType.FORD_ESCORT)
 
         cls.acceleration_max = cls.ks_dynamics.parameters.longitudinal.a_max
         cls.input_accelerations = np.linspace(-cls.acceleration_max, cls.acceleration_max,
@@ -54,6 +56,8 @@ class TestFeasibilityChecker(unittest.TestCase):
         cls.pm_init_states = {init_state.velocity: cls.pm_dynamics.convert_initial_state(init_state)
                               for init_state in cls.init_states}
         cls.ks_init_states = {init_state.velocity: cls.ks_dynamics.convert_initial_state(init_state)
+                              for init_state in cls.init_states}
+        cls.kst_init_states = {init_state.velocity: cls.kst_dynamics.convert_initial_state(init_state)
                               for init_state in cls.init_states}
         cls.st_init_states = {init_state.velocity: cls.st_dynamics.convert_initial_state(init_state)
                               for init_state in cls.init_states}
@@ -84,6 +88,14 @@ class TestFeasibilityChecker(unittest.TestCase):
                 velocity: [cls.ks_dynamics.simulate_next_state(cls.ks_init_states[velocity], inp, cls.dt, False)
                            for inp in cls.inputs
                            if not cls.ks_dynamics.violates_friction_circle(cls.ks_init_states[velocity], inp)]
+                for velocity in cls.velocities
+            }
+
+        if not cls.disable_ks_tests:
+            cls.kst_next_states = {
+                velocity: [cls.kst_dynamics.simulate_next_state(cls.kst_init_states[velocity], inp, cls.dt, False)
+                           for inp in cls.inputs
+                           if not cls.kst_dynamics.violates_friction_circle(cls.kst_init_states[velocity], inp)]
                 for velocity in cls.velocities
             }
 
@@ -179,6 +191,7 @@ class TestFeasibilityChecker(unittest.TestCase):
     def setUp(self):
         self.zero_pm_init_state = self.pm_dynamics.convert_initial_state(self.zero_init_state)
         self.zero_ks_init_state = self.ks_dynamics.convert_initial_state(self.zero_init_state)
+        self.zero_kst_init_state = self.kst_dynamics.convert_initial_state(self.zero_init_state)
         self.zero_st_init_state = self.st_dynamics.convert_initial_state(self.zero_init_state)
         self.zero_mb_init_state = self.mb_dynamics.convert_initial_state(self.zero_init_state)
         self.test_count = 0
@@ -377,6 +390,81 @@ class TestFeasibilityChecker(unittest.TestCase):
 
         self._test_next_states(self.ks_dynamics, init_state, next_states, self.inputs)
 
+    def test_state_transition_feasibility_ks(self):
+        if self.disable_ks_tests: return
+        for velocity, next_states in self.ks_next_states.items():
+            self._test_next_states(self.ks_dynamics, self.ks_init_states[velocity], next_states, self.inputs)
+
+    def test_state_transition_feasibility_ks_velocity_and_steering_bounds(self):
+        if self.disable_ks_tests: return
+        init_state = self.zero_ks_init_state
+        init_state.velocity = self.ks_dynamics.parameters.longitudinal.v_max
+        init_state.steering_angle = self.ks_dynamics.parameters.steering.max
+        next_states = list(filter(None, [self.ks_dynamics.simulate_next_state(init_state, inp, self.dt, False)
+                                         for inp in self.inputs]))
+
+        self._test_next_states(self.ks_dynamics, init_state, next_states, self.inputs)
+
+    def test_state_transition_feasibility_ks_velocity_switch(self):
+        if self.disable_ks_tests: return
+        init_state = self.zero_ks_init_state
+        init_state.velocity = self.ks_dynamics.parameters.longitudinal.v_switch
+        next_states = list(filter(None, [self.ks_dynamics.simulate_next_state(init_state, inp, self.dt, False)
+                                         for inp in self.inputs]))
+
+        self._test_next_states(self.ks_dynamics, init_state, next_states, self.inputs)
+
+    def test_state_transition_feasibility_kst_velocity_switch_below(self):
+        if self.disable_kst_tests: return
+        init_state = self.zero_kst_init_state
+        init_state.velocity = self.kst_dynamics.parameters.longitudinal.v_switch - 0.001
+        next_states = list(filter(None, [self.kst_dynamics.simulate_next_state(init_state, inp, self.dt, False)
+                                         for inp in self.inputs]))
+
+        self._test_next_states(self.kst_dynamics, init_state, next_states, self.inputs)
+
+    def test_state_transition_feasibility_kst_velocity_switch_above(self):
+        if self.disable_kst_tests: return
+        init_state = self.zero_kst_init_state
+        init_state.velocity = self.kst_dynamics.parameters.longitudinal.v_switch + 0.001
+        next_states = list(filter(None, [self.kst_dynamics.simulate_next_state(init_state, inp, self.dt, False)
+                                         for inp in self.inputs]))
+
+        self._test_next_states(self.kst_dynamics, init_state, next_states, self.inputs)
+
+    def test_state_transition_feasibility_kst_velocity_switch_above(self):
+        if self.disable_kst_tests: return
+        init_state = self.zero_kst_init_state
+        init_state.velocity = self.kst_dynamics.parameters.longitudinal.v_switch + 0.001
+        next_states = list(filter(None, [self.kst_dynamics.simulate_next_state(init_state, inp, self.dt, False)
+                                         for inp in self.inputs]))
+
+        self._test_next_states(self.ks_dynamics, init_state, next_states, self.inputs)
+
+    def test_state_transition_feasibility_kst(self):
+        if self.disable_kst_tests: return
+        for velocity, next_states in self.kst_next_states.items():
+            self._test_next_states(self.kst_dynamics, self.kst_init_states[velocity], next_states, self.inputs)
+
+    def test_state_transition_feasibility_kst_velocity_and_steering_bounds(self):
+        if self.disable_kst_tests: return
+        init_state = self.zero_kst_init_state
+        init_state.velocity = self.kst_dynamics.parameters.longitudinal.v_max
+        init_state.steering_angle = self.kst_dynamics.parameters.steering.max
+        next_states = list(filter(None, [self.kst_dynamics.simulate_next_state(init_state, inp, self.dt, False)
+                                         for inp in self.inputs]))
+
+        self._test_next_states(self.kst_dynamics, init_state, next_states, self.inputs)
+
+    def test_state_transition_feasibility_kst_velocity_switch(self):
+        if self.disable_kst_tests: return
+        init_state = self.zero_kst_init_state
+        init_state.velocity = self.kst_dynamics.parameters.longitudinal.v_switch
+        next_states = list(filter(None, [self.kst_dynamics.simulate_next_state(init_state, inp, self.dt, False)
+                                         for inp in self.inputs]))
+
+        self._test_next_states(self.kst_dynamics, init_state, next_states, self.inputs)
+
     def test_state_transition_feasibility_st(self):
         if self.disable_st_tests: return
         for velocity, next_states in self.st_next_states.items():
@@ -540,6 +628,16 @@ class TestFeasibilityChecker(unittest.TestCase):
                                                                                     self.dt)
         assert feasible
 
+    def test_trajectory_feasibility_kst(self):
+        if self.disable_ks_tests: return
+        trajectory, input_vector = DummyDataGenerator.create_random_trajectory(self.zero_kst_init_state,
+                                                                               self.kst_dynamics,
+                                                                               self.dt, 20)
+        feasible, reconstructed_inputs = feasibility_checker.trajectory_feasibility(trajectory,
+                                                                                    self.kst_dynamics,
+                                                                                    self.dt)
+        assert feasible
+
     def test_trajectory_feasibility_st(self):
         if self.disable_st_tests: return
         trajectory, input_vector = DummyDataGenerator.create_random_trajectory(self.zero_st_init_state,
@@ -569,12 +667,18 @@ class TestFeasibilityChecker(unittest.TestCase):
                                                             self.pm_dynamics, self.dt)[0]
 
     def test_input_vector_feasibility(self):
-        if not self.disable_mb_tests:
+        if not self.disable_ks_tests:
             _, ks_vector = DummyDataGenerator.create_random_trajectory(self.zero_ks_init_state,
                                                                        self.ks_dynamics,
                                                                        self.dt, 20)
             assert feasibility_checker.input_vector_feasibility(self.zero_ks_init_state, ks_vector,
                                                                 self.ks_dynamics, self.dt)[0]
+        if not self.disable_kst_tests:
+            _, kst_vector = DummyDataGenerator.create_random_trajectory(self.zero_kst_init_state,
+                                                                       self.kst_dynamics,
+                                                                       self.dt, 20)
+            assert feasibility_checker.input_vector_feasibility(self.zero_kst_init_state, kst_vector,
+                                                                self.kst_dynamics, self.dt)[0]
         if not self.disable_st_tests:
             _, st_vector = DummyDataGenerator.create_random_trajectory(self.zero_st_init_state,
                                                                        self.st_dynamics,

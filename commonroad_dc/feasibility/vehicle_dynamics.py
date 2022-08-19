@@ -12,9 +12,11 @@ from scipy.optimize import Bounds
 from vehiclemodels.parameters_vehicle1 import parameters_vehicle1
 from vehiclemodels.parameters_vehicle2 import parameters_vehicle2
 from vehiclemodels.parameters_vehicle3 import parameters_vehicle3
+from vehiclemodels.parameters_vehicle4 import parameters_vehicle4
 from vehiclemodels.vehicle_dynamics_ks import vehicle_dynamics_ks
 from vehiclemodels.vehicle_dynamics_mb import vehicle_dynamics_mb
 from vehiclemodels.vehicle_dynamics_st import vehicle_dynamics_st
+from vehiclemodels.vehicle_dynamics_kst import vehicle_dynamics_kst
 from vehiclemodels.vehicle_parameters import VehicleParameters
 
 
@@ -46,6 +48,7 @@ class VehicleParameterMapping(Enum):
     FORD_ESCORT = parameters_vehicle1()
     BMW_320i = parameters_vehicle2()
     VW_VANAGON = parameters_vehicle3()
+    TRUCK = parameters_vehicle4()
 
     @classmethod
     def from_vehicle_type(cls, vehicle_type: VehicleType) -> VehicleParameters:
@@ -59,6 +62,7 @@ class VehicleDynamics(ABC):
     List of currently implemented vehicle models
      - Point-Mass Model (PM)
      - Kinematic Single-Track Model (KS)
+     - Kinematic Single-Track Trailer Model (KST)
      - Single-Track Model (ST)
      - Multi-Body Model (MB)
 
@@ -119,6 +123,16 @@ class VehicleDynamics(ABC):
         :return: MultiBodyDynamics instance with the given vehicle type.
         """
         return MultiBodyDynamics(vehicle_type)
+
+    @classmethod
+    def KST(cls, vehicle_type: VehicleType) -> 'KinematicSingleTrackTrailerDynamics':
+        """
+        Creates a KinematicSingleTrackTrailerDynamics VehicleDynamics model.
+
+        :param vehicle_type: VehicleType, i.e. VehicleType.FORD_ESCORT
+        :return: KinematicSingleTrackTrailerDynamics instance with the given vehicle type.
+        """
+        return KinematicSingleTrackTrailerDynamics(vehicle_type)
 
     @classmethod
     def from_model(cls, vehicle_model: VehicleModel, vehicle_type: VehicleType) -> 'VehicleDynamics':
@@ -539,6 +553,39 @@ class SingleTrackDynamics(VehicleDynamics):
             'slip_angle': x[6],
         }
         return State(**values, time_step=time_step)
+
+
+class KinematicSingleTrackTrailerDynamics(VehicleDynamics):
+    def __init__(self, vehicle_type: VehicleType):
+        super(KinematicSingleTrackTrailerDynamics, self).__init__(VehicleModel.KST, vehicle_type)
+
+    def dynamics(self, t, x, u) -> List[float]:
+        return vehicle_dynamics_kst(x, u, self.parameters)
+
+    def _state_to_array(self, state: State, steering_angle_default=0.0, hitch_angle_default=0.0) -> Tuple[np.array, int]:
+        """ Implementation of the VehicleDynamics abstract method. """
+        values = [
+            state.position[0],
+            state.position[1],
+            getattr(state, 'steering_angle', steering_angle_default),  # not defined in initial state
+            state.velocity,
+            state.orientation,
+            getattr(state, 'hitch', hitch_angle_default) # not defined in initial state
+        ]
+        time_step = state.time_step
+        return np.array(values), time_step
+
+    def _array_to_state(self, x: np.array, time_step: int) -> State:
+        """ Implementation of the VehicleDynamics abstract method. """
+        values = {
+            'position': np.array([x[0], x[1]]),
+            'steering_angle': x[2],
+            'velocity': x[3],
+            'orientation': x[4],
+            'hitch': x[5]
+        }
+        state = State(**values, time_step=time_step)
+        return state
 
 
 class MultiBodyDynamics(VehicleDynamics):
