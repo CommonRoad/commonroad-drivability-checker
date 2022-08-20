@@ -1,5 +1,7 @@
+import numpy as np
 import commonroad_dc.pycrccosy as pycrccosy
-from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline, compute_polyline_length
+from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline, compute_polyline_length,\
+    compute_pathlength_from_polyline, compute_orientation_from_polyline
 
 
 class RefPathLengthException(Exception):
@@ -34,4 +36,40 @@ class CurvilinearCoordinateSystem(pycrccosy.CurvilinearCoordinateSystem):
         if len(ref_path) < 3:
             raise RefPathLengthException("Reference path length is invalid")
 
+        # initiaize Curvilinear Coordinate System
         super().__init__(ref_path, default_projection_domain_limit, eps, eps2)
+        # compute curvature
+        super().compute_and_set_curvature()
+
+        # initialize reference attributes
+        self._reference = np.asarray(super().reference_path())
+        self._ref_pos = compute_pathlength_from_polyline(self.reference)
+        self._ref_curv = np.asarray(super().get_curvature())
+        self._ref_curv_d = np.gradient(self._ref_curv, self._ref_pos)
+        self._ref_theta = np.unwrap(compute_orientation_from_polyline(self.reference))
+
+    @property
+    def reference(self) -> np.ndarray:
+        """returns reference path used by CCosy due to slight modifications within the CCosy module"""
+        return self._reference
+
+    @property
+    def ref_pos(self) -> np.ndarray:
+        """position (s-coordinate) along reference path"""
+        return self._ref_pos
+
+    @property
+    def ref_curv(self) -> np.ndarray:
+        """curvature along reference path"""
+        return self._ref_curv
+
+    @property
+    def ref_curv_d(self) -> np.ndarray:
+        """curvature rate along reference path"""
+        return self._ref_curv_d
+
+    @property
+    def ref_theta(self) -> np.ndarray:
+        """orientation along reference path"""
+        return self._ref_theta
+
