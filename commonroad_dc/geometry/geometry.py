@@ -36,7 +36,10 @@ class CurvilinearCoordinateSystem(pycrccosy.CurvilinearCoordinateSystem):
         if len(ref_path) < 3:
             raise RefPathLengthException("Reference path length is invalid")
 
-        # initiaize Curvilinear Coordinate System
+        # remove duplicated vertices in reference path
+        ref_path = np.unique(ref_path, axis=0)
+
+        # initialize Curvilinear Coordinate System
         super().__init__(ref_path, default_projection_domain_limit, eps, eps2)
         # compute curvature
         super().compute_and_set_curvature()
@@ -72,4 +75,3 @@ class CurvilinearCoordinateSystem(pycrccosy.CurvilinearCoordinateSystem):
     def ref_theta(self) -> np.ndarray:
         """orientation along reference path"""
         return self._ref_theta
-

@@ -117,3 +117,35 @@ def compute_orientation_from_polyline(polyline: np.ndarray) -> np.ndarray:
         orientation.append(np.arctan2(tmp[1], tmp[0]))
 
     return np.array(orientation)
+
+
+def resample_polyline_python(polyline: np.ndarray, step: float = 2.0) -> np.ndarray:
+    """
+    Resamples point with equidistant spacing. Python implementation of the pycrccosy.Util.resample_polyline()
+
+    :param polyline: polyline with 2D points
+    :param step: sampling interval
+    :return: resampled polyline
+    """
+    if len(polyline) < 2:
+        return np.array(polyline)
+    new_polyline = [polyline[0]]
+    current_position = step
+    current_length = np.linalg.norm(polyline[0] - polyline[1])
+    current_idx = 0
+    while current_idx < len(polyline) - 1:
+        if current_position >= current_length:
+            current_position = current_position - current_length
+            current_idx += 1
+            if current_idx > len(polyline) - 2:
+                break
+            current_length = np.linalg.norm(polyline[current_idx + 1]
+                                            - polyline[current_idx])
+        else:
+            rel = current_position / current_length
+            new_polyline.append((1 - rel) * polyline[current_idx] +
+                                rel * polyline[current_idx + 1])
+            current_position += step
+    if np.linalg.norm(new_polyline[-1] - polyline[-1]) >= 1e-6:
+        new_polyline.append(polyline[-1])
+    return np.array(new_polyline)
