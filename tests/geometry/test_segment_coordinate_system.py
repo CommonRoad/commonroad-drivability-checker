@@ -149,25 +149,29 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
         for i in range(0, len(x)):
             print('Number of iterations: '+str(len(x)))
             print("\nid:{} ".format(i))
+
+            x_ref = cartesian_points[i,0]
+            y_ref = cartesian_points[i,1]
+
             try:
                 # Points to be tested x_, y_
                 x_, y_ = p_cartesian[i][0], p_cartesian[i][1]
             except Exception as e:
                 plt.plot(reference_path[:, 0], reference_path[:, 1])
                 plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-                plt.plot(x[i], y[i], '*k', linewidth=5)
+                plt.plot(x_ref, y_ref, '*k', linewidth=5)
                 print(e)
                 break
             try:
                 # We test x_, y_ against original dataset x and y
-                print('Calculated: (', x_, ', ', y_, ') - Real: (', x[i], ', ', y[i], ')')
-                np.testing.assert_allclose(x_, x[i], atol=1e-3, rtol=0)
-                np.testing.assert_allclose(y_, y[i], atol=1e-3, rtol=0)
+                print('Calculated: (', x_, ', ', y_, ') - Real: (', x_ref, ', ', y_ref, ')')
+                np.testing.assert_allclose(x_, x_ref, atol=1e-3, rtol=0)
+                np.testing.assert_allclose(y_, y_ref, atol=1e-3, rtol=0)
             except Exception as e:
                 print(e)
                 plt.plot(reference_path[:, 0], reference_path[:, 1])
                 plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-                plt.plot(x[i], y[i], '*g', linewidth=5)
+                plt.plot(x_ref, y_ref, '*g', linewidth=5)
                 plt.plot(x_, y_, '*r', linewidth=5)
                 number_of_failed_data_points += 1
 
