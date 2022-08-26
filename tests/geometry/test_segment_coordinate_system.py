@@ -118,12 +118,31 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
         x = data_set['x']
         y = data_set['y']
 
-        cartesian_points = np.array(list(zip(x, y)))
+        # FIXME convert_list_of_points_to_curvilinear_coords will silently drop any points
+        # outside the projection domain! In order to compare the original and converted
+        # cartesian points, we need to skip any points outside the projection domain.
+        # Otherwise the point indices won't line up when comparing the arrays.
+        points = []
+        for xv,yv in zip(x,y):
+            if cosy.cartesian_point_inside_projection_domain(xv, yv):
+                points += [[xv, yv]]
+
+        cartesian_points = np.array(points)
+
+        # Sanity check that we skipped points outside the projection domain
+        # Exact number based on test data
+        self.assertEqual(cartesian_points.shape, (19644, 2))
+
         # Convert points to Curvilinear
-        p_curvilinear = cosy.convert_list_of_points_to_curvilinear_coords(cartesian_points, 4)
+        p_curvilinear = np.array(cosy.convert_list_of_points_to_curvilinear_coords(cartesian_points, 4))
 
         # Convert points back to Cartesian
-        p_cartesian = cosy.convert_list_of_points_to_cartesian_coords(p_curvilinear, 4)
+        p_cartesian = np.array(cosy.convert_list_of_points_to_cartesian_coords(p_curvilinear, 4))
+
+        self.assertEqual(cartesian_points.shape, p_curvilinear.shape)
+        self.assertEqual(cartesian_points.shape, p_cartesian.shape)
+
+        np.testing.assert_allclose(p_cartesian, cartesian_points, atol=1e-3, rtol=0)
 
         # Compare
         number_of_failed_data_points = 0
