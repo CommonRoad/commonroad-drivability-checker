@@ -146,7 +146,7 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
 
         # Compare
         number_of_failed_data_points = 0
-        for i in range(0, len(x)):
+        for i in range(cartesian_points.shape[0]):
             print('Number of iterations: '+str(len(x)))
             print("\nid:{} ".format(i))
 
