@@ -142,48 +142,52 @@ class TestCurvilinearCoordinateSystem(unittest.TestCase):
         self.assertEqual(cartesian_points.shape, p_curvilinear.shape)
         self.assertEqual(cartesian_points.shape, p_cartesian.shape)
 
+        # Compare original and converted cartesian coordinates
         np.testing.assert_allclose(p_cartesian, cartesian_points, atol=1e-3, rtol=0)
 
-        # Compare
-        number_of_failed_data_points = 0
-        for i in range(cartesian_points.shape[0]):
-            print('Number of iterations: '+str(len(x)))
-            print("\nid:{} ".format(i))
+        # Verbose Comparison (disabled by default)
+        verbose = False
 
-            x_ref = cartesian_points[i,0]
-            y_ref = cartesian_points[i,1]
+        if verbose:
+            number_of_failed_data_points = 0
+            for i in range(cartesian_points.shape[0]):
+                print('Number of iterations: '+str(len(x)))
+                print("\nid:{} ".format(i))
 
-            try:
-                # Points to be tested x_, y_
-                x_, y_ = p_cartesian[i][0], p_cartesian[i][1]
-            except Exception as e:
-                plt.plot(reference_path[:, 0], reference_path[:, 1])
+                x_ref = cartesian_points[i,0]
+                y_ref = cartesian_points[i,1]
+
+                try:
+                    # Points to be tested x_, y_
+                    x_, y_ = p_cartesian[i][0], p_cartesian[i][1]
+                except Exception as e:
+                    plt.plot(reference_path[:, 0], reference_path[:, 1])
+                    plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
+                    plt.plot(x_ref, y_ref, '*k', linewidth=5)
+                    print(e)
+                    break
+                try:
+                    # We test x_, y_ against original dataset x and y
+                    print('Calculated: (', x_, ', ', y_, ') - Real: (', x_ref, ', ', y_ref, ')')
+                    np.testing.assert_allclose(x_, x_ref, atol=1e-3, rtol=0)
+                    np.testing.assert_allclose(y_, y_ref, atol=1e-3, rtol=0)
+                except Exception as e:
+                    print(e)
+                    plt.plot(reference_path[:, 0], reference_path[:, 1])
+                    plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
+                    plt.plot(x_ref, y_ref, '*g', linewidth=5)
+                    plt.plot(x_, y_, '*r', linewidth=5)
+                    number_of_failed_data_points += 1
+
+            print("Number of failed data points: {} -> {}%".format(number_of_failed_data_points,
+                                                                (number_of_failed_data_points*100)/len(x)))
+
+            if self.show_plots:
+                #draw_object_ccosy(cosy.get_segment_list())
                 plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-                plt.plot(x_ref, y_ref, '*k', linewidth=5)
-                print(e)
-                break
-            try:
-                # We test x_, y_ against original dataset x and y
-                print('Calculated: (', x_, ', ', y_, ') - Real: (', x_ref, ', ', y_ref, ')')
-                np.testing.assert_allclose(x_, x_ref, atol=1e-3, rtol=0)
-                np.testing.assert_allclose(y_, y_ref, atol=1e-3, rtol=0)
-            except Exception as e:
-                print(e)
-                plt.plot(reference_path[:, 0], reference_path[:, 1])
-                plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-                plt.plot(x_ref, y_ref, '*g', linewidth=5)
-                plt.plot(x_, y_, '*r', linewidth=5)
-                number_of_failed_data_points += 1
-
-        print("Number of failed data points: {} -> {}%".format(number_of_failed_data_points,
-                                                               (number_of_failed_data_points*100)/len(x)))
-
-        if self.show_plots:
-            #draw_object_ccosy(cosy.get_segment_list())
-            plt.plot(projection_domain[:, 0], projection_domain[:, 1], '-b')
-            plt.autoscale()
-            plt.axis('equal')
-            plt.show()
+                plt.autoscale()
+                plt.axis('equal')
+                plt.show()
 
     def test_determine_subset_of_polygon_in_projection_domain(self):
         # load reference path
