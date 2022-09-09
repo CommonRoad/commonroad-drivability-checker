@@ -26,8 +26,9 @@ before_script:
 build-compile-commands:
   stage: compile
   script:
+    - git submodule update --init
     # run CMake in order to get compile_commands.json
-    - mkdir build-debug && cd build-debug
+    - mkdir build && cd build
     - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
     - cd ..
   needs: []
