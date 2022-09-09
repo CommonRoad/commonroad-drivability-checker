@@ -1,4 +1,4 @@
-commonroad-io>=2020.2
+commonroad-io==2022.1
 commonroad-vehicle-models>=1.0.0
 numpy>=1.19
 shapely>=1.6.4
