@@ -10,14 +10,7 @@ arr = np.array([[136.1013, -52.64465],
                 [147.1013, -59.64465],
                 [152.3213, -60.39465],
                 [163.6113, -58.04465]])
-res = pycrccosy.CurvilinearCoordinateSystem(resample_polyline(arr))
-
-arr = np.array([[64.1976, -38.03163],
-                [63.55926413, -37.26187204],
-                [62.92092826, -36.49211408],
-                [62.4976, -35.98163]])
-arr_resample = resample_polyline(arr)
-res = pycrccosy.CurvilinearCoordinateSystem(arr_resample, 20., 0.1, 0.00000001)
+res = pycrccosy.CurvilinearCoordinateSystem(resample_polyline(arr), 20, 0.1, 0.0001)
 
 first_point = np.asarray(arr[0])
 last_point = np.asarray(arr[-1])
