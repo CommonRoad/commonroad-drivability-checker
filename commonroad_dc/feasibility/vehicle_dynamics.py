@@ -567,6 +567,38 @@ class KinematicSingleTrackTrailerDynamics(VehicleDynamics):
     def dynamics(self, t, x, u) -> List[float]:
         return vehicle_dynamics_kst(x, u, self.parameters)
 
+    def convert_initial_state(self, initial_state: InitialState, steering_angle_default=0.0, hitch_angle_default=0.0) \
+            -> KSTState:
+        """
+        Overrides method convert_initial_state() in VehicleDynamics Base class due to additional hitch angle
+        Converts the given default initial state to VehicleModel's state by setting the state values accordingly.
+
+        :param initial_state: default initial state
+        :param steering_angle_default: default steering_angle value as it is not given in initial state
+        :param hitch_angle_default: default hitch angle as it is not given in initial state
+        :return: converted initial state
+        """
+        return self.array_to_state(self.state_to_array(initial_state, steering_angle_default, hitch_angle_default)[0],
+                                   initial_state.time_step)
+
+    def state_to_array(self, state: TraceState, steering_angle_default=0.0, hitch_angle_default=0.0) \
+            -> Tuple[np.array, int]:
+        """
+        Overrides method state_to_array() from VehicleDynamics Base class due to additional hitch angle
+        Converts the given State to numpy array.
+
+        :param state: State
+        :param steering_angle_default: default steering_angle value as it is not given in initial state
+        :param hitch_angle_default: default hitch angle as it is not given in initial state
+        :return: state values as numpy array and time step of the state
+        """
+        try:
+            array, time_step = self._state_to_array(state, steering_angle_default, hitch_angle_default)
+            return array, time_step
+        except Exception as e:
+            err = f'Not a valid state!\nState:{str(state)}'
+            raise StateException(err) from e
+
     def _state_to_array(self, state: KSTState, steering_angle_default=0.0, hitch_angle_default=0.0) -> Tuple[np.array, int]:
         """ Implementation of the VehicleDynamics abstract method. """
         values = [
@@ -575,7 +607,7 @@ class KinematicSingleTrackTrailerDynamics(VehicleDynamics):
             getattr(state, 'steering_angle', steering_angle_default),  # not defined in initial state
             state.velocity,
             state.orientation,
-            getattr(state, 'hitch', hitch_angle_default) # not defined in initial state
+            getattr(state, 'hitch_angle', hitch_angle_default) # not defined in initial state
         ]
         time_step = state.time_step
         return np.array(values), time_step
