@@ -8,7 +8,7 @@ from commonroad.common.solution import VehicleType, VehicleModel
 from commonroad.geometry.shape import Rectangle
 from commonroad.scenario.trajectory import Trajectory
 from commonroad.scenario.state import InitialState, InputState, PMInputState, PMState, KSState, KSTState, STState, \
-    MBState
+    MBState, LongitudinalState, LateralState
 from scipy.integrate import odeint
 from scipy.optimize import Bounds
 from vehiclemodels.parameters_vehicle1 import parameters_vehicle1
@@ -19,6 +19,7 @@ from vehiclemodels.vehicle_dynamics_ks import vehicle_dynamics_ks
 from vehiclemodels.vehicle_dynamics_mb import vehicle_dynamics_mb
 from vehiclemodels.vehicle_dynamics_st import vehicle_dynamics_st
 from vehiclemodels.vehicle_dynamics_kst import vehicle_dynamics_kst
+from vehiclemodels.vehicle_dynamics_linearized import vehicle_dynamics_linearized
 from vehiclemodels.vehicle_parameters import VehicleParameters
 
 
@@ -68,7 +69,7 @@ class VehicleDynamics(ABC):
     List of currently implemented vehicle models
      - Point-Mass Model (PM)
      - Kinematic Single-Track Model (KS)
-     - TODO: Linearized Kinematic Single-Track Model (LKS)
+     - Linearized Kinematic Single-Track Model (LKS)
      - Kinematic Single-Track Trailer Model (KST)
      - Single-Track Model (ST)
      - Multi-Body Model (MB)
@@ -140,6 +141,16 @@ class VehicleDynamics(ABC):
         :return: KinematicSingleTrackTrailerDynamics instance with the given vehicle type.
         """
         return KinematicSingleTrackTrailerDynamics(vehicle_type)
+
+    @classmethod
+    def LKS(cls, vehicle_type: VehicleType) -> 'LinearizedKSDynamics':
+        """
+        Creates a LinearizedKSDynamics VehicleDynamics model.
+
+        :param vehicle_type: VehicleType, i.e. VehicleType.FORD_ESCORT
+        :return: KinematicSingleTrackTrailerDynamics instance with the given vehicle type.
+        """
+        return LinearizedKSDynamics(vehicle_type)
 
     @classmethod
     def from_model(cls, vehicle_model: VehicleModel, vehicle_type: VehicleType) -> 'VehicleDynamics':
@@ -737,16 +748,53 @@ class MultiBodyDynamics(VehicleDynamics):
         return MBState(**values, time_step=time_step)
 
 
-# TODO
 class LinearizedKSDynamics(VehicleDynamics):
-    def __init__(self, vehicle_type: VehicleType):
-        super(LinearizedKSDynamics, self).__init__(VehicleModel.MB, vehicle_type)
+    def __init__(self, vehicle_type: VehicleType, ref_pos: np.ndarray, ref_theta: np.ndarray):
+        super(LinearizedKSDynamics, self).__init__(VehicleModel.LKS, vehicle_type)
+        self.ref_pos = ref_pos
+        self.ref_theta = ref_theta
 
     def dynamics(self, t, x, u) -> List[float]:
+        """Implementation of the VehicleDynamics abstract method"""
+        return vehicle_dynamics_linearized(x, u, self.parameters, self.ref_pos, self.ref_theta)
+
+    @property
+    def input_bounds(self) -> Bounds:
+        """
+        Overrides the input_bounds() method of VehicleDynamics Base class in order to return bounds for the Linearized
+        KS inputs.
+
+        Bounds are
+            - max jerk_dot <= jerk_dot <= max jerk_dot
+            - min kappa_dot_dot <= kappa_dot_dot <= max kappa_dot_dot
+
+        :return: Bounds
+        """
+        return Bounds([-self.parameters.longitudinal.j_dot_max, -self.parameters.steering.kappa_dot_dot_max],
+                      [self.parameters.longitudinal.j_dot_max, self.parameters.steering.kappa_dot_dot_max])
+
+    def forward_simulation(self, x: np.array, u: np.array, dt: float, throw: bool = True) -> Union[None, np.array]:
+        """
+        Overrides method forward_simulation() from VehicleDynamics Base class!
+        Simulates the next state using the given state and input values as numpy arrays.
+
+        :param x: state values.
+        :param u: input values
+        :param dt: scenario delta time.
+        :param throw: if set to false, will return None as next state instead of throwing exception (default=True)
+        :return: simulated next state values, raises VehicleDynamicsException if invalid input.
+        """
+        within_bounds = self.input_within_bounds(u, throw)
+        if not throw and not within_bounds:
+            return None
+
+        x0, x1 = odeint(self.dynamics, x, [0.0, dt], args=(u,), tfirst=True)
+        return x1
+
+    def _state_to_array(self, state: Union[LongitudinalState, LateralState], steering_angle_default=0.0) -> Tuple[np.array, int]:
+        """ Implementation of the VehicleDynamics abstract method. """
         pass
 
-    def _state_to_array(self, state: TraceState, steering_angle_default=0.0) -> Tuple[np.array, int]:
-        pass
-
-    def _array_to_state(self, x: np.array, time_step: int) -> TraceState:
+    def _array_to_state(self, x: np.array, time_step: int) -> Union[LongitudinalState, LateralState]:
+        """ Implementation of the VehicleDynamics abstract method. """
         pass
