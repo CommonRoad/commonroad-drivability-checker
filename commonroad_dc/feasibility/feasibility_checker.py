@@ -1,8 +1,9 @@
-from typing import Tuple
+from typing import Tuple, Union
 
 import numpy as np
 from commonroad.common.solution import TrajectoryType
-from commonroad.scenario.trajectory import Trajectory, State
+from commonroad.scenario.trajectory import Trajectory
+from commonroad.scenario.state import TraceState, InitialState, InputState, PMInputState
 from scipy.optimize import minimize
 
 from commonroad_dc.feasibility.vehicle_dynamics import VehicleDynamics, PointMassDynamics, VehicleDynamicsException
@@ -179,8 +180,8 @@ def position_orientation_feasibility_criteria(x: np.array, x_sim: np.array, vehi
     return all(np.less(round_diff, e))
 
 
-def state_transition_feasibility(x0: State,
-                                 x1: State,
+def state_transition_feasibility(x0: TraceState,
+                                 x1: TraceState,
                                  vehicle_dynamics: VehicleDynamics,
                                  dt: float,
                                  objective=position_orientation_objective,
@@ -189,7 +190,7 @@ def state_transition_feasibility(x0: State,
                                  e: np.array = np.array([2e-2, 2e-2, 3e-2]),
                                  d: int = 4,
                                  maxiter: int = 100,
-                                 disp: bool = False) -> Tuple[bool, State]:
+                                 disp: bool = False) -> Tuple[bool, Union[InputState, PMInputState]]:
     """
     Checks if the state transition is feasible between given two state according to the vehicle dynamics.
 
@@ -340,7 +341,7 @@ def trajectory_feasibility(trajectory: Trajectory,
         raise Exception(msg) from ex
 
 
-def input_vector_feasibility(initial_state: State, input_vector: Trajectory,
+def input_vector_feasibility(initial_state: InitialState, input_vector: Trajectory,
                              vehicle_dynamics: VehicleDynamics, dt: float) -> Tuple[bool, Trajectory]:
     """
     Checks whether the given input vector (as Trajectory object) is feasible according to the input and

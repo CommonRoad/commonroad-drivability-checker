@@ -175,7 +175,7 @@ class VehicleDynamics(ABC):
         return Bounds([self.parameters.steering.v_min, -self.parameters.longitudinal.a_max],
                       [self.parameters.steering.v_max, self.parameters.longitudinal.a_max])
 
-    def input_within_bounds(self, u: Union[InputState, np.array], throw: bool = False) -> bool:
+    def input_within_bounds(self, u: Union[InputState, PMInputState, np.array], throw: bool = False) -> bool:
         """
         Checks whether the given input is within input constraints of the vehicle dynamics model.
 
@@ -183,7 +183,7 @@ class VehicleDynamics(ABC):
         :param throw: if set to false, will return bool instead of throwing exception (default=False)
         :return: True if within constraints
         """
-        inputs = self.input_to_array(u)[0] if isinstance(u, InputState) else u
+        inputs = self.input_to_array(u)[0] if isinstance(u, (InputState, PMInputState)) else u
         in_bounds = all([self.input_bounds.lb[idx] <= round(inputs[idx], 4) <= self.input_bounds.ub[idx]
                          for idx in range(len(self.input_bounds.lb))])
         if not in_bounds and throw:
@@ -234,7 +234,7 @@ class VehicleDynamics(ABC):
         x0, x1 = odeint(self.dynamics, x, [0.0, dt], args=(u,), tfirst=True)
         return x1
 
-    def simulate_next_state(self, x: TraceState, u: InputState, dt: float, throw: bool = True) -> \
+    def simulate_next_state(self, x: TraceState, u: Union[InputState, PMInputState], dt: float, throw: bool = True) -> \
             Union[None, TraceState]:
         """
         Simulates the next state using the given state and input values as State objects.
@@ -336,7 +336,7 @@ class VehicleDynamics(ABC):
         time_step = input.time_step
         return np.array(values), time_step
 
-    def input_to_array(self, input: InputState) -> Tuple[np.array, int]:
+    def input_to_array(self, input: Union[InputState, PMInputState]) -> Tuple[np.array, int]:
         """
         Converts the given input (as State object) to numpy array.
 
@@ -361,7 +361,7 @@ class VehicleDynamics(ABC):
         }
         return InputState(**values, time_step=time_step)
 
-    def array_to_input(self, u: np.array, time_step: int) -> InputState:
+    def array_to_input(self, u: np.array, time_step: int) -> Union[InputState, PMInputState]:
         """
         Converts the given numpy array of values to input (as State object).
 
@@ -448,7 +448,7 @@ class PointMassDynamics(VehicleDynamics):
 
         return violates
 
-    def _state_to_array(self, state: PMState, steering_angle_default=0.0) -> Tuple[np.array, int]:
+    def _state_to_array(self, state: Union[PMState, InitialState], steering_angle_default=0.0) -> Tuple[np.array, int]:
         """ Implementation of the VehicleDynamics abstract method. """
         if hasattr(state, 'velocity') and hasattr(state, 'orientation') and not hasattr(state,
                                                                                         'velocity_y'):  # If initial state
@@ -470,10 +470,8 @@ class PointMassDynamics(VehicleDynamics):
         values = {
             'position': np.array([x[0], x[1]]),
             'velocity': x[2],
-            'velocity_y': x[3],
-            'orientation': math.atan2(x[3], x[2])
+            'velocity_y': x[3]
         }
-        # TODO check if orientation can be removed
         return PMState(**values, time_step=time_step)
 
     def _input_to_array(self, input: PMInputState) -> Tuple[np.array, int]:
@@ -562,6 +560,8 @@ class SingleTrackDynamics(VehicleDynamics):
 
 class KinematicSingleTrackTrailerDynamics(VehicleDynamics):
     def __init__(self, vehicle_type: VehicleType):
+        assert vehicle_type == VehicleType.TRUCK, "The KinematicSingleTrackTrailerDynamics is only supported for " \
+                                                  "the truck model (VehicleType.TRUCK)"
         super(KinematicSingleTrackTrailerDynamics, self).__init__(VehicleModel.KST, vehicle_type)
 
     def dynamics(self, t, x, u) -> List[float]:
@@ -587,7 +587,7 @@ class KinematicSingleTrackTrailerDynamics(VehicleDynamics):
             'steering_angle': x[2],
             'velocity': x[3],
             'orientation': x[4],
-            'hitch': x[5]
+            'hitch_angle': x[5]
         }
         state = KSTState(**values, time_step=time_step)
         return state
