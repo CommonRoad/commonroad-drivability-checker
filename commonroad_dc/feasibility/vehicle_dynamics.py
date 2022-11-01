@@ -6,7 +6,9 @@ import numpy as np
 import math
 from commonroad.common.solution import VehicleType, VehicleModel
 from commonroad.geometry.shape import Rectangle
-from commonroad.scenario.trajectory import State, Trajectory
+from commonroad.scenario.trajectory import Trajectory
+from commonroad.scenario.state import InitialState, InputState, PMInputState, PMState, KSState, KSTState, STState, \
+    MBState, TraceState
 from scipy.integrate import odeint
 from scipy.optimize import Bounds
 from vehiclemodels.parameters_vehicle1 import parameters_vehicle1
@@ -62,6 +64,7 @@ class VehicleDynamics(ABC):
     List of currently implemented vehicle models
      - Point-Mass Model (PM)
      - Kinematic Single-Track Model (KS)
+     - TODO: Linearized Kinematic Single-Track Model (LKS)
      - Kinematic Single-Track Trailer Model (KST)
      - Single-Track Model (ST)
      - Multi-Body Model (MB)
@@ -172,7 +175,7 @@ class VehicleDynamics(ABC):
         return Bounds([self.parameters.steering.v_min, -self.parameters.longitudinal.a_max],
                       [self.parameters.steering.v_max, self.parameters.longitudinal.a_max])
 
-    def input_within_bounds(self, u: Union[State, np.array], throw: bool = False) -> bool:
+    def input_within_bounds(self, u: Union[InputState, np.array], throw: bool = False) -> bool:
         """
         Checks whether the given input is within input constraints of the vehicle dynamics model.
 
@@ -180,14 +183,14 @@ class VehicleDynamics(ABC):
         :param throw: if set to false, will return bool instead of throwing exception (default=False)
         :return: True if within constraints
         """
-        inputs = self.input_to_array(u)[0] if isinstance(u, State) else u
+        inputs = self.input_to_array(u)[0] if isinstance(u, InputState) else u
         in_bounds = all([self.input_bounds.lb[idx] <= round(inputs[idx], 4) <= self.input_bounds.ub[idx]
                          for idx in range(len(self.input_bounds.lb))])
         if not in_bounds and throw:
             raise InputBoundsException(f'Input is not within bounds!\nInput: {u}')
         return in_bounds
 
-    def violates_friction_circle(self, x: Union[State, np.array], u: Union[State, np.array],
+    def violates_friction_circle(self, x: Union[TraceState, np.array], u: Union[InputState, np.array],
                                  throw: bool = False) -> bool:
         """
         Checks whether given input violates the friction circle constraint for the given state.
@@ -197,8 +200,8 @@ class VehicleDynamics(ABC):
         :param throw: if set to false, will return bool instead of throwing exception (default=False)
         :return: True if the constraint was violated
         """
-        x_vals = self.state_to_array(x)[0] if isinstance(x, State) else x
-        u_vals = self.input_to_array(u)[0] if isinstance(u, State) else u
+        x_vals = self.state_to_array(x)[0] if isinstance(x, TraceState.__args__) else x
+        u_vals = self.input_to_array(u)[0] if isinstance(u, InputState) else u
         x_dot = self.dynamics(0, x_vals, u_vals)
 
         vals = np.array([u_vals[1], x_vals[3] * x_dot[4]])
@@ -231,7 +234,8 @@ class VehicleDynamics(ABC):
         x0, x1 = odeint(self.dynamics, x, [0.0, dt], args=(u,), tfirst=True)
         return x1
 
-    def simulate_next_state(self, x: State, u: State, dt: float, throw: bool = True) -> Union[None, State]:
+    def simulate_next_state(self, x: TraceState, u: InputState, dt: float, throw: bool = True) -> \
+            Union[None, TraceState]:
         """
         Simulates the next state using the given state and input values as State objects.
 
@@ -249,7 +253,7 @@ class VehicleDynamics(ABC):
         x1 = self.array_to_state(x1_vals, x_ts + 1)
         return x1
 
-    def simulate_trajectory(self, initial_state: State, input_vector: Trajectory,
+    def simulate_trajectory(self, initial_state: InitialState, input_vector: Trajectory,
                             dt: float, throw: bool = True) -> Union[None, Trajectory]:
         """
         Creates the trajectory for the given input vector.
@@ -271,11 +275,11 @@ class VehicleDynamics(ABC):
         return trajectory
 
     @abstractmethod
-    def _state_to_array(self, state: State, steering_angle_default=0.0) -> Tuple[np.array, int]:
+    def _state_to_array(self, state: TraceState, steering_angle_default=0.0) -> Tuple[np.array, int]:
         """Actual conversion of state to array happens here, each vehicle will implement its own converter."""
         pass
 
-    def state_to_array(self, state: State, steering_angle_default=0.0) -> Tuple[np.array, int]:
+    def state_to_array(self, state: TraceState, steering_angle_default=0.0) -> Tuple[np.array, int]:
         """
         Converts the given State to numpy array.
 
@@ -290,11 +294,11 @@ class VehicleDynamics(ABC):
             raise StateException(err) from e
 
     @abstractmethod
-    def _array_to_state(self, x: np.array, time_step: int) -> State:
+    def _array_to_state(self, x: np.array, time_step: int) -> TraceState:
         """Actual conversion of the array to state happens here, each vehicle will implement its own converter."""
         pass
 
-    def array_to_state(self, x: np.array, time_step: int) -> State:
+    def array_to_state(self, x: np.array, time_step: int) -> TraceState:
         """
         Converts the given numpy array of values to State.
 
@@ -306,11 +310,10 @@ class VehicleDynamics(ABC):
             state = self._array_to_state(x, time_step)
             return state
         except Exception as e:
-            raise e
             err = f'Not a valid state array!\nTime step: {time_step}, State array:{str(x)}'
             raise StateException(err) from e
 
-    def convert_initial_state(self, initial_state, steering_angle_default=0.0) -> State:
+    def convert_initial_state(self, initial_state: InitialState, steering_angle_default=0.0) -> TraceState:
         """
         Converts the given default initial state to VehicleModel's state by setting the state values accordingly.
 
@@ -321,9 +324,10 @@ class VehicleDynamics(ABC):
         return self.array_to_state(self.state_to_array(initial_state, steering_angle_default)[0],
                                    initial_state.time_step)
 
-    def _input_to_array(self, input: State) -> Tuple[np.array, int]:
+    def _input_to_array(self, input: InputState) -> Tuple[np.array, int]:
         """
-        Actual conversion of input to array happens here. Vehicles can override this method to implement their own converter.
+        Actual conversion of input to array happens here. Vehicles can override this method to implement their own
+        converter.
         """
         values = [
             input.steering_angle_speed,
@@ -332,7 +336,7 @@ class VehicleDynamics(ABC):
         time_step = input.time_step
         return np.array(values), time_step
 
-    def input_to_array(self, input: State) -> Tuple[np.array, int]:
+    def input_to_array(self, input: InputState) -> Tuple[np.array, int]:
         """
         Converts the given input (as State object) to numpy array.
 
@@ -346,7 +350,7 @@ class VehicleDynamics(ABC):
         except Exception as e:
             raise InputException(f'Not a valid input!\n{str(input)}') from e
 
-    def _array_to_input(self, u: np.array, time_step: int) -> State:
+    def _array_to_input(self, u: np.array, time_step: int) -> InputState:
         """
         Actual conversion of input array to input happens here. Vehicles can override this method to implement their
         own converter.
@@ -355,9 +359,9 @@ class VehicleDynamics(ABC):
             'steering_angle_speed': u[0],
             'acceleration': u[1],
         }
-        return State(**values, time_step=time_step)
+        return InputState(**values, time_step=time_step)
 
-    def array_to_input(self, u: np.array, time_step: int) -> State:
+    def array_to_input(self, u: np.array, time_step: int) -> InputState:
         """
         Converts the given numpy array of values to input (as State object).
 
@@ -421,7 +425,7 @@ class PointMassDynamics(VehicleDynamics):
         return Bounds([-self.parameters.longitudinal.a_max, -self.parameters.longitudinal.a_max],
                       [self.parameters.longitudinal.a_max, self.parameters.longitudinal.a_max])
 
-    def violates_friction_circle(self, x: Union[State, np.array], u: Union[State, np.array],
+    def violates_friction_circle(self, x: Union[PMState, np.array], u: Union[PMInputState, np.array],
                                  throw: bool = False) -> bool:
         """
         Overrides the friction circle constraint method of Vehicle Model in order calculate
@@ -432,7 +436,7 @@ class PointMassDynamics(VehicleDynamics):
         :param throw: if set to false, will return bool instead of throwing exception (default=False)
         :return: True if the constraint was violated
         """
-        u_vals = self.input_to_array(u)[0] if isinstance(u, State) else u
+        u_vals = self.input_to_array(u)[0] if isinstance(u, PMInputState) else u
 
         vals_sq = np.power(u_vals, 2)
         vals_sqrt = np.sqrt(np.sum(vals_sq))
@@ -444,7 +448,7 @@ class PointMassDynamics(VehicleDynamics):
 
         return violates
 
-    def _state_to_array(self, state: State, steering_angle_default=0.0) -> Tuple[np.array, int]:
+    def _state_to_array(self, state: PMState, steering_angle_default=0.0) -> Tuple[np.array, int]:
         """ Implementation of the VehicleDynamics abstract method. """
         if hasattr(state, 'velocity') and hasattr(state, 'orientation') and not hasattr(state,
                                                                                         'velocity_y'):  # If initial state
@@ -461,7 +465,7 @@ class PointMassDynamics(VehicleDynamics):
         time_step = state.time_step
         return np.array(values), time_step
 
-    def _array_to_state(self, x: np.array, time_step: int) -> State:
+    def _array_to_state(self, x: np.array, time_step: int) -> PMState:
         """ Implementation of the VehicleDynamics abstract method. """
         values = {
             'position': np.array([x[0], x[1]]),
@@ -469,9 +473,10 @@ class PointMassDynamics(VehicleDynamics):
             'velocity_y': x[3],
             'orientation': math.atan2(x[3], x[2])
         }
-        return State(**values, time_step=time_step)
+        # TODO check if orientation can be removed
+        return PMState(**values, time_step=time_step)
 
-    def _input_to_array(self, input: State) -> Tuple[np.array, int]:
+    def _input_to_array(self, input: PMInputState) -> Tuple[np.array, int]:
         """ Overrides VehicleDynamics method. """
         values = [
             input.acceleration,
@@ -480,13 +485,13 @@ class PointMassDynamics(VehicleDynamics):
         time_step = input.time_step
         return np.array(values), time_step
 
-    def _array_to_input(self, u: np.array, time_step: int) -> State:
+    def _array_to_input(self, u: np.array, time_step: int) -> PMInputState:
         """ Overrides VehicleDynamics method. """
         values = {
             'acceleration': u[0],
             'acceleration_y': u[1],
         }
-        return State(**values, time_step=time_step)
+        return PMInputState(**values, time_step=time_step)
 
 
 class KinematicSingleTrackDynamics(VehicleDynamics):
@@ -496,7 +501,7 @@ class KinematicSingleTrackDynamics(VehicleDynamics):
     def dynamics(self, t, x, u) -> List[float]:
         return vehicle_dynamics_ks(x, u, self.parameters)
 
-    def _state_to_array(self, state: State, steering_angle_default=0.0) -> Tuple[np.array, int]:
+    def _state_to_array(self, state: KSState, steering_angle_default=0.0) -> Tuple[np.array, int]:
         """ Implementation of the VehicleDynamics abstract method. """
         values = [
             state.position[0] - self.parameters.b * math.cos(state.orientation),
@@ -508,7 +513,7 @@ class KinematicSingleTrackDynamics(VehicleDynamics):
         time_step = state.time_step
         return np.array(values), time_step
 
-    def _array_to_state(self, x: np.array, time_step: int) -> State:
+    def _array_to_state(self, x: np.array, time_step: int) -> KSState:
         """ Implementation of the VehicleDynamics abstract method. """
         values = {
             'position': np.array([x[0] + self.parameters.b * math.cos(x[4]),
@@ -517,7 +522,7 @@ class KinematicSingleTrackDynamics(VehicleDynamics):
             'velocity': x[3],
             'orientation': x[4],
         }
-        state = State(**values, time_step=time_step)
+        state = KSState(**values, time_step=time_step)
         return state
 
 
@@ -528,7 +533,7 @@ class SingleTrackDynamics(VehicleDynamics):
     def dynamics(self, t, x, u) -> List[float]:
         return vehicle_dynamics_st(x, u, self.parameters)
 
-    def _state_to_array(self, state: State, steering_angle_default=0.0) -> Tuple[np.array, int]:
+    def _state_to_array(self, state: STState, steering_angle_default=0.0) -> Tuple[np.array, int]:
         """ Implementation of the VehicleDynamics abstract method. """
         values = [
             state.position[0],
@@ -542,7 +547,7 @@ class SingleTrackDynamics(VehicleDynamics):
         time_step = state.time_step
         return np.array(values), time_step
 
-    def _array_to_state(self, x: np.array, time_step: int) -> State:
+    def _array_to_state(self, x: np.array, time_step: int) -> STState:
         """ Implementation of the VehicleDynamics abstract method. """
         values = {
             'position': np.array([x[0], x[1]]),
@@ -552,7 +557,7 @@ class SingleTrackDynamics(VehicleDynamics):
             'yaw_rate': x[5],
             'slip_angle': x[6],
         }
-        return State(**values, time_step=time_step)
+        return STState(**values, time_step=time_step)
 
 
 class KinematicSingleTrackTrailerDynamics(VehicleDynamics):
@@ -562,7 +567,7 @@ class KinematicSingleTrackTrailerDynamics(VehicleDynamics):
     def dynamics(self, t, x, u) -> List[float]:
         return vehicle_dynamics_kst(x, u, self.parameters)
 
-    def _state_to_array(self, state: State, steering_angle_default=0.0, hitch_angle_default=0.0) -> Tuple[np.array, int]:
+    def _state_to_array(self, state: KSTState, steering_angle_default=0.0, hitch_angle_default=0.0) -> Tuple[np.array, int]:
         """ Implementation of the VehicleDynamics abstract method. """
         values = [
             state.position[0],
@@ -575,7 +580,7 @@ class KinematicSingleTrackTrailerDynamics(VehicleDynamics):
         time_step = state.time_step
         return np.array(values), time_step
 
-    def _array_to_state(self, x: np.array, time_step: int) -> State:
+    def _array_to_state(self, x: np.array, time_step: int) -> KSTState:
         """ Implementation of the VehicleDynamics abstract method. """
         values = {
             'position': np.array([x[0], x[1]]),
@@ -584,7 +589,7 @@ class KinematicSingleTrackTrailerDynamics(VehicleDynamics):
             'orientation': x[4],
             'hitch': x[5]
         }
-        state = State(**values, time_step=time_step)
+        state = KSTState(**values, time_step=time_step)
         return state
 
 
@@ -595,7 +600,7 @@ class MultiBodyDynamics(VehicleDynamics):
     def dynamics(self, t, x, u) -> List[float]:
         return vehicle_dynamics_mb(x, u, self.parameters)
 
-    def _state_to_array(self, state: State, steering_angle_default=0.0) -> Tuple[np.array, int]:
+    def _state_to_array(self, state: MBState, steering_angle_default=0.0) -> Tuple[np.array, int]:
         """ Implementation of the VehicleDynamics abstract method. """
         if not len(state.attributes) == 29:  # if initial state
             velocity_x, velocity_y = self._convert_from_directional_velocity(state.velocity, state.orientation)
@@ -608,9 +613,15 @@ class MultiBodyDynamics(VehicleDynamics):
         F0_z_r = p.m_s * g * p.a / (p.a + p.b) + p.m_ur * g
         position_z_front = F0_z_f / 2 * p.K_zt
         position_z_rear = F0_z_r / 2 * p.K_zt
-        wheel_speed = lambda velocity_x: velocity_x / p.R_w
-        velocitz_y_front = lambda velocity_y, yaw_rate: velocity_y + p.a * yaw_rate
-        velocitz_y_rear = lambda velocity_y, yaw_rate: velocity_y - p.b * yaw_rate
+
+        def wheel_speed(vel_x):
+            return vel_x / p.R_w
+
+        def velocity_y_front(vel_y, yaw_rate):
+            return vel_y + p.a * yaw_rate
+
+        def velocity_y_rear(vel_y, yaw_rate):
+            return vel_y - p.b * yaw_rate
 
         values = [
             # sprung mass states
@@ -631,14 +642,14 @@ class MultiBodyDynamics(VehicleDynamics):
             # unsprung mass states (front)
             getattr(state, 'roll_angle_front', 0.0),
             getattr(state, 'roll_rate_front', 0.0),
-            getattr(state, 'velocity_y_front', velocitz_y_front(velocity_y, state.yaw_rate)),
+            getattr(state, 'velocity_y_front', velocity_y_front(velocity_y, state.yaw_rate)),
             getattr(state, 'position_z_front', position_z_front),
             getattr(state, 'velocity_z_front', 0.0),  # not defined in initial state
 
             # unsprung mass states (rear)
             getattr(state, 'roll_angle_rear', 0.0),  # not defined in initial state
             getattr(state, 'roll_rate_rear', 0.0),  # not defined in initial state
-            getattr(state, 'velocity_y_rear', velocitz_y_rear(velocity_y, state.yaw_rate)),
+            getattr(state, 'velocity_y_rear', velocity_y_rear(velocity_y, state.yaw_rate)),
             getattr(state, 'position_z_rear', position_z_rear),
             getattr(state, 'velocity_z_rear', 0.0),  # not defined in initial state
 
@@ -653,7 +664,7 @@ class MultiBodyDynamics(VehicleDynamics):
         time_step = state.time_step
         return np.array(values), time_step
 
-    def _array_to_state(self, x: np.array, time_step: int) -> State:
+    def _array_to_state(self, x: np.array, time_step: int) -> MBState:
         """ Implementation of the VehicleDynamics abstract method. """
         values = {
             'position': np.array([x[0], x[1]]),
@@ -685,4 +696,19 @@ class MultiBodyDynamics(VehicleDynamics):
             'delta_y_f': x[27],
             'delta_y_r': x[28],
         }
-        return State(**values, time_step=time_step)
+        return MBState(**values, time_step=time_step)
+
+
+# TODO
+class LinearizedKSDynamics(VehicleDynamics):
+    def __init__(self, vehicle_type: VehicleType):
+        super(LinearizedKSDynamics, self).__init__(VehicleModel.MB, vehicle_type)
+
+    def dynamics(self, t, x, u) -> List[float]:
+        pass
+
+    def _state_to_array(self, state: TraceState, steering_angle_default=0.0) -> Tuple[np.array, int]:
+        pass
+
+    def _array_to_state(self, x: np.array, time_step: int) -> TraceState:
+        pass
