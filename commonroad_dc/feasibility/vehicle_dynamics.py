@@ -5,6 +5,7 @@ from typing import List, Union, Tuple
 import numpy as np
 import math
 from commonroad.common.solution import VehicleType, VehicleModel
+from commonroad.common.util import make_valid_orientation
 from commonroad.geometry.shape import Rectangle
 from commonroad.scenario.trajectory import Trajectory
 from commonroad.scenario.state import InitialState, InputState, PMInputState, PMState, KSState, KSTState, STState, \
@@ -791,10 +792,49 @@ class LinearizedKSDynamics(VehicleDynamics):
         x0, x1 = odeint(self.dynamics, x, [0.0, dt], args=(u,), tfirst=True)
         return x1
 
-    def _state_to_array(self, state: Union[LongitudinalState, LateralState], steering_angle_default=0.0) -> Tuple[np.array, int]:
-        """ Implementation of the VehicleDynamics abstract method. """
+    def state_to_array(self, state: Tuple[LongitudinalState, LateralState], steering_angle_default=0.0) \
+            -> Tuple[np.array, int]:
+        """Overrides method state_to_array() from VehicleDynamics Base class."""
+        # TODO
         pass
 
-    def _array_to_state(self, x: np.array, time_step: int) -> Union[LongitudinalState, LateralState]:
+    def _state_to_array(self, state: Tuple[LongitudinalState, LateralState], steering_angle_default=0.0) \
+            -> Tuple[np.array, int]:
         """ Implementation of the VehicleDynamics abstract method. """
+        lon_state = state[0]
+        lat_state = state[1]
+        assert lon_state.time_step == lat_state.time_step, "Time steps of longituindal and lateral state do not match."
+        # TODO: lon_state.position and lat_state.distance attributes are changed on cr-io dev branch
+        values = [
+            lon_state.position,
+            lon_state.velocity,
+            lon_state.acceleration,
+            lon_state.jerk,
+            lat_state.distance,
+            lat_state.orientation,
+            lat_state.curvature,
+            lat_state.curvature_rate
+        ]
+        time_step = lon_state.time_step
+        return np.array(values), time_step
+
+    def array_to_state(self, x: np.array, time_step: int) -> VehicleModelStates:
+        """Overrides method state_to_array() from VehicleDynamics Base class."""
+        # TODO
         pass
+
+    def _array_to_state(self, x: np.array, time_step: int) -> Tuple[LongitudinalState, LateralState]:
+        """ Implementation of the VehicleDynamics abstract method. """
+        values_lon = {
+            'position': x[0],
+            'velocity': x[1],
+            'acceleration': x[2],
+            'jerk': x[3]
+        }
+        values_lat = {
+            'distance': x[4],
+            'orientation': make_valid_orientation(x[5]),
+            'curvature': x[6],
+            'curvature_rate': x[7]
+        }
+        return LongitudinalState(**values_lon, time_step=time_step), LateralState(**values_lat, time_step=time_step)
