@@ -9,7 +9,7 @@ from commonroad.common.util import make_valid_orientation
 from commonroad.geometry.shape import Rectangle
 from commonroad.scenario.trajectory import Trajectory
 from commonroad.scenario.state import InitialState, InputState, PMInputState, PMState, KSState, KSTState, STState, \
-    MBState, LongitudinalState, LateralState
+    MBState, LongitudinalState, LateralState, LKSInputState
 from scipy.integrate import odeint
 from scipy.optimize import Bounds
 from vehiclemodels.parameters_vehicle1 import parameters_vehicle1
@@ -24,8 +24,11 @@ from vehiclemodels.vehicle_dynamics_linearized import vehicle_dynamics_linearize
 from vehiclemodels.vehicle_parameters import VehicleParameters
 
 
-# supported vehicle model states in the VehicleDynamics classes of the feasibility checker
+# supported vehicle model state classes in the VehicleDynamics classes of the feasibility checker
 VehicleModelStates = Union[PMState, KSState, KSTState, STState, MBState]
+
+# supported input state classes in the VehicleDynamics classes of the feasibility checker
+InputStateCasses = Union[InputState, PMInputState, LKSInputState]
 
 
 class VehicleDynamicsException(Exception):
@@ -342,19 +345,15 @@ class VehicleDynamics(ABC):
         return self.array_to_state(self.state_to_array(initial_state, steering_angle_default)[0],
                                    initial_state.time_step)
 
-    def _input_to_array(self, input: InputState) -> Tuple[np.array, int]:
+    def _input_to_array(self, input: InputStateCasses) -> Tuple[np.array, int]:
         """
         Actual conversion of input to array happens here. Vehicles can override this method to implement their own
         converter.
         """
-        values = [
-            input.steering_angle_speed,
-            input.acceleration,
-        ]
         time_step = input.time_step
-        return np.array(values), time_step
+        return np.array(input), time_step
 
-    def input_to_array(self, input: Union[InputState, PMInputState]) -> Tuple[np.array, int]:
+    def input_to_array(self, input: InputStateCasses) -> Tuple[np.array, int]:
         """
         Converts the given input (as State object) to numpy array.
 
@@ -468,20 +467,16 @@ class PointMassDynamics(VehicleDynamics):
 
     def _state_to_array(self, state: Union[PMState, InitialState], steering_angle_default=0.0) -> Tuple[np.array, int]:
         """ Implementation of the VehicleDynamics abstract method. """
-        if hasattr(state, 'velocity') and hasattr(state, 'orientation') and not hasattr(state,
-                                                                                        'velocity_y'):  # If initial state
-            velocity_x, velocity_y = self._convert_from_directional_velocity(state.velocity, state.orientation)
-        else:
-            velocity_x, velocity_y = state.velocity, state.velocity_y
-
-        values = [
-            state.position[0],
-            state.position[1],
-            velocity_x,
-            velocity_y
-        ]
         time_step = state.time_step
-        return np.array(values), time_step
+
+        if hasattr(state, 'velocity') and hasattr(state, 'orientation') and not \
+                hasattr(state, 'velocity_y'):  # If initial state
+            velocity_x, velocity_y = self._convert_from_directional_velocity(state.velocity, state.orientation)
+            equivalent_pmstate = PMState(time_step=time_step, position=state.position,
+                                         velocity=velocity_x, velocity_y=velocity_y)
+            return np.array(equivalent_pmstate), time_step
+        else:
+            return np.array(state), time_step
 
     def _array_to_state(self, x: np.array, time_step: int) -> PMState:
         """ Implementation of the VehicleDynamics abstract method. """
@@ -491,15 +486,6 @@ class PointMassDynamics(VehicleDynamics):
             'velocity_y': x[3]
         }
         return PMState(**values, time_step=time_step)
-
-    def _input_to_array(self, input: PMInputState) -> Tuple[np.array, int]:
-        """ Overrides VehicleDynamics method. """
-        values = [
-            input.acceleration,
-            input.acceleration_y,
-        ]
-        time_step = input.time_step
-        return np.array(values), time_step
 
     def _array_to_input(self, u: np.array, time_step: int) -> PMInputState:
         """ Overrides VehicleDynamics method. """
@@ -792,25 +778,18 @@ class LinearizedKSDynamics(VehicleDynamics):
         x0, x1 = odeint(self.dynamics, x, [0.0, dt], args=(u,), tfirst=True)
         return x1
 
-    def state_to_array(self, state: Tuple[LongitudinalState, LateralState], steering_angle_default=0.0) \
-            -> Tuple[np.array, int]:
-        """Overrides method state_to_array() from VehicleDynamics Base class."""
-        # TODO
-        pass
-
     def _state_to_array(self, state: Tuple[LongitudinalState, LateralState], steering_angle_default=0.0) \
             -> Tuple[np.array, int]:
         """ Implementation of the VehicleDynamics abstract method. """
         lon_state = state[0]
         lat_state = state[1]
         assert lon_state.time_step == lat_state.time_step, "Time steps of longituindal and lateral state do not match."
-        # TODO: lon_state.position and lat_state.distance attributes are changed on cr-io dev branch
         values = [
-            lon_state.position,
+            lon_state.longitudinal_position,
             lon_state.velocity,
             lon_state.acceleration,
             lon_state.jerk,
-            lat_state.distance,
+            lat_state.lateral_position,
             lat_state.orientation,
             lat_state.curvature,
             lat_state.curvature_rate
@@ -818,23 +797,27 @@ class LinearizedKSDynamics(VehicleDynamics):
         time_step = lon_state.time_step
         return np.array(values), time_step
 
-    def array_to_state(self, x: np.array, time_step: int) -> VehicleModelStates:
-        """Overrides method state_to_array() from VehicleDynamics Base class."""
-        # TODO
-        pass
-
     def _array_to_state(self, x: np.array, time_step: int) -> Tuple[LongitudinalState, LateralState]:
         """ Implementation of the VehicleDynamics abstract method. """
         values_lon = {
-            'position': x[0],
+            'longitudinal_position': x[0],
             'velocity': x[1],
             'acceleration': x[2],
             'jerk': x[3]
         }
         values_lat = {
-            'distance': x[4],
+            'lateral_position': x[4],
             'orientation': make_valid_orientation(x[5]),
             'curvature': x[6],
             'curvature_rate': x[7]
         }
         return LongitudinalState(**values_lon, time_step=time_step), LateralState(**values_lat, time_step=time_step)
+
+    def _array_to_input(self, u: np.array, time_step: int) -> LKSInputState:
+        """Overrides method _array_to_input() from VehicleDynamics Base class."""
+        values = {
+            'jerk_dot': u[0],
+            'kappa_dot_dot': u[1],
+        }
+        return LKSInputState(**values, time_step=time_step)
+
