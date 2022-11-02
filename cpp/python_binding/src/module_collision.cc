@@ -777,15 +777,14 @@ void init_module_collision(py::module &m) {
 
       .def("draw",
            [](const std::shared_ptr<collision::RectangleAABB> &c,
-              py::object renderer, py::object draw_params,
-              py::object callstack) {
+              py::object renderer, py::object draw_params)
+              {
              py::object pycrcc = py::module::import(
                  "commonroad_dc.collision.visualization.drawing");
              py::object draw = pycrcc.attr("draw_collision_rectaabb");
-             draw(c, renderer, draw_params, callstack);
+             draw(c, renderer, draw_params);
            },
-           py::arg("renderer"), py::arg("draw_params") = py::none(),
-           py::arg("callstack") = py::tuple())
+           py::arg("renderer"), py::arg("draw_params") = py::none())
 
 #if ENABLE_SERIALIZER
       .def(py::pickle(
@@ -866,15 +865,14 @@ void init_module_collision(py::module &m) {
 
       .def("draw",
            [](const std::shared_ptr<collision::RectangleOBB> &c,
-              py::object renderer, py::object draw_params,
-              py::object callstack) {
+              py::object renderer, py::object draw_params
+              ) {
              py::object pycrcc = py::module::import(
                  "commonroad_dc.collision.visualization.drawing");
              py::object draw = pycrcc.attr("draw_collision_rectobb");
-             draw(c, renderer, draw_params, callstack);
+             draw(c, renderer, draw_params);
            },
-           py::arg("renderer"), py::arg("draw_params") = py::none(),
-           py::arg("callstack") = py::tuple())
+           py::arg("renderer"), py::arg("draw_params") = py::none())
 
 #if ENABLE_SERIALIZER
       .def(py::pickle(
@@ -935,14 +933,13 @@ void init_module_collision(py::module &m) {
       .def(
           "draw",
           [](const std::shared_ptr<collision::Triangle> &c, py::object renderer,
-             py::object draw_params, py::object callstack) {
+             py::object draw_params) {
             py::object pycrcc = py::module::import(
                 "commonroad_dc.collision.visualization.drawing");
             py::object draw = pycrcc.attr("draw_collision_triangle");
-            draw(c, renderer, draw_params, callstack);
+            draw(c, renderer, draw_params);
           },
-          py::arg("renderer"), py::arg("draw_params") = py::none(),
-          py::arg("callstack") = py::tuple())
+          py::arg("renderer"), py::arg("draw_params") = py::none())
 
 #if ENABLE_SERIALIZER
       .def(py::pickle(
@@ -980,14 +977,13 @@ void init_module_collision(py::module &m) {
 
       .def("draw",
            [](const std::shared_ptr<collision::Sphere> &c, py::object renderer,
-              py::object draw_params, py::object callstack) {
+              py::object draw_params) {
              py::object pycrcc = py::module::import(
                  "commonroad_dc.collision.visualization.drawing");
              py::object draw = pycrcc.attr("draw_collision_circle");
-             draw(c, renderer, draw_params, callstack);
+             draw(c, renderer, draw_params);
            },
-           py::arg("renderer"), py::arg("draw_params") = py::none(),
-           py::arg("callstack") = py::tuple())
+           py::arg("renderer"), py::arg("draw_params") = py::none())
 
 #if ENABLE_SERIALIZER
       .def(py::pickle(
@@ -1025,16 +1021,14 @@ void init_module_collision(py::module &m) {
 
       .def("draw",
            [](const std::shared_ptr<collision::TimeVariantCollisionObject> &c,
-              py::object renderer, py::object draw_params,
-              py::object callstack) {
+              py::object renderer, py::object draw_params) {
              py::object pycrcc = py::module::import(
                  "commonroad_dc.collision.visualization.drawing");
              py::object draw =
                  pycrcc.attr("draw_collision_timevariantcollisionobject");
-             draw(c, renderer, draw_params, callstack);
+             draw(c, renderer, draw_params);
            },
-           py::arg("renderer"), py::arg("draw_params") = py::none(),
-           py::arg("callstack") = py::tuple())
+           py::arg("renderer"), py::arg("draw_params") = py::none())
 
 #if ENABLE_SERIALIZER
       .def(py::pickle(
@@ -1107,15 +1101,13 @@ void init_module_collision(py::module &m) {
 
       .def("draw",
            [](const std::shared_ptr<collision::ShapeGroup> &c,
-              py::object renderer, py::object draw_params,
-              py::object callstack) {
+              py::object renderer, py::object draw_params) {
              py::object pycrcc = py::module::import(
                  "commonroad_dc.collision.visualization.drawing");
              py::object draw = pycrcc.attr("draw_collision_shapegroup");
-             draw(c, renderer, draw_params, callstack);
+             draw(c, renderer, draw_params);
            },
-           py::arg("renderer"), py::arg("draw_params") = py::none(),
-           py::arg("callstack") = py::tuple())
+           py::arg("renderer"), py::arg("draw_params") = py::none())
 
 #if ENABLE_SERIALIZER
       .def(py::pickle(
@@ -1296,14 +1288,13 @@ void init_module_collision(py::module &m) {
 
       .def("draw",
            [](const std::shared_ptr<collision::Polygon> &c, py::object renderer,
-              py::object draw_params, py::object callstack) {
+              py::object draw_params) {
              py::object pycrcc = py::module::import(
                  "commonroad_dc.collision.visualization.drawing");
              py::object draw = pycrcc.attr("draw_collision_polygon");
-             draw(c, renderer, draw_params, callstack);
+             draw(c, renderer, draw_params);
            },
-           py::arg("renderer"), py::arg("draw_params") = py::none(),
-           py::arg("callstack") = py::tuple())
+           py::arg("renderer"), py::arg("draw_params") = py::none())
 
 #if ENABLE_SERIALIZER
       .def(py::pickle(
@@ -1484,15 +1475,13 @@ return tb->computeAABBs();
            })
       .def("draw",
            [](const std::shared_ptr<collision::CollisionChecker> &c,
-              py::object renderer, py::object draw_params,
-              py::object callstack) {
+              py::object renderer, py::object draw_params) {
              py::object pycrcc = py::module::import(
                  "commonroad_dc.collision.visualization.drawing");
              py::object draw = pycrcc.attr("draw_collision_collisionchecker");
-             draw(c, renderer, draw_params, callstack);
+             draw(c, renderer, draw_params);
            },
-           py::arg("renderer"), py::arg("draw_params") = py::none(),
-           py::arg("callstack") = py::tuple())
+           py::arg("renderer"), py::arg("draw_params") = py::none())
 
 #if ENABLE_SERIALIZER
       .def(py::pickle(
