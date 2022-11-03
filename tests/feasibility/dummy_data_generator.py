@@ -40,6 +40,26 @@ class DummyDataGenerator:
         )
 
     @classmethod
+    def create_random_initial_state_lks(cls,v_min=0.0, v_max=41.7, a_max=11.0, j_max=10.0e3, theta_max=0.2,
+                                        kappa_max=0.6, kappa_dot_max=0.4):
+        """For the linearized kinematic single track model (LKS) we directly  create a LongitudinalState and
+        LateralState as initial states, as the conversion from the CommonRoad InitialState would require a
+        curvilinear coordinate system transformation"""
+        lon_state = LongitudinalState(longitudinal_position=0.0,
+                                      velocity=cls.create_random_float(v_min, v_max),
+                                      acceleration=cls.create_random_float(-a_max, a_max),
+                                      jerk=cls.create_random_float(-j_max, j_max),
+                                      time_step=0
+                                      )
+        lat_state = LateralState(lateral_position=0.0,
+                                 orientation=cls.create_random_float(-theta_max, theta_max),
+                                 curvature=cls.create_random_float(-kappa_max, kappa_max),
+                                 curvature_rate=cls.create_random_float(-kappa_dot_max, kappa_dot_max),
+                                 time_step=0
+                                 )
+        return lon_state, lat_state
+
+    @classmethod
     def create_zero_initial_state(cls):
         return InitialState(
             position=np.array([0.0, 0.0]),
@@ -50,6 +70,28 @@ class DummyDataGenerator:
             slip_angle=0.0,
             time_step=0
         )
+
+    @classmethod
+    def create_zero_initial_state_lks(cls):
+        """For the linearized kinematic single track model (LKS) we directly  create a LongitudinalState and
+        LateralState as initial states, as the conversion from the CommonRoad InitialState would require a
+        curvilinear coordinate system transformation"""
+        lon_state = LongitudinalState(
+            longitudinal_position=0.0,
+            velocity=0.0,
+            acceleration=0.0,
+            jerk=0.0,
+            time_step=0
+        )
+
+        lat_state = LateralState(
+            lateral_position=0.0,
+            orientation=0.0,
+            curvature=0.0,
+            curvature_rate=0.0,
+            time_step=0
+        )
+        return lon_state, lat_state
 
     @classmethod
     def create_initial_state(cls, velocity):
@@ -160,8 +202,20 @@ class DummyDataGenerator:
         )
 
     @classmethod
-    def create_random_lks_state(cls, v_min, v_max, theta_max, ):
-
+    def create_random_lks_state(cls, v_min=0.0, v_max=41.7, a_max=11.0, j_max=10.0e3, theta_max=0.2, kappa_max=0.6,
+                                kappa_dot_max=0.4):
+        lon_state = LongitudinalState(longitudinal_position=0.0,
+                                      velocity=cls.create_random_float(v_min, v_max),
+                                      acceleration=cls.create_random_float(-a_max, a_max),
+                                      jerk=cls.create_random_float(-j_max, j_max),
+                                      time_step=0
+                                      )
+        lat_state = LateralState(lateral_position=0.0,
+                                 orientation=cls.create_random_float(-theta_max, theta_max),
+                                 curvature=cls.create_random_float(-kappa_max, kappa_max),
+                                 curvature_rate=cls.create_random_float(-kappa_dot_max, kappa_dot_max),
+                                 time_step=0
+                                 )
         return lon_state, lat_state
 
     @classmethod

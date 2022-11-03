@@ -1,6 +1,7 @@
 import math
 import numpy as np
 import unittest
+import pickle
 from commonroad.common.solution import VehicleType
 from commonroad.scenario.trajectory import Trajectory
 from commonroad.scenario.state import InputState, PMInputState, LKSInputState
@@ -14,6 +15,7 @@ class TestVehicleDynamics(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        # Disable Test flags
         cls.disable_pm_tests = False
         cls.disable_ks_tests = False
         cls.disable_kst_tests = False
@@ -21,20 +23,39 @@ class TestVehicleDynamics(unittest.TestCase):
         cls.disable_mb_tests = True
         cls.disable_lks_tests = False
 
+        # general test parameters
         cls.dt = 0.1
         cls.input_range_sample = 5  # Lower if you want to test less samples (less time)
         cls.velocity_range_sample = 5  # Lower if you want to test less samples (less time)
 
+
+        # *********************VehicleDynamics**************************
+        # instantiate PM, KS, KST, ST, MB VehicleDynamics
         cls.pm_dynamics = VehicleDynamics.PM(VehicleType.FORD_ESCORT)
         cls.ks_dynamics = VehicleDynamics.KS(VehicleType.FORD_ESCORT)
         cls.kst_dynamics = VehicleDynamics.KST(VehicleType.TRUCK)
         cls.st_dynamics = VehicleDynamics.ST(VehicleType.FORD_ESCORT)
         cls.mb_dynamics = VehicleDynamics.MB(VehicleType.FORD_ESCORT)
-        cls.lks_dynamics = VehicleDynamics.LKS(VehicleType.BMW_320i)
 
+        # instantiate LKS VehicleDynamics
+        # load precomputed positions and orientations of reference path (here the reference path is simply a straight line)
+        with open('ref_pos_ref_theta.pkl', "rb") as f:
+            ref_pos = pickle.load(f)
+            ref_theta = pickle.load(f)
+        cls.lks_dynamics = VehicleDynamics.LKS(VehicleType.BMW_320i, ref_pos=ref_pos, ref_theta=ref_theta)
+
+
+        # *********************Initial States**************************
+        # create zero and random init state for PM, KS, KS, KST, ST, MB models
         cls.zero_init_state = DummyDataGenerator.create_zero_initial_state()
         cls.random_init_state = DummyDataGenerator.create_random_initial_state()
 
+        # create zero and random init state for LKS model
+        cls.zero_init_state_lks = DummyDataGenerator.create_zero_initial_state_lks()
+        cls.random_init_state_lks = DummyDataGenerator.create_random_initial_state_lks()
+
+
+        # *********************Input States**************************
         # inputs for PM, KS, KST, ST, MB
         cls.acceleration_max = cls.ks_dynamics.parameters.longitudinal.a_max
         cls.input_accelerations = np.linspace(-cls.acceleration_max, cls.acceleration_max,
@@ -45,7 +66,7 @@ class TestVehicleDynamics(unittest.TestCase):
                                           cls.input_range_sample)
 
         # inputs for LKS
-        cls.jerk_dot_max = cls.lks_dynamics.parameters.longitudinal.jerk_dot_max
+        cls.jerk_dot_max = cls.lks_dynamics.parameters.longitudinal.j_dot_max
         cls.input_jerk_dots = np.linspace(-cls.jerk_dot_max, cls.jerk_dot_max,
                                           cls.input_range_sample)
 
@@ -56,18 +77,6 @@ class TestVehicleDynamics(unittest.TestCase):
         cls.max_velocity = cls.ks_dynamics.parameters.longitudinal.v_max
         cls.min_velocity = cls.ks_dynamics.parameters.longitudinal.v_min
         cls.velocities = np.linspace(cls.min_velocity, cls.max_velocity, cls.velocity_range_sample)
-
-        cls.init_states = [DummyDataGenerator.create_initial_state(velocity) for velocity in cls.velocities]
-        cls.pm_init_states = {init_state.velocity: cls.pm_dynamics.convert_initial_state(init_state)
-                              for init_state in cls.init_states}
-        cls.ks_init_states = {init_state.velocity: cls.ks_dynamics.convert_initial_state(init_state)
-                              for init_state in cls.init_states}
-        cls.kst_init_states = {init_state.velocity: cls.kst_dynamics.convert_initial_state(init_state)
-                              for init_state in cls.init_states}
-        cls.st_init_states = {init_state.velocity: cls.st_dynamics.convert_initial_state(init_state)
-                              for init_state in cls.init_states}
-        cls.mb_init_states = {init_state.velocity: cls.mb_dynamics.convert_initial_state(init_state)
-                              for init_state in cls.init_states}
 
         cls.inputs = [
             InputState(acceleration=acceleration, steering_angle_speed=steering, time_step=0)
@@ -85,15 +94,18 @@ class TestVehicleDynamics(unittest.TestCase):
             for kappa_dot_dot in cls.input_kappa_dot_dots
         ]
 
+
+        # *********************Random States**************************
         # generate random states
         cls.random_pm_state = DummyDataGenerator.create_random_pm_state()
         cls.random_ks_state = DummyDataGenerator.create_random_ks_state()
         cls.random_kst_state = DummyDataGenerator.create_random_kst_state()
         cls.random_st_state = DummyDataGenerator.create_random_st_state()
         cls.random_mb_state = DummyDataGenerator.create_random_mb_state(cls.mb_dynamics.parameters)
-        # TODO
         cls.random_lks_state = DummyDataGenerator.create_random_lks_state()
 
+
+        # *********************Random Inputs**************************
         # generate random inputs
         cls.random_pm_input = DummyDataGenerator.create_random_pm_input(cls.pm_dynamics.parameters.longitudinal.a_max)
         cls.random_ks_input = DummyDataGenerator.create_random_input(cls.ks_dynamics.parameters.longitudinal.a_max,
@@ -115,15 +127,13 @@ class TestVehicleDynamics(unittest.TestCase):
         self.zero_kst_init_state = self.kst_dynamics.convert_initial_state(self.zero_init_state)
         self.zero_st_init_state = self.st_dynamics.convert_initial_state(self.zero_init_state)
         self.zero_mb_init_state = self.mb_dynamics.convert_initial_state(self.zero_init_state)
-        # TODO
-        self.zero_lks_init_state = self.lks_dynamics.convert_initial_state(self.zero_init_state)
+        self.zero_lks_init_state = self.zero_init_state_lks
         self.random_pm_init_state = self.pm_dynamics.convert_initial_state(self.random_init_state)
         self.random_ks_init_state = self.ks_dynamics.convert_initial_state(self.random_init_state)
         self.random_kst_init_state = self.kst_dynamics.convert_initial_state(self.random_init_state)
         self.random_st_init_state = self.st_dynamics.convert_initial_state(self.random_init_state)
         self.random_mb_init_state = self.mb_dynamics.convert_initial_state(self.random_init_state)
-        # TODO
-        self.random_lks_init_state = self.lks_dynamics.convert_initial_state(self.random_init_state)
+        self.random_lks_init_state = self.random_init_state_lks
         self.test_count = 0
         self.success_count = 0
         self.fail_count = 0
@@ -459,8 +469,8 @@ class TestVehicleDynamics(unittest.TestCase):
 
         converted_input = self.lks_dynamics.array_to_input(input_values, ts)
 
-        assert converted_input.acceleration == self.random_lks_input.jerk_dot
-        assert converted_input.acceleration_y == self.random_lks_input.kappa_dot_dot
+        assert converted_input.jerk_dot == self.random_lks_input.jerk_dot
+        assert converted_input.kappa_dot_dot == self.random_lks_input.kappa_dot_dot
         assert ts == self.random_lks_input.time_step
 
     def test_convert_initial_state_pm(self):
@@ -587,8 +597,8 @@ class TestVehicleDynamics(unittest.TestCase):
     def test_input_bounds_lks(self):
         assert self.lks_dynamics.input_bounds.lb[0] == -self.lks_dynamics.parameters.longitudinal.j_dot_max
         assert self.lks_dynamics.input_bounds.ub[0] == self.lks_dynamics.parameters.longitudinal.j_dot_max
-        assert self.lks_dynamics.input_bounds.lb[1] == -self.lks_dynamics.parameters.longitudinal.kappa_dot_dot_max
-        assert self.lks_dynamics.input_bounds.ub[1] == self.lks_dynamics.parameters.longitudinal.kappa_dot_dot_max
+        assert self.lks_dynamics.input_bounds.lb[1] == -self.lks_dynamics.parameters.steering.kappa_dot_dot_max
+        assert self.lks_dynamics.input_bounds.ub[1] == self.lks_dynamics.parameters.steering.kappa_dot_dot_max
 
     def test_input_within_bounds_pm(self):
         max_input = PMInputState(
@@ -642,7 +652,7 @@ class TestVehicleDynamics(unittest.TestCase):
             time_step=0
         )
 
-        assert not self.lks_dynamics.input_bounds(max_input)
+        assert not self.lks_dynamics.input_within_bounds(max_input)
 
     def test_violates_friction_constraint_pm(self):
         max_input = PMInputState(
@@ -1147,25 +1157,31 @@ class TestVehicleDynamics(unittest.TestCase):
         assert x1[28] == next_state.delta_y_r
         assert x_ts + 1 == next_state.time_step
 
-    # TODO
     def test_simulate_next_state_lks(self):
         if self.disable_lks_tests:
             return
 
+        # TODO: friction circle ?
         """while self.pm_dynamics.violates_friction_circle(self.zero_pm_init_state, self.random_pm_input):
             self.random_pm_input = DummyDataGenerator.create_random_pm_input()"""
 
-        x, x_ts = self.pm_dynamics.state_to_array(self.zero_pm_init_state)
-        u, u_ts = self.pm_dynamics.input_to_array(self.random_pm_input)
+        x, x_ts = self.lks_dynamics.state_to_array(self.zero_lks_init_state)
+        u, u_ts = self.lks_dynamics.input_to_array(self.random_lks_input)
 
-        x1 = odeint(self.pm_dynamics.dynamics, x, [0.0, self.dt], args=(u,), tfirst=True)[1]
-        next_state = self.pm_dynamics.simulate_next_state(self.zero_pm_init_state, self.random_pm_input, self.dt)
+        x1 = odeint(self.lks_dynamics.dynamics, x, [0.0, self.dt], args=(u,), tfirst=True)[1]
+        next_state = self.lks_dynamics.simulate_next_state(self.zero_lks_init_state, self.random_lks_input, self.dt)
 
-        assert x1[0] == next_state.position[0]
-        assert x1[1] == next_state.position[1]
-        assert x1[2] == next_state.velocity
-        assert x1[3] == next_state.velocity_y
-        assert x_ts + 1 == next_state.time_step
+        next_lon_state = next_state[0]
+        next_lat_state = next_state[1]
+        assert x1[0] == next_lon_state.longitudinal_position
+        assert x1[1] == next_lon_state.velocity
+        assert x1[2] == next_lon_state.acceleration
+        assert x1[3] == next_lon_state.jerk
+        assert x1[4] == next_lat_state.lateral_position
+        assert x1[5] == next_lat_state.orientation
+        assert x1[6] == next_lat_state.curvature
+        assert x1[7] == next_lat_state.curvature_rate
+        assert x_ts + 1 == next_lon_state.time_step
 
     def _simulate_trajectory(self, vehicle, init_state, inp_generator):
         """ Try to create a random valid trajectory """
@@ -1292,12 +1308,6 @@ class TestVehicleDynamics(unittest.TestCase):
             assert state.right_rear_wheel_angular_speed == expected_state.right_rear_wheel_angular_speed
             assert state.delta_y_f == expected_state.delta_y_f
             assert state.delta_y_r == expected_state.delta_y_r
-
-    # TODO
-    def test_simulate_trajectory_lks(self):
-        if self.disable_lks_tests:
-            return
-        pass
 
 
 if __name__ == '__main__':

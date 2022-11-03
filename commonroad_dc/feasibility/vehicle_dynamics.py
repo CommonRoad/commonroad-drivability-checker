@@ -255,8 +255,9 @@ class VehicleDynamics(ABC):
         x0, x1 = odeint(self.dynamics, x, [0.0, dt], args=(u,), tfirst=True)
         return x1
 
-    def simulate_next_state(self, x: VehicleModelStates, u: Union[InputState, PMInputState], dt: float, throw: bool = True) -> \
-            Union[None, VehicleModelStates]:
+    def simulate_next_state(self, x: Union[VehicleModelStates, Tuple[LongitudinalState, LateralState]],
+                            u: InputStateClasses, dt: float, throw: bool = True) -> \
+            Union[None, VehicleModelStates, Tuple[LongitudinalState, LateralState]]:
         """
         Simulates the next state using the given state and input values as State objects.
 
@@ -380,7 +381,7 @@ class VehicleDynamics(ABC):
         }
         return InputState(**values, time_step=time_step)
 
-    def array_to_input(self, u: np.array, time_step: int) -> Union[InputState, PMInputState]:
+    def array_to_input(self, u: np.array, time_step: int) -> InputStateClasses:
         """
         Converts the given numpy array of values to input (as State object).
 
@@ -739,7 +740,7 @@ class MultiBodyDynamics(VehicleDynamics):
 
 class LinearizedKSDynamics(VehicleDynamics):
     def __init__(self, vehicle_type: VehicleType, ref_pos: np.ndarray, ref_theta: np.ndarray):
-        super(LinearizedKSDynamics, self).__init__(VehicleModel.LKS, vehicle_type)
+        super(LinearizedKSDynamics, self).__init__(VehicleModel.MB, vehicle_type)
         self.ref_pos = ref_pos
         self.ref_theta = ref_theta
 
@@ -823,12 +824,38 @@ class LinearizedKSDynamics(VehicleDynamics):
         }
         return LKSInputState(**values, time_step=time_step)
 
-    # TODO
-    def convert_initial_state(self, initial_state: InitialState, steering_angle_default=0.0) -> VehicleModelStates:
-        pass
+    def convert_initial_state(self, initial_state: InitialState, steering_angle_default=0.0) -> None:
+        """Overrides method _array_to_input() from VehicleDynamics Base class."""
 
-    # TODO
-    def violates_friction_circle(self, x: Union[VehicleModelStates, np.array], u: Union[InputState, np.array],
-                                 throw: bool = False) -> bool:
-        pass
+        msg = "Conversion of InitialState is not supported for the LinearizedKSDynamics Model. Please convert the" \
+              "initial state to LongitudinalState and LateralState beforehand"
+        raise NotImplementedError(msg)
+
+    def violates_friction_circle(self, x: Union[Tuple[LongitudinalState, LateralState], np.array],
+                                 u: Union[LKSInputState, np.array], throw: bool = False) -> bool:
+        """
+        Overrides method violates_friction_circle() from VehicleDynamics Base class!
+        Checks whether the given state violates the friction circle constraint for the LKS model
+
+        :param x: current state
+        :param u: the input which was used to simulate the next state
+        :param throw: if set to false, will return bool instead of throwing exception (default=False)
+        :return: True if the constraint was violated
+        """
+        x_vals = self.state_to_array(x)[0] if isinstance(x, tuple) and \
+                                              list(map(type, x)) == [LongitudinalState, LateralState] else x
+
+        # Friction Circle Formula: a_long^2 + (v^2 * kappa)^2
+        vals = np.array([x_vals[2], x_vals[1]*x_vals[1]*x_vals[6]])
+        vals_sq = np.power(vals, 2)
+        vals_sum = np.sum(vals_sq)
+
+        violates = vals_sum > self.parameters.longitudinal.a_max ** 2
+
+        if throw and violates:
+            msg = f'Input violates friction circle constraint!\n' \
+                  f'Init state: {x}\n\n Input:{u}'
+            raise FrictionCircleException(msg)
+
+        return violates
 
