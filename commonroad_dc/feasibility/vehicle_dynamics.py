@@ -28,7 +28,7 @@ from vehiclemodels.vehicle_parameters import VehicleParameters
 VehicleModelStates = Union[PMState, KSState, KSTState, STState, MBState]
 
 # supported input state classes in the VehicleDynamics classes of the feasibility checker
-InputStateCasses = Union[InputState, PMInputState, LKSInputState]
+InputStateClasses = Union[InputState, PMInputState, LKSInputState]
 
 
 class VehicleDynamicsException(Exception):
@@ -147,14 +147,16 @@ class VehicleDynamics(ABC):
         return KinematicSingleTrackTrailerDynamics(vehicle_type)
 
     @classmethod
-    def LKS(cls, vehicle_type: VehicleType) -> 'LinearizedKSDynamics':
+    def LKS(cls, vehicle_type: VehicleType, ref_pos: np.ndarray, ref_theta: np.ndarray) -> 'LinearizedKSDynamics':
         """
         Creates a LinearizedKSDynamics VehicleDynamics model.
 
         :param vehicle_type: VehicleType, i.e. VehicleType.FORD_ESCORT
+        :param ref_pos: longitudinal position (s) of each vertex of the reference path
+        :param ref_theta: orientations (theta) at each vertex of the reference path
         :return: KinematicSingleTrackTrailerDynamics instance with the given vehicle type.
         """
-        return LinearizedKSDynamics(vehicle_type)
+        return LinearizedKSDynamics(vehicle_type, ref_pos=ref_pos, ref_theta=ref_theta)
 
     @classmethod
     def from_model(cls, vehicle_model: VehicleModel, vehicle_type: VehicleType) -> 'VehicleDynamics':
@@ -194,7 +196,7 @@ class VehicleDynamics(ABC):
         return Bounds([self.parameters.steering.v_min, -self.parameters.longitudinal.a_max],
                       [self.parameters.steering.v_max, self.parameters.longitudinal.a_max])
 
-    def input_within_bounds(self, u: Union[InputState, PMInputState, np.array], throw: bool = False) -> bool:
+    def input_within_bounds(self, u: Union[InputStateClasses, np.array], throw: bool = False) -> bool:
         """
         Checks whether the given input is within input constraints of the vehicle dynamics model.
 
@@ -202,7 +204,7 @@ class VehicleDynamics(ABC):
         :param throw: if set to false, will return bool instead of throwing exception (default=False)
         :return: True if within constraints
         """
-        inputs = self.input_to_array(u)[0] if isinstance(u, (InputState, PMInputState)) else u
+        inputs = self.input_to_array(u)[0] if isinstance(u, InputStateClasses.__args__) else u
         in_bounds = all([self.input_bounds.lb[idx] <= round(inputs[idx], 4) <= self.input_bounds.ub[idx]
                          for idx in range(len(self.input_bounds.lb))])
         if not in_bounds and throw:
@@ -345,7 +347,7 @@ class VehicleDynamics(ABC):
         return self.array_to_state(self.state_to_array(initial_state, steering_angle_default)[0],
                                    initial_state.time_step)
 
-    def _input_to_array(self, input: InputStateCasses) -> Tuple[np.array, int]:
+    def _input_to_array(self, input: InputStateClasses) -> Tuple[np.array, int]:
         """
         Actual conversion of input to array happens here. Vehicles can override this method to implement their own
         converter.
@@ -353,7 +355,7 @@ class VehicleDynamics(ABC):
         time_step = input.time_step
         return np.array(input), time_step
 
-    def input_to_array(self, input: InputStateCasses) -> Tuple[np.array, int]:
+    def input_to_array(self, input: InputStateClasses) -> Tuple[np.array, int]:
         """
         Converts the given input (as State object) to numpy array.
 
@@ -783,7 +785,7 @@ class LinearizedKSDynamics(VehicleDynamics):
         """ Implementation of the VehicleDynamics abstract method. """
         lon_state = state[0]
         lat_state = state[1]
-        assert lon_state.time_step == lat_state.time_step, "Time steps of longituindal and lateral state do not match."
+        assert lon_state.time_step == lat_state.time_step, "Time steps of longitudinal and lateral state do not match."
         values = [
             lon_state.longitudinal_position,
             lon_state.velocity,
@@ -820,4 +822,13 @@ class LinearizedKSDynamics(VehicleDynamics):
             'kappa_dot_dot': u[1],
         }
         return LKSInputState(**values, time_step=time_step)
+
+    # TODO
+    def convert_initial_state(self, initial_state: InitialState, steering_angle_default=0.0) -> VehicleModelStates:
+        pass
+
+    # TODO
+    def violates_friction_circle(self, x: Union[VehicleModelStates, np.array], u: Union[InputState, np.array],
+                                 throw: bool = False) -> bool:
+        pass
 
