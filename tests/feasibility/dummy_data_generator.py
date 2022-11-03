@@ -3,7 +3,7 @@ import numpy as np
 import random
 from commonroad.scenario.trajectory import Trajectory
 from commonroad.scenario.state import InitialState, PMState, KSState, KSTState, STState, MBState, InputState, \
-    PMInputState
+    PMInputState, LKSInputState, LongitudinalState, LateralState
 
 
 class DummyDataGenerator:
@@ -160,6 +160,11 @@ class DummyDataGenerator:
         )
 
     @classmethod
+    def create_random_lks_state(cls, v_min, v_max, theta_max, ):
+
+        return lon_state, lat_state
+
+    @classmethod
     def create_random_input(cls, a_max=11.5, steering_angle_speed_max=0.4, time_step=0):
         return InputState(
             acceleration=cls.create_random_float(-a_max, a_max),
@@ -172,6 +177,14 @@ class DummyDataGenerator:
         return PMInputState(
             acceleration=cls.create_random_float(-a_max, a_max),
             acceleration_y=cls.create_random_float(-a_max, a_max),
+            time_step=time_step
+        )
+
+    @classmethod
+    def create_random_lks_input(cls, j_dot_max=10.0e3, kappa_dot_dot_max = 20.0, time_step=0):
+        return LKSInputState(
+            jerk_dot=cls.create_random_float(-j_dot_max, j_dot_max),
+            kappa_dot_dot=cls.create_random_float(-kappa_dot_dot_max, kappa_dot_dot_max),
             time_step=time_step
         )
 
