@@ -859,3 +859,36 @@ class LinearizedKSDynamics(VehicleDynamics):
 
         return violates
 
+    def violates_state_constraints(self, x: Union[Tuple[LongitudinalState, LateralState], np.array]) -> bool:
+        """
+        Checks whether the given state violates state constraints for the LKS model
+        :param x: current state
+        :return: True if one constraint is violated
+        """
+        x_vals = self.state_to_array(x)[0] if isinstance(x, tuple) and \
+                                              list(map(type, x)) == [LongitudinalState, LateralState] else x
+
+        # velocity
+        if x_vals[1] < self.parameters.longitudinal.v_min or x_vals > self.parameters.longitudinal.v_max:
+            return True
+
+        # acceleration
+        if np.abs(x_vals[2]) > self.parameters.longitudinal.a_max:
+            return True
+
+        # jerk
+        if np.abs(x_vals[3]) > self.parameters.longitudinal.j_max:
+            return True
+
+        # curvature
+        l_wb = self.parameters.a + self.parameters.b
+        kappa_max = np.tan(self.parameters.steering.max) / l_wb
+        kappa_min = np.tan(self.parameters.steering.min) / l_wb
+        if x_vals[6] > kappa_max or x_vals[6] < kappa_min:
+            return True
+
+        # curvature rate
+        if np.abs(x_vals[7]) > self.parameters.steering.kappa_dot_max:
+            return True
+
+        return False
