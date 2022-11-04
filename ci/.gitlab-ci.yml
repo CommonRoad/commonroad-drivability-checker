@@ -246,7 +246,7 @@ build-wheels-py-37:
   when: manual
   script:
     # Prepare build
-    - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
+    - git clone -b development git@gitlab.lrz.de:cps/commonroad-drivability-checker.git
     - cd commonroad-drivability-checker
     - git submodule update --init
     # Preparing PyPi
