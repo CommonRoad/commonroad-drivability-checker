@@ -207,8 +207,8 @@ build-wheels-py-39:
   image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
   when: manual
   script:
-    # Prepare build
-    - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
+    # Prepare build (development branch is built)
+    - git clone -b development git@gitlab.lrz.de:cps/commonroad-drivability-checker.git
     - cd commonroad-drivability-checker
     - git submodule update --init
     # Preparing PyPi
@@ -226,8 +226,8 @@ build-wheels-py-38:
   image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
   when: manual
   script:
-    # Prepare build
-    - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
+    # Prepare build (development branch is built)
+    - git clone -b development git@gitlab.lrz.de:cps/commonroad-drivability-checker.git
     - cd commonroad-drivability-checker
     - git submodule update --init
     # Preparing PyPi
@@ -245,7 +245,7 @@ build-wheels-py-37:
   image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
   when: manual
   script:
-    # Prepare build
+    # Prepare build (development branch is built)
     - git clone -b development git@gitlab.lrz.de:cps/commonroad-drivability-checker.git
     - cd commonroad-drivability-checker
     - git submodule update --init
@@ -264,8 +264,8 @@ build-wheels-py-36:
   image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
   when: manual
   script:
-    # Prepare build
-    - git clone https://gitlab.lrz.de/tum-cps/commonroad-drivability-checker.git
+    # Prepare build (development branch is built)
+    - git clone -b development git@gitlab.lrz.de:cps/commonroad-drivability-checker.git
     - cd commonroad-drivability-checker
     - git submodule update --init
     # Preparing PyPi
@@ -279,7 +279,7 @@ build-wheels-py-36:
       - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
 
 ### deploy wheels ###
-deploy-wheels:
+deploy-wheels-internal-registry:
   stage: deploy
   image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
   script:
