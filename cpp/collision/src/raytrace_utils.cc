@@ -194,49 +194,75 @@ bool rayTracePostprocess(const Eigen::Vector2d &point1,
   return true;
 }
 
-int rayTraceRemoveOverlaps(std::vector<LineSegment> intersect,
+int rayTraceRemoveOverlaps(const std::vector<LineSegment>& intersect,
                            std::vector<LineSegment> &out_vec, int axis) {
-  std::vector<LineSegment> starts = intersect;
-  std::vector<LineSegment> ends = intersect;
-  std::vector<bool> remove_its(intersect.size());
-  // todo zeromemory?
+  std::vector<LineSegment> starts(intersect);
 
-  for (auto &it : starts) {
-    if (it.point1().getCoord(axis) > it.point2().getCoord(axis)) {
+  std::vector<int> remove_its(starts.size(),0);
+
+
+  //make sure point1 goes before point 2
+
+  for (int cc1=0; cc1<starts.size(); cc1++) {
+	  LineSegment& it(starts[cc1]);
+	  if (it.point1().getCoord(axis) > it.point2().getCoord(axis)) {
       it.swap();
     }
   }
+
+  // make sure the segments go in incremental order w.r.t. to the start point coordinate
+
   if (!axis) {
     std::sort(starts.begin(), starts.end(), startsSortX);
   } else {
     std::sort(starts.begin(), starts.end(), startsSortY);
   }
-  // std::sort(ends.begin(), ends.end(), endsSortX);
 
-  std::vector<LineSegment>::iterator starts_it = starts.begin();
-  while (starts_it < starts.end()) {
-    bool repeat = 1;
-    auto starts_it2 = starts_it + 1;
 
-    while (repeat) {
-      std::vector<LineSegment>::iterator maxend = starts_it;
-      while ((starts_it2 < starts.end()) &&
-             (starts_it2)->point1().getCoord(axis) <=
-                 (starts_it)->point2().getCoord(axis)) {
-        remove_its[starts_it2 - starts.begin()] = true;
-        if ((starts_it2)->point2().getCoord(axis) >=
-            maxend->point2().getCoord(axis)) {
-          maxend = starts_it2;
-        }
-        starts_it2++;
-      }
-      if (maxend != starts_it) {
-        starts_it->set_point_2(maxend->point2());
-      } else {
-        starts_it = starts_it2;
-        repeat = 0;
-      }
-    }
+  // go over all segments
+  for(int cc1=0; cc1<starts.size()-1; cc1++)
+  {
+      // skip segments marked for removal
+	  if(remove_its[cc1])
+		  continue;
+	  while(true)
+	  {
+
+		  int maxend=cc1;
+		  // go over all segments that start after the current one
+		  for(int cc2=cc1+1; cc2<starts.size(); cc2++)
+		  {
+			  // if the segment wasn't marked for removal already
+			  if(!remove_its[cc2])
+			  {
+				  // remove all the segments that start before the end of the current segment
+				  if(starts[cc2].point1().getCoord(axis) <= starts[cc1].point2().getCoord(axis))
+				  {
+					  remove_its[cc2]=1;
+
+					  // if any of the removed segments ended after the current segment (cc1),
+					  // remember the index of such segment, the one with rightmost end
+
+					  if (starts[cc2].point2().getCoord(axis) >= starts[maxend].point2().getCoord(axis)) {
+						  maxend = cc2;
+					  }
+				  }
+			  }
+
+		  }
+		  // if the segment needs extension
+		  if (maxend != cc1) {
+			  // extent the current segment
+			  starts[cc1].set_point_2(starts[maxend].point2());
+			  // check if other segments must be removed due to the extension
+		  }
+		  else
+		  {
+			  // there was no extension of the current segment
+			  break;
+		  }
+	  }
+
   }
 
   for (unsigned int cc1 = 0; cc1 < starts.size(); cc1++) {
