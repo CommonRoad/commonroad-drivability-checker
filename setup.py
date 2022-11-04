@@ -174,7 +174,7 @@ class CMakeBuild(build_ext):
 
 setup(
     name='commonroad-drivability-checker',
-    version='2022.1.1',
+    version='2022.2',
     description='Drivability checker for CommonRoad scenarios.',
     long_description_content_type='text/markdown',
     long_description=readme,
