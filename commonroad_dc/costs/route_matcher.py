@@ -12,7 +12,7 @@ from commonroad.scenario.scenario import Scenario
 from commonroad.scenario.traffic_sign import SupportedTrafficSignCountry
 from commonroad.scenario.traffic_sign_interpreter import TrafficSigInterpreter
 from commonroad.scenario.trajectory import Trajectory
-from commonroad.scenario.state import State, FloatExactOrInterval, CustomState
+from commonroad.scenario.state import FloatExactOrInterval, CustomState, PMState, TraceState
 from commonroad_dc.collision.collision_detection.scenario import create_collision_checker_scenario
 from scipy.signal import savgol_filter
 
@@ -247,7 +247,7 @@ class LaneletRouteMatcher:
 
         return self._lanelet_cosys[lanelet_id]
 
-    def _select_by_best_alignment(self, lanelets2states: Dict[int, List[State]],
+    def _select_by_best_alignment(self, lanelets2states: Dict[int, List[TraceState]],
                                   successor_candidates: List[List[int]]) -> Optional[List[int]]:
         """
         Computes mean square error of deviation of orientations compared to lanelets in successor_candidates
@@ -273,7 +273,12 @@ class LaneletRouteMatcher:
                 for s in lanelets2states[l]:
                     ori = get_orientation_at_position(cosy, s.position)
                     if ori is not None:
-                        errors_tmp.append(subtract_orientations(s.orientation, ori))
+                        if type(s) is not PMState:
+                            state_orientation = s.orientation
+                        else:
+                            # for PM State: compute orientation from x and y velocity:
+                            state_orientation = np.arctan2(s.velocity_y, s.velocity)
+                        errors_tmp.append(subtract_orientations(state_orientation, ori))
 
             # compute mean square error for deviation of tangent (only if tangent was feasible)
             if len(errors_tmp) > 0:
@@ -612,7 +617,11 @@ class LaneletRouteMatcher:
 
             if not delta_orientation:
                 tangent = cosys[i_c].tangent(s)
-                delta_orientation = subtract_orientations(state.orientation, np.arctan2(tangent[1], tangent[0]))
+                if not type(state) == PMState:
+                    state_orientation = state.orientation
+                else:
+                    state_orientation = np.arctan2(state.velocity_y, state.velocity)
+                delta_orientation = subtract_orientations(state_orientation, np.arctan2(tangent[1], tangent[0]))
 
             # negate s when driving against driving direction
             ghost_driving = subtract_orientations(delta_orientation, math.pi / 2) > 0.0 or subtract_orientations(
