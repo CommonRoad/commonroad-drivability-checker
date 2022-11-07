@@ -353,6 +353,7 @@ int num_omp_threads) const {
     EigenPolyline reference_path = this->reference_path_;
     // for each point in the polyline
     EigenPolyline group_of_cartesian_points;
+    group_of_cartesian_points.resize(points.size());
 #pragma omp parallel
     {
 #pragma omp for nowait
@@ -360,7 +361,6 @@ int num_omp_threads) const {
          point_index++) {
 	    auto point=points[point_index];
             // get for each point the coordinates
-            omp_set_lock(&writelock);
             double s_coordinate = point.x();
             double l_coordinate = point.y();
             bool within_projection_domain = this->curvilinearPointInProjectionDomain(s_coordinate, l_coordinate);
@@ -376,7 +376,8 @@ int num_omp_threads) const {
             Eigen::Vector2d cartesian_coord = this->segment_list_[segment_index]->convertToCartesianCoords(
                     s_coordinate - this->segment_longitudinal_coord_[segment_index], l_coordinate);
 
-            group_of_cartesian_points.push_back(cartesian_coord);
+            omp_set_lock(&writelock);
+            group_of_cartesian_points[point_index] = cartesian_coord;
             omp_unset_lock(&writelock);
         }
     }

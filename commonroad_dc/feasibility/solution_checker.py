@@ -8,7 +8,8 @@ from commonroad.planning.planning_problem import PlanningProblemSet
 from commonroad.prediction.prediction import TrajectoryPrediction
 from commonroad.scenario.obstacle import StaticObstacle, ObstacleType
 from commonroad.scenario.scenario import Scenario
-from commonroad.scenario.trajectory import State as StateTupleFactory, Trajectory, State
+from commonroad.scenario.trajectory import Trajectory
+from commonroad.scenario.state import InitialState
 from commonroad_dc.pycrcc import CollisionChecker, CollisionObject
 
 import commonroad_dc.feasibility.feasibility_checker as fc
@@ -74,7 +75,7 @@ def _construct_boundary_checker(scenario: Scenario) -> CollisionChecker:
     road_boundary_shape_list = []
     initial_state = None
     for r in boundary['triangulation'].unpack():
-        initial_state = StateTupleFactory(position=np.array([0, 0]), orientation=0.0, time_step=0)
+        initial_state = InitialState(position=np.array([0, 0]), orientation=0.0, time_step=0)
         p = Polygon(np.array(r.vertices()))
         road_boundary_shape_list.append(p)
     road_bound = StaticObstacle(obstacle_id=scenario.generate_object_id(),
@@ -87,7 +88,7 @@ def _construct_boundary_checker(scenario: Scenario) -> CollisionChecker:
 
 
 def _check_input_vector_feasibility(pp_solution: PlanningProblemSolution,
-                                    initial_state: State,
+                                    initial_state: InitialState,
                                     vehicle_dynamics: VehicleDynamics,
                                     dt: float) -> Tuple[bool, Trajectory]:
     try:

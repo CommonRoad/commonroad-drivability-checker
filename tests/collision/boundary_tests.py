@@ -3,7 +3,6 @@ from commonroad.geometry.shape import Polygon, ShapeGroup, Shape, Rectangle
 from commonroad.scenario.lanelet import LaneletNetwork
 from commonroad.scenario.obstacle import StaticObstacle, ObstacleType
 from commonroad.scenario.scenario import Scenario
-from commonroad.scenario.trajectory import State
 
 #commonroad-io
 from commonroad.common.file_reader import CommonRoadFileReader
