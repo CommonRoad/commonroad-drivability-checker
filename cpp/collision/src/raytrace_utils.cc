@@ -204,18 +204,18 @@ int rayTraceRemoveOverlaps(const std::vector<LineSegment>& intersect,
   //make sure point1 goes before point 2
 
   for (int cc1=0; cc1<starts.size(); cc1++) {
-	  LineSegment& it(starts[cc1]);
-	  if (it.point1().getCoord(axis) > it.point2().getCoord(axis)) {
-      it.swap();
+	  LineSegment& cur_segment(starts[cc1]);
+	  if (cur_segment.point1().getCoord(axis) > cur_segment.point2().getCoord(axis)) {
+		  cur_segment.swap();
     }
   }
 
   // make sure the segments go in incremental order w.r.t. to the start point coordinate
 
   if (!axis) {
-    std::sort(starts.begin(), starts.end(), startsSortX);
+    std::stable_sort(starts.begin(), starts.end(), startsSortX);
   } else {
-    std::sort(starts.begin(), starts.end(), startsSortY);
+    std::stable_sort(starts.begin(), starts.end(), startsSortY);
   }
 
 
@@ -265,7 +265,7 @@ int rayTraceRemoveOverlaps(const std::vector<LineSegment>& intersect,
 
   }
 
-  for (unsigned int cc1 = 0; cc1 < starts.size(); cc1++) {
+  for (unsigned int cc1 = 0; cc1 < remove_its.size(); cc1++) {
     if (!remove_its[cc1]) {
       out_vec.push_back(starts[cc1]);
     }
