@@ -15,6 +15,7 @@ before_script:
 
 .python-prepare: &python-prepare
   - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.lrz.de/".insteadOf "git@gitlab.lrz.de:"
+  - python -m pip install --upgrade pip
   - pip install -r ./requirements.txt
   - pip install -r ./test_requirements.txt
 
