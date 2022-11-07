@@ -6,6 +6,7 @@
 #include "collision/solvers/boost/boost_collision_queries.h"
 
 #include "collision/solvers/geometry_queries.h"
+#include <boost/range/combine.hpp>
 
 namespace collision {
 
@@ -91,6 +92,49 @@ RectangleOBBConstPtr ccd_merge_entities(const RectangleOBB* first,
   return (ret);
 }
 
+/**
+ * @brief merges two ShapeGroups by merging their shapes pairwise; if one ShapeGroup has more shapes than the other one, their additional shapes are also included in the result.
+ *
+ * @param first
+ * @param second
+ * @return ShapeGroupConstPtr
+ */
+ShapeGroupConstPtr ccd_merge_entities(const ShapeGroup* first,
+                                        const ShapeGroup* second) {
+
+  std::vector<ShapeConstPtr> shapes1 = first->unpack();
+  std::vector<ShapeConstPtr> shapes2 = second->unpack();
+
+  unsigned int maxSize = std::max(shapes1.size(), shapes2.size());
+
+  ShapeGroup *result = new ShapeGroup();
+
+  for (unsigned int i = 0; i < maxSize; i++) {
+    ShapeConstPtr s1 = nullptr;
+    ShapeConstPtr s2 = nullptr;
+
+    if (i < shapes1.size()) {
+      s1 = shapes1[i];
+    }
+    if (i < shapes2.size()) {
+      s2 = shapes2[i];
+    }
+
+    if (s1 && s2) {
+      CollisionObjectConstPtr merged = collision::geometry_queries::ccd_merge_entities(s1.get(), s2.get());
+      result->addToGroup(std::static_pointer_cast<const Shape>(merged));
+    }
+    else if (s1) {
+      result->addToGroup(s1);
+    }
+    else if (s2) {
+      result->addToGroup(s2);
+    }
+  }
+
+  return ShapeGroupConstPtr(result);
+}
+
 bool cmpd(double A, double B, double epsilon = 1e-7)
 {
     return (fabs(A - B) < epsilon);
@@ -171,7 +215,14 @@ CollisionObjectConstPtr ccd_merge_entities(const CollisionObject* first,
         static_cast<const RectangleOBB*>(first),
         static_cast<const RectangleOBB*>(second));
   }
-  else if(first->getCollisionObjectType()==OBJ_TYPE_SPHERE &&
+
+  if (first->getCollisionObjectType() == OBJ_TYPE_SHAPEGROUP &&
+      second->getCollisionObjectType() == OBJ_TYPE_SHAPEGROUP) {
+        return detail::geometry_queries::ccd_merge_entities(
+          static_cast<const ShapeGroup*>(first),
+          static_cast<const ShapeGroup*>(second));
+  }
+  if(first->getCollisionObjectType()==OBJ_TYPE_SPHERE &&
        second->getCollisionObjectType()==OBJ_TYPE_SPHERE)
        {
 	  	  ShapeGroupPtr sg_merge_res(new ShapeGroup());
@@ -183,7 +234,6 @@ CollisionObjectConstPtr ccd_merge_entities(const CollisionObject* first,
 	  	  else
 	  		  return sg_merge_res;
        }
-
   /*
             else if(first->getCollisionObjectType()==OBJ_TYPE_POLYGON &&
      second->getCollisionObjectType()==OBJ_TYPE_POLYGON)
@@ -195,8 +245,10 @@ CollisionObjectConstPtr ccd_merge_entities(const CollisionObject* first,
      new_poly;
             }
    */
-  else
-    return nullptr;
+  else {
+      std::cout << "wrong type" << std::endl;
+      return nullptr;
+  }
 }
 
 std::size_t test_polygon_enclosure(const ShapeGroup& sg,
