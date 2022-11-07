@@ -202,7 +202,7 @@ setup(
     python_requires='>=3.6',
     install_requires=[
         'commonroad-io>=2022.2',
-        'commonroad-vehicle-models>=1.0.0',
+        'commonroad-vehicle-models>=3.0.0',
         'numpy>=1.19',
         'scipy>=1.4.1',
         'matplotlib>=3.2.2',
