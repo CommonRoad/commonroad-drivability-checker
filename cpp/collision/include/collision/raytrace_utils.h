@@ -17,7 +17,7 @@ bool rayTracePostprocess(const Eigen::Vector2d &point1,
                          std::vector<Eigen::Vector2d> inters1,
                          std::vector<LineSegment> &intersect,
                          const collision::CollisionObject *obj);
-int rayTraceRemoveOverlaps(std::vector<LineSegment> intersect,
+int rayTraceRemoveOverlaps(const std::vector<LineSegment>& intersect,
                            std::vector<LineSegment> &out_vec, int axis = 0);
 
 }  // namespace raytrace
