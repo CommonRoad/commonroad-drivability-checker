@@ -17,11 +17,19 @@ add_library(crccosy STATIC ${LIB_CRCCOSY_SRC})
 
 set_property(TARGET crccosy PROPERTY POSITION_INDEPENDENT_CODE ON)
 
-
+if(NOT WIN32)
 target_link_libraries(crccosy
     PUBLIC
         Eigen3::Eigen
 	OpenMP::OpenMP_CXX)
+else()
+	target_compile_options(crccosy PRIVATE "-fopenmp")
+	target_link_libraries(crccosy
+    PUBLIC
+        Eigen3::Eigen)
+	target_link_libraries(crccosy  PRIVATE "-fopenmp")
+endif()
+
 
 target_compile_features(crccosy
     PUBLIC
@@ -43,6 +51,10 @@ if(NOT s11n_FOUND)
     target_compile_definitions(crccosy PRIVATE -DENABLE_SERIALIZER=0)
 else()
     message(STATUS "Serialization and pickling support have been enabled for crccosy")
-    target_link_libraries(crccosy PUBLIC s11n::s11n)
+	if(NOT WIN32)
+		target_link_libraries(crccosy PUBLIC s11n::s11n)
+	else()
+		target_link_libraries(crccosy PUBLIC s11n)
+	endif()
     target_compile_definitions(crccosy PRIVATE -DENABLE_SERIALIZER=1)
 endif()

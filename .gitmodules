@@ -1,5 +1,5 @@
-[submodule "third_party/box2d"]
-	path = third_party/box2d
+[submodule "third_party/third_party/box2d"]
+	path = third_party/third_party/box2d
 	url = https://github.com/erincatto/box2d.git
 [submodule "third_party/fcl"]
 	path = third_party/fcl
