@@ -169,7 +169,7 @@ class CMakeBuild(build_ext):
 
 setup(
     name='commonroad-drivability-checker',
-    version='2022.1.1',
+    version='2022.2',
     description='Drivability checker for CommonRoad scenarios.',
     long_description_content_type='text/markdown',
     long_description=readme,
@@ -196,8 +196,8 @@ setup(
     # Requirements
     python_requires='>=3.6',
     install_requires=[
-        'commonroad-io==2022.1',
-        'commonroad-vehicle-models>=1.0.0',
+        'commonroad-io>=2022.2',
+        'commonroad-vehicle-models>=3.0.0',
         'numpy>=1.19',
         'scipy>=1.4.1',
         'matplotlib>=3.2.2',
