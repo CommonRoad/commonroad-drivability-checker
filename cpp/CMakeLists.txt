@@ -12,6 +12,9 @@ option(ADD_MODULE_COLLISION "add collision module" ON)
 option(ADD_PYTHON_BINDINGS "add Python bindings" OFF)
 option(ADD_TRIANGLE "Use a non-free Triangle library" OFF)
 
+if(WIN32)
+set(CMAKE_INTERPROCEDURAL_OPTIMIZATION FALSE)
+endif(WIN32)
 
 # Add modules for discovering Sphinx etc.
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMakeModules" ${CMAKE_MODULE_PATH})
@@ -83,7 +86,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 ### Discover dependencies
 
+if(NOT WIN32)
 find_package(s11n)
+endif(NOT WIN32)
 
 find_package(Eigen3 3.0.5 QUIET CONFIG)
 
@@ -181,6 +186,50 @@ target_include_directories(gpc
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc
     )
+	
+if(WIN32)
+
+set(S11_SRC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libs11n/windows/src)
+
+set(S11_SRC 
+
+${S11_SRC_ROOT}/argv_parser.cpp
+${S11_SRC_ROOT}/data_node_io.cpp
+${S11_SRC_ROOT}/exception.cpp
+${S11_SRC_ROOT}/path_finder.cpp
+${S11_SRC_ROOT}/plugin.cpp
+${S11_SRC_ROOT}/s11n.cpp
+${S11_SRC_ROOT}/s11nlite.cpp
+${S11_SRC_ROOT}/s11n_node.cpp
+${S11_SRC_ROOT}/strtool.cpp
+)
+
+set(S11_PLUGINS
+
+${S11_SRC_ROOT}/compact.flex.cpp
+${S11_SRC_ROOT}/compact_serializer.cpp
+)
+
+set(s11n_FOUND ON)
+
+add_library(s11n STATIC ${S11_SRC} ${S11_PLUGINS}) 
+
+target_compile_features(s11n PUBLIC cxx_std_98)
+
+set_property(TARGET s11n PROPERTY CXX_STANDARD 98)
+
+set_property(TARGET s11n PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+target_compile_definitions(s11n PRIVATE -DWIN32=1)
+
+target_include_directories(s11n
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libs11n/windows/include>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libs11n/windows/include
+    )
+	
+endif(WIN32)
 
 ### Definition of crcc
 
@@ -193,6 +242,10 @@ if(ADD_MODULE_COLLISION)
     endif()
     set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrcc)
 endif(ADD_MODULE_COLLISION)
+
+if(WIN32)
+set(INSTALL_MODULES ${INSTALL_MODULES} s11n)
+endif(WIN32)
 
 ### Definition of crccosy
 

@@ -7,15 +7,24 @@ if(ADD_MODULE_COLLISION)
         ${PYBIND_SRC_ROOT}/py_bind.cc
        )
 
-    pybind11_add_module(pycrcc ${PYBIND_SRC_COLLISION})
+    pybind11_add_module(pycrcc ${PYBIND_SRC_COLLISION} ${S11_PLUGINS})
 
     target_compile_definitions(pycrcc PRIVATE -DPY_WRAPPER_MODULE_COLLISION=1)
+
+	IF (WIN32)
+		#requires  cmake 3.13
+		target_link_options(pycrcc PRIVATE -static-libgcc -static-libstdc++ -static)
+	ENDIF()
 
     target_link_libraries(pycrcc PUBLIC crcc)
 
 if(s11n_FOUND)
     target_compile_definitions(pycrcc PRIVATE -DENABLE_SERIALIZER=1)
-    target_link_libraries(pycrcc PUBLIC s11n::s11n)
+	if(NOT WIN32)
+		target_link_libraries(pycrcc PUBLIC s11n::s11n)
+	else()
+	    target_link_libraries(pycrcc PUBLIC s11n)
+	endif(NOT WIN32)
 else()
     target_compile_definitions(pycrcc PRIVATE -DENABLE_SERIALIZER=0)
 endif()
@@ -55,10 +64,10 @@ if(ADD_MODULE_GEOMETRY)
         ${PYBIND_SRC_ROOT}/py_bind.cc
        )
 
-    pybind11_add_module(pycrccosy ${PYBIND_SRC_GEOMETRY})
+    pybind11_add_module(pycrccosy ${PYBIND_SRC_GEOMETRY} ${S11_PLUGINS})
 
     target_compile_definitions(pycrccosy PRIVATE -DPY_WRAPPER_MODULE_GEOMETRY=1)
-
+if(NOT WIN32)
 #if (OPENMP_FOUND)
     if(APPLE)
          target_link_directories(pycrccosy PUBLIC "/usr/local/lib")
@@ -69,12 +78,24 @@ if(ADD_MODULE_GEOMETRY)
     endif(APPLE)
 
 #endif(OPENMP_FOUND)
+else()
+	target_compile_options(pycrccosy PRIVATE "-fopenmp")
+	target_link_libraries(pycrccosy  PRIVATE "-fopenmp")
+endif()
+	IF (WIN32)
+		#requires  cmake 3.13
+		target_link_options(pycrccosy PRIVATE -static-libgcc -static-libstdc++ -static)
+	ENDIF()
 
     target_link_libraries(pycrccosy PUBLIC crccosy)
 
 if(s11n_FOUND)
     target_compile_definitions(pycrccosy PRIVATE -DENABLE_SERIALIZER=1)
-    target_link_libraries(pycrccosy PUBLIC s11n::s11n)
+	if(NOT WIN32)
+		target_link_libraries(pycrccosy PUBLIC s11n::s11n)
+	else()
+		target_link_libraries(pycrccosy PUBLIC s11n)
+	endif()
 else()
     target_compile_definitions(pycrccosy PRIVATE -DENABLE_SERIALIZER=0)
 endif()

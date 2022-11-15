@@ -1,0 +1,56 @@
+name: Windows Workflow
+on: [workflow_dispatch]
+
+jobs:
+  msys2-mingw64:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniconda-version: "latest"
+          
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: git mingw-w64-x86_64-cc mingw-w64-x86_64-cmake mingw-w64-x86_64-eigen3 mingw-w64-x86_64-boost
+      
+      - name: Build wheel Python 3.7
+        run: |
+          ./.github/workflows/build_wheel_37.sh
+      - name: Test wheel Python 3.7
+        shell: bash -l {0}
+        run: |
+          ./.github/workflows/test_wheel_37.sh
+      - name: Build wheel Python 3.8
+        run: |
+          ./.github/workflows/build_wheel_38.sh
+      - name: Build wheel Python 3.9
+        run: |
+          ./.github/workflows/build_wheel_39.sh
+      
+      - name: Bash
+        shell: bash -l {0}
+        run: |
+          ls -la dist
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: |
+            dist
+
+      - name: Test wheel Python 3.8
+        shell: bash -l {0}
+        run: |
+          ./.github/workflows/test_wheel_38.sh
+      - name: Test wheel Python 3.9
+        shell: bash -l {0}
+        run: |
+          ./.github/workflows/test_wheel_39.sh

@@ -110,12 +110,7 @@ class CMakeBuild(build_ext):
         cfg = 'Debug' if self.debug else 'Release'
         build_args = ['--config', cfg]
 
-        if platform.system() == "Windows":
-            if sys.maxsize > 2 ** 32:
-                cmake_args += ['-A', 'x64']
-            build_args += ['--', '/m']
-        else:
-            cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
+        cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
 
         dist_dir = os.path.abspath(os.path.join(self.build_temp, 'dist'))
         build_dir = os.path.abspath(os.path.join(self.build_temp, 'build'))
