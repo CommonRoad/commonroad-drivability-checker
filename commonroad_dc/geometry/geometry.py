@@ -37,7 +37,8 @@ class CurvilinearCoordinateSystem(pycrccosy.CurvilinearCoordinateSystem):
             raise RefPathLengthException("Reference path length is invalid")
 
         # remove duplicated vertices in reference path
-        ref_path = np.unique(ref_path, axis=0)
+        _, idx = np.unique(ref_path, axis=0, return_index=True)
+        ref_path = ref_path[np.sort(idx)]
 
         # initialize Curvilinear Coordinate System
         super().__init__(ref_path, default_projection_domain_limit, eps, eps2)
