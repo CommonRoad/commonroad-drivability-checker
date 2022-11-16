@@ -5,6 +5,10 @@
 
 #if TIME_PROFILE_ENABLED
 #include <sys/time.h>
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 //#include <boost/timer.hpp>
 
 namespace test {

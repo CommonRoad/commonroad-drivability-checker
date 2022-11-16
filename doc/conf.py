@@ -49,7 +49,7 @@ copyright = '2022, Technical University of Munich, Professorship Cyber-Physical 
 author = 'Technical University of Munich, Professorship Cyber-Physical Systems'
 
 # The full version, including alpha/beta/rc tags
-release = '2022.1'
+release = '2022.2'
 
 
 # -- General configuration ---------------------------------------------------

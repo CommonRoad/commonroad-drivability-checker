@@ -155,8 +155,7 @@ class TestCostFunctionEvaluator(TestSolutionEvaluationBase):
         feas, traj = input_vector_feasibility(pp.planning_problem_dict[sol.planning_problem_solutions[0].planning_problem_id].initial_state,
                                  list(sol.planning_problem_solutions)[0].trajectory, PointMassDynamics(VehicleType.BMW_320i),sce.dt)
         rnd = MPRenderer()
-        rnd.draw_trajectory(traj,draw_params=rnd.draw_params,
-                            call_stack=())
+        rnd.draw_trajectory(traj ,draw_params=rnd.draw_params)
         rnd.render()
 
     def test_pm_input_solution_reconstruction(self):
