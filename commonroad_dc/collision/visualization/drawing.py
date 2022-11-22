@@ -3,17 +3,16 @@ from typing import *
 import commonroad_dc.collision
 import matplotlib.colors
 import numpy as np
-from commonroad.visualization.param_server import ParamServer
 from commonroad.visualization.renderer import IRenderer
 
 
 def draw_collision_point(obj, renderer: IRenderer,
-                            draw_params: Union[ParamServer, dict, None] = None) -> None:
+                            draw_params: Union[dict, None] = None) -> None:
     renderer.draw_ellipse(obj.center, 0.125, 0.125, draw_params)
 
 
 def draw_collision_rectaabb(obj, renderer: IRenderer,
-                            draw_params: Union[ParamServer, dict, None] = None) -> None:
+                            draw_params: Union[dict, None] = None) -> None:
     vertices = np.array([(obj.min_x(), obj.min_y()),
                          (obj.min_x(), obj.max_y()),
                          (obj.max_x(), obj.max_y()),
@@ -22,7 +21,7 @@ def draw_collision_rectaabb(obj, renderer: IRenderer,
 
 
 def draw_collision_rectobb(obj, renderer: IRenderer,
-                           draw_params: Union[ParamServer, dict, None] = None) -> None:
+                           draw_params: Union[dict, None] = None) -> None:
     center = obj.center()
     r_x = obj.r_x()
     r_y = obj.r_y()
@@ -41,7 +40,7 @@ def draw_collision_rectobb(obj, renderer: IRenderer,
 
 
 def draw_collision_triangle(obj, renderer: IRenderer,
-                            draw_params: Union[ParamServer, dict, None] = None) -> None:
+                            draw_params: Union[dict, None] = None) -> None:
     v = obj.vertices()
     vertices = [(v[0][0], v[0][1]),
                 (v[1][0], v[1][1]),
@@ -51,14 +50,14 @@ def draw_collision_triangle(obj, renderer: IRenderer,
 
 
 def draw_collision_circle(obj, renderer: IRenderer,
-                          draw_params: Union[ParamServer, dict, None] = None) -> None:
+                          draw_params: Union[dict, None] = None) -> None:
     renderer.draw_ellipse([obj.x(), obj.y()], obj.r(),
                           obj.r(), draw_params)
 
 
 def draw_collision_timevariantcollisionobject(obj, renderer: IRenderer,
                                               draw_params: Union[
-                                                  ParamServer, dict, None] = None) -> None:
+                                                  dict, None] = None) -> None:
     for i in range(obj.time_start_idx(), obj.time_end_idx() + 1):
         tmp = obj.obstacle_at_time(i)
         if draw_params is not None and "time_to_color" in draw_params.keys():
@@ -69,20 +68,20 @@ def draw_collision_timevariantcollisionobject(obj, renderer: IRenderer,
 
 def draw_collision_shapegroup(obj, renderer: IRenderer,
                               draw_params: Union[
-                                  ParamServer, dict, None] = None) -> None:
+                                  dict, None] = None) -> None:
     for o in obj.unpack():
         o.draw(renderer, draw_params)
 
 
 def draw_collision_truck(obj, renderer: IRenderer,
                               draw_params: Union[
-                                  ParamServer, dict, None] = None) -> None:
+                                  dict, None] = None) -> None:
     for o in obj.unpack():
         o.draw(renderer, draw_params)
 
 
 def draw_collision_polygon(obj, renderer: IRenderer,
-                           draw_params: Union[ParamServer, dict, None] = None) -> None:
+                           draw_params: Union[dict, None] = None) -> None:
     draw_mesh = renderer.draw_params.shape.draw_mesh
     if draw_mesh:
         for o in obj.triangle_mesh():
@@ -93,6 +92,6 @@ def draw_collision_polygon(obj, renderer: IRenderer,
 
 def draw_collision_collisionchecker(obj, renderer: IRenderer,
                                     draw_params: Union[
-                                        ParamServer, dict, None] = None) -> None:
+                                        dict, None] = None) -> None:
     for o in obj.obstacles():
         o.draw(renderer, draw_params)
