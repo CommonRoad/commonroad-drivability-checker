@@ -232,9 +232,6 @@ def goal_reached(scenario: Scenario,
                                                                             scenario.dt)
         planning_problem = planning_problem_set.planning_problem_dict[pp_solution.planning_problem_id]
 
-        # if KS Model is used: shift positions to KS reference point (rear-axle) for goal check
-        if vehicle_dynamics.vehicle_model == VehicleModel.KS:
-            trajectory = _shift_KS_trajectory(trajectory, vehicle_dynamics)
 
         if not planning_problem.goal_reached(trajectory)[0]:
             msg = f'Ego vehicle has not reached the goal in planning planning problem solution ' \
@@ -242,24 +239,6 @@ def goal_reached(scenario: Scenario,
             raise GoalNotReachedException(msg)
 
     return True
-
-
-def _shift_KS_trajectory(trajectory: Trajectory, vehicle_dynamics: VehicleDynamics) -> Trajectory:
-    """
-    Shifts (x, y) position of each state in KS trajectory to the reference point of the KS vehicle model (rear axis)
-    The input trajectory contains positions for the center point of the
-    :param trajectory: Input Trajectory
-    :param vehicle_dynamics: VehicleDynamics object
-    :return: Output Trajectory with positions matching the reference point (rear axis) of the KS vehicle model
-    """
-    new_state_list = list()
-    rear_ax_dist = vehicle_dynamics.parameters.b
-    init_time_step = trajectory.initial_time_step
-    for state in trajectory.state_list:
-        new_state = state.translate_rotate(np.array([-rear_ax_dist * math.cos(state.orientation),
-                                                     - rear_ax_dist * math.sin(state.orientation)]), 0)
-        new_state_list.append(new_state)
-    return Trajectory(initial_time_step=init_time_step, state_list=new_state_list)
 
 
 def solved_all_problems(planning_problem_set: PlanningProblemSet, solution: Solution) -> bool:
@@ -298,13 +277,6 @@ def starts_at_correct_state(solution: Solution, planning_problem_set: PlanningPr
         is_input_vector = pp_solution.trajectory_type in [TrajectoryType.Input, TrajectoryType.PMInput]
         initial_state_pp = planning_problem.initial_state
         initial_state_sol = pp_solution.trajectory.state_list[0]
-
-        if pp_solution.vehicle_model == VehicleModel.KS:
-            params = VehicleParameterMapping[pp_solution.vehicle_type.name].value
-            rear_ax_dist = params.b
-            initial_state_sol = initial_state_sol.translate_rotate(
-                np.array([-rear_ax_dist * math.cos(initial_state_sol.orientation),
-                          -rear_ax_dist * math.sin(initial_state_sol.orientation)]), 0)
 
         ts = initial_state_sol.time_step
         expected_ts = [initial_state_pp.time_step]

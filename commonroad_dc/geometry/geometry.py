@@ -52,6 +52,14 @@ class CurvilinearCoordinateSystem(pycrccosy.CurvilinearCoordinateSystem):
         self._ref_curv_d = np.gradient(self._ref_curv, self._ref_pos)
         self._ref_theta = np.unwrap(compute_orientation_from_polyline(self.reference))
 
+    def __getstate__(self):
+        return(pycrccosy.CurvilinearCoordinateSystem.__getstate__(self),
+               self.__dict__)
+
+    def __setstate__(self, state: tuple):
+        pycrccosy.CurvilinearCoordinateSystem.__setstate__(self, state[0])
+        self.__dict__ = state[1]
+
     @property
     def reference(self) -> np.ndarray:
         """returns reference path used by CCosy due to slight modifications within the CCosy module"""
