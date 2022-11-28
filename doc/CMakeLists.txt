@@ -5,7 +5,7 @@ find_package(Sphinx REQUIRED)
 get_target_property(CRCC_PUBLIC_HEADER_DIR crcc INTERFACE_INCLUDE_DIRECTORIES)
 file(GLOB_RECURSE CRCC_PUBLIC_HEADERS ${CRCC_PUBLIC_HEADER_DIR}/*.h)
 
-set(DOXYGEN_INPUT_DIR "${PROJECT_SOURCE_DIR}/cpp/collision")
+set(DOXYGEN_INPUT_DIR "${PROJECT_SOURCE_DIR}/collision")
 set(DOXYGEN_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/doxygen)
 set(DOXYGEN_INDEX_FILE ${DOXYGEN_OUTPUT_DIR}/xml/index.xml)
 set(DOXYFILE_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
@@ -60,3 +60,7 @@ add_custom_target(Sphinx ALL DEPENDS ${SPHINX_INDEX_FILE} pycrcc pycrccosy)
 # include(GNUInstallDirs)
 install(DIRECTORY ${SPHINX_BUILD}
   DESTINATION ${CMAKE_INSTALL_DOCDIR})
+
+# Please uncomment the next line to also install the doxygen documentation into the dist directory
+#install(DIRECTORY ${DOXYGEN_OUTPUT_DIR} DESTINATION ${CMAKE_INSTALL_DOCDIR})
+

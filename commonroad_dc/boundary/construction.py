@@ -8,7 +8,7 @@ import Polygon.Utils
 from commonroad.geometry.shape import Polygon, ShapeGroup, Rectangle
 from commonroad.scenario.obstacle import StaticObstacle, ObstacleType
 from commonroad.scenario.scenario import Scenario
-from commonroad.scenario.trajectory import State
+from commonroad.scenario.state import InitialState
 
 import commonroad_dc.pycrcc as pycrcc
 from commonroad_dc.boundary import triangle_builder, lanelet_bounds, scenario_bounds
@@ -325,7 +325,8 @@ def construct_boundary_obstacle_obb_rectangles(scenario: Scenario, width=1e-5, o
         return sg_rectangles
 
 def postprocess_create_static_obstacle_triangles(scenario: Scenario, shape_group: pycrcc.ShapeGroup):
-    initial_state = State(position=np.array([0, 0]), orientation=0.0, time_step=0)
+    initial_state = InitialState(position=np.array([0, 0]), orientation=0.0, time_step=0, velocity=0, acceleration=0,
+                                 yaw_rate=0, slip_angle=0)
     road_boundary_shape_list = list()
     for r in shape_group.unpack():
         p = Polygon(np.array(r.vertices()))
@@ -338,7 +339,8 @@ def postprocess_create_static_obstacle_triangles(scenario: Scenario, shape_group
 
 
 def postprocess_create_static_obstacle_obb_rectangles(scenario: Scenario, shape_group: pycrcc.ShapeGroup):
-    initial_state = State(position=np.array([0, 0]), orientation=0.0, time_step=0)
+    initial_state = InitialState(position=np.array([0, 0]), orientation=0.0, time_step=0, velocity=0, acceleration=0,
+                                 yaw_rate=0, slip_angle=0)
     road_boundary_shape_list = list()
     for r in shape_group.unpack():
         p = Rectangle(r.r_x() * 2, r.r_y() * 2, r.center(), r.orientation())

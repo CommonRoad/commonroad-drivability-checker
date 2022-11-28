@@ -33,8 +33,11 @@ int resample_polyline(const RowMatrixXd& polyline, double step,
       current_position += step;
     }
   }
-  new_polyline.push_back(
-      polyline.middleRows(polyline.rows() - 1, 1).transpose().eval());
+  // avoid duplicating last point due to precision errors
+  if ( (polyline.middleRows(polyline.rows() - 1, 1) - new_polyline.back()).norm() >=1e-6) {
+    new_polyline.push_back(
+        polyline.middleRows(polyline.rows() - 1, 1).transpose().eval());
+  }
 
   return 0;
 }

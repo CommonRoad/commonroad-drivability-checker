@@ -11,7 +11,8 @@ from commonroad.common.solution import VehicleType
 from commonroad.scenario.scenario import Scenario
 from commonroad.scenario.traffic_sign import SupportedTrafficSignCountry
 from commonroad.scenario.traffic_sign_interpreter import TrafficSigInterpreter
-from commonroad.scenario.trajectory import Trajectory, State
+from commonroad.scenario.trajectory import Trajectory
+from commonroad.scenario.state import FloatExactOrInterval, CustomState, PMState, TraceState
 from commonroad_dc.collision.collision_detection.scenario import create_collision_checker_scenario
 from scipy.signal import savgol_filter
 
@@ -178,18 +179,19 @@ class SolutionProperties(Enum):
     DeltaOrientation = "DELTA_ORIENTATION"
 
 
-class CurvilinearState(State):
-    __slots__ = State.__slots__ + [
-        'lon_position',
-        'lon_velocity',
-        'lon_acceleration',
-        'lon_jerk',
-        'lat_position',
-        'lat_velocity',
-        'lat_acceleration',
-        'lat_jerk',
-        'delta_orientation'
-    ]
+class CurvilinearState(CustomState):
+    def __init__(self, **attributes):
+        super().__init__(**attributes)
+
+    lon_position: FloatExactOrInterval = None
+    lon_velocity: FloatExactOrInterval = None
+    lon_acceleration: FloatExactOrInterval = None
+    lon_jerk: FloatExactOrInterval = None
+    lat_position: FloatExactOrInterval = None
+    lat_velocity: FloatExactOrInterval = None
+    lat_acceleration: FloatExactOrInterval = None
+    lat_jerk: FloatExactOrInterval = None
+    delta_orientation: FloatExactOrInterval = None
 
 
 class LaneletRouteMatcher:
@@ -245,7 +247,7 @@ class LaneletRouteMatcher:
 
         return self._lanelet_cosys[lanelet_id]
 
-    def _select_by_best_alignment(self, lanelets2states: Dict[int, List[State]],
+    def _select_by_best_alignment(self, lanelets2states: Dict[int, List[TraceState]],
                                   successor_candidates: List[List[int]]) -> Optional[List[int]]:
         """
         Computes mean square error of deviation of orientations compared to lanelets in successor_candidates
@@ -271,7 +273,12 @@ class LaneletRouteMatcher:
                 for s in lanelets2states[l]:
                     ori = get_orientation_at_position(cosy, s.position)
                     if ori is not None:
-                        errors_tmp.append(subtract_orientations(s.orientation, ori))
+                        if type(s) is not PMState:
+                            state_orientation = s.orientation
+                        else:
+                            # for PM State: compute orientation from x and y velocity:
+                            state_orientation = np.arctan2(s.velocity_y, s.velocity)
+                        errors_tmp.append(subtract_orientations(state_orientation, ori))
 
             # compute mean square error for deviation of tangent (only if tangent was feasible)
             if len(errors_tmp) > 0:
@@ -610,7 +617,11 @@ class LaneletRouteMatcher:
 
             if not delta_orientation:
                 tangent = cosys[i_c].tangent(s)
-                delta_orientation = subtract_orientations(state.orientation, np.arctan2(tangent[1], tangent[0]))
+                if not type(state) == PMState:
+                    state_orientation = state.orientation
+                else:
+                    state_orientation = np.arctan2(state.velocity_y, state.velocity)
+                delta_orientation = subtract_orientations(state_orientation, np.arctan2(tangent[1], tangent[0]))
 
             # negate s when driving against driving direction
             ghost_driving = subtract_orientations(delta_orientation, math.pi / 2) > 0.0 or subtract_orientations(
@@ -621,7 +632,8 @@ class LaneletRouteMatcher:
             elif s_return is not None and not ghost_driving:
                 s_return = None
 
-            state_tmp = CurvilinearState(**{s: getattr(state, s) for s in state.__slots__ if hasattr(state, s)})
+            state_tmp = CurvilinearState(**{s: getattr(state, s) for s in state.attributes if hasattr(state, s)})
+            state_tmp.time_step = state.time_step
             if s_return is None:
                 state_tmp.lon_position = s + ds
             else:
@@ -688,14 +700,15 @@ class LaneletRouteMatcher:
             c.lat_acceleration = accelerations_lat[i]
             c.lat_jerk = jerks_lat[i]
 
-        trajectory.state_list = curvilinear_states
+        trajectory_cvln = Trajectory(trajectory.initial_time_step, curvilinear_states)
+        # trajectory.state_list = curvilinear_states
 
         if draw_lanelet_path is True:
             plt.figure(figsize=(30, 15))
             f, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 15), gridspec_kw={'width_ratios': [4, 1]})
             plt.suptitle(f"Debug <costs/compute_curvilinear_coordinates> {self.scenario.scenario_id}")
 
-            positions_tmp = np.array([s.position for s in trajectory.state_list])
+            positions_tmp = np.array([s.position for s in trajectory_cvln.state_list])
             plot_limits = [np.min(positions_tmp[:, 0], axis=0) - 50, np.max(positions_tmp[:, 0], axis=0) + 50,
                            np.min(positions_tmp[:, 1], axis=0) - 30, np.max(positions_tmp[:, 1], axis=0) + 30]
 
@@ -706,11 +719,11 @@ class LaneletRouteMatcher:
             l_tmp.draw(draw_params={'lanelet': {'facecolor': 'red'}, "traffic_sign": {
                 "draw_traffic_signs": False}, "traffic_light": {
                 "draw_traffic_lights": False}}, renderer=rnd)
-            trajectory.draw(draw_params={'time_begin': 0, 'time_end': trajectory.final_state.time_step + 1},
-                            renderer=rnd)
+            trajectory_cvln.draw(draw_params={'time_begin': 0, 'time_end': trajectory_cvln.final_state.time_step + 1},
+                                 renderer=rnd)
 
             rnd.render(show=False)
-            for s in trajectory.state_list:
+            for s in trajectory_cvln.state_list:
                 plt.scatter(s.position[0], s.position[1], )
                 plt.text(s.position[0], s.position[1], s=str(s.time_step), zorder=1e6)
 
@@ -722,15 +735,15 @@ class LaneletRouteMatcher:
 
             plt.sca(ax2)
             ax2.title.set_text("Lon/lat trajectories")
-            maxs = max([s.lon_position for s in trajectory.state_list],)
-            plt.plot([s.lon_position / maxs for s in trajectory.state_list], label="lon_position")
-            plt.plot([s.lat_position for s in trajectory.state_list], label="lat_position")
-            plt.plot([s.lat_jerk for s in trajectory.state_list], label="lat_jerk")
-            plt.plot([s.lon_jerk for s in trajectory.state_list], label="lon_jerk")
-            plt.plot([s.delta_orientation for s in trajectory.state_list], label="delta_orientation")
+            maxs = max([s.lon_position for s in trajectory_cvln.state_list],)
+            plt.plot([s.lon_position / maxs for s in trajectory_cvln.state_list], label="lon_position")
+            plt.plot([s.lat_position for s in trajectory_cvln.state_list], label="lat_position")
+            plt.plot([s.lat_jerk for s in trajectory_cvln.state_list], label="lat_jerk")
+            plt.plot([s.lon_jerk for s in trajectory_cvln.state_list], label="lon_jerk")
+            plt.plot([s.delta_orientation for s in trajectory_cvln.state_list], label="delta_orientation")
             plt.legend(loc="upper right")
             plt.autoscale()
             plt.close(1)
             plt.show(block=True)
 
-        return trajectory, lanelets, properties
+        return trajectory_cvln, lanelets, properties

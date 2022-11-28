@@ -103,16 +103,28 @@ if(NOT s11n_FOUND)
     target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=0)
 else()
     message(STATUS "Serialization and pickling support have been enabled for crcc")
-    target_link_libraries(crcc PUBLIC s11n::s11n)
-    target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=1)
+    if(NOT WIN32)
+		target_link_libraries(crcc PUBLIC s11n::s11n)
+    else()
+		target_link_libraries(crcc PUBLIC s11n)
+	endif()
+	target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=1)
+endif()
+
+if(ADD_TRIANGLE)
+    target_compile_definitions(crcc PUBLIC ENABLE_TRIANGLE=1)
 endif()
 
 target_link_libraries(crcc
   PRIVATE
-    triangle
+    gpc
   PUBLIC
     fcl
     ccd
     Eigen3::Eigen
     box2d::box2d
-    )
+)
+
+if(ADD_TRIANGLE)
+    target_link_libraries(crcc PRIVATE triangle)
+endif()

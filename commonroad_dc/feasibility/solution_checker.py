@@ -8,7 +8,8 @@ from commonroad.planning.planning_problem import PlanningProblemSet
 from commonroad.prediction.prediction import TrajectoryPrediction
 from commonroad.scenario.obstacle import StaticObstacle, ObstacleType
 from commonroad.scenario.scenario import Scenario
-from commonroad.scenario.trajectory import State as StateTupleFactory, Trajectory, State
+from commonroad.scenario.trajectory import Trajectory
+from commonroad.scenario.state import InitialState, KSState
 from commonroad_dc.pycrcc import CollisionChecker, CollisionObject
 
 import commonroad_dc.feasibility.feasibility_checker as fc
@@ -16,7 +17,7 @@ from commonroad_dc.boundary import construction
 from commonroad_dc.collision.collision_detection.pycrcc_collision_dispatch import create_collision_object, \
     create_collision_checker
 from commonroad_dc.feasibility.feasibility_checker import FeasibilityException
-from commonroad_dc.feasibility.vehicle_dynamics import VehicleDynamics
+from commonroad_dc.feasibility.vehicle_dynamics import VehicleDynamics, VehicleParameterMapping
 
 
 class SolutionCheckerException(Exception):
@@ -74,7 +75,7 @@ def _construct_boundary_checker(scenario: Scenario) -> CollisionChecker:
     road_boundary_shape_list = []
     initial_state = None
     for r in boundary['triangulation'].unpack():
-        initial_state = StateTupleFactory(position=np.array([0, 0]), orientation=0.0, time_step=0)
+        initial_state = InitialState(position=np.array([0, 0]), orientation=0.0, time_step=0)
         p = Polygon(np.array(r.vertices()))
         road_boundary_shape_list.append(p)
     road_bound = StaticObstacle(obstacle_id=scenario.generate_object_id(),
@@ -87,7 +88,7 @@ def _construct_boundary_checker(scenario: Scenario) -> CollisionChecker:
 
 
 def _check_input_vector_feasibility(pp_solution: PlanningProblemSolution,
-                                    initial_state: State,
+                                    initial_state: InitialState,
                                     vehicle_dynamics: VehicleDynamics,
                                     dt: float) -> Tuple[bool, Trajectory]:
     try:
@@ -230,6 +231,8 @@ def goal_reached(scenario: Scenario,
                                                                             pp_solution,
                                                                             scenario.dt)
         planning_problem = planning_problem_set.planning_problem_dict[pp_solution.planning_problem_id]
+
+
         if not planning_problem.goal_reached(trajectory)[0]:
             msg = f'Ego vehicle has not reached the goal in planning planning problem solution ' \
                   f'{pp_solution.planning_problem_id}.'
@@ -274,6 +277,7 @@ def starts_at_correct_state(solution: Solution, planning_problem_set: PlanningPr
         is_input_vector = pp_solution.trajectory_type in [TrajectoryType.Input, TrajectoryType.PMInput]
         initial_state_pp = planning_problem.initial_state
         initial_state_sol = pp_solution.trajectory.state_list[0]
+
         ts = initial_state_sol.time_step
         expected_ts = [initial_state_pp.time_step]
 
