@@ -8,13 +8,21 @@ import os
 
 class TestGeometryUtil(unittest.TestCase):
     def setUp(self) -> None:
-        with open(os.path.abspath('reference_path_b.pic'), 'rb') as path_file:
-            data_set = pickle.load(path_file)
+        try:
+            with open(os.path.abspath('reference_path_b.pic'), 'rb') as path_file:
+                data_set = pickle.load(path_file)
+        except OSError as e:
+            with open(os.path.abspath('geometry/reference_path_b.pic'), 'rb') as path_file:
+                data_set = pickle.load(path_file)
         self.reference_path_test = data_set['reference_path']
         self.number_of_samples = len(self.reference_path_test)
 
-        with open(os.path.abspath('reference_path_b_data.pic'), 'rb') as data_file:
-            data_details = pickle.load(data_file)
+        try:
+            with open(os.path.abspath('reference_path_b_data.pic'), 'rb') as data_file:
+                data_details = pickle.load(data_file)
+        except OSError as e:
+            with open(os.path.abspath('geometry/reference_path_b_data.pic'), 'rb') as data_file:
+                data_details = pickle.load(data_file)
         self.polyline_length = data_details['polyline_length']
         self.path_length = data_details['path_length']
         self.curvature = data_details['curvature']

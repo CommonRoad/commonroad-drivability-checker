@@ -11,6 +11,8 @@ import os
 class PickleTest(unittest.TestCase):
     """
     Test cases for testing correct functionality of serialization for pickling the CurvilinearCoordinateSystem
+    NOTE: File paths are interpreted differently in the CI side, therefore the following Try-Catch code resolves this
+    issue.
     """
 
     def setUp(self) -> None:
