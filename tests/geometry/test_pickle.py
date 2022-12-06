@@ -5,7 +5,7 @@ import pickle
 import unittest
 import numpy as np
 import math
-
+import os
 
 class PickleTest(unittest.TestCase):
     """
@@ -13,7 +13,7 @@ class PickleTest(unittest.TestCase):
     """
 
     def setUp(self) -> None:
-        with open("reference_path_b.pic", "rb") as f:
+        with open(os.path.abspath("geometry/reference_path_b.pic"), "rb") as f:
             data_set = pickle.load(f)
         self.reference_path_test = data_set['reference_path']
 
