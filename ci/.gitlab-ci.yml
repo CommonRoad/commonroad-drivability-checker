@@ -32,6 +32,7 @@ build-compile-commands:
     - mkdir build && cd build
     - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
     - cd ..
+    - ls
   needs: []
   artifacts:
     paths:
