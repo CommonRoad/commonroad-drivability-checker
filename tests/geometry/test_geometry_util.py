@@ -9,18 +9,22 @@ import os
 class TestGeometryUtil(unittest.TestCase):
     def setUp(self) -> None:
         try:
+            # Local Test side
             with open(os.path.abspath('reference_path_b.pic'), 'rb') as path_file:
                 data_set = pickle.load(path_file)
         except OSError as e:
+            # CI Test side
             with open(os.path.abspath('geometry/reference_path_b.pic'), 'rb') as path_file:
                 data_set = pickle.load(path_file)
         self.reference_path_test = data_set['reference_path']
         self.number_of_samples = len(self.reference_path_test)
 
         try:
+            # Local Test side
             with open(os.path.abspath('reference_path_b_data.pic'), 'rb') as data_file:
                 data_details = pickle.load(data_file)
         except OSError as e:
+            # CI Test side
             with open(os.path.abspath('geometry/reference_path_b_data.pic'), 'rb') as data_file:
                 data_details = pickle.load(data_file)
         self.polyline_length = data_details['polyline_length']
