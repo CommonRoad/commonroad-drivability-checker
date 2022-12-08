@@ -5,16 +5,25 @@ import pickle
 import unittest
 import numpy as np
 import math
+import os
 
 
 class PickleTest(unittest.TestCase):
     """
     Test cases for testing correct functionality of serialization for pickling the CurvilinearCoordinateSystem
+    NOTE: File paths are interpreted differently in the CI side, therefore the following Try-Catch code resolves this
+    issue.
     """
 
     def setUp(self) -> None:
-        with open("reference_path_b.pic", "rb") as f:
-            data_set = pickle.load(f)
+        try:
+            # Local Test side
+            with open(os.path.abspath("reference_path_b.pic"), "rb") as f:
+                data_set = pickle.load(f)
+        except OSError as e:
+            # CI Test side
+            with open(os.path.abspath("geometry/reference_path_b.pic"), "rb") as f:
+                data_set = pickle.load(f)
         self.reference_path_test = data_set['reference_path']
 
         # CLCS pybind object
@@ -28,7 +37,7 @@ class PickleTest(unittest.TestCase):
         clcs_dump = pickle.dumps(self.pycrccosy_CLCS)
         clcs_load = pickle.loads(clcs_dump)
         clcs_load_dump = pickle.dumps(clcs_load)
-        assert(clcs_dump == clcs_load_dump)
+        assert (clcs_dump == clcs_load_dump)
 
     def test_pickle_dump_wrapper(self):
         clcs_dump = pickle.dumps(self.wrapper_CLCS)
@@ -47,7 +56,7 @@ class PickleTest(unittest.TestCase):
         assert np.allclose(np.asarray(self.pycrccosy_CLCS.reference_path()), np.asarray(clcs_load.reference_path()))
         # reference path original
         assert np.allclose(np.asarray(self.pycrccosy_CLCS.reference_path_original()),
-                              np.asarray(clcs_load.reference_path_original()))
+                           np.asarray(clcs_load.reference_path_original()))
 
         # length
         assert math.isclose(self.pycrccosy_CLCS.length(), clcs_load.length())

@@ -32,8 +32,8 @@ def resample_polyline(polyline: np.ndarray, step: float = 2.0) -> np.ndarray:
 def resample_polyline_with_length_check(polyline, length_to_check: float = 2.0):
     """
     Resamples point with length check.
-    TODO: This is a helper functions to avoid exceptions during creating CurvilinearCoordinateSystem
-
+    TODO: This is a helper function to avoid exceptions during creating CurvilinearCoordinateSystem
+    :param length_to_check: length to be checked
     :param polyline: polyline with 2D points
     :return: resampled polyline
     """
@@ -67,9 +67,8 @@ def compute_polyline_length(polyline: np.ndarray) -> float:
     :param polyline: The polyline
     :return: The path length of the polyline
     """
-    assert isinstance(polyline, np.ndarray) and polyline.ndim == 2 and len(
-        polyline[:,
-        0]) > 2, 'Polyline malformed for path length computation p={}'.format(polyline)
+    assert isinstance(polyline, np.ndarray) and polyline.ndim == 2 and len(polyline[:,0]) > 2, \
+        'Polyline malformed for path length computation p={}'.format(polyline)
 
     distance_between_points = np.diff(polyline, axis=0)
     # noinspection PyTypeChecker
@@ -83,10 +82,10 @@ def compute_curvature_from_polyline(polyline: np.ndarray) -> np.ndarray:
     :param polyline: The polyline for the curvature computation
     :return: The curvature of the polyline
     """
-    assert isinstance(polyline, np.ndarray) and polyline.ndim == 2 and len(
-        polyline[:, 0]) > 2, 'Polyline malformed for curvature computation p={}'.format(polyline)
+    assert isinstance(polyline, np.ndarray) and polyline.ndim == 2 and len(polyline[:, 0]) > 2, \
+        'Polyline malformed for curvature computation p={}'.format(polyline)
 
-    curvature=pycrccosy.Util.compute_curvature(polyline)
+    curvature = pycrccosy.Util.compute_curvature(polyline)
     return curvature
 
 
