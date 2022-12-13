@@ -2,6 +2,7 @@ import numpy as np
 import commonroad_dc.pycrccosy as pycrccosy
 from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline, compute_polyline_length,\
     compute_pathlength_from_polyline, compute_orientation_from_polyline
+from matplotlib import pyplot as plt
 
 
 class RefPathLengthException(Exception):
@@ -84,3 +85,26 @@ class CurvilinearCoordinateSystem(pycrccosy.CurvilinearCoordinateSystem):
     def ref_theta(self) -> np.ndarray:
         """orientation along reference path"""
         return self._ref_theta
+
+    def plot_reference_states(self):
+        """function plots orientation, curvature and curvature rate of ref path over s position"""
+        plt.figure(figsize=(7, 7.5))
+        plt.suptitle("Reference path states")
+
+        # orientation
+        plt.subplot(3, 1, 1)
+        plt.plot(self.ref_pos, self.ref_theta, color="k")
+        plt.xlabel("s")
+        plt.ylabel("theta_ref")
+        # curvature
+        plt.subplot(3, 1, 2)
+        plt.plot(self.ref_pos, self.ref_curv, color="k")
+        plt.xlabel("s")
+        plt.ylabel("kappa_ref")
+        # curvature rate
+        plt.subplot(3, 1, 3)
+        plt.plot(self.ref_pos, self.ref_curv_d, color="k")
+        plt.xlabel("s")
+        plt.ylabel("kappa_dot_ref")
+        plt.tight_layout()
+        plt.show()
