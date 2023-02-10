@@ -63,7 +63,7 @@ pip install commonroad-drivability-checker
 ```
 
 To build the drivability checker package from source, please refer to the installation description in the 
-[documentation](https://commonroad.in.tum.de/docs/commonroad-drivability-checker/sphinx/).
+[documentation](https://cps.pages.gitlab.lrz.de/commonroad-drivability-checker/).
 
 
 Documentation
