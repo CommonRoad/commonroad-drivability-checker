@@ -13,6 +13,7 @@ INSTALL="FALSE"
 WHEEL="FALSE"
 CGAL="FALSE"
 NO_ROOT="FALSE"
+DOCS="OFF"
 JOBS=1
 COMMONROAD=""
 
@@ -56,6 +57,7 @@ function print_args() {
   print_info "INSTALL CGAL          = ${CGAL}"
   print_info "NO ROOT               = ${NO_ROOT}"
   print_info "ALLOWED JOBS          = ${JOBS}"
+  print_info "DOCS                  = ${DOCS}"
   print_info "COMMONROAD PATH       = ${COMMONROAD}" -n
 }
 
@@ -131,7 +133,7 @@ function build_dc() {
   (
     set -e
     print_progress "Building drivability checker..." -n
-    BUILD_JOBS="$JOBS" python setup.py build
+    BUILD_JOBS="$JOBS" BUILD_DOC="$DOCS" python setup.py build
     print_progress "Done!" -n
     back_to_basedir
   )
@@ -207,6 +209,11 @@ while [[ $# -gt 0 ]]; do
     COMMONROAD=${COMMONROAD%/}
     shift # past argument
     shift # past value
+    ;;
+
+  -d | --docs)
+    DOCS="ON"
+    shift
     ;;
 
   *) # unknown option

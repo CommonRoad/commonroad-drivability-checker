@@ -1,12 +1,10 @@
 stages:
   - compile
-  - test
-  #  - coverage
+  - build-test-python
   - static-test
   - build-wheels
   - deploy
-#  - docs
-#  - publish
+  - publish
 
 image: $CI_REGISTRY/cps/rapid-prototyping-setup/ci:1.0
 
@@ -24,6 +22,7 @@ before_script:
   - mv ./commonroad/dist/include/ /commonroad/dist/
 
 ### building project ###
+# TODO uncomment compile jobs
 build-compile-commands:
   stage: compile
   script:
@@ -82,38 +81,27 @@ build-test:
       - ./build/
       - ./dist/
     expire_in: 30 minutes
-
-build-run-coverage:
-  stage: compile
-  script:
-    - git submodule update --init
-    - mkdir build-debug && cd build-debug
-    - cmake -DCMAKE_INSTALL_PREFIX=/commonroad/dist/ -DCMAKE_BUILD_TYPE=Debug -DENV_MODEL_BUILD_CODE_COVERAGE=ON -DCMAKE_CXX_FLAGS=--coverage ..
-    - cmake --build . -- -j 4
-  after_script:
-    - mv /commonroad/dist/ ./
-  needs: []
-  artifacts:
-    paths:
-      - ./build/
-      - ./dist/
-    expire_in: 30 minutes
-
 ## tests ###
+# python-37 build-test stage additionally build the documentation
 build-test-python-37:
-  stage: test
+  stage: build-test-python
   before_script:
     - source activate cr37
     - *python-prepare
+    # install pandoc from conda-forge for building the doc
+    - conda install -c conda-forge pandoc
   script:
-    - bash ./build.sh -j 4 --cgal -i
+    - bash ./build.sh -j 4 --cgal -i -d
     - cd tests
     - python run_tests.py
-#    - python -m pytest tests/python
+  artifacts:
+    paths:
+      - ./doc/build
+    expire_in: 30 minutes
   needs: []
 
 build-test-python-38:
-  stage: test
+  stage: build-test-python
   before_script:
     - source activate cr38
     - *python-prepare
@@ -121,11 +109,10 @@ build-test-python-38:
     - bash ./build.sh -j 4 --cgal -i
     - cd tests
     - python run_tests.py
-#    - python -m pytest tests/python
   needs: []
 
 build-test-python-39:
-  stage: test
+  stage: build-test-python
   before_script:
     - source activate cr39
     - *python-prepare
@@ -133,68 +120,9 @@ build-test-python-39:
     - bash ./build.sh -j 4 --cgal -i
     - cd tests
     - python run_tests.py
-#    - python -m pytest tests/python
   needs: []
 
-### coverage ###
-#coverage-analyze:
-#  stage: coverage
-#  before_script:
-#    - *copy-cpp-dist
-#  script:
-#    - gcovr --version
-#    - gcovr
-#      -f src/
-#      -e src/commonroad_cpp/interfaces/standalone/main.cpp
-#      -e src/commonroad_cpp/geometry/shape.h
-#      -e src/commonroad_cpp/interfaces/pybind/
-#      -e /commonroad/dist/include/yaml-cpp/
-#      --print-summary
-#      --exclude-unreachable-branches
-#      --output coverage.xml
-#      --xml
-#  needs:
-#    - job: build-run-coverage
-#      artifacts: true
-#  coverage: /^\s*lines:\s*\d+.\d+\%/
-#  artifacts:
-#    reports:
-#      cobertura: coverage.xml
-#
-#coverage-report:
-#  stage: coverage
-#  before_script:
-#    - *copy-cpp-dist
-#  script:
-#    - gcovr --version
-#    - gcovr
-#      -f src/
-#      -e src/commonroad_cpp/interfaces/standalone/main.cpp
-#      -e src/commonroad_cpp/geometry/shape.h
-#      -e src/commonroad_cpp/interfaces/pybind/
-#      -e /commonroad/dist/include/yaml-cpp/
-#      --print-summary
-#      --exclude-unreachable-branches
-#      --output coverage.html
-#      --html
-#      --html-details
-#    - mkdir coverage
-#    - mv coverage*.html coverage
-#  needs:
-#    - job: build-run-coverage
-#      artifacts: true
-#  artifacts:
-#    paths:
-#      - coverage
-#    expose_as: 'Coverage Report'
-#    expire_in: 30 minutes
-
 ### static test ###
-#clang-format:  # Test must be applied in a clean state
-#  stage: static-test
-#  script: bash ./ci/clang-format.sh
-#  needs: []
-
 clang-tidy:
   stage: static-test
   script: bash ./ci/clang-tidy.sh
@@ -280,9 +208,13 @@ build-wheels-py-36:
       - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
 
 ### deploy wheels ###
-deploy-wheels-internal-registry:
+push-to-internal-registry:
+  # push built wheels to the internal GitLab PyPi registry
   stage: deploy
   image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
+  when: manual
+  only:
+    - development
   script:
     - cd commonroad-drivability-checker
     - /opt/python/cp39-cp39/bin/python -m pip install twine
@@ -297,31 +229,66 @@ deploy-wheels-internal-registry:
     - job: build-wheels-py-36
       artifacts: true
 
-### create documentation ###
-#docs:
-#  stage: docs
-#  script:
-#    - mkdir -p build && cd build
-#    - cmake -DCMAKE_PREFIX_PATH=/commonroad/dist -DCMAKE_BUILD_TYPE=Debug -DBUILD_DOC=ON  ..
-#    - make doc_doxygen ..
-#  dependencies: []
-#  artifacts:
-#    paths:
-#      - build/doc_doxygen/html/
-#    expose_as: 'Doxygen Documentation'
-#    expire_in: 30 minutes
+push-to-external-pypi-test-registry:
+  # push built wheels to the external PyPi test registry
+  # at: https://test.pypi.org/project/commonroad-drivability-checker/
+  stage: deploy
+  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
+  when: manual
+  only:
+    - master
+  script:
+    - cd commonroad-drivability-checker
+    - /opt/python/cp39-cp39/bin/python -m pip install twine
+    - TWINE_PASSWORD=${CR_PYPI_TEST_PASSWORD} TWINE_USERNAME=${CR_PYPI_TEST_USERNAME} /opt/python/cp39-cp39/bin/python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/wheelhouse/* dist/commonroad-drivability-checker-*.tar.gz --verbose
+  needs:
+    - job: build-wheels-py-39
+      artifacts: true
+    - job: build-wheels-py-38
+      artifacts: true
+    - job: build-wheels-py-37
+      artifacts: true
+    - job: build-wheels-py-36
+      artifacts: true
 
-### publish ###
-#pages:
-#  stage: publish
-#  script:
-#    - mv build/doc_doxygen/html public
-#  needs:
-#    - job: docs
-#      artifacts: true
-#  artifacts:
-#    paths:
-#      - public
-#    expire_in: 20 minutes
-#  rules:
-#    - if: '$CI_COMMIT_BRANCH == "master"'
+push-to-external-pypi-registry:
+  # push built wheels to the external PyPi registry
+  # at: https://pypi.org/project/commonroad-drivability-checker/
+  stage: deploy
+  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
+  when: manual
+  only:
+    - master
+  script:
+    - cd commonroad-drivability-checker
+    - /opt/python/cp39-cp39/bin/python -m pip install twine
+    - TWINE_PASSWORD=${CR_PYPI_RELEASE_PASSWORD} TWINE_USERNAME=${CR_PYPI_RELEASE_USERNAME} /opt/python/cp39-cp39/bin/python -m twine upload dist/wheelhouse/* dist/commonroad-drivability-checker-*.tar.gz --verbose
+  needs:
+    - job: build-wheels-py-39
+      artifacts: true
+    - job: build-wheels-py-38
+      artifacts: true
+    - job: build-wheels-py-37
+      artifacts: true
+    - job: build-wheels-py-36
+      artifacts: true
+
+
+### publish documentation ###
+pages:
+  # Push the latest documentation of the development branch to the GitLab Pages
+  # at https://cps.pages.gitlab.lrz.de/commonroad-drivability-checker/
+  stage: publish
+  script:
+    - mv ./doc/build/sphinx public
+  needs:
+    - job: build-test-python-37
+      artifacts: true
+  artifacts:
+    paths:
+      - public
+  environment:
+    name: Gitlab Pages
+    url: https://cps.pages.gitlab.lrz.de/commonroad-drivability-checker/
+  only:
+    - master
