@@ -210,7 +210,9 @@ setup(
         'scipy>=1.4.1',
         'matplotlib>=3.2.2',
         'polygon3>=3.0.8',
-        'shapely>=1.6.4'
+        'shapely>=1.6.4',
+        'setuptools>=62.1.0',
+        'matplotlib>=3.2.2'
     ],
 
     # Additional information
