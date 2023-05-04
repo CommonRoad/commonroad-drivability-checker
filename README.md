@@ -62,6 +62,8 @@ To install the Python package of the drivability checker, please run:
 pip install commonroad-drivability-checker
 ```
 
+**Note for MacOS M1 useres:** We strongly recommend to use Anaconda as a package manager. You need to use the 64-bit Anaconda Installer (graphical or command-line) in order to install the MacOS PyPi package.
+
 To build the drivability checker package from source, please refer to the installation description in the 
 [documentation](https://cps.pages.gitlab.lrz.de/commonroad-drivability-checker/).
 
