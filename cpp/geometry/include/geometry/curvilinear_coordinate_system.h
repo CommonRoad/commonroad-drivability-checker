@@ -195,10 +195,11 @@ class CurvilinearCoordinateSystem
   /**
    *
    * Computes and sets the curvature information for the reference path
+   * @param digits: no. of decimal points for curvature value (default 6)
    *
    */
 
-  int computeAndSetCurvature(void);
+  int computeAndSetCurvature(int digits = 6);
 
   /**
    *
