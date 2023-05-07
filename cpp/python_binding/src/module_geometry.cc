@@ -338,10 +338,10 @@ void init_module_geometry(py::module &m) {
       .def("compute_and_set_curvature", [](geometry::CurvilinearCoordinateSystem &cosy, const int digits){
                return cosy.computeAndSetCurvature(digits);
            },
-           py::arg("digits") = 6,
+           py::arg("digits") = 8,
            "Automatically computes and sets the curvature information for the "
            "reference path."
-           "\n\n:param digits:  no. of decimal points for curvature value (default 6)")
+           "\n\n:param digits:  no. of decimal points for curvature value (default 8)")
 
 #if ENABLE_SERIALIZER
       .def(py::pickle(
