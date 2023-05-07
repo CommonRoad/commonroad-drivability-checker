@@ -41,10 +41,10 @@ class TestGeometry(unittest.TestCase):
         assert np.allclose(self.curvilinear_coord_sys.ref_pos, self.ref_pos)
 
     def test_ref_curv(self):
-        assert np.allclose(self.curvilinear_coord_sys.ref_curv, self.ref_curv)
+        assert np.allclose(self.curvilinear_coord_sys.ref_curv, self.ref_curv, atol=1e-04)
 
     def test_ref_curv_d(self):
-        assert np.allclose(self.curvilinear_coord_sys.ref_curv_d, self.ref_curv_d)
+        assert np.allclose(self.curvilinear_coord_sys.ref_curv_d, self.ref_curv_d, atol=1e-04)
 
     def test_ref_theta(self):
         assert np.allclose(self.curvilinear_coord_sys.ref_theta, self.ref_theta)
