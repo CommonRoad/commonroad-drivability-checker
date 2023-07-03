@@ -10,33 +10,32 @@ int resample_polyline(const RowMatrixXd& polyline, double step,
   }
 
   new_polyline = geometry::EigenPolyline();
-  new_polyline.push_back(polyline.middleRows(0, 1).transpose().eval());
+  new_polyline.push_back(polyline.row(0).transpose().eval());
   double current_position = step;
-  double current_length =
-      (polyline.middleRows(0, 1) - polyline.middleRows(1, 1)).norm();
+  double current_length = (polyline.row(0) - polyline.row(1)).norm();
   int current_idx = 0;
   while (current_idx < (polyline.rows() - 1)) {
     if (current_position >= current_length) {
       current_position = current_position - current_length;
       current_idx += 1;
       if (current_idx > polyline.rows() - 2) break;
-      current_length = (polyline.middleRows(current_idx + 1, 1) -
-                        polyline.middleRows(current_idx, 1))
-                           .norm();
+      current_length = (polyline.row(current_idx + 1) - polyline.row(current_idx)).norm();
     } else {
       double rel = current_position / current_length;
-      new_polyline.push_back(((1 - rel) * polyline.middleRows(current_idx, 1) +
-                              rel * polyline.middleRows(current_idx + 1, 1))
-                                 .eval()
-                                 .transpose()
-                                 .eval());
+      new_polyline.push_back(
+          ((1 - rel) * polyline.row(current_idx) + rel * polyline.row(current_idx + 1))
+              .eval()
+              .transpose()
+              .eval());
       current_position += step;
     }
   }
+
+  Eigen::Vector2d last = polyline.bottomRows<1>().transpose();
+
   // avoid duplicating last point due to precision errors
-  if ( (polyline.middleRows(polyline.rows() - 1, 1) - new_polyline.back()).norm() >=1e-6) {
-    new_polyline.push_back(
-        polyline.middleRows(polyline.rows() - 1, 1).transpose().eval());
+  if ((last - new_polyline.back()).norm() >= 1e-6) {
+      new_polyline.push_back(last.eval());
   }
 
   return 0;
@@ -75,13 +74,13 @@ int chaikins_corner_cutting(const RowMatrixXd& polyline, int refinements,
 
     RowMatrixXd R = RowMatrixXd::Zero(el.rows(), el.cols());
 
-    R.middleRows(0, 1) = el.middleRows(0, 1);
+    R.row(0) = el.row(0);
 
     for (int cc1 = 2; cc1 < R.rows(); cc1 += 2) {
-      R.middleRows(cc1, 1) = el.middleRows(cc1 - 1, 1);
-      R.middleRows(cc1 - 1, 1) = el.middleRows(cc1, 1);
+      R.row(cc1) = el.row(cc1 - 1);
+      R.row(cc1 - 1) = el.row(cc1);
     }
-    R.middleRows(R.rows() - 1, 1) = el.middleRows(el.rows() - 1, 1);
+    R.row(R.rows() - 1) = el.row(el.rows() - 1);
 
     el2 = (el * 0.75 + R * 0.25).eval();
   }
@@ -105,7 +104,7 @@ int chaikins_corner_cutting(const geometry::EigenPolyline& polyline,
 int to_RowMatrixXd(const geometry::EigenPolyline& polyline, RowMatrixXd& ret) {
   ret = RowMatrixXd(polyline.size(), 2);
   for (int cc1 = 0; cc1 < polyline.size(); cc1++) {
-    ret.middleRows(cc1, 1) = polyline[cc1].transpose().eval();
+    ret.row(cc1) = polyline[cc1].transpose().eval();
   }
   return 0;
 }
@@ -114,7 +113,7 @@ int to_EigenPolyline(const RowMatrixXd& polyline,
                      geometry::EigenPolyline& ret) {
   ret = geometry::EigenPolyline();
   for (int cc1 = 0; cc1 < polyline.rows(); cc1++) {
-    ret.push_back(polyline.middleRows(cc1, 1).transpose().eval());
+    ret.push_back(polyline.row(cc1).transpose().eval());
   }
   return 0;
 }
