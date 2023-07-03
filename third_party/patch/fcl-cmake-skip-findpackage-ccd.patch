@@ -1,0 +1,25 @@
+From 860a53cc77920d259023f89040491b6db165916d Mon Sep 17 00:00:00 2001
+From: Tobias Markus <tobias.markus@tum.de>
+Date: Mon, 22 Aug 2022 15:07:22 +0200
+Subject: [PATCH] cmake: Skip find_package call for ccd
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6e5bbb8..29f726c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -178,7 +178,7 @@ endif()
+ # If libccd is not found, manually set the cache variables CCD_INCLUDE_DIR and
+ # CCD_LIBRARY
+ #===============================================================================
+-find_package(ccd QUIET)
++# find_package(ccd QUIET)
+ 
+ # If ccd-config.cmake is not found, use pkg-config and/or find_path() and
+ # find_library()
+-- 
+2.37.2
+

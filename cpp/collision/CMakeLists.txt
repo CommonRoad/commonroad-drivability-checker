@@ -1,12 +1,6 @@
 ### Definition of crcc
 
-find_package(fcl REQUIRED)
-
-find_package(ccd REQUIRED)
-
-find_package(box2d REQUIRED)
-
-find_package( Boost REQUIRED)
+find_package(Boost REQUIRED)
 
 
 set(COLLISION_SRC_ROOT ${COLLISION_ROOT}/src)
@@ -98,17 +92,13 @@ target_include_directories(crcc
         ${Boost_INCLUDE_DIRS} 
     )
 
-if(NOT s11n_FOUND)
+if(NOT TARGET s11n::s11n)
     message(STATUS "Serialization and pickling support have been disabled for crcc")
     target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=0)
 else()
     message(STATUS "Serialization and pickling support have been enabled for crcc")
-    if(NOT WIN32)
-		target_link_libraries(crcc PUBLIC s11n::s11n)
-    else()
-		target_link_libraries(crcc PUBLIC s11n)
-	endif()
-	target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=1)
+    target_link_libraries(crcc PUBLIC s11n::s11n)
+    target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=1)
 endif()
 
 if(ADD_TRIANGLE)
@@ -122,7 +112,7 @@ target_link_libraries(crcc
     fcl
     ccd
     Eigen3::Eigen
-    box2d::box2d
+    box2d
 )
 
 if(ADD_TRIANGLE)

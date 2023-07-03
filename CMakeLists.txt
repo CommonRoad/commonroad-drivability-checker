@@ -1,11 +1,7 @@
 project(DrivabilityChecker)
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.18)
 
-# Flags for enabling superbuild
-option(BUILD_LIBCCD "build vendored libccd" ON)
-option(BUILD_FCL "build vendored fcl" ON)
-option(BUILD_S11N "build vendored s11n" ON)
-option(BUILD_BOX2D "build vendored box2d" ON)
+option(BUILD_SHARED_LIBS "Build dc as a shared library" OFF)
 
 # commonroad_dc flags
 option(ADD_TESTS "unit tests" OFF)
@@ -15,6 +11,9 @@ option(ADD_MODULE_COLLISION "add collision module" ON)
 option(ADD_PYTHON_BINDINGS "add Python bindings" OFF)
 option(ADD_TRIANGLE "Use a non-free Triangle library" OFF)
 
+# FIXME Maybe rename this option in the future?
+# Note: BUILD_S11N is already used by other projects
+option(BUILD_S11N "enable serialization support using s11n" ON)
 
 if("${CMAKE_BINARY_DIR}" EQUAL "${PROJECT_SOURCE_DIR}/build")
   message(WARNING
@@ -25,113 +24,50 @@ if("${CMAKE_BINARY_DIR}" EQUAL "${PROJECT_SOURCE_DIR}/build")
     )
 endif()
 
-include(ExternalProject)
+# TODO: Investigate migrating setup.py to skbuild,
+# a build system specifically for C/C++ Python extension modules
 
-set(SUPERBUILD_PREFIX_DIR  ${CMAKE_CURRENT_BINARY_DIR}/superbuild)
-set(SUPERBUILD_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/install)
-set_directory_properties(PROPERTIES EP_BASE ${SUPERBUILD_PREFIX_DIR})
+# Users should generally not use ADD_PYTHON_BINDINGS directly
+mark_as_advanced(ADD_PYTHON_BINDINGS)
 
-set(DEPEND_LIBCCD "")
-if(BUILD_LIBCCD)
-  set(DEPEND_LIBCCD libccd)
-  ExternalProject_Add(libccd
-      SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/third_party/libccd"
-      INSTALL_DIR       "${SUPERBUILD_INSTALL_DIR}"
-      CMAKE_ARGS
-        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-        -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-        -DBUILD_DOCUMENTATION:BOOL=OFF
-        -DBUILD_TESTING:BOOL=OFF
-        -DBUILD_SHARED_LIBS:BOOL=OFF
-        -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
-        -DENABLE_DOUBLE_PRECISION:BOOL=ON
-
-  )
+if(ADD_PYTHON_BINDINGS)
+  message(STATUS "PYTHON MODE - assuming we are invoked by pip/setup.py")
+  message(STATUS "PYTHON MODE - building static libraries")
+  set(BUILD_SHARED_LIBS OFF)
+  set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
-set(DEPEND_FCL "")
-if(BUILD_FCL)
-  set(DEPEND_FCL fcl)
-  ExternalProject_Add(fcl
-      SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/third_party/fcl"
-      INSTALL_DIR       "${SUPERBUILD_INSTALL_DIR}"
-      CMAKE_ARGS
-        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-        -DCMAKE_PREFIX_PATH=${SUPERBUILD_PREFIX_DIR}
-        -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-        -DBUILD_TESTING:BOOL=OFF
-        -DFCL_STATIC_LIBRARY:BOOL=ON
-        -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON	
-      DEPENDS ${DEPEND_LIBCCD}
-  )
-endif()
+include(FetchContent)
 
-set(DEPEND_S11N "")
-if(NOT WIN32)
-	if(BUILD_S11N)
-	  set(DEPEND_S11N s11n)
-	  ExternalProject_Add(s11n
-		  SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/third_party/libs11n"
-		  INSTALL_DIR       "${SUPERBUILD_INSTALL_DIR}"
-		  CMAKE_ARGS
-			-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-			-DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-			-DBUILD_SHARED_LIBS:BOOL=ON
-			-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
-	  )
-	endif()
-endif(NOT WIN32)
-
-set(DEPEND_BOX2D "")
-if(BUILD_BOX2D)
-  set(DEPEND_BOX2D box2d)
-  ExternalProject_Add(box2d
-      SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/third_party/box2d"
-      INSTALL_DIR       "${SUPERBUILD_INSTALL_DIR}"
-      CMAKE_ARGS
-        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-        -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-        -DBOX2D_BUILD_TESTBED:BOOL=OFF
-        -DBOX2D_BUILD_DOCS:BOOL=OFF
-        -DBOX2D_BUILD_UNIT_TESTS:BOOL=OFF
-        -DBUILD_SHARED_LIBS:BOOL=OFF
-        -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
-  )
-endif()
-
-ExternalProject_Add(commonroad_dc
-    SOURCE_DIR        "${CMAKE_CURRENT_LIST_DIR}/cpp"
-    INSTALL_DIR       "${SUPERBUILD_INSTALL_DIR}"
-    CMAKE_ARGS
-      -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-      -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
-      -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-      -DBUILD_SHARED_LIBS:BOOL=OFF
-      -DBUILD_DOC:BOOL=${BUILD_DOC}
-      -DADD_TESTS:BOOL=${ADD_TESTS}
-      -DADD_MODULE_COLLISION:BOOL=${ADD_MODULE_COLLISION}
-      -DADD_MODULE_GEOMETRY:BOOL=${ADD_MODULE_GEOMETRY}
-      -DADD_PYTHON_BINDINGS:BOOL=${ADD_PYTHON_BINDINGS}
-      -DADD_TRIANGLE:BOOL=${ADD_TRIANGLE}
-      -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
-      -DPYTHON_LIBRARY:PATH=${PYTHON_LIBRARY}
-      -DPYTHON_EXECUTABLE:PATH=${PYTHON_EXECUTABLE}
-      -DPATH_TO_PYTHON_ENVIRONMENT:PATH=${PATH_TO_PYTHON_ENVIRONMENT}
-      -DPYTHON_VER=${PYTHON_VER}
-      -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-      -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-      
-    DEPENDS ${DEPEND_BOX2D} ${DEPEND_S11N} ${DEPEND_FCL}
-    BUILD_ALWAYS TRUE
-)
-
-# Note: commonroad_dc and its dependencies will be installed to the SUPERBUILD_INSTALL_DIR
-# during the build. This directory is only intended for internal usage.
+# Disable verbose git clone output if we are invoked by Python
+# The Git progress messages don't work correctly when relayed by Python
 #
-# After the internal build completes, the whole internal install tree is installed
-# using the usual CMake install command below (honoring CMAKE_INSTALL_PREFIX etc.).
+# Explanation: Verbose Git output is enabled iff GIT_PROGRESS=ON *and* FETCHCONTENT_QUIET=OFF
+# We set GIT_PROGRESS to ON in every FetchContent_Declare call, and set FETCHCONTENT_QUIET to off
+# if we are invoked by Python.
+#
+# References:
+# https://cmake.org/cmake/help/v3.24/module/FetchContent.html#variable:FETCHCONTENT_QUIET
+# https://cmake.org/cmake/help/v3.24/module/ExternalProject.html?highlight=git_progress
+set(FETCHCONTENT_QUIET ${ADD_PYTHON_BINDINGS})
 
-install(
-  DIRECTORY ${SUPERBUILD_INSTALL_DIR}/
-  DESTINATION "."
-  )
+include(third_party/external_libccd_fcl.cmake)
+
+include(third_party/external_pybind11.cmake)
+
+include(third_party/external_box2d.cmake)
+
+include(third_party/external_triangle.cmake)
+
+include(third_party/external_gpc.cmake)
+
+if(BUILD_S11N)
+    add_subdirectory(third_party/libs11n)
+
+    # FIXME Curently we use s11n_FOUND in various places to check whether we are using s11n
+    # since we previously used find_package/ExternalProject.
+    # Uses of s11n_FOUND should simply be changed to BUILD_S11N
+    set(s11n_FOUND TRUE)
+endif()
+
+add_subdirectory(cpp)

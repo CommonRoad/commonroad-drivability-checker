@@ -1,0 +1,34 @@
+From c7f869f11f1f97d0d0aed970b01da863d745c973 Mon Sep 17 00:00:00 2001
+From: Tobias Markus <tobias.markus@tum.de>
+Date: Mon, 22 Aug 2022 15:03:44 +0200
+Subject: [PATCH] cmake: Set correct install directory
+
+---
+ CMakeLists.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 35bf430..1d8ddf5 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -62,14 +62,14 @@ write_basic_package_version_file(ccd-config-version.cmake
+   VERSION ${CCD_VERSION} COMPATIBILITY AnyNewerVersion)
+ 
+ install(FILES
+-  "${CMAKE_BINARY_DIR}/ccd-config.cmake"
+-  "${CMAKE_BINARY_DIR}/ccd-config-version.cmake"
++  "${CMAKE_CURRENT_BINARY_DIR}/ccd-config.cmake"
++  "${CMAKE_CURRENT_BINARY_DIR}/ccd-config-version.cmake"
+   DESTINATION "${CMAKE_INSTALL_LIBDIR}/ccd")
+ 
+ set(CCD_PKGCONFIG_DESCRIPTION
+   "Library for collision detection between convex shapes")
+ configure_file(ccd.pc.in ccd.pc @ONLY)
+-install(FILES "${CMAKE_BINARY_DIR}/ccd.pc"
++install(FILES "${CMAKE_CURRENT_BINARY_DIR}/ccd.pc"
+   DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+ 
+ install(FILES BSD-LICENSE DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/doc/ccd")
+-- 
+2.37.2
+

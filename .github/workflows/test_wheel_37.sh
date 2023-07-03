@@ -9,7 +9,7 @@ cd collision
 python "pickle_test.py"
 python "collision_unit_tests.py"
 cd ../geometry
-python "pickle_test.py"
+python "test_pickle.py"
 
 
 

@@ -1,0 +1,45 @@
+From 994c93324a4370507875dc70eee28c9690073a9b Mon Sep 17 00:00:00 2001
+From: Tobias Markus <tobias@miglix.eu>
+Date: Mon, 22 Aug 2022 15:20:24 +0200
+Subject: [PATCH 2/2] cmake: Disable warnings on GCC/Clang
+
+FCL enables lots of warnings unconditionally, but as users of FCL we don't
+really care about them.
+---
+ CMakeModules/CompilerSettings.cmake | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeModules/CompilerSettings.cmake b/CMakeModules/CompilerSettings.cmake
+index 96b9e1f..c5850ad 100644
+--- a/CMakeModules/CompilerSettings.cmake
++++ b/CMakeModules/CompilerSettings.cmake
+@@ -33,7 +33,7 @@
+ 
+ # GCC
+ if(CMAKE_COMPILER_IS_GNUCXX)
+-    add_definitions(-std=c++11 -W -Wall -Wextra -Wpedantic)
++    add_definitions(-std=c++11)
+     if(FCL_TREAT_WARNINGS_AS_ERRORS)
+         add_definitions(-Werror)
+     endif()
+@@ -41,7 +41,7 @@ endif()
+ 
+ # Clang
+ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+-    add_definitions(-std=c++11 -W -Wall -Wextra)
++    add_definitions(-std=c++11)
+     if(FCL_TREAT_WARNINGS_AS_ERRORS)
+         add_definitions(-Werror)
+     endif()
+@@ -53,7 +53,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.1)
+         message(FATAL_ERROR "AppleClang version must be at least 6.1!")
+     endif()
+-    add_definitions(-std=c++11 -W -Wall -Wextra)
++    add_definitions(-std=c++11)
+     if(FCL_TREAT_WARNINGS_AS_ERRORS)
+         add_definitions(-Werror)
+     endif()
+-- 
+2.37.2
+
