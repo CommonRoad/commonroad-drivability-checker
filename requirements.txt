@@ -4,7 +4,7 @@ numpy>=1.19
 shapely>=1.6.4
 matplotlib>=3.2.2
 jupyter>=1.0.0
-scipy==1.6.0
+scipy>=1.4.1
 pandoc>=1.0.2
 sphinx_rtd_theme>=0.4.3
 sphinx>=3.0.3
