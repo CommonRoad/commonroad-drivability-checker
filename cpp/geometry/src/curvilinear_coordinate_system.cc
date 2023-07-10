@@ -1223,11 +1223,50 @@ void CurvilinearCoordinateSystem::computeBestProjectionAxisForSegments() {
   }
 }
 
-int CurvilinearCoordinateSystem::findSegmentIndex(double s) const {
+
+std::optional<int> CurvilinearCoordinateSystem::findSegmentIndex_Fast(double s) const {
   if ((s < 0) || (s > this->length_)) {
-    return -1;
+    return std::nullopt;
   }
-  int idx = -1;
+
+#ifndef NDEBUG
+  bool sorted = std::is_sorted(this->segment_longitudinal_coord_.cbegin(), this->segment_longitudinal_coord_.cend());
+  assert(sorted);
+#endif
+
+  assert(this->segment_longitudinal_coord_.size() == this->segment_list_.size() + 1);
+
+  // std::lower_bound finds the first segment with a longitudinal coordinate greater or equal s
+  // However, we need the last segment with a longitudinal coordinate less than s
+  // Therefore, a few special cases need to be handled below
+  auto it = std::lower_bound(this->segment_longitudinal_coord_.cbegin(), this->segment_longitudinal_coord_.cend(), s);
+
+  // If lower_bound returns the first segment, then s is lower than all segment longitudinal coordinates
+  // and thus outside the projection domain
+  if (it == this->segment_longitudinal_coord_.cbegin()) {
+    return std::nullopt;
+  }
+
+  // Move the iterator to the last segment with a longitudinal coordinate less than s
+  it = std::prev(it);
+
+#ifndef NDEBUG
+  assert(s >= *it);
+  if (std::next(it) != this->segment_longitudinal_coord_.cend()) {
+    assert(*it <= *std::next(it));
+  }
+#endif
+
+  return std::distance(this->segment_longitudinal_coord_.cbegin(), it);
+}
+
+
+std::optional<int> CurvilinearCoordinateSystem::findSegmentIndex_Slow(double s) const {
+  if ((s < 0) || (s > this->length_)) {
+    return std::nullopt;
+  }
+
+  std::optional<int> idx = std::nullopt;
   for (int i = 0; i < this->segment_list_.size(); i++) {
     double s_1 = this->segment_longitudinal_coord_[i];
     double s_2 = this->segment_longitudinal_coord_[i + 1];
@@ -1237,6 +1276,23 @@ int CurvilinearCoordinateSystem::findSegmentIndex(double s) const {
     }
   }
   return idx;
+}
+
+
+std::optional<int> CurvilinearCoordinateSystem::tryFindSegmentIndex(double s) const {
+  auto idx_fast = this->findSegmentIndex_Fast(s);
+
+#ifndef NDEBUG
+  auto idx_slow = this->findSegmentIndex_Slow(s);
+  assert(idx_slow == idx_fast);
+#endif
+
+  return idx_fast;
+}
+
+
+int CurvilinearCoordinateSystem::findSegmentIndex(double s) const {
+  return this->tryFindSegmentIndex(s).value_or(-1);
 }
 
 std::vector<std::vector<std::tuple<int, double, double>>>

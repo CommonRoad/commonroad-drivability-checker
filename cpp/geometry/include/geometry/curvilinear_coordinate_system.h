@@ -10,6 +10,7 @@
 #include <memory>
 #include <numeric>
 #include <vector>
+#include <optional>
 
 #include <Eigen/Dense>
 #include <Eigen/StdVector>
@@ -620,9 +621,22 @@ class CurvilinearCoordinateSystem
    */
   int findSegmentIndex(double s) const;
 
+  /**
+   * Finds the corresponding segment for a given longitudinal coordinate of a
+   * point.
+   *
+   * @param s longitudinal coordinate
+   * @return segment index, or std::nullopt if not found
+   */
+  std::optional<int> tryFindSegmentIndex(double s) const;
+
+
   void removeSegment(int ind);
 
  private:
+  std::optional<int> findSegmentIndex_Fast(double s) const;
+  std::optional<int> findSegmentIndex_Slow(double s) const;
+
   EigenPolyline reference_path_original_;
   EigenPolyline reference_path_;
 
