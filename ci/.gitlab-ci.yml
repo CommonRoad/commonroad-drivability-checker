@@ -188,25 +188,6 @@ build-wheels-py-37:
     paths:
       - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
 
-build-wheels-py-36:
-  stage: build-wheels
-  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
-  when: manual
-  script:
-    # Prepare build (master branch is built)
-    - git clone -b master git@gitlab.lrz.de:cps/commonroad-drivability-checker.git
-    - cd commonroad-drivability-checker
-    - git submodule update --init
-    # Preparing PyPi
-    - /opt/python/cp36-cp36m/bin/python setup.py sdist
-    - /opt/python/cp36-cp36m/bin/python setup.py bdist_wheel
-    - cd dist
-    - auditwheel show *.whl
-    - auditwheel repair *.whl
-  artifacts:
-    paths:
-      - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
-
 ### deploy wheels ###
 push-to-internal-registry:
   # push built wheels to the internal GitLab PyPi registry
@@ -225,8 +206,6 @@ push-to-internal-registry:
     - job: build-wheels-py-38
       artifacts: true
     - job: build-wheels-py-37
-      artifacts: true
-    - job: build-wheels-py-36
       artifacts: true
 
 push-to-external-pypi-test-registry:
@@ -248,8 +227,6 @@ push-to-external-pypi-test-registry:
       artifacts: true
     - job: build-wheels-py-37
       artifacts: true
-    - job: build-wheels-py-36
-      artifacts: true
 
 push-to-external-pypi-registry:
   # push built wheels to the external PyPi registry
@@ -269,8 +246,6 @@ push-to-external-pypi-registry:
     - job: build-wheels-py-38
       artifacts: true
     - job: build-wheels-py-37
-      artifacts: true
-    - job: build-wheels-py-36
       artifacts: true
 
 
