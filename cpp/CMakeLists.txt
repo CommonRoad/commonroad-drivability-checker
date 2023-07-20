@@ -3,8 +3,7 @@ set(CMAKE_INTERPROCEDURAL_OPTIMIZATION FALSE)
 endif(WIN32)
 
 # Add modules for discovering Sphinx etc.
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMakeModules" ${CMAKE_MODULE_PATH})
-
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules" ${CMAKE_MODULE_PATH})
 
 if(APPLE)
    # do nothing
