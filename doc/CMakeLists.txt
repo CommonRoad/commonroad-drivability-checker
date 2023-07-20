@@ -62,5 +62,6 @@ install(DIRECTORY ${SPHINX_BUILD}
   DESTINATION ${CMAKE_INSTALL_DOCDIR})
 
 # Please uncomment the next line to also install the doxygen documentation into the dist directory
-#install(DIRECTORY ${DOXYGEN_OUTPUT_DIR} DESTINATION ${CMAKE_INSTALL_DOCDIR})
+install(DIRECTORY ${DOXYGEN_OUTPUT_DIR}
+  DESTINATION ${CMAKE_INSTALL_DOCDIR}/sphinx)
 

@@ -1124,11 +1124,13 @@ Eigen::VectorXd CurvilinearCoordinateSystem::computeCurvature(
   return curvature;
 }
 
-int CurvilinearCoordinateSystem::computeAndSetCurvature(void) {
+int CurvilinearCoordinateSystem::computeAndSetCurvature(int digits) {
   auto curvature = computeCurvature(referencePath());
   std::vector<double> curv;
+  double precision = pow(10.0, digits);
   for (int cc1 = 0; cc1 < curvature.size(); cc1++) {
-    curv.push_back(curvature[cc1]);
+    // round value to precision
+    curv.push_back(std::round(curvature[cc1] * precision) / precision);
   }
   this->setCurvature(curv);
   return 0;

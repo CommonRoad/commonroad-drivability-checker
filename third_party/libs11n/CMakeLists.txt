@@ -37,9 +37,25 @@ file(GLOB_RECURSE S11_HEADERS ${PROJECT_SOURCE_DIR}/include/*.hpp)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-add_library(s11n ${S11_SRC})
+# IMPORTANT NOTE:
+#
+# Building s11n as a static library WON'T WORK and will SILENTLY BREAK serialization
+# When linking against a static library, the linker will only add symbols which are
+# actually used in the resulting executable/shared library.
+# However, the plugin system used by s11n needs all s11n symbols to be included,
+# even when some plugin symbols appear to be unused.
+#
+# As a result, it is only possible to use s11n as a shared library or an object library.
+# The latter option will result in s11n's object files being included directly
+# (without creating a static archive first).
+
+add_library(s11n OBJECT ${S11_SRC})
+
+add_library(s11n::s11n ALIAS s11n)
 
 set_property(TARGET s11n PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+target_compile_options(s11n PUBLIC $<$<CXX_COMPILER_ID:GNU,Clang>:-Wno-deprecated-declarations>)
 
 target_include_directories(s11n
   PUBLIC

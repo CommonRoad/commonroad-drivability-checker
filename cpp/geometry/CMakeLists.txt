@@ -46,15 +46,11 @@ target_include_directories(crccosy
 
 
 
-if(NOT s11n_FOUND)
+if(NOT TARGET s11n::s11n)
     message(STATUS "Serialization and pickling support have been disabled for crccosy")
     target_compile_definitions(crccosy PRIVATE -DENABLE_SERIALIZER=0)
 else()
     message(STATUS "Serialization and pickling support have been enabled for crccosy")
-	if(NOT WIN32)
-		target_link_libraries(crccosy PUBLIC s11n::s11n)
-	else()
-		target_link_libraries(crccosy PUBLIC s11n)
-	endif()
+    target_link_libraries(crccosy PUBLIC s11n::s11n)
     target_compile_definitions(crccosy PRIVATE -DENABLE_SERIALIZER=1)
 endif()

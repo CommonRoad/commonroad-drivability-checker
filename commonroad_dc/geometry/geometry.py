@@ -1,7 +1,9 @@
+from typing import Optional
 import numpy as np
 import commonroad_dc.pycrccosy as pycrccosy
 from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline, compute_polyline_length,\
     compute_pathlength_from_polyline, compute_orientation_from_polyline
+from matplotlib import pyplot as plt
 
 
 class RefPathLengthException(Exception):
@@ -42,15 +44,16 @@ class CurvilinearCoordinateSystem(pycrccosy.CurvilinearCoordinateSystem):
 
         # initialize Curvilinear Coordinate System
         super().__init__(ref_path, default_projection_domain_limit, eps, eps2)
-        # compute curvature
-        super().compute_and_set_curvature()
 
         # initialize reference attributes
         self._reference = np.asarray(super().reference_path())
         self._ref_pos = compute_pathlength_from_polyline(self.reference)
-        self._ref_curv = np.asarray(super().get_curvature())
-        self._ref_curv_d = np.gradient(self._ref_curv, self._ref_pos)
         self._ref_theta = np.unwrap(compute_orientation_from_polyline(self.reference))
+        self._ref_curv: Optional[np.ndarray] = None
+        self._ref_curv_d: Optional[np.ndarray] = None
+
+        # compute curvature and curvature derivative
+        self.compute_and_set_curvature()
 
     def __getstate__(self):
         return(pycrccosy.CurvilinearCoordinateSystem.__getstate__(self),
@@ -84,3 +87,37 @@ class CurvilinearCoordinateSystem(pycrccosy.CurvilinearCoordinateSystem):
     def ref_theta(self) -> np.ndarray:
         """orientation along reference path"""
         return self._ref_theta
+
+    def compute_and_set_curvature(self, digits: int = 8):
+        """
+        Computes curvature and sets curvature _ref_curv and its derivative _ref_curv_d
+        :param digits: no. of decimal points to round curvature values
+        """
+        # call compute curvature function of C++ class
+        super().compute_and_set_curvature(digits)
+        # set curvature and curvature change
+        self._ref_curv = np.asarray(super().get_curvature())
+        self._ref_curv_d = np.gradient(self._ref_curv, self._ref_pos)
+
+    def plot_reference_states(self):
+        """function plots orientation, curvature and curvature rate of ref path over s position"""
+        plt.figure(figsize=(7, 7.5))
+        plt.suptitle("Reference path states")
+
+        # orientation
+        plt.subplot(3, 1, 1)
+        plt.plot(self.ref_pos, self.ref_theta, color="k")
+        plt.xlabel("s")
+        plt.ylabel("theta_ref")
+        # curvature
+        plt.subplot(3, 1, 2)
+        plt.plot(self.ref_pos, self.ref_curv, color="k")
+        plt.xlabel("s")
+        plt.ylabel("kappa_ref")
+        # curvature rate
+        plt.subplot(3, 1, 3)
+        plt.plot(self.ref_pos, self.ref_curv_d, color="k")
+        plt.xlabel("s")
+        plt.ylabel("kappa_dot_ref")
+        plt.tight_layout()
+        plt.show()

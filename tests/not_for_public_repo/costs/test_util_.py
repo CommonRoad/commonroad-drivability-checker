@@ -5,18 +5,17 @@ from commonroad.common.solution import CommonRoadSolutionReader
 from commonroad_dc import pycrccosy
 
 matplotlib.use('TkAgg')
-import matplotlib.pyplot as plt
 
 from commonroad.common.file_reader import CommonRoadFileReader
 from commonroad_dc.costs.route_matcher import *
-
-draw = True
+from commonroad.visualization.draw_params import LaneletNetworkParams, DynamicObstacleParams
 
 
 class TestLaneletNetworkMatcher(unittest.TestCase):
     def setUp(self) -> None:
         self.test_ressources_dir = os.path.join(os.path.dirname(__file__), "ressources")
         self.test_scenario_dir = os.path.join(self.test_ressources_dir, "scenarios")
+        self.draw = True
 
     def test_find_lanelet_by_trajectory(self):
         scenario_name = "USA_Lanker-2_23_T-1.xml"
@@ -26,21 +25,28 @@ class TestLaneletNetworkMatcher(unittest.TestCase):
             lanelets, props = lnm.find_lanelets_by_trajectory(obs.prediction.trajectory,
                                                        required_properties=[SolutionProperties.LonJerk])
 
-            if draw is True:
+            if self.draw is True:
                 l_tmp = LaneletNetwork.create_from_lanelet_list([lnm.lanelet_network._lanelets[l] for l in lanelets])
                 plt.figure()
                 rnd = MPRenderer()
-                lnm.lanelet_network.draw(rnd)
-                l_tmp.draw(draw_params={'lanelet': {'facecolor': 'red'},   "traffic_sign": {
-                    "draw_traffic_signs": False},  "traffic_light": {
-                    "draw_traffic_lights": False}}, renderer=rnd)
-                obs.draw(draw_params={'time_begin':0, 'time_end': obs.prediction.final_time_step}, renderer=rnd)
+                rnd.draw_params.time_begin = 0
+                lnm_params = LaneletNetworkParams()
+                lnm_params.traffic_sign.draw_traffic_signs = False
+                lnm_params.traffic_light.draw_traffic_lights = False
+                lnm.lanelet_network.draw(rnd, draw_params=lnm_params)
+                lnm_params.lanelet.facecolor = "red"
+                l_tmp.draw(renderer=rnd, draw_params=lnm_params)
+                rnd.draw_params.time_end = obs.prediction.final_time_step
+                obs_params = DynamicObstacleParams()
+                obs_params.trajectory.draw_continuous = True
+                obs_params.trajectory.line_width = 1.0
+                obs.draw(renderer=rnd, draw_params=obs_params)
                 rnd.render(show=False)
                 plt.show(block=False)
 
                 plt.pause(0.01)
 
-        if draw is True:
+        if self.draw is True:
             plt.pause(1000)
 
     def test_find_lanelet_by_trajectory_oncoming_in_intersection(self):
@@ -54,21 +60,23 @@ class TestLaneletNetworkMatcher(unittest.TestCase):
         lanelets, props = lnm.find_lanelets_by_trajectory(solution.planning_problem_solutions[0].trajectory,
                                                    required_properties=[SolutionProperties.LonJerk])
 
-        self.assertEqual([31740, 36042], lanelets)
-
-        if draw is True:
+        if self.draw is True:
             l_tmp = LaneletNetwork.create_from_lanelet_list([lnm.lanelet_network._lanelets[l] for l in lanelets])
             plt.figure()
             rnd = MPRenderer()
-            lnm.lanelet_network.draw(rnd)
-            l_tmp.draw(draw_params={'lanelet': {'facecolor': 'red'},   "traffic_sign": {
-                "draw_traffic_signs": False},  "traffic_light": {
-                "draw_traffic_lights": False}}, renderer=rnd)
-            solution.planning_problem_solutions[0].trajectory.draw(draw_params={'time_begin':0}, renderer=rnd)
+            rnd.draw_params.time_begin = 0
+            lnm_params = LaneletNetworkParams()
+            lnm_params.traffic_sign.draw_traffic_signs = False
+            lnm_params.traffic_light.draw_traffic_lights = False
+            lnm.lanelet_network.draw(rnd, draw_params=lnm_params)
+            lnm_params.lanelet.facecolor = "red"
+            lnm_params.lanelet.show_label = True
+            l_tmp.draw(renderer=rnd, draw_params=lnm_params)
+            solution.planning_problem_solutions[0].trajectory.draw(renderer=rnd)
             rnd.render(show=False)
-            plt.show(block=False)
+            plt.show(block=True)
 
-            plt.pause(1000)
+        self.assertEqual([31740], lanelets)
 
     def test_compute_curvilinear_coordinates(self):
         cy = pycrccosy.CurvilinearCoordinateSystem([[1.0, 1.0], [2.0, 1.0], [3.0, 1.0], [4.0, 1.0]])
@@ -82,15 +90,22 @@ class TestLaneletNetworkMatcher(unittest.TestCase):
             trajectory, lanelets, props = lnm.compute_curvilinear_coordinates(obs.prediction.trajectory,
                                                        required_properties=[SolutionProperties.LonJerk])
 
-            if draw is True:
+            if self.draw is True:
                 l_tmp = LaneletNetwork.create_from_lanelet_list([lnm.lanelet_network._lanelets[l] for l in lanelets])
                 plt.figure()
                 rnd = MPRenderer()
-                lnm.lanelet_network.draw(rnd)
-                l_tmp.draw(draw_params={'lanelet': {'facecolor': 'red'},   "traffic_sign": {
-        "draw_traffic_signs": False},  "traffic_light": {
-        "draw_traffic_lights": False}}, renderer=rnd)
-                obs.draw(draw_params={'time_begin':0, 'time_end': obs.prediction.final_time_step}, renderer=rnd)
+                rnd.draw_params.time_begin = 0
+                lnm_params = LaneletNetworkParams()
+                lnm_params.traffic_sign.draw_traffic_signs = False
+                lnm_params.traffic_light.draw_traffic_lights = False
+                lnm.lanelet_network.draw(rnd, draw_params=lnm_params)
+                lnm_params.lanelet.facecolor = "red"
+                l_tmp.draw(renderer=rnd, draw_params=lnm_params)
+                rnd.draw_params.time_end = obs.prediction.final_time_step
+                obs_params = DynamicObstacleParams()
+                obs_params.trajectory.draw_continuous = True
+                obs_params.trajectory.line_width = 1.0
+                obs.draw(renderer=rnd, draw_params=obs_params)
                 rnd.render(show=False)
                 plt.show(block=False)
 
@@ -100,13 +115,11 @@ class TestLaneletNetworkMatcher(unittest.TestCase):
                 plt.show(block=True)
                 plt.pause(0.01)
 
-        if draw is True:
-            plt.pause(1000)
-
 
     def test_curvilinear_state(self):
-        cs = CurvilinearState(velocity=1.0, lon_jerk=0)
-        self.assertTrue(cs.velocity == 1.0)
+        cs = CurvilinearState(time_step=0, lon_velocity=1.0, lon_jerk=0)
+        self.assertTrue(cs.time_step == 0)
+        self.assertTrue(cs.lon_velocity == 1.0)
         self.assertTrue(cs.lon_jerk == 0)
 
 

@@ -1,24 +1,9 @@
-# CONF
-project(DrivabilityChecker)
-cmake_minimum_required(VERSION 3.10)
-
-option(BUILD_SHARED_LIBS "Build dc as a shared library" OFF)
-
-
-option(ADD_TESTS "unit tests" OFF)
-option(BUILD_DOC "generate the doc target." OFF)
-option(ADD_MODULE_GEOMETRY "add geometry module" ON)
-option(ADD_MODULE_COLLISION "add collision module" ON)
-option(ADD_PYTHON_BINDINGS "add Python bindings" OFF)
-option(ADD_TRIANGLE "Use a non-free Triangle library" OFF)
-
 if(WIN32)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION FALSE)
 endif(WIN32)
 
 # Add modules for discovering Sphinx etc.
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMakeModules" ${CMAKE_MODULE_PATH})
-
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules" ${CMAKE_MODULE_PATH})
 
 if(APPLE)
    # do nothing
@@ -48,11 +33,11 @@ endif()
 
 
 if(ADD_PYTHON_BINDINGS)
-    
+
 
 	message(STATUS ${PYTHON_VER})
-	
-	if((PYTHON_VER) AND (PATH_TO_PYTHON_ENVIRONMENT)) 
+
+	if((PYTHON_VER) AND (PATH_TO_PYTHON_ENVIRONMENT))
 		if (${PYTHON_VER} GREATER_EQUAL 3.8)
 			set(PYTHON_INCLUDE_DIR ${PATH_TO_PYTHON_ENVIRONMENT}/include/python${PYTHON_VER})
 			set(PYTHON_LIBRARY ${PATH_TO_PYTHON_ENVIRONMENT}/lib/libpython${PYTHON_VER}.so)
@@ -67,15 +52,12 @@ if(ADD_PYTHON_BINDINGS)
 			#find_package(Python3 COMPONENTS Interpreter Development)
 		endif()
 	endif()
-	
 
-	
+
+
 	message(STATUS ${PYTHON_INCLUDE_DIR})
 	message(STATUS ${PYTHON_LIBRARY})
 	message(STATUS ${PYTHON_EXECUTABLE})
-
-    # Specific binary directory required here
-    add_subdirectory(../third_party/pybind11 third_party/pybind11)
 endif()
 
 ### Shared configuration
@@ -87,7 +69,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 ### Discover dependencies
 
 if(NOT WIN32)
-find_package(s11n)
+#find_package(s11n)
 endif(NOT WIN32)
 
 find_package(Eigen3 3.0.5 QUIET CONFIG)
@@ -147,46 +129,6 @@ include(CMakePackageConfigHelpers)
 # Includes sane defaults for installation paths (CMAKE_INSTALL_LIBDIR, CMAKE_INSTALL_BINDIR etc.)
 include(GNUInstallDirs)
 
-if(ADD_TRIANGLE)
-  # Static library for triangle sources
-  
-message(STATUS "Building with support for triangulation using a non-free Triangle library")
-
-add_library(triangle STATIC
-    "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c/triangle.c"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c/triangle.h")
-
-target_compile_definitions(triangle PRIVATE -DANSI_DECLARATORS=1 -DTRILIBRARY=1 -DREAL=double -DVOID=int)
-
-
-set_property(TARGET triangle PROPERTY POSITION_INDEPENDENT_CODE ON)
-
-target_include_directories(triangle
-    PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c>
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/triangle/c
-    )
-else()
-	message(STATUS "The non-free Triangle library is excluded from build.")
-endif()
-
-
-# Static library for gpc sources
-
-add_library(gpc STATIC
-    "${CMAKE_CURRENT_SOURCE_DIR}/../cpp/collision/src/plugins/triangulation/gpc_wrapper.c"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc/gpc.h")
-
-set_property(TARGET gpc PROPERTY POSITION_INDEPENDENT_CODE ON)
-
-target_include_directories(gpc
-    PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc>
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/gpc
-    )
-	
 if(WIN32)
 
 set(S11_SRC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libs11n/windows/src)
@@ -228,7 +170,9 @@ target_include_directories(s11n
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libs11n/windows/include
     )
-	
+
+add_library(s11n::s11n ALIAS s11n)
+
 endif(WIN32)
 
 ### Definition of crcc
@@ -236,7 +180,7 @@ endif(WIN32)
 if(ADD_MODULE_COLLISION)
     set(COLLISION_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/collision)
     include(${CMAKE_CURRENT_SOURCE_DIR}/collision/CMakeLists.txt)
-    set(INSTALL_MODULES ${INSTALL_MODULES} crcc gpc)
+    set(INSTALL_MODULES ${INSTALL_MODULES} crcc gpc box2d)
     if(ADD_TRIANGLE)
         set(INSTALL_MODULES ${INSTALL_MODULES} triangle)
     endif()
@@ -258,6 +202,10 @@ if(ADD_MODULE_GEOMETRY)
     set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrccosy)
 endif(ADD_MODULE_GEOMETRY)
 
+if(BUILD_S11N)
+    set(INSTALL_MODULES ${INSTALL_MODULES} s11n)
+endif()
+
 if(ADD_PYTHON_BINDINGS)
     set(PYBIND_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/python_binding)
     include(${CMAKE_CURRENT_SOURCE_DIR}/python_binding/CMakeLists.txt)
@@ -266,13 +214,6 @@ endif()
 
 if(ADD_TESTS)
     add_subdirectory(tests)
-endif()
-
-if(BUILD_DOC)
-    if(NOT (ADD_PYTHON_BINDINGS AND ADD_MODULE_COLLISION AND ADD_MODULE_GEOMETRY))
-        message(FATAL_ERROR "BUILD_DOC requires ADD_PYTHON_BINDINGS, ADD_MODULE_COLLISION and ADD_MODULE_GEOMETRY")
-    endif()
-    add_subdirectory(../doc doc)
 endif()
 
 if(ADD_PYTHON_BINDINGS)
@@ -326,4 +267,11 @@ if(ADD_MODULE_GEOMETRY)
       DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/geometry/include/
       DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     )
+endif()
+
+if(BUILD_DOC)
+    if(NOT (ADD_PYTHON_BINDINGS AND ADD_MODULE_COLLISION AND ADD_MODULE_GEOMETRY))
+        message(FATAL_ERROR "BUILD_DOC requires ADD_PYTHON_BINDINGS, ADD_MODULE_COLLISION and ADD_MODULE_GEOMETRY")
+    endif()
+    add_subdirectory(../doc doc)
 endif()

@@ -14,13 +14,18 @@ Please post questions, bug reports, etc. related to our tools or website in our 
 
 System Requirements
 -------------------
-The software is written in Python 3.6/3.7 and C++11 and tested on MacOS and Linux. The usage of the [Anaconda](http://www.anaconda.com/download/#download9) 
-Python distribution is strongly recommended.  For building the code, the following minimum versions are required:
+The software is written in Python 3.6/3.7 and C++11 and tested on MacOS and Linux. 
+
+The usage of the **[Anaconda](http://www.anaconda.com/download/#download9) Python distribution** is strongly recommended. 
+
+**Note for MacOS M1 users:** You need to use the 64-bit Anaconda Installer (graphical or command-line) in order to install the MacOS PyPi package.
+
+For building the code from source, the following minimum versions are required:
   * **GCC and G++**: version 9 or above
   * **CMake**: version 3.10 or above.
   * **Pip**: version 21.3 or above
 
-If you are a Mac user, we additionally recommend you to use Homebrew, allowing you to install required dependencies such as Eigen.
+**Note for MacOS users (M1 or Intel):** we additionally recommend using the Homebrew package manager, to install required dependencies such as Eigen.
 
 
 Third Party Libraries and Packages
@@ -63,7 +68,7 @@ pip install commonroad-drivability-checker
 ```
 
 To build the drivability checker package from source, please refer to the installation description in the 
-[documentation](https://commonroad.in.tum.de/docs/commonroad-drivability-checker/sphinx/).
+[documentation](https://cps.pages.gitlab.lrz.de/commonroad-drivability-checker/).
 
 
 Documentation

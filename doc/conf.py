@@ -13,43 +13,52 @@
 import os
 import sys
 from pathlib import Path
+import shutil
 
+# set required paths
 current_file_dir = Path(__file__).parent
 root_dir = current_file_dir.parent
+build_dir = list(root_dir.glob("./build/temp.*"))[0]
+build_python_bindings = list(build_dir.joinpath('build/superbuild/Build/commonroad_dc').resolve().glob('./*.so'))
 
 print('documentation root {}'.format(os.path.abspath(root_dir)))
 
-# NOTE: If you want to use the Python files in the source directory (instead of the
-# installed source files), you need to copy/symlink the built Python modules
-# into the commonroad_dc directory!
-# Example: If your Python version is 3.8, then (after running python setup.py build) copy
-#   build/lib.linux-x86_64-3.8/commonroad_dc/pycrcc.cpython-38-x86_64-linux-gnu.so
-# and
-#   build/lib.linux-x86_64-3.8/commonroad_dc/pycrccosy.cpython-38-x86_64-linux-gnu.so
-# to
-#   commonroad_dc/
-#
-# The exact paths depend on your environment (operating system, Python version etc.)
+# NOTE:
+# The python binding libraries (pycrcc.*.so and pycrcc.*.so) need to be copied to the source directory such that Sphinx
+# can properly import them for building the documentation
+# If building the documentation is deactivated, this step is done in setup.py
+for file in build_python_bindings:
+    if not file.exists():
+        raise FileNotFoundError("Sphinx Error: Library pycrcc can not be found at {}". format(os.path.abspath(file)))
+    shutil.copy(str(file), os.path.join(str(root_dir.resolve()), 'commonroad_dc'))
 
-# If you uncommented these lines and get an import error: See note above
-sys.path.insert(0, root_dir.resolve())
-sys.path.insert(0, (root_dir / 'commonroad_dc').resolve())
-sys.path.insert(0, (root_dir / 'tutorials').resolve())
-sys.path.insert(0, (root_dir.parent / 'commonroad-vehicle-models' / 'Python').resolve())
-sys.path.insert(0, (root_dir.parent / 'commonroad-io').resolve())
+# Add source root and tutorial folder to sys.path
+sys.path.insert(0, str((root_dir / 'tutorials').resolve()))
+sys.path.insert(0, str(root_dir))
 
 # If you get an import error in the following line: See note above
-import commonroad_dc.pycrcc as pycrcc
+from commonroad_dc.__version__ import __version__
+try:
+    import commonroad_dc.pycrcc as pycrcc
+except ImportError:
+    raise ImportError("Sphinx Error: Library pycrcc is required to build the documentation and can not be found")
+
+try:
+    import commonroad_dc.pycrccosy as pycrccosy
+except ImportError:
+    raise ImportError("Sphinx Error: Library pycrccosy is required to build the documentation and can not be found")
+
 print("building documentation for the library {}".format(pycrcc.__file__))
+print("building documentation for the library {}".format(pycrccosy.__file__))
 
 # -- Project information -----------------------------------------------------
 
 project = 'CommonRoad Drivability Checker'
-copyright = '2022, Technical University of Munich, Professorship Cyber-Physical Systems'
+copyright = '2023, Technical University of Munich, Professorship Cyber-Physical Systems'
 author = 'Technical University of Munich, Professorship Cyber-Physical Systems'
 
 # The full version, including alpha/beta/rc tags
-release = '2022.2'
+release = __version__
 
 
 # -- General configuration ---------------------------------------------------
