@@ -19,7 +19,7 @@ import shutil
 current_file_dir = Path(__file__).parent
 root_dir = current_file_dir.parent
 build_dir = list(root_dir.glob("./build/temp.*"))[0]
-build_python_bindings = list(build_dir.joinpath('build/superbuild/Build/commonroad_dc').resolve().glob('./*.so'))
+build_python_bindings = list(build_dir.joinpath('build/cpp').resolve().glob('./*.so'))
 
 print('documentation root {}'.format(os.path.abspath(root_dir)))
 
