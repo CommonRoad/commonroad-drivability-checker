@@ -12,13 +12,27 @@ of motion planning algorithms.
 Please post questions, bug reports, etc. related to our tools or website in our [forum](https://commonroad.in.tum.de/forum/).
 
 
+Installation
+------------
+
+We provide two installation options: Installation as a Python package or building from source.
+
+1. **Python Package**: Install the python package via `pip` in your Conda environment:
+
+	```bash
+	pip install commonroad-drivability-checker
+	```
+	**Note for MacOS M1 users**: You need to use the 64-bit Anaconda Installer (graphical or command-line) in order to install the MacOS PyPi package.
+
+2. **Build from source**: To build the drivability checker from source, please refer to the installation description in the 
+[documentation](https://cps.pages.gitlab.lrz.de/commonroad-drivability-checker/).
+
+
 System Requirements
 -------------------
-The software is written in Python 3.6/3.7 and C++11 and tested on MacOS and Linux. 
+The software is written in Python 3.7 and C++11 and tested on MacOS and Linux. 
 
 The usage of the **[Anaconda](http://www.anaconda.com/download/#download9) Python distribution** is strongly recommended. 
-
-**Note for MacOS M1 users:** You need to use the 64-bit Anaconda Installer (graphical or command-line) in order to install the MacOS PyPi package.
 
 For building the code from source, the following minimum versions are required:
   * **GCC and G++**: version 9 or above
@@ -30,7 +44,7 @@ For building the code from source, the following minimum versions are required:
 
 Third Party Libraries and Packages
 ----------------------------------
-The C++ code depends on the following libraries:
+The following third-party dependencies of the C++ code are only required for building the project from source!
 
 **Essential dependencies**:
 
@@ -57,18 +71,6 @@ Included as submodules:
 See also `notes.txt` and the licensing information on the respective package websites for more details.
 
 The Python dependencies are listed in `requirements.txt`.
-
-
-
-Installation
-------------
-To install the Python package of the drivability checker, please run:
-```
-pip install commonroad-drivability-checker
-```
-
-To build the drivability checker package from source, please refer to the installation description in the 
-[documentation](https://cps.pages.gitlab.lrz.de/commonroad-drivability-checker/).
 
 
 Documentation
