@@ -693,10 +693,8 @@ void init_module_collision(py::module &m) {
 
       ;
 
-  py::class_<collision::Shape, collision::CollisionObject,
+  auto pyShape = py::class_<collision::Shape, collision::CollisionObject,
              std::shared_ptr<collision::Shape>>(m, "Shape")
-      .def("getAABB", &collision::CollisionObjectEx::getAABB)
-
       ;
 
   py::class_<collision::Point, collision::Shape,
@@ -739,8 +737,8 @@ void init_module_collision(py::module &m) {
              return new collision::RectangleAABB(r_x, r_y,
                                                  Eigen::Vector2d(x, y));
            }),
-           py::arg("width/2"), py::arg("height/2"), py::arg("center x"),
-           py::arg("center y"))
+           py::arg("half_width"), py::arg("half_height"), py::arg("center_x"),
+           py::arg("center_y"))
       .def("collide",
            [](std::shared_ptr<collision::RectangleAABB> &cc,
               std::shared_ptr<collision::CollisionObject> &co) {
@@ -799,6 +797,10 @@ void init_module_collision(py::module &m) {
 #endif
 
       ;
+
+  // Deferred definition - required to ensure correct signature
+  // See https://pybind11.readthedocs.io/en/latest/advanced/misc.html#avoiding-cpp-types-in-docstrings
+  pyShape.def("getAABB", &collision::CollisionObjectEx::getAABB);
 
   py::class_<collision::RectangleOBB, collision::Shape,
              std::shared_ptr<collision::RectangleOBB>>(m, "RectOBB")
