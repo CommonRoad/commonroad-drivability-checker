@@ -6,6 +6,7 @@
 #include <cmath>
 #include <deque>
 #include <limits>
+#include <list>
 #include <memory>
 #include <numeric>
 #include <vector>
