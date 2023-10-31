@@ -1,0 +1,41 @@
+From 90daaa8f8a7e99d2ea7406924c69f4503477d7e2 Mon Sep 17 00:00:00 2001
+From: Tobias Markus <tobias.markus@tum.de>
+Date: Thu, 2 Nov 2023 13:02:38 +0100
+Subject: [PATCH] cmake: Disable tests
+
+fcl adds gtest as a library itself, conflicting with possible other definitions.
+---
+ CMakeLists.txt | 17 -----------------
+ 1 file changed, 17 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e90e56b..4bbb142 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -338,23 +338,6 @@ configure_file(
+ add_custom_target(uninstall
+   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/CMakeModules/cmake_uninstall.cmake")
+ 
+-set(FCL_BUILD_TESTS "DEFAULT" CACHE INTERNAL "Deprecated; use BUILD_TESTING instead.")
+-
+-if(NOT FCL_BUILD_TESTS STREQUAL "DEFAULT")
+-  message(DEPRECATION "FCL_BUILD_TESTS is deprecated; use BUILD_TESTING instead.")
+-  if(FCL_BUILD_TESTS)
+-    set(_BUILD_TESTING ON)
+-  else()
+-    set(_BUILD_TESTING OFF)
+-  endif()
+-  set(BUILD_TESTING ${_BUILD_TESTING} CACHE BOOL "Build the testing tree." FORCE)
+-  unset(_BUILD_TESTING)
+-endif()
+-
+-if(BUILD_TESTING AND NOT FCL_HIDE_ALL_SYMBOLS)
+-    add_subdirectory(test)
+-endif()
+-
+ #===============================================================================
+ # API documentation using Doxygen
+ # References:
+-- 
+2.42.0
+
