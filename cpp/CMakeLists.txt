@@ -72,20 +72,7 @@ if(NOT WIN32)
 #find_package(s11n)
 endif(NOT WIN32)
 
-find_package(Eigen3 3.0.5 QUIET CONFIG)
-
-# If Eigen3Config.cmake is not found, use the FindEigen3.cmake module
-if(NOT Eigen3_FOUND)
-  find_package(Eigen3 3.0.5 QUIET MODULE)
-  set(Eigen3_FOUND ON)
-endif()
-
-if(Eigen3_FOUND)
-  set(COM_HAVE_EIGEN TRUE)
-else()
-  message(SEND_ERROR "EIGEN3 (>= 3.0.5) is required by the CollisionChecker")
-  set(COM_HAVE_EIGEN FALSE)
-endif()
+find_package(Eigen3 REQUIRED)
 
 #find_package(OpenMP)
 
