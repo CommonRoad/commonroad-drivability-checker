@@ -38,6 +38,15 @@ if(ADD_PYTHON_BINDINGS)
 endif()
 
 include(FetchContent)
+FetchContent_Declare(
+    commonroad_cmake
+
+    GIT_REPOSITORY https://gitlab.lrz.de/tum-cps/commonroad-cmake.git
+    GIT_TAG        main
+)
+FetchContent_MakeAvailable(commonroad_cmake)
+
+list(APPEND CMAKE_MODULE_PATH ${commonroad_cmake_SOURCE_DIR})
 
 # Disable verbose git clone output if we are invoked by Python
 # The Git progress messages don't work correctly when relayed by Python

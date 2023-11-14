@@ -62,6 +62,7 @@ FetchContent_Declare(
       ${PROJECT_SOURCE_DIR}/third_party/patch/fcl-cmake-disable-warnings.patch
       # Used for CMake<3.24 (see above)
       ${_fcl_extra_patch}
+      ${PROJECT_SOURCE_DIR}/third_party/patch/fcl-cmake-disable-tests.patch
   )
 
 # BUILD_TESTING is used by libccd and FCL
