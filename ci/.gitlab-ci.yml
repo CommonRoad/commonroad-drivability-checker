@@ -6,7 +6,7 @@ stages:
   - deploy
   - publish
 
-image: $CI_REGISTRY/cps/rapid-prototyping-setup/ci:1.6
+image: $CI_REGISTRY/cps/commonroad-drivability-checker/ci_deps:1.0
 
 variables:
   BUILD_JOBS: 8
@@ -19,6 +19,13 @@ before_script:
   - python -m pip install --upgrade pip
   - pip install -r ./requirements.txt
   - pip install -r ./test_requirements.txt
+
+.python-versions: &python-versions
+  - "3.7"
+  - "3.8"
+  - "3.9"
+  - "3.10"
+  - "3.11"
 
 
 ### building project ###
@@ -63,7 +70,7 @@ build-gcc:
 build-test-python:
   stage: build-test-python
   before_script:
-    - source activate "cr$PYTHON_VER"
+    - source activate "commonroad-py$PYTHON_VER"
     - *python-prepare
     # install pandoc from conda-forge for building the doc
     - conda install -c conda-forge pandoc
@@ -73,7 +80,7 @@ build-test-python:
     - python run_tests.py
   parallel:
     matrix:
-      - PYTHON_VER: [37, 38, 39, 310]
+      - PYTHON_VER: *python-versions
   artifacts:
     paths:
       - ./doc/build
@@ -87,82 +94,28 @@ clang-tidy:
     - job: build-compile-commands
       artifacts: true
 
+
 ### build wheels ####
-build-wheels-py-310:
+build-wheels-py:
   stage: build-wheels
-  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
+  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheel_deps:1.0
   when: manual
+  before_script:
+    - source activate "commonroad-py$PYTHON_VER"
+    - *python-prepare
   script:
-    # Prepare build (master branch is built)
-    - git clone -b master git@gitlab.lrz.de:cps/commonroad-drivability-checker.git
-    - cd commonroad-drivability-checker
-    - git submodule update --init
-    # Preparing PyPi
-    - /opt/python/cp310-cp310/bin/python setup.py sdist
-    - /opt/python/cp310-cp310/bin/python setup.py bdist_wheel
+    - python setup.py sdist
+    - python setup.py bdist_wheel
     - cd dist
     - auditwheel show *.whl
     - auditwheel repair *.whl
+  parallel:
+    matrix:
+      - PYTHON_VER: *python-versions
   artifacts:
     paths:
-      - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
+      - $CI_PROJECT_DIR/dist
 
-build-wheels-py-39:
-  stage: build-wheels
-  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
-  when: manual
-  script:
-    # Prepare build (master branch is built)
-    - git clone -b master git@gitlab.lrz.de:cps/commonroad-drivability-checker.git
-    - cd commonroad-drivability-checker
-    - git submodule update --init
-    # Preparing PyPi
-    - /opt/python/cp39-cp39/bin/python setup.py sdist
-    - /opt/python/cp39-cp39/bin/python setup.py bdist_wheel
-    - cd dist
-    - auditwheel show *.whl
-    - auditwheel repair *.whl
-  artifacts:
-    paths:
-      - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
-
-build-wheels-py-38:
-  stage: build-wheels
-  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
-  when: manual
-  script:
-    # Prepare build (master branch is built)
-    - git clone -b master git@gitlab.lrz.de:cps/commonroad-drivability-checker.git
-    - cd commonroad-drivability-checker
-    - git submodule update --init
-    # Preparing PyPi
-    - /opt/python/cp38-cp38/bin/python setup.py sdist
-    - /opt/python/cp38-cp38/bin/python setup.py bdist_wheel
-    - cd dist
-    - auditwheel show *.whl
-    - auditwheel repair *.whl
-  artifacts:
-    paths:
-      - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
-
-build-wheels-py-37:
-  stage: build-wheels
-  image: $CI_REGISTRY/cps/commonroad-drivability-checker/wheels-reqs
-  when: manual
-  script:
-    # Prepare build (master branch is built)
-    - git clone -b master git@gitlab.lrz.de:cps/commonroad-drivability-checker.git
-    - cd commonroad-drivability-checker
-    - git submodule update --init
-    # Preparing PyPi
-    - /opt/python/cp37-cp37m/bin/python setup.py sdist
-    - /opt/python/cp37-cp37m/bin/python setup.py bdist_wheel
-    - cd dist
-    - auditwheel show *.whl
-    - auditwheel repair *.whl
-  artifacts:
-    paths:
-      - $CI_PROJECT_DIR/commonroad-drivability-checker/dist
 
 ### deploy wheels ###
 push-to-internal-registry:
@@ -173,17 +126,10 @@ push-to-internal-registry:
   only:
     - development
   script:
-    - cd commonroad-drivability-checker
     - /opt/python/cp39-cp39/bin/python -m pip install twine
     - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token /opt/python/cp39-cp39/bin/python -m twine upload --skip-existing --repository-url https://gitlab.lrz.de/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/wheelhouse/* dist/commonroad-drivability-checker-*.tar.gz --verbose
   needs:
-    - job: build-wheels-py-310
-      artifacts: true
-    - job: build-wheels-py-39
-      artifacts: true
-    - job: build-wheels-py-38
-      artifacts: true
-    - job: build-wheels-py-37
+    - job: build-wheels-py
       artifacts: true
 
 push-to-external-pypi-test-registry:
@@ -195,17 +141,10 @@ push-to-external-pypi-test-registry:
   only:
     - master
   script:
-    - cd commonroad-drivability-checker
     - /opt/python/cp39-cp39/bin/python -m pip install twine
     - TWINE_PASSWORD=${CR_PYPI_TEST_PASSWORD} TWINE_USERNAME=${CR_PYPI_TEST_USERNAME} /opt/python/cp39-cp39/bin/python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/wheelhouse/* dist/commonroad-drivability-checker-*.tar.gz --verbose
   needs:
-    - job: build-wheels-py-310
-      artifacts: true
-    - job: build-wheels-py-39
-      artifacts: true
-    - job: build-wheels-py-38
-      artifacts: true
-    - job: build-wheels-py-37
+    - job: build-wheels-py
       artifacts: true
 
 push-to-external-pypi-registry:
@@ -217,17 +156,10 @@ push-to-external-pypi-registry:
   only:
     - master
   script:
-    - cd commonroad-drivability-checker
     - /opt/python/cp39-cp39/bin/python -m pip install twine
     - TWINE_PASSWORD=${CR_PYPI_RELEASE_PASSWORD} TWINE_USERNAME=${CR_PYPI_RELEASE_USERNAME} /opt/python/cp39-cp39/bin/python -m twine upload dist/wheelhouse/* dist/commonroad-drivability-checker-*.tar.gz --verbose
   needs:
-    - job: build-wheels-py-310
-      artifacts: true
-    - job: build-wheels-py-39
-      artifacts: true
-    - job: build-wheels-py-38
-      artifacts: true
-    - job: build-wheels-py-37
+    - job: build-wheels-py
       artifacts: true
 
 
