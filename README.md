@@ -39,7 +39,9 @@ For building the code from source, the following minimum versions are required:
   * **CMake**: version 3.10 or above.
   * **Pip**: version 21.3 or above
 
-**Note for MacOS users (M1 or Intel):** we additionally recommend using the Homebrew package manager, to install required dependencies such as Eigen.
+**Note for MacOS users (M1 or Intel):** 
+- We additionally recommend using the Homebrew package manager, to install required dependencies such as Eigen.
+- The installation has been tested for the **AppleClang (15.0)** and the **GCC (13)** compiler.
 
 
 Third Party Libraries and Packages
