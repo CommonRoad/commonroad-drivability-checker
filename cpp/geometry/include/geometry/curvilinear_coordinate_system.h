@@ -50,6 +50,48 @@ enum class ProjectionAxis {
   Y_AXIS_ROTATED = 3
 };
 
+/**
+ * Projection domain errors are thrown when trying to convert coordinates
+ * outside the projection domain.
+ */
+class ProjectionDomainError : public std::invalid_argument {
+protected:
+    explicit ProjectionDomainError(const std::string& message)
+        : std::invalid_argument(message) {}
+};
+
+/**
+ * Error for curvilinear coordinates outside the projection domain, either laterally or longitudinally.
+ */
+class CurvilinearProjectionDomainError : public ProjectionDomainError {
+protected:
+    explicit CurvilinearProjectionDomainError(const std::string& message)
+        : ProjectionDomainError(message) {}
+
+public:
+   static CurvilinearProjectionDomainError longitudinal() {
+       return CurvilinearProjectionDomainError("Longitudinal coordinate outside of projection domain");
+   }
+
+   static CurvilinearProjectionDomainError general() {
+       return CurvilinearProjectionDomainError("Longitudinal and/or lateral coordinate outside of projection domain");
+   }
+};
+
+/**
+ * Error for cartesian coordinates outside the projection domain.
+ */
+class CartesianProjectionDomainError : public ProjectionDomainError {
+protected:
+    explicit CartesianProjectionDomainError(const std::string& message)
+        : ProjectionDomainError(message) {}
+
+public:
+   static CartesianProjectionDomainError general() {
+       return CartesianProjectionDomainError("x and/or y coordinate outside of projection domain");
+   }
+};
+
 class CurvilinearCoordinateSystem
     : public std::enable_shared_from_this<CurvilinearCoordinateSystem> {
  public:
