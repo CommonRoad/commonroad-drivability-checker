@@ -156,10 +156,7 @@ std::tuple<double, double> CurvilinearCoordinateSystem::curvatureRange(
   auto it_min = this->curvature_.upper_bound(s_min);
   if (it_min == this->curvature_.begin()) {
     std::cout << "s_min: " << s_min << std::endl;
-    throw std::invalid_argument(
-        "<CurvilinearCoordinateSystem/curvatureRange> Longitudinal position is "
-        "outside of "
-        "coordinate system.");
+    throw CurvilinearProjectionDomainError::longitudinal();
   } else {
     it_min--;
   }
@@ -169,10 +166,7 @@ std::tuple<double, double> CurvilinearCoordinateSystem::curvatureRange(
   if (it_max == this->curvature_.end()) {
     std::cout << "s_max: " << s_max << std::endl;
     // first and all other longitudinal positions are higher than s_max
-    throw std::invalid_argument(
-        "<CurvilinearCoordinateSystem/curvatureRange> Longitudinal position is "
-        "outside of "
-        "coordinate system.");
+    throw CurvilinearProjectionDomainError::longitudinal();
   } else {
     it_max++;
   }
@@ -225,22 +219,12 @@ double CurvilinearCoordinateSystem::minimumCurvature() const {
 
 Eigen::Vector2d CurvilinearCoordinateSystem::normal(double s) const {
   auto idx = this->findSegmentIndex(s);
-  if (idx < 0) {
-    throw std::invalid_argument(
-        "<CurvilinearCoordinateSystem/normal> Longitudinal coordinate "
-        "outside of projection domain.");
-  }
   auto &segment = this->segment_list_[idx];
   return segment->normal(s - this->segment_longitudinal_coord_[idx]);
 }
 
 Eigen::Vector2d CurvilinearCoordinateSystem::tangent(double s) const {
   auto idx = this->findSegmentIndex(s);
-  if (idx < 0) {
-    throw std::invalid_argument(
-        "<CurvilinearCoordinateSystem/tangent> Longitudinal coordinate "
-        "outside of projection domain.");
-  }
   auto &segment = segment_list_[idx];
   return segment->tangent(s - this->segment_longitudinal_coord_[idx]);
 }
@@ -249,17 +233,9 @@ Eigen::Vector2d CurvilinearCoordinateSystem::convertToCartesianCoords(
     double s, double l) const {
   bool is_in_projection_domain = this->curvilinearPointInProjectionDomain(s, l);
   if (!is_in_projection_domain) {
-    throw std::invalid_argument(
-        "<CurvilinearCoordinateSystem/convertToCurvilinearCoords> "
-        "Coordinate outside of projection domain.");
+    throw CurvilinearProjectionDomainError::general();
   }
   int idx = this->findSegmentIndex(s);
-  if (idx < 0) {
-    throw std::invalid_argument(
-        "<CurvilinearCoordinateSystem/convertToCartesianCoords> Longitudinal "
-        "coordinate "
-        "outside of projection domain.");
-  }
   return this->segment_list_[idx]->convertToCartesianCoords(
       s - this->segment_longitudinal_coord_[idx], l);
 }
@@ -277,10 +253,7 @@ CurvilinearCoordinateSystem::convertToCurvilinearCoordsAndGetSegmentIdx(
 
   if (!is_in_projection_domain) {
     //    std::cout << "Coordinate: " << x << ", " << y << std::endl;
-    throw std::invalid_argument(
-        "<CurvilinearCoordinateSystem/"
-        "convertToCurvilinearCoordsAndGetSegmentIdx> Coordinate "
-        "outside of projection domain.");
+    throw CartesianProjectionDomainError::general();
   }
 
   std::vector<std::pair<Eigen::Vector2d, int>> candidates;
@@ -298,10 +271,7 @@ CurvilinearCoordinateSystem::convertToCurvilinearCoordsAndGetSegmentIdx(
 
   if (candidates.empty()) {
     std::cout << "Coordinate: " << x << ", " << y << std::endl;
-    throw std::invalid_argument(
-        "<CurvilinearCoordinateSystem/"
-        "convertToCurvilinearCoordsAndGetSegmentIdx> Coordinate "
-        "outside of projection domain.");
+    throw CartesianProjectionDomainError::general();
   }
 
   std::sort(candidates.begin(), candidates.end(),
@@ -365,14 +335,9 @@ int num_omp_threads) const {
             double l_coordinate = point.y();
             bool within_projection_domain = this->curvilinearPointInProjectionDomain(s_coordinate, l_coordinate);
             if (!within_projection_domain) {
-                throw std::invalid_argument("<CurvilinearCoordinateSystem/convertListOfPointsToCartesianCoords> "
-                                            "Coordinate outside of projection domain.");
+                throw CurvilinearProjectionDomainError::general();
             }
             int segment_index = this->findSegmentIndex(s_coordinate);
-            if (segment_index < 0) {
-                throw std::invalid_argument("<CurvilinearCoordinateSystem/convertListOfPointsToCartesianCoords> "
-                                            "Found no corresponding segment to project.");
-            }
             Eigen::Vector2d cartesian_coord = this->segment_list_[segment_index]->convertToCartesianCoords(
                     s_coordinate - this->segment_longitudinal_coord_[segment_index], l_coordinate);
 
@@ -391,11 +356,6 @@ EigenPolyline CurvilinearCoordinateSystem::convertRectangleToCartesianCoords(
     std::vector<EigenPolyline> &triangle_mesh) const {
   int idx_lo = this->findSegmentIndex(s_lo);
   int idx_hi = this->findSegmentIndex(s_hi);
-  if (idx_lo < 0 || idx_hi < 0) {
-    throw std::invalid_argument(
-        "<CurvilinearCoordinateSystem/convertRectangleToCurvilinearCoords> "
-        "Coordinate outside of projection domain.");
-  }
   triangle_mesh.reserve((idx_hi - idx_lo) * 2);
 
   for (int idx = idx_lo; idx <= idx_hi; idx++) {
@@ -1223,11 +1183,50 @@ void CurvilinearCoordinateSystem::computeBestProjectionAxisForSegments() {
   }
 }
 
-int CurvilinearCoordinateSystem::findSegmentIndex(double s) const {
+
+std::optional<int> CurvilinearCoordinateSystem::findSegmentIndex_Fast(double s) const {
   if ((s < 0) || (s > this->length_)) {
-    return -1;
+    return std::nullopt;
   }
-  int idx = -1;
+
+#ifndef NDEBUG
+  bool sorted = std::is_sorted(this->segment_longitudinal_coord_.cbegin(), this->segment_longitudinal_coord_.cend());
+  assert(sorted);
+#endif
+
+  assert(this->segment_longitudinal_coord_.size() == this->segment_list_.size() + 1);
+
+  // std::lower_bound finds the first segment with a longitudinal coordinate greater or equal s
+  // However, we need the last segment with a longitudinal coordinate less than s
+  // Therefore, a few special cases need to be handled below
+  auto it = std::lower_bound(this->segment_longitudinal_coord_.cbegin(), this->segment_longitudinal_coord_.cend(), s);
+
+  // If lower_bound returns the first segment, then s is lower than all segment longitudinal coordinates
+  // and thus outside the projection domain
+  if (it == this->segment_longitudinal_coord_.cbegin()) {
+    return std::nullopt;
+  }
+
+  // Move the iterator to the last segment with a longitudinal coordinate less than s
+  it = std::prev(it);
+
+#ifndef NDEBUG
+  assert(s >= *it);
+  if (std::next(it) != this->segment_longitudinal_coord_.cend()) {
+    assert(*it <= *std::next(it));
+  }
+#endif
+
+  return std::distance(this->segment_longitudinal_coord_.cbegin(), it);
+}
+
+
+std::optional<int> CurvilinearCoordinateSystem::findSegmentIndex_Slow(double s) const {
+  if ((s < 0) || (s > this->length_)) {
+    return std::nullopt;
+  }
+
+  std::optional<int> idx = std::nullopt;
   for (int i = 0; i < this->segment_list_.size(); i++) {
     double s_1 = this->segment_longitudinal_coord_[i];
     double s_2 = this->segment_longitudinal_coord_[i + 1];
@@ -1237,6 +1236,27 @@ int CurvilinearCoordinateSystem::findSegmentIndex(double s) const {
     }
   }
   return idx;
+}
+
+
+std::optional<int> CurvilinearCoordinateSystem::tryFindSegmentIndex(double s) const {
+  auto idx_fast = this->findSegmentIndex_Fast(s);
+
+#ifndef NDEBUG
+  auto idx_slow = this->findSegmentIndex_Slow(s);
+  assert(idx_slow == idx_fast);
+#endif
+
+  return idx_fast;
+}
+
+
+int CurvilinearCoordinateSystem::findSegmentIndex(double s) const {
+  try {
+      return this->tryFindSegmentIndex(s).value();
+  } catch (const std::bad_optional_access& e) {
+      throw CurvilinearProjectionDomainError::longitudinal();
+  }
 }
 
 std::vector<std::vector<std::tuple<int, double, double>>>
