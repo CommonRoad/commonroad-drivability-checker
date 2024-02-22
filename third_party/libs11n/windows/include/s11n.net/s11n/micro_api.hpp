@@ -138,7 +138,7 @@ MyT * your = micro.load( "somefile" );
 		bool save( const serializable_type & src, const std::string & dest ) const
 		{
 			node_type n;
-			std::auto_ptr<serializer_interface> sap( this->prepare_save( n, src ) );
+			std::unique_ptr<serializer_interface> sap( this->prepare_save( n, src ) );
 			return sap.get() ? sap->serialize( n, dest ) : false;
 		}
 
@@ -146,7 +146,7 @@ MyT * your = micro.load( "somefile" );
 		bool save( const serializable_type & src, std::ostream & dest ) const
 		{
 			node_type n;
-			std::auto_ptr<serializer_interface> sap( this->prepare_save( n, src ) );
+			std::unique_ptr<serializer_interface> sap( this->prepare_save( n, src ) );
 			return sap.get() ? sap->serialize( n, dest ) : false;
 		}
 

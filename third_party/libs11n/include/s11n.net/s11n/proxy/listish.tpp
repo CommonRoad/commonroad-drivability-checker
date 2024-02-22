@@ -38,7 +38,7 @@ bool s11n::list::serialize_list( NodeType & dest, const SerType & src )
 	using namespace ::s11n::debug;
 	for( ; src.end() != it; ++it )
 	{
-		std::auto_ptr<NodeType> ch( TR::create() );
+		std::unique_ptr<NodeType> ch( TR::create() );
 		if( ::s11n::serialize<NodeType,VT>( *ch, *it ) )
 		{
 			TR::children(dest).push_back( ch.release() );
@@ -57,7 +57,7 @@ bool s11n::list::serialize_list( NodeType & dest,
 				 const SerType & src )
 {
 	typedef node_traits<NodeType> TR;
-	std::auto_ptr<NodeType> ch( TR::create(subnodename) );
+	std::unique_ptr<NodeType> ch( TR::create(subnodename) );
 	if( serialize_list<NodeType,SerType>( *ch, src ) )
 	{
 		TR::children(dest).push_back( ch.release() );

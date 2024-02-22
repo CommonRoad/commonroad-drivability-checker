@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.1)
 
 option(BUILD_SHARED_LIBS "Build s11n as a shared library" ON)
 
-set(CMAKE_CXX_STANDARD 98)
+set(CMAKE_CXX_STANDARD 17)
 
 set(S11_SRC_ROOT "./src")
 
