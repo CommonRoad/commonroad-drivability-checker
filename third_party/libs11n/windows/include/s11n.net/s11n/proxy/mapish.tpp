@@ -34,7 +34,7 @@ bool s11n::map::serialize_streamable_map( NodeType & dest,
 					  const MapType & src )
 {
 	typedef ::s11n::node_traits<NodeType> TR;
-	std::auto_ptr<NodeType> ch( TR::create( subnodename ) );
+	std::unique_ptr<NodeType> ch( TR::create( subnodename ) );
 	if( serialize_streamable_map( *ch, src ) )
 	{
 		TR::children(dest).push_back( ch.release() );
@@ -208,7 +208,7 @@ bool s11n::map::serialize_pair( NodeType & dest, const PairType & src )
 	typedef typename PairType::first_type FstT;
 	typedef typename PairType::second_type SndT;
 	NT::class_name( dest, STR::class_name(&src) );
-	std::auto_ptr<NodeType> ch( NT::create("first") );
+	std::unique_ptr<NodeType> ch( NT::create("first") );
 	//                         if( ! ::s11n::serialize<NodeType,FstT>( *ch, src.first ) )
 	// Compiler bug??? ^^^^ fully qualifying that causes a compile error, but doing the
 	// same thing on .second below does not!
@@ -216,7 +216,7 @@ bool s11n::map::serialize_pair( NodeType & dest, const PairType & src )
 	{
 		return false;
 	}
-	std::auto_ptr<NodeType> ch2( NT::create("second") );
+	std::unique_ptr<NodeType> ch2( NT::create("second") );
 	if( ! ::s11n::serialize<NodeType,SndT>( *ch2, src.second ) )
 	{
 		return false;
@@ -339,7 +339,7 @@ bool s11n::map::serialize_map( NodeType & dest, const MapType & src )
 	CIT e = src.end();
 	for( ; e != b; ++b )
 	{
-		std::auto_ptr<NodeType> ch( TR::create("pair") );
+		std::unique_ptr<NodeType> ch( TR::create("pair") );
 		if( ! serialize_pair<NodeType,PairType>( *ch, *b ) )
 		{
 			using namespace ::s11n::debug;
@@ -357,7 +357,7 @@ bool s11n::map::serialize_map( NodeType & dest,
 			       const MapType & src )
 {
 	typedef node_traits<NodeType> TR;
-	std::auto_ptr<NodeType> ch( TR::create(subnodename) );
+	std::unique_ptr<NodeType> ch( TR::create(subnodename) );
 	if( ! serialize_map<NodeType,MapType>( *ch, src ) )
 	{
 		return false;

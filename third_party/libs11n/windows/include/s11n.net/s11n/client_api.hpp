@@ -204,7 +204,7 @@ namespace s11nlite {
 			// return s11n::serialize_subnode<node_type,SerializableType>( dest, subnodename, src );
 			// Nevermind... we can't. If we do, then (SerializableType*) is not forwarded properly
 			// without some additional type juggling.
-			std::auto_ptr<node_type> n( node_traits::create( subnodename ) );
+			std::unique_ptr<node_type> n( node_traits::create( subnodename ) );
 			if( this->serialize<SerializableType>( *n, src ) )
 			{
                                node_traits::children(dest).push_back( n.release() );
@@ -225,7 +225,7 @@ namespace s11nlite {
 		*/
 		virtual bool save( const node_type & src, std::ostream & dest )
 		{
-			std::auto_ptr<serializer_interface> s(this->create_serializer());
+			std::unique_ptr<serializer_interface> s(this->create_serializer());
 			return s.get()
 				? s->serialize( src, dest )
 				: false;
@@ -245,7 +245,7 @@ namespace s11nlite {
 		*/
 		virtual bool save( const node_type & src, const std::string & filename )
 		{
-			std::auto_ptr<serializer_interface> s(this->create_serializer());
+			std::unique_ptr<serializer_interface> s(this->create_serializer());
 			return s.get()
 				? s->serialize( src, filename )
 				: false;
@@ -297,7 +297,7 @@ namespace s11nlite {
 		bool save( const SerializableType & src, const std::string & dest )
 		{
 // See save(node,string) for why we don't wan this:
-// 			typedef std::auto_ptr<std::ostream> AP;
+// 			typedef std::unique_ptr<std::ostream> AP;
 // 			AP os = AP( s11n::io::get_ostream( dest ) );
 // 			if( ! os.get() ) return 0;
 // 			return this->save( src, *os );
@@ -392,7 +392,7 @@ namespace s11nlite {
 		template <typename SerializableType>
 		inline SerializableType * load_serializable( std::istream & src )
 		{
-			std::auto_ptr<node_type> n( this->load_node( src ) );
+			std::unique_ptr<node_type> n( this->load_node( src ) );
 			return n.get()
 				? this->deserialize<SerializableType>( *n )
 				: 0;
@@ -409,7 +409,7 @@ namespace s11nlite {
 		template <typename SerializableType>
 		inline SerializableType * load_serializable( const std::string & src )
 		{
-			std::auto_ptr<node_type> node( this->load_node(src) );
+			std::unique_ptr<node_type> node( this->load_node(src) );
 			return node.get()
 				? this->deserialize<SerializableType>( *node )
 				: 0;

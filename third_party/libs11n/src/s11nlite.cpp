@@ -158,7 +158,7 @@ namespace s11nlite {
 
         bool load_node( const std::string & src, node_type & dest )
 	{
-	    typedef std::auto_ptr<node_type> AP;
+	    typedef std::unique_ptr<node_type> AP;
 	    AP n( load_node( src ) );
 	    if( ! n.get() ) return false;
 	    node_traits::swap( dest, *n );
@@ -167,7 +167,7 @@ namespace s11nlite {
 
         bool load_node( std::istream & src, node_type & dest )
 	{
-	    typedef std::auto_ptr<node_type> AP;
+	    typedef std::unique_ptr<node_type> AP;
 	    AP n( load_node( src ) );
 	    if( ! n.get() ) return false;
 	    node_traits::swap( dest, *n );

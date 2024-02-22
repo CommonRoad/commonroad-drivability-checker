@@ -924,7 +924,7 @@ namespace s11n {
  		inline bool operator()( NodeType & dest, SerializableT const & src ) const
  		{
 			typedef node_traits<NodeType> NTR;
-			std::auto_ptr<NodeType> nap( NTR::create( this->name ) );
+			std::unique_ptr<NodeType> nap( NTR::create( this->name ) );
  			return this->functor( *nap, src )
 				? (NTR::children(dest).push_back( nap.release() ),true)
 				: false;
@@ -1003,7 +1003,7 @@ namespace s11n {
  		bool operator()( SerializableT const & src ) const
  		{
 			typedef node_traits<NodeType> NTR;
-			std::auto_ptr<NodeType> nap( NTR::create( this->name ) );
+			std::unique_ptr<NodeType> nap( NTR::create( this->name ) );
  			if( this->functor( *nap, src ) )
 			{
 				NTR::children(this->node()).push_back( nap.release() );

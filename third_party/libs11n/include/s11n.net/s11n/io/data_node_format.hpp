@@ -595,7 +595,7 @@ namespace s11n {
                                                       )
                 {
                         // CERR << "deserialize_lex_forwarder("<<lexerClassName<<")\n";
-			std::auto_ptr<FlexLexer> lexer( ::s11n::cl::classload<FlexLexer>( lexerClassName ) );
+			std::unique_ptr<FlexLexer> lexer( ::s11n::cl::classload<FlexLexer>( lexerClassName ) );
                         if( ! lexer.get() )
                         {
 				throw ::s11n::s11n_exception(
@@ -607,7 +607,7 @@ namespace s11n {
 
                         typedef s11n::io::data_node_tree_builder<NodeType> BuilderType;
                         typedef tree_builder_context<BuilderContext> BC;
-                        std::auto_ptr<BuilderType> treebuilder( new BuilderType );
+                        std::unique_ptr<BuilderType> treebuilder( new BuilderType );
                         treebuilder->auto_delete( true ); // if we throw, let it clean up
                         try
                         {

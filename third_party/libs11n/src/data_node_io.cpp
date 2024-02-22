@@ -65,7 +65,7 @@ namespace s11n {
                 std::string get_magic_cookie( const std::string & src, bool AsFile )
                 {
                         if( src.empty() ) return src;
-                        typedef std::auto_ptr<std::istream> AP;
+                        typedef std::unique_ptr<std::istream> AP;
                         AP is( get_istream( src, AsFile ) );
                         return is.get()
 				? get_magic_cookie( *is )
