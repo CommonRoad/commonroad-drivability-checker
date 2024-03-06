@@ -43,6 +43,8 @@ FetchContent_Declare(
       ${PROJECT_SOURCE_DIR}/third_party/patch/libccd-cmake-fix-install-location.patch
 
   ${_fetch_content_override_flag}
+
+  UPDATE_DISCONNECTED 1
   )
 
 set(fcl_git_tag 43f9805445e73397077127556165f8af822c0383)
@@ -70,6 +72,8 @@ FetchContent_Declare(
       # Used for CMake<3.24 (see above)
       ${_fcl_extra_patch}
       ${PROJECT_SOURCE_DIR}/third_party/patch/fcl-cmake-disable-tests.patch
+
+  UPDATE_DISCONNECTED 1
   )
 
 # BUILD_TESTING is used by libccd and FCL
