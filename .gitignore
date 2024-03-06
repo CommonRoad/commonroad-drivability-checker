@@ -13,6 +13,7 @@ __pycache__/
 .Python
 build/
 cmake-build-debug/
+cmake-build-release/
 /build-debug/
 develop-eggs/
 dist/
@@ -30,6 +31,14 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# third party directories which are pulled by CMake FetchContent
+third_party/box2d/
+third_party/fcl/
+third_party/gpc/
+third_party/libccd/
+third_party/pybind11/
+third_party/triangle/
 
 # Sphinx documentation
 doctrees
