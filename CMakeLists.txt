@@ -1,3 +1,4 @@
+
 project(DrivabilityChecker)
 cmake_minimum_required(VERSION 3.18)
 
@@ -14,6 +15,8 @@ option(ADD_TRIANGLE "Use a non-free Triangle library" OFF)
 # FIXME Maybe rename this option in the future?
 # Note: BUILD_S11N is already used by other projects
 option(BUILD_S11N "enable serialization support using s11n" ON)
+
+option(BUILD_PYBIND11 "build pybind11 for python bindings" ON)
 
 if("${CMAKE_BINARY_DIR}" EQUAL "${PROJECT_SOURCE_DIR}/build")
   message(WARNING
@@ -38,6 +41,15 @@ if(ADD_PYTHON_BINDINGS)
 endif()
 
 include(FetchContent)
+FetchContent_Declare(
+    commonroad_cmake
+
+    GIT_REPOSITORY https://gitlab.lrz.de/tum-cps/commonroad-cmake.git
+    GIT_TAG        main
+)
+FetchContent_MakeAvailable(commonroad_cmake)
+
+list(APPEND CMAKE_MODULE_PATH ${commonroad_cmake_SOURCE_DIR})
 
 # Disable verbose git clone output if we are invoked by Python
 # The Git progress messages don't work correctly when relayed by Python
@@ -53,7 +65,9 @@ set(FETCHCONTENT_QUIET ${ADD_PYTHON_BINDINGS})
 
 include(third_party/external_libccd_fcl.cmake)
 
-include(third_party/external_pybind11.cmake)
+if(BUILD_PYBIND11)
+    include(third_party/external_pybind11.cmake)
+endif()
 
 include(third_party/external_box2d.cmake)
 

@@ -63,7 +63,7 @@ PartialCostFunctionMapping = {
     PartialCostFunction.Vlon:  cost_functions.longitudinal_velocity_offset_cost,
     PartialCostFunction.O:  cost_functions.orientation_offset_cost,
     PartialCostFunction.D:  cost_functions.distance_to_obstacle_cost,
-    PartialCostFunction.L:  cost_functions.lane_center_offset_cost,
+    PartialCostFunction.L:  cost_functions.path_length_cost,
     PartialCostFunction.T:  cost_functions.time_cost,
     PartialCostFunction.ID:  cost_functions.inverse_duration_cost,
 }

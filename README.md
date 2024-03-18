@@ -30,16 +30,18 @@ We provide two installation options: Installation as a Python package or buildin
 
 System Requirements
 -------------------
-The software is written in Python 3.7 and C++11 and tested on MacOS and Linux. 
+The software is written in Python 3.7 and C++17 and tested on MacOS and Linux (Ubuntu 18.04, 20.04 and 22.04). 
 
 The usage of the **[Anaconda](http://www.anaconda.com/download/#download9) Python distribution** is strongly recommended. 
 
 For building the code from source, the following minimum versions are required:
-  * **GCC and G++**: version 9 or above
-  * **CMake**: version 3.10 or above.
+  * **GCC and G++**: version 10 or above
+  * **CMake**: version 3.18 or above.
   * **Pip**: version 21.3 or above
 
-**Note for MacOS users (M1 or Intel):** we additionally recommend using the Homebrew package manager, to install required dependencies such as Eigen.
+**Note for MacOS users (M1 or Intel):** 
+- We additionally recommend using the Homebrew package manager, to install required dependencies such as Eigen.
+- The installation has been tested for the **AppleClang (15.0)** and the **GCC (13)** compiler.
 
 
 Third Party Libraries and Packages

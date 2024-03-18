@@ -250,7 +250,7 @@ namespace s11n {
                         virtual bool serialize( const node_type & src, const std::string & destfile )
                         {
 				if( destfile.empty() ) return false;
-                                std::auto_ptr<std::ostream> os( ::s11n::io::get_ostream( destfile ) );
+                                std::unique_ptr<std::ostream> os( ::s11n::io::get_ostream( destfile ) );
                                 if( ! os.get() ) return false;
                                 bool b = this->serialize( src, *os );
                                 return b;
@@ -295,7 +295,7 @@ namespace s11n {
                         */
                         virtual node_type * deserialize( const std::string & src )
                         {
-                                typedef std::auto_ptr<std::istream> AP;
+                                typedef std::unique_ptr<std::istream> AP;
                                 AP is = AP( ::s11n::io::get_istream( src ) );
                                 if( ! is.get() ) return 0;
                                 return this->deserialize( *is );
@@ -506,7 +506,7 @@ namespace s11n {
 		template <typename NodeType>
 		data_node_serializer<NodeType> * guess_serializer( std::string const & infile )
 		{
-			std::auto_ptr<std::istream> is( get_istream( infile.c_str() ) );
+			std::unique_ptr<std::istream> is( get_istream( infile.c_str() ) );
 			return is.get()
 				? guess_serializer<NodeType>( *is )
 				: 0;
@@ -537,7 +537,7 @@ namespace s11n {
 			try
 			{
 				typedef data_node_serializer<NodeType> ST;
-				std::auto_ptr<ST> ser( guess_serializer<NodeType>( is ) );
+				std::unique_ptr<ST> ser( guess_serializer<NodeType>( is ) );
 				return ser.get()
 					? ser->deserialize( is )
 					: 0;
@@ -575,7 +575,7 @@ namespace s11n {
 			try
 			{
 				typedef data_node_serializer<NodeType> ST;
-				std::auto_ptr<ST> ser( guess_serializer<NodeType>( src ) );
+				std::unique_ptr<ST> ser( guess_serializer<NodeType>( src ) );
 				return ser.get()
 					? ser->deserialize( src )
 					: 0;
@@ -636,7 +636,7 @@ namespace s11n {
                 {
 			if( ! ExternalData )
 			{
-				typedef std::auto_ptr<std::istream> AP;
+				typedef std::unique_ptr<std::istream> AP;
 				AP is( ::s11n::io::get_istream( src, ExternalData ) );
 				if( ! is.get() ) return 0;
 				return load_node<NodeType>( *is );
@@ -655,7 +655,7 @@ namespace s11n {
                 template <typename NodeT,typename SerializableT>
                 SerializableT * load_serializable( std::istream & src )
                 {
-                        typedef std::auto_ptr<NodeT> AP;
+                        typedef std::unique_ptr<NodeT> AP;
                         AP node( load_node<NodeT>( src ) );
                         if( ! node.get() )
                         {
@@ -683,7 +683,7 @@ namespace s11n {
                 {
 			if( ! ExternalData )
 			{
-				typedef std::auto_ptr<std::istream> AP;
+				typedef std::unique_ptr<std::istream> AP;
 				AP is( ::s11n::io::get_istream( src, ExternalData ) );
 				if( ! is.get() )
 				{
@@ -692,7 +692,7 @@ namespace s11n {
 				}
 				return load_serializable<NodeT,SerializableT>( *is );
 			}
-                        typedef std::auto_ptr<NodeT> AP;
+                        typedef std::unique_ptr<NodeT> AP;
                         AP node( load_node<NodeT>( src ) );
                         if( ! node.get() )
                         {

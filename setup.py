@@ -174,7 +174,6 @@ class CMakeBuild(build_ext):
             doc_source_dir = os.path.join(dist_dir, 'share/doc/DrivabilityChecker')
             shutil.copytree(doc_source_dir, doc_target_dir)
 
-
 setup(
     name='commonroad-drivability-checker',
     version=__version__,
@@ -202,7 +201,7 @@ setup(
     cmdclass={"build_ext": CMakeBuild},
 
     # Requirements
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     install_requires=[
         'commonroad-io>=2022.3',
         'commonroad-vehicle-models>=3.0.0',
@@ -218,9 +217,11 @@ setup(
     # Additional information
     classifiers=[
         "Programming Language :: C++",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "License :: OSI Approved :: BSD License",
         "Operating System :: POSIX :: Linux",
         "Operating System :: MacOS",

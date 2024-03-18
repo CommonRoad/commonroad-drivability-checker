@@ -43,13 +43,22 @@ FetchContent_Declare(
       ${PROJECT_SOURCE_DIR}/third_party/patch/libccd-cmake-fix-install-location.patch
 
   ${_fetch_content_override_flag}
+
+  UPDATE_DISCONNECTED 1
   )
+
+set(fcl_git_tag 43f9805445e73397077127556165f8af822c0383)
+if (APPLE)
+  # The other git commit does not work on apple silicone!
+  set(fcl_git_tag df2702ca5e703dec98ebd725782ce13862e87fc8)
+endif ()
 
 FetchContent_Declare(
   fcl
   
   GIT_REPOSITORY  https://github.com/flexible-collision-library/fcl.git
-  GIT_TAG         43f9805445e73397077127556165f8af822c0383
+  GIT_TAG         ${fcl_git_tag}
+#    GIT_TAG         43f9805445e73397077127556165f8af822c0383
 
   # Necessary to run git am in CI environment (git am requires committer name and email)
   GIT_CONFIG user.name=cmake user.email=cmake@localhost
@@ -62,6 +71,9 @@ FetchContent_Declare(
       ${PROJECT_SOURCE_DIR}/third_party/patch/fcl-cmake-disable-warnings.patch
       # Used for CMake<3.24 (see above)
       ${_fcl_extra_patch}
+      ${PROJECT_SOURCE_DIR}/third_party/patch/fcl-cmake-disable-tests.patch
+
+  UPDATE_DISCONNECTED 1
   )
 
 # BUILD_TESTING is used by libccd and FCL

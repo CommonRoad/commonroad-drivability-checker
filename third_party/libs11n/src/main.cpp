@@ -248,7 +248,7 @@ do_everything( int argc, char **argv )
         }
 
 
-         typedef std::auto_ptr<s11nlite::serializer_interface> APSER;
+         typedef std::unique_ptr<s11nlite::serializer_interface> APSER;
          APSER ser = APSER( s11nlite::create_serializer( fmt ) );
          if( ! ser.get() )
          {
@@ -326,7 +326,7 @@ do_everything( int argc, char **argv )
                  use_ofile = true;
          }
 
-         typedef std::auto_ptr<s11nlite::node_type> NAP;
+         typedef std::unique_ptr<s11nlite::node_type> NAP;
          NAP innode;
          std::string forcedinser = NTR::get( argn, "S", std::string() );
          if( ! forcedinser.empty() )

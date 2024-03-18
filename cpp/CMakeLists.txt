@@ -62,7 +62,7 @@ endif()
 
 ### Shared configuration
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -72,20 +72,7 @@ if(NOT WIN32)
 #find_package(s11n)
 endif(NOT WIN32)
 
-find_package(Eigen3 3.0.5 QUIET CONFIG)
-
-# If Eigen3Config.cmake is not found, use the FindEigen3.cmake module
-if(NOT Eigen3_FOUND)
-  find_package(Eigen3 3.0.5 QUIET MODULE)
-  set(Eigen3_FOUND ON)
-endif()
-
-if(Eigen3_FOUND)
-  set(COM_HAVE_EIGEN TRUE)
-else()
-  message(SEND_ERROR "EIGEN3 (>= 3.0.5) is required by the CollisionChecker")
-  set(COM_HAVE_EIGEN FALSE)
-endif()
+find_package(Eigen3 REQUIRED)
 
 #find_package(OpenMP)
 
@@ -93,18 +80,28 @@ OPTION (USE_OpenMP "Use OpenMP to enamble <omp.h>" ON)
 
 # Find OpenMP
 if(APPLE AND USE_OpenMP)
-    if(CMAKE_C_COMPILER_ID MATCHES "Clang")
-        set(OpenMP_C "${CMAKE_C_COMPILER}")
-        set(OpenMP_C_FLAGS "-Xclang -fopenmp")
-        set(OpenMP_C_LIB_NAMES "omp")
-        set(OpenMP_omp_LIBRARY ${OpenMP_C_LIB_NAMES})
-    endif()
+
+    if (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "arm64")
+        set(MAC_LIBOMP_PATH /opt/homebrew/opt/libomp)
+    else ()
+        set(MAC_LIBOMP_PATH /usr/local/opt/libomp)
+    endif ()
+
+    list(APPEND CMAKE_PREFIX_PATH ${MAC_LIBOMP_PATH})
+
     if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-      set(OpenMP_CXX "${CMAKE_CXX_COMPILER}")
-      set(OpenMP_CXX_FLAGS "-Xclang -fopenmp")
-      set(OpenMP_CXX_LIB_NAMES "omp")
-      set(OpenMP_omp_LIBRARY ${OpenMP_CXX_LIB_NAMES})
+        foreach(_lang IN ITEMS C CXX)
+            set(OpenMP_${_lang}_LIB_NAMES "omp")
+            set(OpenMP_${_lang}_FLAGS "-Xclang -fopenmp")
+            set(OpenMP_${_lang}_INCLUDE_DIR ${MAC_LIBOMP_PATH}/include)
+        endforeach()
     endif()
+
+    find_library(OpenMP_omp_LIBRARY
+        NAMES omp
+        PATHS ${MAC_LIBOMP_PATH}/lib
+    )
+
 endif()
 
 if(USE_OpenMP)
@@ -133,7 +130,7 @@ if(WIN32)
 
 set(S11_SRC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libs11n/windows/src)
 
-set(S11_SRC 
+set(S11_SRC
 
 ${S11_SRC_ROOT}/argv_parser.cpp
 ${S11_SRC_ROOT}/data_node_io.cpp
@@ -154,7 +151,7 @@ ${S11_SRC_ROOT}/compact_serializer.cpp
 
 set(s11n_FOUND ON)
 
-add_library(s11n STATIC ${S11_SRC} ${S11_PLUGINS}) 
+add_library(s11n STATIC ${S11_SRC} ${S11_PLUGINS})
 
 target_compile_features(s11n PUBLIC cxx_std_98)
 

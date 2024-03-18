@@ -10,7 +10,7 @@ bool s11n::serialize_subnode( DataNodeType & target,
 			      const SerializableT & src )
 {
 	typedef ::s11n::node_traits<DataNodeType> NT;
-	std::auto_ptr<DataNodeType> sub(NT::create(nodename));
+	std::unique_ptr<DataNodeType> sub(NT::create(nodename));
 	typedef typename ::s11n::type_traits<SerializableT>::type ST;
 	if( serialize<DataNodeType,ST>( *sub, src ) )
 	{

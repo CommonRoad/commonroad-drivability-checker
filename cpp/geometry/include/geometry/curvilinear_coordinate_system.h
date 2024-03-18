@@ -6,9 +6,11 @@
 #include <cmath>
 #include <deque>
 #include <limits>
+#include <list>
 #include <memory>
 #include <numeric>
 #include <vector>
+#include <optional>
 
 #include <Eigen/Dense>
 #include <Eigen/StdVector>
@@ -46,6 +48,48 @@ enum class ProjectionAxis {
   Y_AXIS = 1,
   X_AXIS_ROTATED = 2,
   Y_AXIS_ROTATED = 3
+};
+
+/**
+ * Projection domain errors are thrown when trying to convert coordinates
+ * outside the projection domain.
+ */
+class ProjectionDomainError : public std::invalid_argument {
+protected:
+    explicit ProjectionDomainError(const std::string& message)
+        : std::invalid_argument(message) {}
+};
+
+/**
+ * Error for curvilinear coordinates outside the projection domain, either laterally or longitudinally.
+ */
+class CurvilinearProjectionDomainError : public ProjectionDomainError {
+protected:
+    explicit CurvilinearProjectionDomainError(const std::string& message)
+        : ProjectionDomainError(message) {}
+
+public:
+   static CurvilinearProjectionDomainError longitudinal() {
+       return CurvilinearProjectionDomainError("Longitudinal coordinate outside of projection domain");
+   }
+
+   static CurvilinearProjectionDomainError general() {
+       return CurvilinearProjectionDomainError("Longitudinal and/or lateral coordinate outside of projection domain");
+   }
+};
+
+/**
+ * Error for cartesian coordinates outside the projection domain.
+ */
+class CartesianProjectionDomainError : public ProjectionDomainError {
+protected:
+    explicit CartesianProjectionDomainError(const std::string& message)
+        : ProjectionDomainError(message) {}
+
+public:
+   static CartesianProjectionDomainError general() {
+       return CartesianProjectionDomainError("x and/or y coordinate outside of projection domain");
+   }
 };
 
 class CurvilinearCoordinateSystem
@@ -619,9 +663,22 @@ class CurvilinearCoordinateSystem
    */
   int findSegmentIndex(double s) const;
 
+  /**
+   * Finds the corresponding segment for a given longitudinal coordinate of a
+   * point.
+   *
+   * @param s longitudinal coordinate
+   * @return segment index, or std::nullopt if not found
+   */
+  std::optional<int> tryFindSegmentIndex(double s) const;
+
+
   void removeSegment(int ind);
 
  private:
+  std::optional<int> findSegmentIndex_Fast(double s) const;
+  std::optional<int> findSegmentIndex_Slow(double s) const;
+
   EigenPolyline reference_path_original_;
   EigenPolyline reference_path_;
 
