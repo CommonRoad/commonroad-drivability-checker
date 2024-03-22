@@ -10,7 +10,7 @@ import shapely.geometry
 from commonroad.common.solution import VehicleType
 from commonroad.scenario.scenario import Scenario
 from commonroad.scenario.traffic_sign import SupportedTrafficSignCountry
-from commonroad.scenario.traffic_sign_interpreter import TrafficSigInterpreter
+from commonroad.scenario.traffic_sign_interpreter import TrafficSignInterpreter
 from commonroad.scenario.trajectory import Trajectory
 from commonroad.scenario.state import FloatExactOrInterval, CustomState, PMState, TraceState
 from commonroad_dc.collision.collision_detection.scenario import create_collision_checker_scenario
@@ -424,7 +424,7 @@ class LaneletRouteMatcher:
                 # try:
                 country = SupportedTrafficSignCountry(self.scenario.scenario_id.country_id)
                 # except:
-                tsi = TrafficSigInterpreter(country, self.lanelet_network)
+                tsi = TrafficSignInterpreter(country, self.lanelet_network)
                 for i, l_list_tmp in enumerate(lanelets):
                     l_tmp = frozenset(l_list_tmp) & frozenset(l_seq)
                     if not l_list_tmp:
