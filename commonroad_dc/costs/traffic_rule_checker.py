@@ -1,4 +1,4 @@
-from typing import Tuple, Dict, Union
+from typing import Tuple, Dict, Union, Optional
 import os
 import logging
 import copy
@@ -121,7 +121,7 @@ class TrafficRuleChecker:
 
     # Rule checking methods at all time steps, logger can be uncommented for debugging purposes
   
-    def check_safe_distance(self, time_step: int) -> Tuple[bool, Union[int, None], float, float]:
+    def check_safe_distance(self, time_step: int) -> Tuple[bool, Optional[int], float, float]:
         """checks if the ego vehicle complies with the safe distance rule at the current time_step
 
         Args:
@@ -215,7 +215,7 @@ class TrafficRuleChecker:
  
     
     
-    def check_no_unnecessary_braking(self, time_step : int) -> Tuple[bool, Union[float, None]] :
+    def check_no_unnecessary_braking(self, time_step : int) -> Tuple[bool, Optional[int]] :
         """checks if ego vehicle braked abruptly at the current time step
 
         Args:

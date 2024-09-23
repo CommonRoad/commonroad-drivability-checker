@@ -10,6 +10,7 @@ from commonroad_dc.costs.route_matcher import LaneletRouteMatcher, SolutionPrope
 from commonroad.common.solution import Solution, CostFunction, VehicleType
 
 import commonroad_dc.costs.partial_cost_functions as cost_functions
+import commonroad_dc.costs.partial_cost_functions_traffic as cost_functions_tr
 
 
 class PartialCostFunction(Enum):
@@ -48,6 +49,9 @@ class PartialCostFunction(Enum):
     L = "L"
     T = "T"
     ID = "ID"
+    
+    SD = "SD"
+    UB = "UB"
 
 
 PartialCostFunctionMapping = {
@@ -66,6 +70,9 @@ PartialCostFunctionMapping = {
     PartialCostFunction.L:  cost_functions.path_length_cost,
     PartialCostFunction.T:  cost_functions.time_cost,
     PartialCostFunction.ID:  cost_functions.inverse_duration_cost,
+    
+    PartialCostFunction.SD: cost_functions_tr.r_g_1_cost,
+    PartialCostFunction.UB: cost_functions_tr.r_g_2_cost,
 }
 
 
@@ -120,6 +127,10 @@ cost_function_mapping =\
             (PartialCostFunction.SR, 22),
             (PartialCostFunction.D, 8),
             (PartialCostFunction.LC, 0.5),
+            
+            (PartialCostFunction.SD, 5),
+          #  (PartialCostFunction.UB, 3)
+            
         ]
     }
 
@@ -139,7 +150,10 @@ required_properties = {
     PartialCostFunction.D: [SolutionProperties.LonDistanceObstacles],
     PartialCostFunction.L: [],
     PartialCostFunction.T: [],
-    PartialCostFunction.ID: [], }
+    PartialCostFunction.ID: [],
+    
+    PartialCostFunction.SD: [],
+    PartialCostFunction.UB: [], }
 
 
 class CostFunctionEvaluator:
