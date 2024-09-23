@@ -10,7 +10,7 @@ import shapely.geometry
 from commonroad.common.solution import VehicleType
 from commonroad.scenario.scenario import Scenario
 from commonroad.scenario.traffic_sign import SupportedTrafficSignCountry
-from commonroad.scenario.traffic_sign_interpreter import TrafficSignInterpreter
+from commonroad.scenario.traffic_sign_interpreter import TrafficSigInterpreter
 from commonroad.scenario.trajectory import Trajectory
 from commonroad.scenario.state import FloatExactOrInterval, CustomState, PMState, TraceState
 from commonroad_dc.collision.collision_detection.scenario import create_collision_checker_scenario
