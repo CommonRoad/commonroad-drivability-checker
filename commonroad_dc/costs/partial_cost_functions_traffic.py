@@ -22,15 +22,13 @@ def r_g_1_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajec
         
         total_violation_cost = 0.0
         
-        # Loop through each state in the ego vehicle's trajectory
         for state in ego_trajectory.state_list:
             time_step = state.time_step
             
-            # Check if safe distance is maintained
+            # Check if safe distance is maintained for each time_step
             safe_distance_maintained, _ , actual_distance, safe_distance = traffic_rule_checker.check_safe_distance(time_step)
             
             if not safe_distance_maintained:
-                # Calculate the robustness (violation)
                 # print(f"Distance = {actual_distance}, safe_distance_threshold = {safe_distance}")
                 violation = (safe_distance - actual_distance) * scenario.dt
                 total_violation_cost += violation
@@ -56,7 +54,7 @@ def r_g_2_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajec
             no_unnecessary_braking, violation = traffic_rule_checker.check_no_unnecessary_braking(time_step)
             
             if not no_unnecessary_braking: # braked unnecessarily
-                total_violation_cost += violation
+                total_violation_cost += (violation * scenario.dt)
         
         return total_violation_cost
     
