@@ -33,6 +33,9 @@ class PartialCostFunction(Enum):
     L: Path Length,
     T: Time,
     ID: Inverse Duration,
+    
+    SD: Safe Distance,
+    UB: Unnecessary Braking
     """
     A = "A"
     J = "J"
@@ -128,8 +131,8 @@ cost_function_mapping =\
             (PartialCostFunction.D, 8),
             (PartialCostFunction.LC, 0.5),
             
-            (PartialCostFunction.SD, 5),
-          #  (PartialCostFunction.UB, 3)
+           # (PartialCostFunction.SD, 5),
+            (PartialCostFunction.UB, 3)
             
         ]
     }
