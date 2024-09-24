@@ -35,7 +35,7 @@ class PartialCostFunction(Enum):
     ID: Inverse Duration,
     
     SD: Safe Distance,
-    UB: Unnecessary Braking
+    UB: Unecessary Braking,
     """
     A = "A"
     J = "J"
