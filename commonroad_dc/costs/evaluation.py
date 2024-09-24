@@ -33,6 +33,9 @@ class PartialCostFunction(Enum):
     L: Path Length,
     T: Time,
     ID: Inverse Duration,
+
+    SD: Safe Distance,
+    UB: Unecessary Braking,
     """
     A = "A"
     J = "J"
