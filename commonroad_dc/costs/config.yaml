@@ -1,42 +1,45 @@
-simulation_param:
-  dt: 0.1
+# simulation_param:
+#   dt: 0.1
 
-# road network and curvilinear coordinate system parameters
-###
-# .. code-block:: yaml
-#
-#    - num_chankins_corner_cutting: number of how often chankins algorithm should be applied
-#    - polyline_resampling_step: step size for polyline resampling
-#    - merging_length: maximum accumulated length of lanalets belonging to a lane
-road_network_param:
-  num_chankins_corner_cutting: 1
-  polyline_resampling_step: 0.1
-  merging_length: 10000
+# # road network and curvilinear coordinate system parameters
+# ###
+# # .. code-block:: yaml
+# #
+# #    - num_chankins_corner_cutting: number of how often chankins algorithm should be applied
+# #    - polyline_resampling_step: step size for polyline resampling
+# #    - merging_length: maximum accumulated length of lanalets belonging to a lane
+# road_network_param:
+#   num_chankins_corner_cutting: 1
+#   polyline_resampling_step: 0.1
+#   merging_length: 10000
 
-# Ego vehicle parameters
-###
-# .. code-block:: yaml
-#
-#    - vehicle_number: CommonRoad vehicle number; possible options are 1, 2 or 3 (see CommonRoad vehicle models)
-#    - a_max: maximum acceleration of egovehicle
-#    - a_min: minimum acceleration of egovehicle
-#    - j_max: maximum jerk of ego vehicle
-#    - j_min: minimum jerk of ego vehicle
-#    - v_des: desired velocity of ego vehicle
-#    - t_react: reaction time of ego vehicle
-#    - dynamics_param: physical parameters of ego vehicle; will be initialized during runtime
-#    - fov: field of view (sensor range)
-#    - v_min: minimum allowed velocity considering vehicle dynamics
-#    - const_dist_offset: minimum distance at standstill
-#    - emergency_profile: emergency jerk profile
-#    - emergency_profile_num_steps_fb: number of steps minimum jerk should be attended to emergency profile
-#    - fov_speed_limit: speed limit based on field of view
-#    - braking_speed_limit: speed limit to ensure comfortable braking within field of view
-#    - road_condition_speed_limit: speed limit based on road conditions
+# # Ego vehicle parameters
+# ###
+# # .. code-block:: yaml
+# #
+# #    - vehicle_number: CommonRoad vehicle number; possible options are 1, 2 or 3 (see CommonRoad vehicle models)
+# #    - a_max: maximum acceleration of egovehicle
+# #    - a_min: minimum acceleration of egovehicle
+# #    - j_max: maximum jerk of ego vehicle
+# #    - j_min: minimum jerk of ego vehicle
+# #    - v_des: desired velocity of ego vehicle
+# #    - t_react: reaction time of ego vehicle
+# #    - dynamics_param: physical parameters of ego vehicle; will be initialized during runtime
+# #    - fov: field of view (sensor range)
+# #    - v_min: minimum allowed velocity considering vehicle dynamics
+# #    - const_dist_offset: minimum distance at standstill
+# #    - emergency_profile: emergency jerk profile
+# #    - emergency_profile_num_steps_fb: number of steps minimum jerk should be attended to emergency profile
+# #    - fov_speed_limit: speed limit based on field of view
+# #    - braking_speed_limit: speed limit to ensure comfortable braking within field of view
+# #    - road_condition_speed_limit: speed limit based on road conditions
 
 #country: 'USA'
 country: 'DEU'
-#desired_interstate_velocity: 36.6
+desired_interstate_velocity: 36.6
+min_velocity_dif: 0.01
+braking_speed_limit: 43 
+fov_speed_limit: 50
 
 ego_vehicle_param:
   vehicle_number: 2
@@ -59,6 +62,7 @@ ego_vehicle_param:
   braking_speed_limit: 43 # compute with calc_v_max_braking(ego_vehicle_param, simulation_param, traffic_rule_param)
   road_condition_speed_limit: 50
   desired_interstate_velocity: 36.6
+  
 
 # Other vehicle's parameters
 ###
