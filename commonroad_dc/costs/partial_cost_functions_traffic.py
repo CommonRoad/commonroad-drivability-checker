@@ -22,10 +22,10 @@ def r_g_1_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajec
         
         total_violation_cost = 0.0
         
-        for state in ego_trajectory.state_list:
-            time_step = state.time_step
+        time_steps = [state.time_step for state in ego_trajectory.state_list]
+        for time_step in time_steps:
             
-            # Check if safe distance is maintained for each time_step
+            # check if safe distance is maintained for each time_step
             safe_distance_maintained, _ , actual_distance, safe_distance = traffic_rule_checker.check_safe_distance(time_step)
             
             if not safe_distance_maintained:
@@ -48,9 +48,10 @@ def r_g_2_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajec
         
         total_violation_cost = 0.0
         
-        for state in ego_trajectory.state_list:
-            time_step = state.time_step
+        time_steps = [state.time_step for state in ego_trajectory.state_list]
+        for time_step in time_steps:
             
+            # check no unnecessary braking at each time_step
             no_unnecessary_braking, violation = traffic_rule_checker.check_no_unnecessary_braking(time_step)
             
             if not no_unnecessary_braking: # braked unnecessarily
@@ -63,11 +64,24 @@ def r_g_2_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajec
         raise PartialCostFunctionException(msg) from ex
    
     
-def r_g_3_cost(scenario: Scenario, planning_problem: PlanningProblem, trajectory: Trajectory,
+def r_g_3_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajectory: Trajectory,
                 properties: Dict[SolutionProperties, Dict[int,Any]]) -> float:
     """R_G3:maximum speed limit"""
     try:
-        pass # TODO
+        traffic_rule_checker = TrafficRuleChecker(scenario, ego_trajectory, planning_problem)
+        
+        total_violation_cost = 0.0
+        
+        time_steps = [state.time_step for state in ego_trajectory.state_list]
+        for time_step in time_steps:
+        
+            # check speed limit keeping at each time_step
+            speed_limit_kept, violation = traffic_rule_checker.check_maximum_speed_limit(time_step)
+            
+            if not speed_limit_kept:
+                total_violation_cost += (violation * scenario.dt)
+            
+        return total_violation_cost
     
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'maximum speed limit' cost!"

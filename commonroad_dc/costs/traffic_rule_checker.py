@@ -17,6 +17,7 @@ from commonroad.prediction.prediction import TrajectoryPrediction
 from crmonitor.predicates.position import PredSafeDistPrec, PredInFrontOf, PredInSameLane, PredPreceding
 from crmonitor.predicates.general import PredCutIn
 from crmonitor.predicates.acceleration import PredAbruptBreaking, PredRelAbruptBreaking
+from crmonitor.predicates.velocity import PredLaneSpeedLimit, PredLaneSpeedLimitStar,PredBrSpeedLimit,PredFovSpeedLimit,PredTypeSpeedLimit
 
 
 class TrafficRuleChecker:
@@ -122,10 +123,6 @@ class TrafficRuleChecker:
   
     def check_safe_distance(self, time_step: int) -> Tuple[bool, Optional[int], float, float]:
         """checks if the ego vehicle complies with the safe distance rule at the current time_step
-        
-        Args:
-            time_step (int): 
-
         Returns:
             Tuple:
             -if safe distance is maintained : bool
@@ -140,7 +137,7 @@ class TrafficRuleChecker:
         
         distance_to_preceding_vehicle = float('inf')  
         vehicles_in_front_of_ego_ids = []  # List saving the id(s) of the vehicle(s) in front of the ego at the current time_step
-        t_c = 1  
+        t_c = 3  # According to Maierhofer et al.
         previous_time = max(0, time_step - t_c)   
         
         for other_vehicle_id in self._other_vehicle_ids: # Loop to find the vehicles in same lane and in front of the ego vehicle
@@ -219,8 +216,7 @@ class TrafficRuleChecker:
  
     
     def check_no_unnecessary_braking(self, time_step: int) -> Tuple[bool, Optional[float]]:
-        """
-        Checks if the ego vehicle braked abruptly and unnecessarily at the given time step.
+        """cheks if the ego vehicle braked abruptly and unnecessarily at the given time step.
         Returns:
             Tuple:
             - if no unnecessary braking (True if no unnecessary braking) : bool
@@ -258,3 +254,57 @@ class TrafficRuleChecker:
         # No abrupt or unnecessary braking detected
        # self.logger.info(f"Ego acceleration at time {time_step} is {ego_acceleration} m/s². No unnecessary braking detected.")
         return True, None  # No penalty if braking is justified
+
+
+    def check_maximum_speed_limit(self, time_step: int) -> Tuple[bool, Optional[float]]:
+        """checks if maximum speed limit of the lane is violated
+        Returns:
+            Tuple:
+            -if speed limit is exceeded (True if no violation) : bool
+            -violation : float
+        """
+        lane_speed_limit_pred = PredLaneSpeedLimit(self._config)
+        brake_speed_limit_pred = PredBrSpeedLimit(self._config)    # method 'get_speed_limit()' loads value from the config file according to the implementation in stl-monitor
+        fov_speed_limit_pred = PredFovSpeedLimit(self._config)     # method 'get_speed_limit()' loads value from the given config file 
+        type_speed_limit_pred = PredTypeSpeedLimit(self._config)   # method 'get_speed_limit()' loads value from the given config file  
+        
+        lane_speed_limit = lane_speed_limit_pred.get_speed_limit(self._world, time_step,
+                                                                 [self._ego_vehicle_id, None])   
+        #brake_speed_limit = brake_speed_limit_pred.get_speed_limit(self._world, time_step,
+        #                                                           [self._ego_vehicle_id, None])
+        #fov_speed_limit = fov_speed_limit_pred.get_speed_limit(self._world, time_step,
+        #                                                      [self._ego_vehicle_id, None])
+           
+        # to save computation time i simply load the values from the config file    
+        brake_speed_limit = self._config["ego_vehicle_param"]["braking_speed_limit"] # Use config parameter
+        fov_speed_limit = self._config["ego_vehicle_param"]["fov_speed_limit"] # Use config file parameter 
+        type_speed_limit = self._config["ego_vehicle_param"]["v_max"]  # Assuming ego vehicle uses KS2 model just as in config file
+        
+        ego_velocity = self._ego_vehicle.states_cr[time_step].velocity  # Velocity of the ego vehicle at this time
+        
+        # if lane_speed_limit is None assume lane has no speed limit or lane speed limit is 'inf' 
+        lane_speed_limit_kept = (ego_velocity <= lane_speed_limit) if lane_speed_limit is not None else True
+        lane_speed_limit =  float('inf') if lane_speed_limit is None else lane_speed_limit
+        
+        # if brake_speed_limit is None, assume there is no brake speed limit or brake speed limit is 'inf'      
+        brake_speed_limit_kept = (ego_velocity <= brake_speed_limit) if brake_speed_limit is not None else True
+        brake_speed_limit = float('inf') if brake_speed_limit is None else brake_speed_limit
+            
+        fov_speed_limit_kept = (ego_velocity <= fov_speed_limit)    
+        type_speed_limit_kept = (ego_velocity <= type_speed_limit)
+        
+        # # FOR DEBUGGING PURPOSES
+        # self.logger.info(f"EGO VEL at {time_step}: {ego_velocity}")
+        # self.logger.info(f"Lane Speed Limit : {lane_speed_limit}")
+        # self.logger.info(f"Brake Speed Limit : {brake_speed_limit}")
+        # self.logger.info(f"Fov Speed Limit : {fov_speed_limit}")
+        # self.logger.info(f"Type Speed Limit : {type_speed_limit}")
+        
+        if lane_speed_limit_kept and brake_speed_limit_kept and fov_speed_limit_kept and type_speed_limit_kept:  # Temporal Logic from the Paper of Sebastian Maierhofer et al.
+            return True, None
+        else:
+            violation = max((ego_velocity-brake_speed_limit),
+                            (ego_velocity-lane_speed_limit),
+                            (ego_velocity-fov_speed_limit),
+                            (ego_velocity-type_speed_limit))
+            return False, violation

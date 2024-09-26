@@ -1,5 +1,5 @@
 simulation_param:
-  dt: 0.2
+  dt: 0.1
 
 # road network and curvilinear coordinate system parameters
 ###
@@ -34,9 +34,13 @@ road_network_param:
 #    - braking_speed_limit: speed limit to ensure comfortable braking within field of view
 #    - road_condition_speed_limit: speed limit based on road conditions
 
+#country: 'USA'
+country: 'DEU'
+#desired_interstate_velocity: 36.6
+
 ego_vehicle_param:
   vehicle_number: 2
-  a_abrupt: -3
+  a_abrupt: -2
   a_max: 3
   a_min: -10.0
   a_corr: 0.0
@@ -47,12 +51,14 @@ ego_vehicle_param:
   dynamics_param: 
   fov: 200
   v_min: 0
+  v_max: 36.6
   const_dist_offset: 0
   emergency_profile: []
   emergency_profile_num_steps_fb: 200
   fov_speed_limit: 50 # compute with calc_v_max_fov(ego_vehicle_param, simulation_param)
   braking_speed_limit: 43 # compute with calc_v_max_braking(ego_vehicle_param, simulation_param, traffic_rule_param)
   road_condition_speed_limit: 50
+  desired_interstate_velocity: 36.6
 
 # Other vehicle's parameters
 ###
