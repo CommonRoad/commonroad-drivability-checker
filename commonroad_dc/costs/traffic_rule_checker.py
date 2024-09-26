@@ -17,7 +17,9 @@ from commonroad.prediction.prediction import TrajectoryPrediction
 from crmonitor.predicates.position import PredSafeDistPrec, PredInFrontOf, PredInSameLane, PredPreceding
 from crmonitor.predicates.general import PredCutIn
 from crmonitor.predicates.acceleration import PredAbruptBreaking, PredRelAbruptBreaking
-from crmonitor.predicates.velocity import PredLaneSpeedLimit, PredLaneSpeedLimitStar,PredBrSpeedLimit,PredFovSpeedLimit,PredTypeSpeedLimit
+from crmonitor.predicates.velocity import (PredLaneSpeedLimit, PredLaneSpeedLimitStar,PredBrSpeedLimit,
+                                           PredFovSpeedLimit,PredTypeSpeedLimit, PredSlowLeadingVehicle,
+                                           PredPreservesTrafficFlow)
 
 
 class TrafficRuleChecker:
@@ -51,8 +53,15 @@ class TrafficRuleChecker:
         # Store vehicle IDs
         self._ego_vehicle_id = self._ego_obstacle.obstacle_id  # Use obstacle ID as vehicle ID for the ego vehicle
         self._ego_vehicle = self._world.vehicle_by_id(self._ego_vehicle_id)
-        self._other_vehicles = self._world.vehicles # Ego Vehicle included
-        self._other_vehicle_ids = [vehicle.id for vehicle in self._other_vehicles]
+        self._ego_vehicle.vehicle_param.update(self._config["ego_vehicle_param"])
+        self._other_vehicles = self._world.vehicles # Ego Vehicle included    
+       # self._other_vehicle_ids = [vehicle.id for vehicle in self._other_vehicles] # to be removed
+        
+        for vehicle in self._other_vehicles:
+            if vehicle.id == self._ego_vehicle_id:
+                continue
+            vehicle.vehicle_param.update(self._config["other_vehicles_param"])
+        
         # Initialize logger
         logging.basicConfig(level=logging.INFO)
         self.logger = logging.getLogger("T_R_Checker")
@@ -110,14 +119,14 @@ class TrafficRuleChecker:
         return ego_obstacle 
           
           
-    def _has_valid_trajectory(self, vehicle, time_step: int) -> bool:
-        """Check if the vehicle has a valid trajectory at the given time step."""
-        return time_step in vehicle.states_cr
+    # def _has_valid_trajectory(self, vehicle, time_step: int) -> bool:
+    #     """Check if the vehicle has a valid trajectory at the given time step."""
+    #     return time_step in vehicle.states_cr
 
 
-    def _has_valid_lanelet_assignment(self, vehicle, time_step: int) -> bool:
-        """Check if the vehicle has a valid lanelet assignment at the given time step."""
-        return vehicle.lanelet_assignment and time_step in vehicle.lanelet_assignment
+    # def _has_valid_lanelet_assignment(self, vehicle, time_step: int) -> bool:
+    #     """Check if the vehicle has a valid lanelet assignment at the given time step."""
+    #     return vehicle.lanelet_assignment and time_step in vehicle.lanelet_assignment
 
     # Rule checking methods at all time steps, logger can be uncommented for debugging purposes
   
@@ -134,30 +143,34 @@ class TrafficRuleChecker:
         in_front_of_pred = PredInFrontOf(self._config)
         safe_distance_pred = PredSafeDistPrec(self._config)
         cut_in_pred = PredCutIn(self._config)
+        precede_pred = PredPreceding(self._config)
         
         distance_to_preceding_vehicle = float('inf')  
         vehicles_in_front_of_ego_ids = []  # List saving the id(s) of the vehicle(s) in front of the ego at the current time_step
         t_c = 3  # According to Maierhofer et al.
-        previous_time = max(0, time_step - t_c)   
+        previous_time = max(0, time_step - t_c)  
+        preceding_vehicle_id = None 
         
-        for other_vehicle_id in self._other_vehicle_ids: # Loop to find the vehicles in same lane and in front of the ego vehicle
+        #for other_vehicle_id in self._other_vehicle_ids: # Loop to find the vehicles in same lane and in front of the ego vehicle
+        for other_vehicle_id in self._world.vehicle_ids_for_time_step(time_step):
             try:
                 if other_vehicle_id == self._ego_vehicle_id:
                     continue  # skip the ego vehicle itself
                 # skip vehicle(s) with no valid state at the current time_step
                 other_vehicle = self._world.vehicle_by_id(other_vehicle_id)    
-                if not self._has_valid_trajectory(other_vehicle, time_step):
-                    continue
-                if not self._has_valid_lanelet_assignment(other_vehicle, time_step):
-                    continue 
+                # if not self._has_valid_trajectory(other_vehicle, time_step):
+                #     continue
+                #if not self._has_valid_lanelet_assignment(other_vehicle, time_step):
+                 #   continue 
                 ego_vehicle_lane = self._ego_vehicle.get_lane(time_step)
                 other_vehicle_rear_s = other_vehicle.rear_s(time_step, ego_vehicle_lane)
                 if other_vehicle_rear_s is None: # No Information on the rear position of this vehicle at this time step
-                    continue
-                if time_step not in other_vehicle.lanelet_assignment:
-                    continue 
+                     continue
+                #if time_step not in other_vehicle.lanelet_assignment:
+                 #    continue 
                 # procede with only valid vehicle(s) at this time step   
-                # check if the vehicle is in the same lane
+                
+                # check if the vehicle is in the same lane        
                 in_same_lane_as_ego = in_same_lane_pred.evaluate_boolean(self._world, time_step,
                                                                          [other_vehicle_id, self._ego_vehicle_id])
                 if not in_same_lane_as_ego:
@@ -175,12 +188,16 @@ class TrafficRuleChecker:
            # self.logger.info(f"No obstacle in front of the ego vehicle within sensor range at time {time_step}")
             return True, None, float('inf'), float('inf')
         
-        for vehicle_id in vehicles_in_front_of_ego_ids: # Finding the preceding vehicle using min distance evaluation
-            distance = in_front_of_pred.evaluate_robustness(self._world, time_step, 
-                                                            [self._ego_vehicle_id, vehicle_id])   
-            if distance < distance_to_preceding_vehicle:
-                distance_to_preceding_vehicle = distance
-                preceding_vehicle_id = vehicle_id
+        elif len(vehicles_in_front_of_ego_ids) == 1:
+            preceding_vehicle_id = vehicles_in_front_of_ego_ids[0]
+            
+        else:
+            for vehicle_id in vehicles_in_front_of_ego_ids: # Finding the preceding vehicle using min distance evaluation
+                distance = in_front_of_pred.evaluate_robustness(self._world, time_step, 
+                                                                [self._ego_vehicle_id, vehicle_id])   
+                if distance < distance_to_preceding_vehicle:
+                    distance_to_preceding_vehicle = distance
+                    preceding_vehicle_id = vehicle_id
         preceding_vehicle = self._world.vehicle_by_id(preceding_vehicle_id) # preceding vehicle found
         # check if cut_in happened
         cut_in_happened_p = False # cut_in happend in the previous state
@@ -260,51 +277,72 @@ class TrafficRuleChecker:
         """checks if maximum speed limit of the lane is violated
         Returns:
             Tuple:
-            -if speed limit is exceeded (True if no violation) : bool
-            -violation : float
+            - if speed limit is exceeded (True if no violation): bool
+            - violation: float
         """
         lane_speed_limit_pred = PredLaneSpeedLimit(self._config)
-        brake_speed_limit_pred = PredBrSpeedLimit(self._config)    # method 'get_speed_limit()' loads value from the config file according to the implementation in stl-monitor
-        fov_speed_limit_pred = PredFovSpeedLimit(self._config)     # method 'get_speed_limit()' loads value from the given config file 
-        type_speed_limit_pred = PredTypeSpeedLimit(self._config)   # method 'get_speed_limit()' loads value from the given config file  
-        
-        lane_speed_limit = lane_speed_limit_pred.get_speed_limit(self._world, time_step,
-                                                                 [self._ego_vehicle_id, None])   
-        #brake_speed_limit = brake_speed_limit_pred.get_speed_limit(self._world, time_step,
-        #                                                           [self._ego_vehicle_id, None])
-        #fov_speed_limit = fov_speed_limit_pred.get_speed_limit(self._world, time_step,
-        #                                                      [self._ego_vehicle_id, None])
-           
-        # to save computation time i simply load the values from the config file    
-        brake_speed_limit = self._config["ego_vehicle_param"]["braking_speed_limit"] # Use config parameter
-        fov_speed_limit = self._config["ego_vehicle_param"]["fov_speed_limit"] # Use config file parameter 
-        type_speed_limit = self._config["ego_vehicle_param"]["v_max"]  # Assuming ego vehicle uses KS2 model just as in config file
-        
-        ego_velocity = self._ego_vehicle.states_cr[time_step].velocity  # Velocity of the ego vehicle at this time
-        
-        # if lane_speed_limit is None assume lane has no speed limit or lane speed limit is 'inf' 
-        lane_speed_limit_kept = (ego_velocity <= lane_speed_limit) if lane_speed_limit is not None else True
-        lane_speed_limit =  float('inf') if lane_speed_limit is None else lane_speed_limit
-        
-        # if brake_speed_limit is None, assume there is no brake speed limit or brake speed limit is 'inf'      
-        brake_speed_limit_kept = (ego_velocity <= brake_speed_limit) if brake_speed_limit is not None else True
+        brake_speed_limit_pred = PredBrSpeedLimit(self._config)    
+        fov_speed_limit_pred = PredFovSpeedLimit(self._config)    
+        type_speed_limit_pred = PredTypeSpeedLimit(self._config)
+
+        # Fetch speed limits from predicates
+        lane_speed_limit = lane_speed_limit_pred.get_speed_limit(self._world, time_step, [self._ego_vehicle_id])
+        brake_speed_limit = brake_speed_limit_pred.get_speed_limit(self._world, time_step, [self._ego_vehicle_id])
+        fov_speed_limit = fov_speed_limit_pred.get_speed_limit(self._world, time_step, [self._ego_vehicle_id])
+        type_speed_limit = type_speed_limit_pred.get_speed_limit(self._world, time_step, [self._ego_vehicle_id])
+
+        # Use fallback values if limits are None
+        lane_speed_limit = float('inf') if lane_speed_limit is None else lane_speed_limit
         brake_speed_limit = float('inf') if brake_speed_limit is None else brake_speed_limit
-            
-        fov_speed_limit_kept = (ego_velocity <= fov_speed_limit)    
+        fov_speed_limit = float('inf') if fov_speed_limit is None else fov_speed_limit
+        type_speed_limit = float('inf') if type_speed_limit is None else type_speed_limit
+
+        # Ego vehicle's velocity
+        ego_velocity = self._ego_vehicle.states_cr[time_step].velocity
+
+        # Check if each speed limit is respected
+        lane_speed_limit_kept = (ego_velocity <= lane_speed_limit)
+        brake_speed_limit_kept = (ego_velocity <= brake_speed_limit)
+        fov_speed_limit_kept = (ego_velocity <= fov_speed_limit)
         type_speed_limit_kept = (ego_velocity <= type_speed_limit)
-        
-        # # FOR DEBUGGING PURPOSES
-        # self.logger.info(f"EGO VEL at {time_step}: {ego_velocity}")
-        # self.logger.info(f"Lane Speed Limit : {lane_speed_limit}")
-        # self.logger.info(f"Brake Speed Limit : {brake_speed_limit}")
-        # self.logger.info(f"Fov Speed Limit : {fov_speed_limit}")
-        # self.logger.info(f"Type Speed Limit : {type_speed_limit}")
-        
-        if lane_speed_limit_kept and brake_speed_limit_kept and fov_speed_limit_kept and type_speed_limit_kept:  # Temporal Logic from the Paper of Sebastian Maierhofer et al.
+
+        # Log speed limits and ego velocity for debugging
+        self.logger.info(f"EGO VEL at {time_step}: {ego_velocity}")
+        self.logger.info(f"Lane Speed Limit: {lane_speed_limit}")
+        self.logger.info(f"Brake Speed Limit: {brake_speed_limit}")
+        self.logger.info(f"FOV Speed Limit: {fov_speed_limit}")
+        self.logger.info(f"Type Speed Limit: {type_speed_limit}")
+
+        # If all speed limits are respected
+        if lane_speed_limit_kept and brake_speed_limit_kept and fov_speed_limit_kept and type_speed_limit_kept:
             return True, None
         else:
-            violation = max((ego_velocity-brake_speed_limit),
-                            (ego_velocity-lane_speed_limit),
-                            (ego_velocity-fov_speed_limit),
-                            (ego_velocity-type_speed_limit))
+            # Return maximum violation
+            violation = max(ego_velocity - brake_speed_limit,
+                            ego_velocity - lane_speed_limit,
+                            ego_velocity - fov_speed_limit,
+                            ego_velocity - type_speed_limit)
             return False, violation
+
+        
+        
+    def check_traffic_flow(self, time_step: int) -> Tuple[bool, Optional[float]]:
+        
+        slow_leadig_vehicle_pred = PredSlowLeadingVehicle(self._config)
+        preserves_traffic_flow_pred = PredPreservesTrafficFlow(self._config)
+        
+        there_is_a_slow_leading_vehicle = slow_leadig_vehicle_pred.evaluate_boolean(self._world, time_step,
+                                                                                    [self._ego_vehicle_id, None])
+        
+        ego_preserves_traffic_flow = preserves_traffic_flow_pred.evaluate_boolean(self._world, time_step, 
+                                                                                  [self._ego_vehicle_id, None])
+        
+        if there_is_a_slow_leading_vehicle or ego_preserves_traffic_flow: # Temporal Logic Resolution from the Paper of Sebastian Maierhofer et al.
+            return True, None
+        
+        else:
+            violation = preserves_traffic_flow_pred.evaluate_robustness(self._world, time_step,
+                                                                        [self._ego_vehicle_id])
+            return False, violation
+            
+        
