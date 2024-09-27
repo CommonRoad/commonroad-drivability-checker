@@ -230,13 +230,13 @@ class TrafficRuleChecker:
         fov_speed_limit_pred = PredFovSpeedLimit(self._config)    
         type_speed_limit_pred = PredTypeSpeedLimit(self._config)
 
-        # Fetch speed limits from predicates
+        # Get speed limits from predicates
         lane_speed_limit = lane_speed_limit_pred.get_speed_limit(self._world, time_step, [self._ego_vehicle_id])
         brake_speed_limit = brake_speed_limit_pred.get_speed_limit(self._world, time_step, [self._ego_vehicle_id])
         fov_speed_limit = fov_speed_limit_pred.get_speed_limit(self._world, time_step, [self._ego_vehicle_id])
         type_speed_limit = type_speed_limit_pred.get_speed_limit(self._world, time_step, [self._ego_vehicle_id])
 
-        # Use fallback values if limits are None
+        # Assume no speed limits if they are None
         lane_speed_limit = float('inf') if lane_speed_limit is None else lane_speed_limit
         brake_speed_limit = float('inf') if brake_speed_limit is None else brake_speed_limit
         fov_speed_limit = float('inf') if fov_speed_limit is None else fov_speed_limit
@@ -311,62 +311,5 @@ class TrafficRuleChecker:
             except TypeError as e:
                 self.logger.info(f"Error processing if there is a slow leading vehicle  @ time {time_step} returning True--- : {e}")
                 return True, None
-            
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        # for other_vehicle_id in self._world.vehicle_ids_for_time_step(time_step):
-            
-        #     other_vehicle = self._world.vehicle_by_id(other_vehicle_id)    
-        #     ego_vehicle_lane = self._ego_vehicle.get_lane(time_step)
-        #     other_vehicle_rear_s = other_vehicle.rear_s(time_step, ego_vehicle_lane)
-        #     if other_vehicle_rear_s is None:
-        #              continue  # skip vehicl(s) without information on the rear position  
-            
-        
-        #     there_is_a_slow_leading_vehicle = slow_leading_vehicle_pred.evaluate_boolean(self._world, time_step,
-        #                                                                                 [self._ego_vehicle_id, other_vehicle_id])  
-        #     if there_is_a_slow_leading_vehicle:
-        #         slow_leading_vehicle.append(other_vehicle_id)
-                
-                
-        # ego_preserves_traffic_flow = preserves_traffic_flow_pred.evaluate_boolean(self._world, time_step, 
-        #                                                                           [self._ego_vehicle_id, None])
-        
-        
-        # print(f"There is a slow leading vehicle ? : {there_is_a_slow_leading_vehicle}")
-        # print(f"ego preserves traffic flow  ?     : {ego_preserves_traffic_flow}")
-        # if slow_leading_vehicle or ego_preserves_traffic_flow: # Temporal Logic Resolution from the Paper of Sebastian Maierhofer et al.
-        #     return True, None
-        
-        # else:
-        #    # robustness = preserves_traffic_flow_pred.evaluate_robustness(self._world, time_step,
-        # #                                                            [self._ego_vehicle_id])
-        #     return False, 5
             
         
