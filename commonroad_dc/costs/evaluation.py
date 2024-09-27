@@ -36,7 +36,8 @@ class PartialCostFunction(Enum):
     
     SD: Safe Distance,
     UB: Unecessary Braking,
-    MSL: Maximum Speed Limit
+    MSL: Maximum Speed Limit,
+    TF: Traffic Flow
     """
     A = "A"
     J = "J"
@@ -57,6 +58,7 @@ class PartialCostFunction(Enum):
     SD = "SD"
     UB = "UB"
     MSL = "MSL"
+    TF = "TF"
 
 
 PartialCostFunctionMapping = {
@@ -79,6 +81,7 @@ PartialCostFunctionMapping = {
     PartialCostFunction.SD: cost_functions_tr.r_g_1_cost,
     PartialCostFunction.UB: cost_functions_tr.r_g_2_cost,
     PartialCostFunction.MSL: cost_functions_tr.r_g_3_cost,
+    PartialCostFunction.TF: cost_functions_tr.r_g_4_cost,
 }
 
 
@@ -134,9 +137,11 @@ cost_function_mapping =\
             (PartialCostFunction.D, 8),
             (PartialCostFunction.LC, 0.5),
             
-          #  (PartialCostFunction.SD, 5),
-          # (PartialCostFunction.UB, 3),
-            (PartialCostFunction.MSL, 3)
+           #(PartialCostFunction.SD, 5),
+            #(PartialCostFunction.UB, 3),
+            #(PartialCostFunction.MSL, 3),
+            (PartialCostFunction.TF, 3)
+          
             
         ]
     }
@@ -161,7 +166,8 @@ required_properties = {
     
     PartialCostFunction.SD: [],
     PartialCostFunction.UB: [], 
-    PartialCostFunction.MSL: [], }
+    PartialCostFunction.MSL: [],
+    PartialCostFunction.TF: [], }
 
 
 class CostFunctionEvaluator:

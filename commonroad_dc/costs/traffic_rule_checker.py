@@ -40,30 +40,22 @@ class TrafficRuleChecker:
         self._ego_obstacle_id = scenario.generate_object_id() # To ensure a unique ID for the ego_obstacle/ego_vehicle
         self._ego_trajectory = ego_trajectory
         self._initial_state = planning_problem.initial_state
-        # Create ego_obstacle
         self._ego_obstacle = self._create_ego_obstacle(self._ego_trajectory,
-                                                        self._initial_state, self._ego_obstacle_id)
-        # Add ego obstacle to the scenario and assign lanelets to all obstacles in scenario
-        self._scenario.add_objects(self._ego_obstacle)
-        self._scenario.assign_obstacles_to_lanelets()
-        # Initialize World from scenario
-        self._world = World.create_from_scenario(self._scenario)
-        # Load configuration for traffic rules
-        self._config = self._load_configuration(config_path)
+                                                        self._initial_state, self._ego_obstacle_id) # Create ego_obstacle
+        self._scenario.add_objects(self._ego_obstacle)              # Add ego obstacle to the scenario
+        self._scenario.assign_obstacles_to_lanelets()               # Assign lanelets to all obstacles in scenario
+        self._world = World.create_from_scenario(self._scenario)    # Initialize World from scenario
+        self._config = self._load_configuration(config_path)        # Load configuration for traffic rules
         # Store vehicle IDs
-        self._ego_vehicle_id = self._ego_obstacle.obstacle_id  # Use obstacle ID as vehicle ID for the ego vehicle
+        self._ego_vehicle_id = self._ego_obstacle.obstacle_id       # Use obstacle ID as vehicle ID for the ego vehicle
         self._ego_vehicle = self._world.vehicle_by_id(self._ego_vehicle_id)
-        self._ego_vehicle.vehicle_param.update(self._config["ego_vehicle_param"])
-        self._other_vehicles = self._world.vehicles # Ego Vehicle included    
-       # self._other_vehicle_ids = [vehicle.id for vehicle in self._other_vehicles] # to be removed
-        
-        for vehicle in self._other_vehicles:
+        self._ego_vehicle.vehicle_param.update(self._config) # update go vehicle parameters
+        self._other_vehicles = self._world.vehicles                 # Ego Vehicle included    
+        for vehicle in self._other_vehicles:                        # Update other vehicle parameters
             if vehicle.id == self._ego_vehicle_id:
                 continue
             vehicle.vehicle_param.update(self._config["other_vehicles_param"])
-        
-        # Initialize logger
-        logging.basicConfig(level=logging.INFO)
+        logging.basicConfig(level=logging.INFO)                     # Initialize logger
         self.logger = logging.getLogger("T_R_Checker")
         
         # # # FOR DEBUGGING PURPOSES TO ENSURE THE EGO VEHICLE IS ADDED TO THE WORLD
@@ -73,16 +65,8 @@ class TrafficRuleChecker:
         # for id in self._other_vehicle_ids:
         #     self.logger.info(id)
     
-          
+    
     def _load_configuration(self, config_path : str) -> Union[Dict, None] :
-        
-        """ a private method to load the configuration file (a yaml file)
-            this function calls the load_yaml
-        Args:
-            config_path (str): the path to the file in the project
-        Returns:
-            Union[Dict, None]: a Dict mapping the vehicle paramters to numbers, can be customized
-        """    
         # Use default configuration if none is given   
         if config_path is None :
             config_path = os.path.join(os.getcwd(), "commonroad_dc/costs/config.yaml")
@@ -97,12 +81,6 @@ class TrafficRuleChecker:
                              ego_initial_state: PlanningProblem.initial_state,
                              ego_id) -> DynamicObstacle:
         
-        """ a private method to create an ego obstacle that spans the given trajectory
-            this dynamic obstacle is then the ego vehicle whose behaviour is checked
-            NB : this obstacle takes the shape of the Vehicle 2 in CommonRoad assuming KS2 benchmark
-        Returns:
-            dynamic obstacle object
-        """        
         vehicle_2 = parameters_vehicle2.parameters_vehicle2()
         vehicle_shape = Rectangle(width=vehicle_2.w, length=vehicle_2.l)
         
@@ -118,17 +96,6 @@ class TrafficRuleChecker:
                                     ego_initial_state, ego_prediction)
         return ego_obstacle 
           
-          
-    # def _has_valid_trajectory(self, vehicle, time_step: int) -> bool:
-    #     """Check if the vehicle has a valid trajectory at the given time step."""
-    #     return time_step in vehicle.states_cr
-
-
-    # def _has_valid_lanelet_assignment(self, vehicle, time_step: int) -> bool:
-    #     """Check if the vehicle has a valid lanelet assignment at the given time step."""
-    #     return vehicle.lanelet_assignment and time_step in vehicle.lanelet_assignment
-
-    # Rule checking methods at all time steps, logger can be uncommented for debugging purposes
   
     def check_safe_distance(self, time_step: int) -> Tuple[bool, Optional[int], float, float]:
         """checks if the ego vehicle complies with the safe distance rule at the current time_step
@@ -149,48 +116,32 @@ class TrafficRuleChecker:
         vehicles_in_front_of_ego_ids = []  # List saving the id(s) of the vehicle(s) in front of the ego at the current time_step
         t_c = 3  # According to Maierhofer et al.
         previous_time = max(0, time_step - t_c)  
-        preceding_vehicle_id = None 
+        preceding_vehicle_id = None # Initialize preceding vehile ID
         
-        #for other_vehicle_id in self._other_vehicle_ids: # Loop to find the vehicles in same lane and in front of the ego vehicle
         for other_vehicle_id in self._world.vehicle_ids_for_time_step(time_step):
             try:
                 if other_vehicle_id == self._ego_vehicle_id:
-                    continue  # skip the ego vehicle itself
-                # skip vehicle(s) with no valid state at the current time_step
+                    continue  # skip the ego vehicle itself 
                 other_vehicle = self._world.vehicle_by_id(other_vehicle_id)    
-                # if not self._has_valid_trajectory(other_vehicle, time_step):
-                #     continue
-                #if not self._has_valid_lanelet_assignment(other_vehicle, time_step):
-                 #   continue 
                 ego_vehicle_lane = self._ego_vehicle.get_lane(time_step)
                 other_vehicle_rear_s = other_vehicle.rear_s(time_step, ego_vehicle_lane)
-                if other_vehicle_rear_s is None: # No Information on the rear position of this vehicle at this time step
-                     continue
-                #if time_step not in other_vehicle.lanelet_assignment:
-                 #    continue 
-                # procede with only valid vehicle(s) at this time step   
-                
-                # check if the vehicle is in the same lane        
+                if other_vehicle_rear_s is None:
+                     continue  # skip vehicl(s) without information on the rear position       
                 in_same_lane_as_ego = in_same_lane_pred.evaluate_boolean(self._world, time_step,
-                                                                         [other_vehicle_id, self._ego_vehicle_id])
+                                                                         [other_vehicle_id, self._ego_vehicle_id])   
                 if not in_same_lane_as_ego:
-                    continue
-                # check if the vehicle is in front of the ego vehicle
+                    continue  # skip vehicle(s) not in same lane as ego
                 in_front_of_ego = in_front_of_pred.evaluate_boolean(self._world, time_step, 
                                                                     [self._ego_vehicle_id, other_vehicle_id])
                 if not in_front_of_ego:
-                    continue 
-                vehicles_in_front_of_ego_ids.append(other_vehicle_id)   
+                    continue  # skip vehicle(s) not infront of ego  
+                vehicles_in_front_of_ego_ids.append(other_vehicle_id)   # extract vehicles in same lane and in front of ego
             except Exception as ex:
-                self.logger.warning(f"Error processing vehicle {other_vehicle_id} for SD Check @ time {time_step}: {ex}")
-                
+                self.logger.warning(f"Error processing vehicle {other_vehicle_id} for SD Check @ time {time_step}: {ex}")     
         if len(vehicles_in_front_of_ego_ids) == 0: # No vehicle(s) in front => safe distance is trivially maintained
-           # self.logger.info(f"No obstacle in front of the ego vehicle within sensor range at time {time_step}")
             return True, None, float('inf'), float('inf')
-        
-        elif len(vehicles_in_front_of_ego_ids) == 1:
+        elif len(vehicles_in_front_of_ego_ids) == 1:  # Only one vehicle in same lane and infront of ego => this vehicle precedes the ego
             preceding_vehicle_id = vehicles_in_front_of_ego_ids[0]
-            
         else:
             for vehicle_id in vehicles_in_front_of_ego_ids: # Finding the preceding vehicle using min distance evaluation
                 distance = in_front_of_pred.evaluate_robustness(self._world, time_step, 
@@ -201,19 +152,19 @@ class TrafficRuleChecker:
         preceding_vehicle = self._world.vehicle_by_id(preceding_vehicle_id) # preceding vehicle found
         # check if cut_in happened
         cut_in_happened_p = False # cut_in happend in the previous state
-        cut_in_happened_o = False # cut_in happened in some previous state
-        
-        if previous_time in self._ego_vehicle.states_cr and previous_time in preceding_vehicle.states_cr:
+        cut_in_happened_o = False # cut_in happened in some previous state 
+        if previous_time in preceding_vehicle.states_cr:
             cut_in_happened_p = cut_in_pred.evaluate_boolean(self._world, previous_time, 
                                                             [preceding_vehicle_id, self._ego_vehicle_id])
             valid_time_steps = range(0, previous_time)
+            
             cut_in_happened_o = any([cut_in_pred.evaluate_boolean(self._world, t, 
                                         [preceding_vehicle_id, self._ego_vehicle_id])
                 for t in valid_time_steps])
         # evaluate if safe distance is kept  
         safe_distance_kept = safe_distance_pred.evaluate_boolean(self._world, time_step, 
                                                                 [self._ego_vehicle_id, preceding_vehicle_id])
-        if cut_in_happened_o or cut_in_happened_p or safe_distance_kept:
+        if cut_in_happened_o or cut_in_happened_p or safe_distance_kept: # Temporal Logic resolution from the paper
           #  self.logger.info(f"Safe Distance Maintained following {other_vehicle_id}, maybe violated only due to a cut-in at previous time: {time_step}")
             return True, preceding_vehicle_id,float('inf'), float('inf')
         distance_to_preceding_vehicle = in_front_of_pred.evaluate_robustness(self._world, time_step, 
@@ -222,12 +173,11 @@ class TrafficRuleChecker:
         a_min_ego = self._ego_vehicle.vehicle_param.get("a_min")
         a_min_preceding = preceding_vehicle.vehicle_param.get("a_min")
         t_react_ego = self._ego_vehicle.vehicle_param.get("t_react")
-        safe_distance_threshold = PredSafeDistPrec.calculate_safe_distance(
-                                                                self._ego_vehicle.states_cr[time_step].velocity,
-                                                                preceding_vehicle.states_cr[time_step].velocity,
-                                                                a_min_preceding,
-                                                                a_min_ego,
-                                                                t_react_ego)
+        safe_distance_threshold = PredSafeDistPrec.calculate_safe_distance(self._ego_vehicle.states_cr[time_step].velocity,
+                                                                           preceding_vehicle.states_cr[time_step].velocity,
+                                                                           a_min_preceding,
+                                                                           a_min_ego,
+                                                                           t_react_ego)
       #  self.logger.info(f"Safe Distance violated while following {preceding_vehicle_id} without cut-in at time: {time_step}")
         return False, preceding_vehicle_id, distance_to_preceding_vehicle, safe_distance_threshold
  
@@ -242,35 +192,30 @@ class TrafficRuleChecker:
         abrupt_braking_pred = PredAbruptBreaking(self._config)
         rel_abrupt_braking_pred = PredRelAbruptBreaking(self._config)
         safe_distance_kept, preceding_vehicle_id, _, _ = self.check_safe_distance(time_step)
-        ego_acceleration = self._ego_vehicle.states_cr[time_step].acceleration # ego acceleration at the  current time_step
-        a_abrupt_threshold = self._config["ego_vehicle_param"]["a_abrupt"]
-        
-        # Compare acceleration to the defined threshold and set violation
-        if ego_acceleration < -a_abrupt_threshold:
-            violation = abs(ego_acceleration + a_abrupt_threshold)
-        else:
-            violation = 0  # if acceleration is within limits => No violation
-       # if no preceding vehicle the ego vehicle should not brake abruptly
-        if preceding_vehicle_id is None:
+            
+        if preceding_vehicle_id is None: #  Case 1 No preceding vehicle, check only abrupt braking
             braked_abruptly = abrupt_braking_pred.evaluate_boolean(self._world, time_step, [self._ego_vehicle_id])
-            if braked_abruptly:
-                self.logger.info(f"Ego braked abruptly without a preceding vehicle at time {time_step}.")
-                return False, violation  # Penalize unnecessary braking
-       # Preceding vehicle exists, check abrupt braking relative to the preceding vehicle
-        elif preceding_vehicle_id is not None:
-            try:
-                braked_abruptly_rel = rel_abrupt_braking_pred.evaluate_boolean(self._world, time_step,
-                                                                            [self._ego_vehicle_id, preceding_vehicle_id])
-            except AttributeError as e:
-                self.logger.warning(f"Error: Preceding vehicle not found or invalid at time {time_step}: {e}")
-                return True, None  # unnecessary braking not checked since there's no valid preceding vehicle
-                   
-            if not safe_distance_kept or braked_abruptly_rel:
-               # self.logger.info(f"Ego vehicle braked abruptly relative to preceding vehicle at time {time_step}.")
-                return False, violation  # Penalize for braking abruptly
-        # No abrupt or unnecessary braking detected
-       # self.logger.info(f"Ego acceleration at time {time_step} is {ego_acceleration} m/s². No unnecessary braking detected.")
-        return True, None  # No penalty if braking is justified
+            
+            if not braked_abruptly:
+                return True, None
+            else:
+                # Using robustness as the cost of violation
+                robustness = abrupt_braking_pred.evaluate_robustness(self._world, time_step, [self._ego_vehicle_id])
+                return False, abs(robustness)
+        
+        else: # Case 2 : There is a preceding vehicle, check both abrupt braking and relative abrupt braking
+            braked_abruptly = abrupt_braking_pred.evaluate_boolean(self._world, time_step, [self._ego_vehicle_id])
+            braked_abruptly_rel = rel_abrupt_braking_pred.evaluate_boolean(self._world, time_step, [self._ego_vehicle_id, preceding_vehicle_id])
+            # Using CNF resolution of the logic 
+            condition_1 = (not braked_abruptly or preceding_vehicle_id)
+            condition_2 = (not braked_abruptly or not safe_distance_kept or not braked_abruptly_rel)
+            
+            if condition_1 and condition_2: # True => abrupt relative braking
+                robustness = rel_abrupt_braking_pred.evaluate_robustness(self._world, time_step, [self._ego_vehicle_id, preceding_vehicle_id])
+                return False, abs(robustness)
+            else:
+                # No relative abrupt braking
+                return True, None
 
 
     def check_maximum_speed_limit(self, time_step: int) -> Tuple[bool, Optional[float]]:
@@ -306,14 +251,14 @@ class TrafficRuleChecker:
         fov_speed_limit_kept = (ego_velocity <= fov_speed_limit)
         type_speed_limit_kept = (ego_velocity <= type_speed_limit)
 
-        # Log speed limits and ego velocity for debugging
-        self.logger.info(f"EGO VEL at {time_step}: {ego_velocity}")
-        self.logger.info(f"Lane Speed Limit: {lane_speed_limit}")
-        self.logger.info(f"Brake Speed Limit: {brake_speed_limit}")
-        self.logger.info(f"FOV Speed Limit: {fov_speed_limit}")
-        self.logger.info(f"Type Speed Limit: {type_speed_limit}")
+        # # Log speed limits and ego velocity for debugging
+        # self.logger.info(f"EGO VEL at {time_step}: {ego_velocity}")
+        # self.logger.info(f"Lane Speed Limit: {lane_speed_limit}")
+        # self.logger.info(f"Brake Speed Limit: {brake_speed_limit}")
+        # self.logger.info(f"FOV Speed Limit: {fov_speed_limit}")
+        # self.logger.info(f"Type Speed Limit: {type_speed_limit}")
 
-        # If all speed limits are respected
+        # Resolution into CNF form 
         if lane_speed_limit_kept and brake_speed_limit_kept and fov_speed_limit_kept and type_speed_limit_kept:
             return True, None
         else:
@@ -323,26 +268,105 @@ class TrafficRuleChecker:
                             ego_velocity - fov_speed_limit,
                             ego_velocity - type_speed_limit)
             return False, violation
-
-        
+  
         
     def check_traffic_flow(self, time_step: int) -> Tuple[bool, Optional[float]]:
-        
-        slow_leadig_vehicle_pred = PredSlowLeadingVehicle(self._config)
+        """checks if ego vehicle maintains traffic flow
+        Returns:
+              Tuple:
+              - if traffic flow is mainted (True if not violated): bool
+              - violation : float
+        """         
+        slow_leading_vehicle_pred = PredSlowLeadingVehicle(self._config)
         preserves_traffic_flow_pred = PredPreservesTrafficFlow(self._config)
+        _, preceding_vehicle_id, _, _ = self.check_safe_distance(time_step)
         
-        there_is_a_slow_leading_vehicle = slow_leadig_vehicle_pred.evaluate_boolean(self._world, time_step,
-                                                                                    [self._ego_vehicle_id, None])
-        
-        ego_preserves_traffic_flow = preserves_traffic_flow_pred.evaluate_boolean(self._world, time_step, 
+        if preceding_vehicle_id is None: # No leading vehicle => No slow leading vehicle
+            ego_preserves_traffic_flow = preserves_traffic_flow_pred.evaluate_boolean(self._world, time_step, 
                                                                                   [self._ego_vehicle_id, None])
-        
-        if there_is_a_slow_leading_vehicle or ego_preserves_traffic_flow: # Temporal Logic Resolution from the Paper of Sebastian Maierhofer et al.
-            return True, None
-        
+            if ego_preserves_traffic_flow:
+                return True, None
+            else:
+                robustness = preserves_traffic_flow_pred.evaluate_robustness(self._world, time_step, 
+                                                                             [self._ego_vehicle_id, None])
+                return False, abs(robustness)
+            
         else:
-            violation = preserves_traffic_flow_pred.evaluate_robustness(self._world, time_step,
-                                                                        [self._ego_vehicle_id])
-            return False, violation
+            # There is a leading vehicle, check if there is a slow leading vehicle
+            try: 
+                there_is_a_slow_leading_vehicle = slow_leading_vehicle_pred.evaluate_boolean(self._world, time_step,
+                                                                                        [self._ego_vehicle_id, None])  # Line doesnt work for some scenarios 
+                 
+                ego_preserves_traffic_flow = preserves_traffic_flow_pred.evaluate_boolean(self._world, time_step, 
+                                                                                     [self._ego_vehicle_id, None]) 
+        
+                if there_is_a_slow_leading_vehicle or ego_preserves_traffic_flow: # Resolution of temporal logic in CNF
+                    return True, None 
+                else:
+                    # There is a violation 
+                    robustness = slow_leading_vehicle_pred.evaluate_robustness(self._world, time_step, 
+                                                                                [self._ego_vehicle_id, None])
+                    print(f"Robustness : {robustness}")
+                    return False, abs(robustness)     
+            except TypeError as e:
+                self.logger.info(f"Error processing if there is a slow leading vehicle  @ time {time_step} returning True--- : {e}")
+                return True, None
+            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        # for other_vehicle_id in self._world.vehicle_ids_for_time_step(time_step):
+            
+        #     other_vehicle = self._world.vehicle_by_id(other_vehicle_id)    
+        #     ego_vehicle_lane = self._ego_vehicle.get_lane(time_step)
+        #     other_vehicle_rear_s = other_vehicle.rear_s(time_step, ego_vehicle_lane)
+        #     if other_vehicle_rear_s is None:
+        #              continue  # skip vehicl(s) without information on the rear position  
+            
+        
+        #     there_is_a_slow_leading_vehicle = slow_leading_vehicle_pred.evaluate_boolean(self._world, time_step,
+        #                                                                                 [self._ego_vehicle_id, other_vehicle_id])  
+        #     if there_is_a_slow_leading_vehicle:
+        #         slow_leading_vehicle.append(other_vehicle_id)
+                
+                
+        # ego_preserves_traffic_flow = preserves_traffic_flow_pred.evaluate_boolean(self._world, time_step, 
+        #                                                                           [self._ego_vehicle_id, None])
+        
+        
+        # print(f"There is a slow leading vehicle ? : {there_is_a_slow_leading_vehicle}")
+        # print(f"ego preserves traffic flow  ?     : {ego_preserves_traffic_flow}")
+        # if slow_leading_vehicle or ego_preserves_traffic_flow: # Temporal Logic Resolution from the Paper of Sebastian Maierhofer et al.
+        #     return True, None
+        
+        # else:
+        #    # robustness = preserves_traffic_flow_pred.evaluate_robustness(self._world, time_step,
+        # #                                                            [self._ego_vehicle_id])
+        #     return False, 5
             
         
