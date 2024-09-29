@@ -76,7 +76,7 @@ other_vehicles_param:
   j_min: -10
   t_react: 0.4   # for safe distance calculation of preceding vehicles
   dynamics_param: None    # TODO replace dynamics parameter with worst case behavior
-  
+
 
 #traffic_rules_param:
 j_abrupt: -2 # for ego vehicle emergency profile calculation
