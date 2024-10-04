@@ -90,8 +90,10 @@ class TrafficRuleChecker:
         ego_obstacle = DynamicObstacle(ego_id, ObstacleType.CAR, vehicle_shape,
                                     ego_initial_state, ego_prediction)
         return ego_obstacle 
-          
-  
+     
+    #---------------checker_methods--defined--for--each--rule------------
+     
+    #--------------R_G_1--------------------
     def check_safe_distance(self, time_step: int) -> Tuple[bool, Optional[int], float, float]:
         """checks if the ego vehicle complies with the safe distance rule at the current time_step
         Returns:
@@ -178,7 +180,8 @@ class TrafficRuleChecker:
         #  self.logger.info(f"Safe Distance violated while following {preceding_vehicle_id} without cut-in at time: {time_step}")
             return False, preceding_vehicle_id, distance_to_preceding_vehicle, safe_distance_threshold
  
-    
+ 
+    #--------------R_G_2--------------------
     def check_no_unnecessary_braking(self, time_step: int) -> Tuple[bool, Optional[float]]:
         """cheks if the ego vehicle braked abruptly and unnecessarily at the given time step.
         Returns:
@@ -215,6 +218,7 @@ class TrafficRuleChecker:
                 return True, None
 
 
+    #--------------R_G_3--------------------
     def check_maximum_speed_limit(self, time_step: int) -> Tuple[bool, Optional[float]]:
         """checks if maximum speed limit of the lane is violated
         Returns:
@@ -248,7 +252,7 @@ class TrafficRuleChecker:
         fov_speed_limit_kept = (ego_velocity <= fov_speed_limit)
         type_speed_limit_kept = (ego_velocity <= type_speed_limit)
 
-        # # Log speed limits and ego velocity for debugging
+        # # for debugging
         # self.logger.info(f"EGO VEL at {time_step}: {ego_velocity}")
         # self.logger.info(f"Lane Speed Limit: {lane_speed_limit}")
         # self.logger.info(f"Brake Speed Limit: {brake_speed_limit}")
@@ -266,7 +270,8 @@ class TrafficRuleChecker:
                             ego_velocity - type_speed_limit)
             return False, violation
   
-        
+  
+    #--------------R_G_4--------------------    
     def check_traffic_flow(self, time_step: int) -> Tuple[bool, Optional[float]]:
         """checks if ego vehicle maintains traffic flow
         Returns:
@@ -308,10 +313,16 @@ class TrafficRuleChecker:
             except TypeError as e:
                 self.logger.info(f"Error processing vehicle for traffic_flow check @ time {time_step} returning True--- : {e}")
                 return True, None
+      
             
-         
+    #--------------R_I_1--------------------    
     def check_no_stopping(self, time_step: int) -> Tuple[bool, Optional[float]]:
-        # Instantiate predicates
+        """checks if ego vehicle stopped unnecessarily
+        Returns:
+              Tuple:
+              - if no stopping is mainted (True if not violated): bool
+              - violation : float
+        """         
         in_stand_still_pred = PredInStandStill(self._config)
         standing_leading_vehicle_pred = PredExistStandingLeadingVehicle(self._config)
         in_congestion_pred = PredInCongestion(self._config)
@@ -346,19 +357,22 @@ class TrafficRuleChecker:
                 self.logger.info(f"Error processing vehicle for no_stopping check @ time {time_step}: returning True {ex}")
                 return True, None # Assuming no violation
          
-    
+         
+    #--------------R_I_2--------------------    
     def check_driving_faster_than_left_traffic(self, time_step: int) -> Tuple[bool, Optional[float]]:
         pass
 
     
-    
+    #--------------R_I_3--------------------    
     def check_reversing_and_turning(self, time_step: int) -> Tuple[bool, Optional[float]]:
         pass
     
     
+    #--------------R_I_4--------------------    
     def check_emergency_lane(self, time_step: int) -> Tuple[bool, Optional[float]]:
         pass
     
     
+    #--------------R_I_5--------------------    
     def check_consideration_of_entering_vehicles(self, time_step: int) -> Tuple[bool, Optional[float]]:
         pass

@@ -10,7 +10,7 @@ from commonroad_dc.costs.partial_cost_functions import PartialCostFunctionExcept
 from commonroad_dc.costs.traffic_rule_checker import TrafficRuleChecker
     
 
- 
+#--------------Partial--Cost-Functions--------evaluates--the--cost--of--violation--for--each--rule   
 
 def r_g_1_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajectory: Trajectory,
                properties: Dict[SolutionProperties, Dict[int, Any]]) -> float:
@@ -30,10 +30,12 @@ def r_g_1_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajec
             
             if not safe_distance_maintained:
                 # print(f"Distance = {actual_distance}, safe_distance_threshold = {safe_distance}")
-                violation = (safe_distance - actual_distance) * scenario.dt
-                total_violation_cost += violation
-                
-        return total_violation_cost
+                violation = (safe_distance - actual_distance)**2  # square the violation for each time step
+                total_violation_cost += violation                 # sum up all the squared violations
+                        
+        N = len(ego_trajectory.state_list) 
+        mean_square_error_cost = 1/N * total_violation_cost       # get a mean squared error (MSE) cost over the whole trajectory, may be limited to only the time_steps where there is a violation
+        return mean_square_error_cost
     
     except Exception as ex:
         msg = "An exception occurred during calculation of 'safe distance' cost!"
