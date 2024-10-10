@@ -33,12 +33,17 @@ class PartialCostFunction(Enum):
     L: Path Length,
     T: Time,
     ID: Inverse Duration,
-    
+
+  
     SD: Safe Distance,
     UB: Unecessary Braking,
     MSL: Maximum Speed Limit,
     TF: Traffic Flow
     S: Stopping
+    DFL: Drive Faster than Left Traffic
+    RT: Reversing and Turning
+    EL: Emergency Lane
+    CEV: Consider Entering Vehicle
     """
     A = "A"
     J = "J"
@@ -55,12 +60,19 @@ class PartialCostFunction(Enum):
     L = "L"
     T = "T"
     ID = "ID"
-    
+  
+# Traffic Rules
+#----general----  
     SD = "SD"
     UB = "UB"
     MSL = "MSL"
     TF = "TF"
+#----interstate----
     S = "S"
+    DFL = "DFL"
+    RT = "RT"
+    EL = "EL"
+    CEV = "CEV"
 
 
 PartialCostFunctionMapping = {
@@ -80,11 +92,17 @@ PartialCostFunctionMapping = {
     PartialCostFunction.T:  cost_functions.time_cost,
     PartialCostFunction.ID:  cost_functions.inverse_duration_cost,
     # Traffic Rules Specific Cost Functions
+    #----general----    
     PartialCostFunction.SD: cost_functions_tr.r_g_1_cost,
     PartialCostFunction.UB: cost_functions_tr.r_g_2_cost,
     PartialCostFunction.MSL: cost_functions_tr.r_g_3_cost,
     PartialCostFunction.TF: cost_functions_tr.r_g_4_cost,
+    #----interstate----
     PartialCostFunction.S: cost_functions_tr.r_i_1_cost,
+    PartialCostFunction.DFL: cost_functions_tr.r_i_2_cost,
+    PartialCostFunction.RT: cost_functions_tr.r_i_3_cost,
+    PartialCostFunction.EL: cost_functions_tr.r_i_4_cost,
+    PartialCostFunction.CEV: cost_functions_tr.r_i_5_cost,
 }
 
 
@@ -140,13 +158,16 @@ cost_function_mapping =\
             (PartialCostFunction.D, 8),
             (PartialCostFunction.LC, 0.5),
             
+            # Traffic Rules # TODO: Add weights
             (PartialCostFunction.SD, 5),
             (PartialCostFunction.UB, 3),
             (PartialCostFunction.MSL, 3),
             (PartialCostFunction.TF, 3),
             (PartialCostFunction.S, 3),
-          
-            
+            (PartialCostFunction.DFL, 3),
+            (PartialCostFunction.RT, 3),
+            (PartialCostFunction.EL, 3),
+            (PartialCostFunction.CEV, 3),
         ]
     }
 
@@ -172,7 +193,11 @@ required_properties = {
     PartialCostFunction.UB: [], 
     PartialCostFunction.MSL: [],
     PartialCostFunction.TF: [], 
-    PartialCostFunction.S: [], }
+    PartialCostFunction.S: [],
+    PartialCostFunction.DFL: [],
+    PartialCostFunction.RT: [],
+    PartialCostFunction.EL: [],
+    PartialCostFunction.CEV: [],}
 
 
 class CostFunctionEvaluator:
