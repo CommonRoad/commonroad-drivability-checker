@@ -10,7 +10,9 @@ from commonroad_dc.costs.partial_cost_functions import PartialCostFunctionExcept
 from commonroad_dc.costs.traffic_rule_checker import TrafficRuleChecker
     
 
-#--------------Partial--Cost-Functions--------evaluates--the--cost--of--violation--for--each--rule------  
+#------------------------------------Partial--Cost-Functions---------------------------------
+#----------------------evaluates--the--cost--of--violation--for--each--rule------------------  
+
 
 def r_g_1_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajectory: Trajectory,
                properties: Dict[SolutionProperties, Dict[int, Any]]) -> float:
@@ -94,6 +96,7 @@ def r_g_4_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajec
                 properties: Dict[SolutionProperties, Dict[int,Any]]) -> float:
     """R_G4: preserve traffic flow"""
     try:
+        # Initialize the checker
         traffic_rule_checker = TrafficRuleChecker(scenario, ego_trajectory, planning_problem)
         
         total_violation_cost = 0.0
@@ -137,10 +140,9 @@ def r_i_1_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajec
         raise PartialCostFunctionException(msg) from ex
     
     
-    
 def r_i_2_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajectory: Trajectory,
                 properties: Dict[SolutionProperties, Dict[int,Any]]) -> float:
-    """R_I2: driving faster than left traffic"""
+    """R_I2: no driving faster than left traffic"""
     try:
         # Initialize the checker
         traffic_rule_checker = TrafficRuleChecker(scenario, ego_trajectory, planning_problem)
@@ -149,15 +151,17 @@ def r_i_2_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajec
         
         time_steps = [state.time_step for state in ego_trajectory.state_list]
         for time_step in time_steps:
-           
-             pass # TODO: implement the cost function
+            
+            no_drive_faster_than_left_traffic , violation = traffic_rule_checker.check_driving_faster_than_left_traffic(time_step)
+            
+        if not no_drive_faster_than_left_traffic:
+            total_violation_cost += (violation * scenario.dt) # TODO: refine the cost function
         
         return total_violation_cost
         
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'driving faster than left traffic' cost!"
         raise PartialCostFunctionException(msg) from ex
-    
     
     
 def r_i_3_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajectory: Trajectory,
@@ -171,16 +175,19 @@ def r_i_3_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajec
         
         time_steps = [state.time_step for state in ego_trajectory.state_list]
         for time_step in time_steps:
+            
+            no_reversing_and_turning, violation = traffic_rule_checker.check_reversing_and_turning(time_step)
+            
+            if not no_reversing_and_turning:
+                
+                total_violation_cost += (violation * scenario.dt) # TODO: refine the cost function
            
-             pass # TODO: implement the cost function
-        
         return total_violation_cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'reversing and turning' cost!"
         raise PartialCostFunctionException(msg) from ex
  
-        
-                
+                  
 def r_i_4_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajectory: Trajectory,
                 properties: Dict[SolutionProperties, Dict[int,Any]]) -> float:
     """R_I4: emergency lane"""
@@ -192,9 +199,12 @@ def r_i_4_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajec
         
         time_steps = [state.time_step for state in ego_trajectory.state_list]
         for time_step in time_steps:
-           
-             pass # TODO: implement the cost function
-        
+            
+            emergency_lane_allowed, violation = traffic_rule_checker.check_emergency_lane(time_step)
+            
+            if not emergency_lane_allowed:
+                total_violation_cost += (violation * scenario.dt) # TODO: refine the cost function
+                   
         return total_violation_cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'emergency lane' cost!"
@@ -212,11 +222,61 @@ def r_i_5_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajec
         
         time_steps = [state.time_step for state in ego_trajectory.state_list]
         for time_step in time_steps:
-           
-             pass # TODO: implement the cost function
-        
+            
+            considered_entering_vehicles, violation = traffic_rule_checker.check_consideration_of_entering_vehicles(time_step)
+            
+            if not considered_entering_vehicles:
+                total_violation_cost += (violation * scenario.dt) # TODO: refine the cost function
+                
         return total_violation_cost
         
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'consider entering vehicles' cost!"
+        raise PartialCostFunctionException(msg) from ex
+
+
+def r_in_1_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajectory: Trajectory,
+                properties: Dict[SolutionProperties, Dict[int,Any]]) -> float:
+    """R_IN_1: stopping at stop sign"""
+    try:
+        # Initialize the checker
+        traffic_rule_checker = TrafficRuleChecker(scenario, ego_trajectory, planning_problem)
+        
+        total_violation_cost = 0.0
+        
+        time_steps = [state.time_step for state in ego_trajectory.state_list]
+        for time_step in time_steps:
+            
+            stopping_at_traffic_light, violation = traffic_rule_checker.check_stopping_at_stop_sign(time_step)
+            
+            if not stopping_at_traffic_light:
+                total_violation_cost += (violation * scenario.dt) # TODO: refine the cost function
+        
+        return total_violation_cost
+    
+    except Exception as ex:
+        msg = f"An exception occurred during calculation of 'stopping at stop sign' cost!"
+        raise PartialCostFunctionException(msg) from ex
+    
+    
+def r_in_2_cost(scenario: Scenario, planning_problem: PlanningProblem, ego_trajectory: Trajectory,
+                properties: Dict[SolutionProperties, Dict[int,Any]]) -> float:
+    """R_IN_2: stop at red traffic light"""
+    try:
+        # Initialize the checker
+        traffic_rule_checker = TrafficRuleChecker(scenario, ego_trajectory, planning_problem)
+        
+        total_violation_cost = 0.0
+        
+        time_steps = [state.time_step for state in ego_trajectory.state_list]
+        for time_step in time_steps:
+            
+            stopping_at_red_light, violation = traffic_rule_checker.check_stopping_at_red_light(time_step)            
+            if not stopping_at_red_light:
+                total_violation_cost += (violation * scenario.dt) # TODO: refine the cost function
+        
+        return total_violation_cost
+    
+    except Exception as ex:
+        msg = f"An exception occurred during calculation of 'stop at red traffic light' cost!"
         raise PartialCostFunctionException(msg) from ex

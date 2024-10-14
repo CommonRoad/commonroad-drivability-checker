@@ -44,6 +44,8 @@ class PartialCostFunction(Enum):
     RT: Reversing and Turning
     EL: Emergency Lane
     CEV: Consider Entering Vehicle
+    SS: Stop Sign
+    RL: Red Light
     """
     A = "A"
     J = "J"
@@ -73,7 +75,9 @@ class PartialCostFunction(Enum):
     RT = "RT"
     EL = "EL"
     CEV = "CEV"
-
+#----intersection/urban----
+    SS = "SS"
+    RL = "RL"
 
 PartialCostFunctionMapping = {
     PartialCostFunction.A:  cost_functions.acceleration_cost,
@@ -103,6 +107,10 @@ PartialCostFunctionMapping = {
     PartialCostFunction.RT: cost_functions_tr.r_i_3_cost,
     PartialCostFunction.EL: cost_functions_tr.r_i_4_cost,
     PartialCostFunction.CEV: cost_functions_tr.r_i_5_cost,
+    #----intersection/urban----
+    PartialCostFunction.SS: cost_functions_tr.r_in_1_cost,
+    PartialCostFunction.RL: cost_functions_tr.r_in_2_cost,
+    
 }
 
 
@@ -158,7 +166,7 @@ cost_function_mapping =\
             (PartialCostFunction.D, 8),
             (PartialCostFunction.LC, 0.5),
             
-            # Traffic Rules # TODO: Add weights
+            # Traffic Rules # TODO: Add reasonable weights
             (PartialCostFunction.SD, 5),
             (PartialCostFunction.UB, 3),
             (PartialCostFunction.MSL, 3),
@@ -168,6 +176,8 @@ cost_function_mapping =\
             (PartialCostFunction.RT, 3),
             (PartialCostFunction.EL, 3),
             (PartialCostFunction.CEV, 3),
+            (PartialCostFunction.SS, 3),
+            (PartialCostFunction.RL, 3),
         ]
     }
 
@@ -197,7 +207,9 @@ required_properties = {
     PartialCostFunction.DFL: [],
     PartialCostFunction.RT: [],
     PartialCostFunction.EL: [],
-    PartialCostFunction.CEV: [],}
+    PartialCostFunction.CEV: [],
+    PartialCostFunction.SS: [],
+    PartialCostFunction.RL: [],}
 
 
 class CostFunctionEvaluator:
