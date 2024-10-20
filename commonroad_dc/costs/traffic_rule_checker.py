@@ -1,18 +1,16 @@
 import os
 
-from typing import Dict, Tuple
+from typing import Tuple
 from ruamel.yaml import YAML
 from ruamel.yaml.comments import CommentedMap
 from vehiclemodels import parameters_vehicle2
-import numpy as np
+
 
 from commonroad.scenario.state import CustomState
 from commonroad.scenario.scenario import Scenario
 from commonroad.scenario.trajectory import Trajectory
 from commonroad.scenario.obstacle import DynamicObstacle, ObstacleType
 from commonroad.geometry.shape import Rectangle
-from commonroad.planning.planning_problem import PlanningProblem
-from commonroad.prediction.prediction import TrajectoryPrediction
 from crmonitor.common.world import World, RoadNetwork, Vehicle, CurvilinearStateManager
 
 from crmonitor.predicates.general import (PredCutIn, PredInCongestion, PredInSlowMovingTraffic, PredInQueueOfVehicles,
@@ -29,17 +27,6 @@ from crmonitor.predicates.velocity import (PredLaneSpeedLimit,PredBrSpeedLimit,P
                                            PredDrivesFaster, PredDrivesWithSlightlyHigherSpeed, PredReverses)
 
 from crmonitor.predicates.acceleration import PredAbruptBreaking, PredRelAbruptBreaking
-
-from commonroad.scenario.obstacle import DynamicObstacle, ObstacleType
-from commonroad.geometry.shape import Rectangle
-from commonroad.scenario.trajectory import State, Trajectory
-from commonroad.scenario.scenario import Scenario
-from commonroad.planning.planning_problem import PlanningProblem
-from crmonitor.common.road_network import RoadNetwork
-from crmonitor.common.world import World
-from typing import List
-
-
 
 
 
