@@ -177,7 +177,7 @@ cost_function_mapping =\
             (PartialCostFunction.EL, 3),
             (PartialCostFunction.CEV, 3),
             (PartialCostFunction.SS, 3),
-            (PartialCostFunction.RL, 3),
+            #(PartialCostFunction.RL, 3),
         ]
     }
 
