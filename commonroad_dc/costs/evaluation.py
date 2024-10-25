@@ -161,23 +161,23 @@ cost_function_mapping =\
             (PartialCostFunction.L, 10.0),
         ],
         CostFunction.TR1: [
-            (PartialCostFunction.Jlon, 0.01),
-            (PartialCostFunction.SR, 22),
-            (PartialCostFunction.D, 8),
-            (PartialCostFunction.LC, 0.5),
+           # (PartialCostFunction.Jlon, 0.01),
+            #(PartialCostFunction.SR, 22),
+            #(PartialCostFunction.D, 8),
+            #(PartialCostFunction.LC, 0.5),
             
-            # Traffic Rules # TODO: Add reasonable weights
+            #Traffic Rules # TODO: optimize weights
             (PartialCostFunction.SD, 5),
-            (PartialCostFunction.UB, 3),
+            (PartialCostFunction.UB, 0.5),
             (PartialCostFunction.MSL, 3),
-            (PartialCostFunction.TF, 3),
-            (PartialCostFunction.S, 3),
-            (PartialCostFunction.DFL, 3),
-            (PartialCostFunction.RT, 3),
-            (PartialCostFunction.EL, 3),
+            (PartialCostFunction.TF, 0.5),
+            (PartialCostFunction.S, 50),
+            #(PartialCostFunction.DFL, 3), 
+            (PartialCostFunction.RT, 0.1),
+            (PartialCostFunction.EL, 3), 
             (PartialCostFunction.CEV, 3),
             (PartialCostFunction.SS, 3),
-            #(PartialCostFunction.RL, 3),
+            (PartialCostFunction.RL, 3),
         ]
     }
 
