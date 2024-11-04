@@ -1,6 +1,4 @@
-# This file contains the implementation of the traffic rule checker for the commonroad scenario
-from typing import Tuple
-from commonroad_dc.costs.tr_costs.scenario_initializer import ScenarioInitializer
+from .scenario_initializer import ScenarioInitializer
 from crmonitor.evaluation.evaluation import RuleEvaluator
 
 
@@ -19,7 +17,7 @@ class SafeDistanceEvaluator(ScenarioInitializer):
         return self.rule_evaluator.evaluate()
 
     # back-up evaluation method incases of failure of the RuleEvaluator
-    def evaluate_step(self, time_step: int) -> Tuple[bool, float]:
+    def evaluate_step(self, time_step: int) ->  float:
         valid_vehicle_ids = [
             v.id
             for v in self._world.vehicles
@@ -105,7 +103,8 @@ class UnnecessaryBrakingEvaluator(ScenarioInitializer):
     def evaluate_full(self) -> list[float]:
         return self.rule_evaluator.evaluate()
 
-    def evaluate_step(self, time_step: int) -> Tuple[bool, float]:
+    # back-up evaluation method incases of failure of the RuleEvaluator
+    def evaluate_step(self, time_step: int) -> float:
         valid_vehicle_ids = [
             v.id
             for v in self._world.vehicles

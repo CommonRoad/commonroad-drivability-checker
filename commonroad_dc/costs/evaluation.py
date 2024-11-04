@@ -10,7 +10,7 @@ from commonroad_dc.costs.route_matcher import LaneletRouteMatcher, SolutionPrope
 from commonroad.common.solution import Solution, CostFunction, VehicleType
 
 import commonroad_dc.costs.partial_cost_functions as cost_functions
-import commonroad_dc.costs.partial_cost_functions_traffic as cost_functions_tr
+import commonroad_dc.costs.tr_costs.tr_partial_cost_functions as cost_functions_tr
 
 
 class PartialCostFunction(Enum):
@@ -161,7 +161,7 @@ cost_function_mapping =\
             (PartialCostFunction.L, 10.0),
         ],
         CostFunction.TR1: [
-           # (PartialCostFunction.Jlon, 0.01),
+           #(PartialCostFunction.Jlon, 0.01),
             #(PartialCostFunction.SR, 22),
             #(PartialCostFunction.D, 8),
             #(PartialCostFunction.LC, 0.5),
@@ -172,9 +172,9 @@ cost_function_mapping =\
             (PartialCostFunction.MSL, 3),
             (PartialCostFunction.TF, 0.5),
             (PartialCostFunction.S, 50),
-            #(PartialCostFunction.DFL, 3), 
+            #(PartialCostFunction.DFL, 3), # func 'get_curvilinear_state()' from vehicle.py returns None for some scenario evaluations.
             (PartialCostFunction.RT, 0.1),
-            (PartialCostFunction.EL, 3), 
+            #(PartialCostFunction.EL, 3),  # Takes too long for some scenarios
             (PartialCostFunction.CEV, 3),
             (PartialCostFunction.SS, 3),
             (PartialCostFunction.RL, 3),

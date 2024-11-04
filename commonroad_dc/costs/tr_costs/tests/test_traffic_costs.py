@@ -13,7 +13,7 @@ from commonroad_dc.costs.tr_costs.tr_partial_cost_functions import(r_g_1_cost, r
 
 # TODO: Add apprioriate scenarios for each cost function    # DONE
 # TODO: Add test cases for each cost function               # DONE
-# TODO: Check if the cost function is working as expected
+# TODO: Check if the cost function is working as expected    # DONE
 # TODO: Check if the cost function is returning the expected value
 
 # TODO: Judge vehicles differently  # DONE
