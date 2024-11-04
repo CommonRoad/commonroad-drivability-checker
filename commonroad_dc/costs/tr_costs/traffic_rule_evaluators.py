@@ -301,7 +301,7 @@ class DrivingFasterThanLeftTrafficEvaluator(ScenarioInitializer):
                 self._world, time_step, [self.ego_vehicle_id, vehicle_id]
             )
             
-            return False, robustness  # Violation occurred
+            return robustness  # Violation occurred
 
 
 class ReversingAndTurningEvaluator(ScenarioInitializer):
