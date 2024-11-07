@@ -168,16 +168,16 @@ cost_function_mapping =\
             
             #Traffic Rules # TODO: optimize weights
             (PartialCostFunction.SD, 5),
-            (PartialCostFunction.UB, 0.5),
-            (PartialCostFunction.MSL, 3),
-            (PartialCostFunction.TF, 0.5),
-            (PartialCostFunction.S, 50),
-            #(PartialCostFunction.DFL, 3), # func 'get_curvilinear_state()' from vehicle.py returns None for some scenario evaluations.
-            (PartialCostFunction.RT, 0.1),
+            #(PartialCostFunction.UB, 0.5),
+            #(PartialCostFunction.MSL, 3),
+            #(PartialCostFunction.TF, 0.5),
+            #(PartialCostFunction.S, 50),
+            #(PartialCostFunction.DFL, 3), 
+            #(PartialCostFunction.RT, 0.1),
             #(PartialCostFunction.EL, 3),  # Takes too long for some scenarios
-            (PartialCostFunction.CEV, 3),
-            (PartialCostFunction.SS, 3),
-            (PartialCostFunction.RL, 3),
+            #(PartialCostFunction.CEV, 3),
+            #(PartialCostFunction.SS, 3),
+            #(PartialCostFunction.RL, 3),
         ]
     }
 

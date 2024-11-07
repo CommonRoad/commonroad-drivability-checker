@@ -34,6 +34,7 @@ class TrafficRuleCostEvaluator:
     
 
     def evaluate_safe_distance(self) -> list[float]:
+        
         rule_evaluator = RuleEvaluator.create_from_config(
             world=self.world, 
             ego_id=self.ego_vehicle_id, 
@@ -43,6 +44,7 @@ class TrafficRuleCostEvaluator:
     
     
     def evaluate_unnecessary_braking(self) -> list[float]:
+        
         rule_evaluator = RuleEvaluator.create_from_config(
             world=self.world, 
             ego_id=self.ego_vehicle_id, 
@@ -52,6 +54,7 @@ class TrafficRuleCostEvaluator:
     
     
     def evaluate_maximum_speed_limit(self) -> list[float]:
+        
         rule_evaluator = RuleEvaluator.create_from_config(
             world=self.world, 
             ego_id=self.ego_vehicle_id, 
@@ -61,6 +64,7 @@ class TrafficRuleCostEvaluator:
     
     
     def evaluate_traffic_flow(self) -> list[float]:
+        
         rule_evaluator = RuleEvaluator.create_from_config(
             world=self.world, 
             ego_id=self.ego_vehicle_id, 
@@ -70,6 +74,7 @@ class TrafficRuleCostEvaluator:
     
     
     def evaluate_no_stopping(self) -> list[float]:
+        
         rule_evaluator = RuleEvaluator.create_from_config(
             world=self.world, 
             ego_id=self.ego_vehicle_id, 
@@ -79,6 +84,7 @@ class TrafficRuleCostEvaluator:
     
     
     def evaluate_driving_faster_than_left_traffic(self) -> list[float]:
+        
             rule_evaluator = RuleEvaluator.create_from_config(
                 world=self.world, 
                 ego_id=self.ego_vehicle_id, 
@@ -88,6 +94,7 @@ class TrafficRuleCostEvaluator:
         
     
     def evaluate_reversing_and_turning(self) -> list[float]:
+        
         rule_evaluator = RuleEvaluator.create_from_config(
             world=self.world, 
             ego_id=self.ego_vehicle_id, 
@@ -97,6 +104,7 @@ class TrafficRuleCostEvaluator:
     
     
     def evaluate_emergency_lane(self) -> list[float]:
+        
         rule_evaluator = RuleEvaluator.create_from_config(
             world=self.world, 
             ego_id=self.ego_vehicle_id, 
@@ -106,6 +114,7 @@ class TrafficRuleCostEvaluator:
     
     
     def evaluate_consider_entering_vehicle(self) -> list[float]:
+        
         rule_evaluator = RuleEvaluator.create_from_config(
             world=self.world, 
             ego_id=self.ego_vehicle_id, 
@@ -115,6 +124,7 @@ class TrafficRuleCostEvaluator:
     
     
     def evaluate_stop_at_stop_sign(self) -> list[float]:
+        
         rule_evaluator = RuleEvaluator.create_from_config(
             world=self.world, 
             ego_id=self.ego_vehicle_id, 
@@ -124,6 +134,7 @@ class TrafficRuleCostEvaluator:
     
     
     def evaluate_stop_at_traffic_light(self) -> list[float]:
+        
         rule_evaluator = RuleEvaluator.create_from_config(
             world=self.world, 
             ego_id=self.ego_vehicle_id, 

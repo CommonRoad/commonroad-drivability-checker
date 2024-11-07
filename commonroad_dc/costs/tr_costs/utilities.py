@@ -1,6 +1,4 @@
 
-# This is a helper file for the scenario initializer
-
 from crmonitor.common.world import RoadNetwork, Vehicle, CurvilinearStateManager
 from commonroad.scenario.obstacle import DynamicObstacle, ObstacleType
 from commonroad.scenario.state import CustomState
