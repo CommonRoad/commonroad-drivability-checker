@@ -1,3 +1,4 @@
+
 from typing import Dict, Any
 import numpy as np
 
@@ -10,8 +11,7 @@ from .tr_cost_evaluator import TrafficRuleCostEvaluator
 
 
 
-    
-
+  
 #------------------------------------Partial--Cost-Functions---------------------------------
 
 def r_g_1_cost(scenario: Scenario, planning_problem: PlanningProblem,
@@ -21,7 +21,7 @@ def r_g_1_cost(scenario: Scenario, planning_problem: PlanningProblem,
     try:
         evaluator = TrafficRuleCostEvaluator(scenario, ego_trajectory)
         
-        output = evaluator.evaluate_safe_distance()
+        output = evaluator.evaluate_safe_distance() 
         
         costs = [-x if x < 0 else 0.0 for x in output ] 
         
@@ -43,7 +43,7 @@ def r_g_2_cost(scenario: Scenario, planning_problem: PlanningProblem,
         output = evaluator.evaluate_unnecessary_braking()
         
         costs = [-x if x < 0 else 0.0 for x in output ] 
-        
+                
         return np.max(costs)  # TODO : continuous refinement of the cost function
         
     except Exception as ex:
@@ -138,7 +138,7 @@ def r_i_3_cost(scenario: Scenario, planning_problem: PlanningProblem,
         
         costs = [-x if x < 0 else 0.0 for x in output ] 
         
-        return np.sum(costs)
+        return np.sum(costs) # TODO : continuous refinement of the cost function
     
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'reversing and turning' cost!"
@@ -157,7 +157,7 @@ def r_i_4_cost(scenario: Scenario, planning_problem: PlanningProblem,
     
         costs = [-x if x < 0 else 0.0 for x in output ] 
         
-        return np.sum(costs)
+        return np.sum(costs) # TODO : continuous refinement of the cost function
     
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'emergency lane' cost!"
@@ -176,7 +176,7 @@ def r_i_5_cost(scenario: Scenario, planning_problem: PlanningProblem,
         
         costs = [-x if x < 0 else 0.0 for x in output ] 
         
-        return np.sum(costs)
+        return np.sum(costs) # TODO : continuous refinement of the cost function
 
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'consider entering vehicles' cost!"
@@ -195,7 +195,7 @@ def r_in_1_cost(scenario: Scenario, planning_problem: PlanningProblem,
     
         costs = [-x if x < 0 else 0.0 for x in output ] 
         
-        return np.sum(costs)
+        return np.sum(costs) # TODO : continuous refinement of the cost function
 
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'stop at stop sign' cost!"
@@ -214,7 +214,7 @@ def r_in_2_cost(scenario: Scenario, planning_problem: PlanningProblem,
         
         costs = [-x if x < 0 else 0.0 for x in output ] 
         
-        return np.sum(costs)
+        return np.sum(costs) # TODO : continuous refinement of the cost function
     
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'stop at red traffic light' cost!"

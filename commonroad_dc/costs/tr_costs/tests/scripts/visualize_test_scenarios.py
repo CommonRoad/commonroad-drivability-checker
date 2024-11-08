@@ -13,7 +13,7 @@ file_path = Path(__file__).parent.parent.joinpath(
     # ----------------------Uncomment the desired test scenario to visualize -------------------------------
     
     #"scenarios/DEU_test_safe_distance.xml"
-    "scenarios/DEU_test_recapture_safe_distance.xml"
+    #"scenarios/DEU_test_recapture_safe_distance.xml"
     #"scenarios/DEU_test_unnecessary_braking.xml"
     #"scenarios/DEU_test_max_speed_limit.xml"
     #"scenarios/DEU_test_preserve_traffic_flow.xml"
@@ -26,7 +26,7 @@ file_path = Path(__file__).parent.parent.joinpath(
     #"scenarios/DEU_test_emergency_two_lanes_not_broad_enough.xml"
     #"scenarios/DEU_test_consider_entering_vehicles_for_lane_change.xml"
     #"scenarios/DEU_test_stop_line.xml"
-    #"scenarios/DEU_test_stop_at_red_light.xml"
+    "scenarios/DEU_test_stop_at_red_light.xml"
 )
 
 image_dir = 'solution_images'
