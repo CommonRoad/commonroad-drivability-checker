@@ -48,18 +48,18 @@ class TrafficRuleCostEvaluator:
     
 
     def evaluate_safe_distance(self) -> list[float]:
-            """
-            Evaluates the safe distance for the ego vehicle.
+        """
+        Evaluates the safe distance for the ego vehicle.
 
-            Returns:
-                A list of floats representing the safe distance robustness for each time step.
-            """
-            rule_evaluator = RuleEvaluator.create_from_config(
-                world=self.world, 
-                ego_id=self.ego_vehicle_id, 
-                rule="R_G1"
-            )
-            return rule_evaluator.evaluate()
+        Returns:
+            A list of floats representing the safe distance robustness for each time step.
+        """
+        rule_evaluator = RuleEvaluator.create_from_config(
+            world=self.world, 
+            ego_id=self.ego_vehicle_id, 
+            rule="R_G1"
+        )
+        return rule_evaluator.evaluate()
     
     
     def evaluate_unnecessary_braking(self) -> list[float]:
