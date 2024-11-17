@@ -168,8 +168,8 @@ cost_function_mapping =\
             
             #Traffic Rules # TODO: optimize weights
             (PartialCostFunction.SD, 5),
-            #(PartialCostFunction.UB, 0.5),
-            #(PartialCostFunction.MSL, 3),
+            (PartialCostFunction.UB, 0.5),
+            (PartialCostFunction.MSL, 3),
             #(PartialCostFunction.TF, 0.5),
             #(PartialCostFunction.S, 50),
             #(PartialCostFunction.DFL, 3), # Takes too long for some scenarios
