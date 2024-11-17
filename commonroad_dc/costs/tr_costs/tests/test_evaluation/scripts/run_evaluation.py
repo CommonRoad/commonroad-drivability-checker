@@ -64,37 +64,38 @@ output_file = Path(__file__).parent.joinpath('evaluation_results.json')
 scenario, planning_problem_set = CommonRoadFileReader(scenario_file_path).open(lanelet_assignment=True)
 results = []
 
-i = 0
-while i < 100:
-    for solution_file in solutions_directory.glob("*.xml"):
-        try:
-            
-            solution = CommonRoadSolutionReader.open(solution_file)
-            
-            ce = CostFunctionEvaluator.init_from_solution(solution)
+counter = 0
+max_iterations = 100
+for solution_file in solutions_directory.glob("*.xml"):
+    if counter >= max_iterations:  # Max of 100 files to be processed, can be changed
+        break
+    try:
+        solution = CommonRoadSolutionReader.open(solution_file)
+        
+        ce = CostFunctionEvaluator.init_from_solution(solution)
 
-            cost_result = ce.evaluate_solution(scenario, planning_problem_set, solution)
+        cost_result = ce.evaluate_solution(scenario, planning_problem_set, solution)
 
-            pp_result = next(iter(cost_result.pp_results.values()))  # the first planning problem
+        pp_result = next(iter(cost_result.pp_results.values()))  # the first planning problem
 
-            # Extract only the partial costs
-            partial_costs = {
-                str(key.name): value
-                for key, value in pp_result.partial_costs.items()
-            }
+        # Extract only the partial costs
+        partial_costs = {
+            str(key.name): value
+            for key, value in pp_result.partial_costs.items()
+        }
 
-            results.append({
-                "solution_file": solution_file.name,
-                "partial_costs": partial_costs
-            })
-            i += 1
-            
-        except Exception as e:
-            print(f"Error evaluating {solution_file.name}: {e}")
-            traceback.print_exc()
-            results.append({
-                "solution_file": solution_file.name,
-                "error": str(e)
+        results.append({
+            "solution_file": solution_file.name,
+            "partial_costs": partial_costs
+        })
+        counter += 1  
+
+    except Exception as e:
+        print(f"Error evaluating {solution_file.name}: {e}")
+        traceback.print_exc()
+        results.append({
+            "solution_file": solution_file.name,
+            "error": str(e)
         })
 
 # Save results to a JSON file
