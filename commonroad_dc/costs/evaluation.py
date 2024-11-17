@@ -172,7 +172,7 @@ cost_function_mapping =\
             #(PartialCostFunction.MSL, 3),
             #(PartialCostFunction.TF, 0.5),
             #(PartialCostFunction.S, 50),
-            #(PartialCostFunction.DFL, 3), 
+            #(PartialCostFunction.DFL, 3), # Takes too long for some scenarios
             #(PartialCostFunction.RT, 0.1),
             #(PartialCostFunction.EL, 3),  # Takes too long for some scenarios
             #(PartialCostFunction.CEV, 3),

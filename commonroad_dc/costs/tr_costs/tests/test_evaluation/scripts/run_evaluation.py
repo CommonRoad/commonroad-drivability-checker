@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 # scenario path
-scenario_file_path = Path(__file__).parent.joinpath(
+scenario_file_path = Path(__file__).parent.parent.joinpath(
     
     'scenarios/DEU_Guetersloh-39_5_T-1.xml'
     #'scenarios/BEL_Putte-11_1_T-1.xml'
@@ -23,7 +23,7 @@ scenario_file_path = Path(__file__).parent.joinpath(
 )
 
 # solution directory
-solutions_directory = Path(__file__).parent.joinpath(
+solutions_directory = Path(__file__).parent.parent.joinpath(
     
     
     ### Guetersloh
