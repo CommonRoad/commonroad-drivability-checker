@@ -72,6 +72,12 @@ FetchContent_Declare(
       # Used for CMake<3.24 (see above)
       ${_fcl_extra_patch}
       ${PROJECT_SOURCE_DIR}/third_party/patch/fcl-cmake-disable-tests.patch
+      # FIXME: This patch can be removed once we the issue has been fixed in FCL
+      # The following pull request fixes this in FCL, but has not yet been merged:
+      # https://github.com/flexible-collision-library/fcl/pull/563
+      # Once this is merged, we should update the FCL version we use and remove this patch
+      # Last checked: 2024-05-13
+      ${PROJECT_SOURCE_DIR}/third_party/patch/fcl-cmake-c++-standard.patch
 
   UPDATE_DISCONNECTED 1
   )

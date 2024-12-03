@@ -201,7 +201,7 @@ setup(
     cmdclass={"build_ext": CMakeBuild},
 
     # Requirements
-    python_requires='>=3.7',
+    python_requires='>=3.9',
     install_requires=[
         'commonroad-io>=2022.3',
         'commonroad-vehicle-models>=3.0.0',

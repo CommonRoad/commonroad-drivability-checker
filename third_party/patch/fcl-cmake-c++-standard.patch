@@ -1,0 +1,75 @@
+From c835f3c4e1fc69439ad460ff707530890ee4fd59 Mon Sep 17 00:00:00 2001
+From: Florian Lercher <florian.lercher@tum.de>
+Date: Mon, 13 May 2024 11:10:10 +0200
+Subject: [PATCH] cmake: Use target_compile_features for setting C++ standard
+
+FCL sets the compiler flags for the C++ standard directly, which prevents us
+from using a newer standard. Thus, we remove the direct definitions and set the
+standard using target_compile_features.
+---
+ CMakeModules/CompilerSettings.cmake | 7 ++-----
+ src/CMakeLists.txt                  | 2 ++
+ 2 files changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/CMakeModules/CompilerSettings.cmake b/CMakeModules/CompilerSettings.cmake
+index c5850ad..a3c6a24 100644
+--- a/CMakeModules/CompilerSettings.cmake
++++ b/CMakeModules/CompilerSettings.cmake
+@@ -33,7 +33,6 @@
+ 
+ # GCC
+ if(CMAKE_COMPILER_IS_GNUCXX)
+-    add_definitions(-std=c++11)
+     if(FCL_TREAT_WARNINGS_AS_ERRORS)
+         add_definitions(-Werror)
+     endif()
+@@ -41,7 +40,6 @@ endif()
+ 
+ # Clang
+ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+-    add_definitions(-std=c++11)
+     if(FCL_TREAT_WARNINGS_AS_ERRORS)
+         add_definitions(-Werror)
+     endif()
+@@ -53,7 +51,6 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.1)
+         message(FATAL_ERROR "AppleClang version must be at least 6.1!")
+     endif()
+-    add_definitions(-std=c++11)
+     if(FCL_TREAT_WARNINGS_AS_ERRORS)
+         add_definitions(-Werror)
+     endif()
+@@ -77,7 +74,7 @@ else()
+     set(IS_ICPC 0)
+ endif()
+ if(IS_ICPC)
+-    add_definitions(-std=c++11 -wd191 -wd411 -wd654 -wd1125 -wd1292 -wd1565 -wd1628 -wd2196)
++    add_definitions(-wd191 -wd411 -wd654 -wd1125 -wd1292 -wd1565 -wd1628 -wd2196)
+     set(CMAKE_AR "xiar" CACHE STRING "Intel archiver" FORCE)
+     set(CMAKE_CXX_FLAGS "-pthread" CACHE STRING "Default compile flags" FORCE)
+     set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG"
+@@ -97,7 +94,7 @@ else()
+     set(IS_XLC 0)
+ endif()
+ if(IS_XLC)
+-    add_definitions(-std=c++11 -qpic -q64 -qmaxmem=-1)
++    add_definitions(-qpic -q64 -qmaxmem=-1)
+     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -q64")
+     set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -q64")
+ endif()
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 425724e..05ed2ae 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -47,6 +47,8 @@ else()
+   add_library(${PROJECT_NAME} SHARED ${FCL_HEADERS} ${FCL_SOURCE_CODE})
+ endif()
+ 
++target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_11)
++
+ # Be sure to pass to the consumer the set of SIMD used in the compilation
+ target_compile_options(${PROJECT_NAME} PUBLIC ${SSE_FLAGS})
+ 
+-- 
+2.34.1
+
