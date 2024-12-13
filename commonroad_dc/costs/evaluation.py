@@ -161,23 +161,24 @@ cost_function_mapping =\
             (PartialCostFunction.L, 10.0),
         ],
         CostFunction.TR1: [
-           #(PartialCostFunction.Jlon, 0.01),
-            #(PartialCostFunction.SR, 22),
-            #(PartialCostFunction.D, 8),
-            #(PartialCostFunction.LC, 0.5),
-            
-            #Traffic Rules # TODO: optimize weights
-            (PartialCostFunction.SD, 5),
-            (PartialCostFunction.UB, 0.5),
-            (PartialCostFunction.MSL, 3),
-            #(PartialCostFunction.TF, 0.5),
-            #(PartialCostFunction.S, 50),
-            #(PartialCostFunction.DFL, 3), # Takes too long for some scenarios
-            #(PartialCostFunction.RT, 0.1),
-            #(PartialCostFunction.EL, 3),  # Takes too long for some scenarios
-            #(PartialCostFunction.CEV, 3),
-            #(PartialCostFunction.SS, 3),
-            #(PartialCostFunction.RL, 3),
+            (PartialCostFunction.Jlon, 0.01),
+            (PartialCostFunction.SR, 22),
+            (PartialCostFunction.D, 8),
+            (PartialCostFunction.LC, 0.5),
+        ],  
+        # Traffic Rules
+        CostFunction.TR2: [
+            (PartialCostFunction.SD, 25),
+            (PartialCostFunction.UB, 20),
+            (PartialCostFunction.MSL, 30),
+            (PartialCostFunction.TF, 20),
+            (PartialCostFunction.S, 35),
+            #(PartialCostFunction.DFL, 25), # Takes too long for some scenarios
+            (PartialCostFunction.RT, 75),
+            #(PartialCostFunction.EL, 200),  # Takes too long for some scenarios
+            (PartialCostFunction.CEV, 20),
+            (PartialCostFunction.SS, 10), # To use, ensure scenario has at least an intersection
+            (PartialCostFunction.RL, 90), # To use, ensure scenario has at least an intersection
         ]
     }
 
