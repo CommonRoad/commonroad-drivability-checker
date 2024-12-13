@@ -1,0 +1,229 @@
+<?xml version='1.0' encoding='utf-8'?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="truck" length="7.50" minGap="4.50" maxSpeed="36.11" probability="0.80" speedFactor="normc(0.99,0.18,0.20,2.00)" vClass="truck" impatience="0.14" guiShape="truck" width="2.60" minGapLat="1.50" lcStrategic="1.81" lcCooperative="2.53" lcSpeedGain="9.61" lcKeepRight="0.89" lcSublane="2.00" lcImpatience="0.00" lcMaxSpeedLatStanding="0.00" lcSigma="0.11" accel="1.17" decel="3.13" sigma="0.53" />
+    <vehicle id="0" depart="0.00" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vType id="passenger" length="5.03" minGap="3.93" maxSpeed="50.00" probability="4.00" speedFactor="normc(1.10,0.19,0.20,2.00)" vClass="passenger" impatience="0.14" guiShape="passenger" width="1.89" minGapLat="1.50" lcStrategic="2.66" lcCooperative="2.37" lcSpeedGain="5.72" lcKeepRight="0.86" lcSublane="2.00" lcImpatience="0.00" lcMaxSpeedLatStanding="0.00" lcSigma="0.15" accel="2.55" decel="6.63" sigma="0.66" />
+    <vehicle id="1" depart="0.20" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="2" depart="0.41" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="3" depart="0.61" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="4" depart="0.81" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="5" depart="1.02" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="6" depart="1.22" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="7" depart="1.42" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="8" depart="1.62" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="9" depart="1.83" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="10" depart="2.03" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="11" depart="2.23" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="12" depart="2.44" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="13" depart="2.64" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="14" depart="2.84" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="15" depart="3.05" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="16" depart="3.25" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="17" depart="3.45" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="18" depart="3.65" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="19" depart="3.86" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="20" depart="4.06" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="21" depart="4.26" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="22" depart="4.47" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="23" depart="4.67" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vType id="bus" length="12.40" minGap="2.50" maxSpeed="23.61" probability="0.30" speedFactor="normc(0.95,0.17,0.20,2.00)" vClass="bus" impatience="0.17" guiShape="bus" width="2.70" minGapLat="1.50" lcStrategic="1.43" lcCooperative="1.72" lcSpeedGain="9.51" lcKeepRight="0.87" lcSublane="2.00" lcImpatience="0.00" lcMaxSpeedLatStanding="0.00" lcSigma="0.14" accel="1.07" decel="4.35" sigma="0.58" />
+    <vehicle id="24" depart="4.87" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="25" depart="5.08" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="26" depart="5.28" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="egoVehicle27" depart="5.48" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="28" depart="5.69" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="29" depart="5.89" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="30" depart="6.09" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="31" depart="6.29" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="32" depart="6.50" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="33" depart="6.70" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="34" depart="6.90" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="35" depart="7.11" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="36" depart="7.31" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="37" depart="7.51" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="38" depart="7.72" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="39" depart="7.92" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="40" depart="8.12" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vType id="bicycle" length="2.00" minGap="1.00" maxSpeed="6.94" probability="0.20" speedFactor="normc(0.96,0.16,0.20,2.00)" vClass="bicycle" impatience="0.15" guiShape="bicycle" width="0.68" minGapLat="1.50" lcStrategic="1.57" lcCooperative="2.49" lcSpeedGain="11.47" lcKeepRight="0.89" lcSublane="2.00" lcImpatience="0.00" lcMaxSpeedLatStanding="0.00" lcSigma="0.11" accel="1.07" decel="3.31" sigma="0.68" />
+    <vehicle id="41" depart="8.32" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="42" depart="8.53" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="43" depart="8.73" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="44" depart="8.93" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="45" depart="9.14" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="46" depart="9.34" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="47" depart="9.54" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="48" depart="9.75" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="49" depart="9.95" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="50" depart="10.15" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="51" depart="10.35" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="52" depart="10.56" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="53" depart="10.76" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="54" depart="10.96" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="55" depart="11.17" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="56" depart="11.37" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="57" depart="11.57" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="58" depart="11.78" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="59" depart="11.98" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="60" depart="12.18" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="61" depart="12.39" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="62" depart="12.59" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="63" depart="12.79" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="64" depart="12.99" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="65" depart="13.20" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="66" depart="13.40" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="67" depart="13.60" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="68" depart="13.81" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="69" depart="14.01" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="70" depart="14.21" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="71" depart="14.42" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="72" depart="14.62" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+    <vehicle id="73" depart="14.82" departLane="free" departPos="random_free" departSpeed="max">
+        <route edges="14 41 4 37 24" />
+    </vehicle>
+</routes>

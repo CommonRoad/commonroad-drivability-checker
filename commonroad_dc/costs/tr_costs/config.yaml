@@ -4,3 +4,7 @@ road_network_param:
   polyline_resampling_step: 0.5
   merging_length: 10000
 
+critical_param:
+  critical_distance: 20 # for SD
+  critical_speed: 5.56 # for MSL, TF
+  critical_acceleration: 2 # UB

@@ -1,3 +1,4 @@
+# utility functions and class
 
 from pathlib import Path
 from ruamel.yaml import YAML
@@ -8,6 +9,9 @@ from commonroad.scenario.obstacle import ObstacleType
 from commonroad.scenario.state import CustomState
 from commonroad.scenario.trajectory import Trajectory
 from commonroad.geometry.shape import Rectangle
+from crmonitor.predicates.scaling import RobustnessScalingConstants as constants
+
+import numpy as np
 
 
 
@@ -29,7 +33,7 @@ def load_configuration(config_path: str) -> dict:
 
 
 def create_ego_vehicle_from_trajectory(
-    ego_trajectory : Trajectory, road_network: RoadNetwork, config
+    ego_trajectory : Trajectory, road_network: RoadNetwork, config, dt
     ) -> Vehicle:
     """
     Creates an ego vehicle object from a given trajectory.
@@ -57,7 +61,7 @@ def create_ego_vehicle_from_trajectory(
     for idx, state in enumerate(ego_trajectory.state_list):
         if idx > 0:
             prev_state = ego_trajectory.state_list[idx - 1]
-            acceleration = (state.velocity - prev_state.velocity) / 0.1  # scenario.dt , using 0.1 for now 
+            acceleration = (state.velocity - prev_state.velocity) / dt 
         else:
             acceleration = 0
         
@@ -84,3 +88,36 @@ def create_ego_vehicle_from_trajectory(
     )
     
     return ego_vehicle
+
+
+class CriticalScaler:
+    """
+    Class for re-scaling robustness values (distance, speed, and acceleration),
+    clipped to the range [-1, 1].
+
+    The parameter `critical_param` represents the upper bound for critical cost.
+    This parameter can be configured via the config file.
+    
+    """
+
+    def __init__(self):
+        self.config = load_configuration(Path(__file__).parent.joinpath("config.yaml"))
+        self.critical_value = self.config.get("critical_param")
+
+    def _scale(self, rob, critical_value):
+        return np.clip(rob / critical_value, -1.0, 1.0)
+
+    @classmethod
+    def scale_speed(cls, rob):
+        raw_rob = constants.MAX_SPEED * rob
+        return cls()._scale(raw_rob, cls().critical_value["critical_speed"])
+
+    @classmethod
+    def scale_distance(cls, rob):
+        raw_rob = constants.MAX_LONG_DIST * rob
+        return cls()._scale(raw_rob, cls().critical_value["critical_distance"])
+
+    @classmethod
+    def scale_acceleration(cls, rob):
+        raw_rob = constants.MAX_ACC * rob
+        return cls()._scale(raw_rob, cls().critical_value["critical_acceleration"])
