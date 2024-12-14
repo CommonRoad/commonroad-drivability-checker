@@ -30,11 +30,10 @@ def r_g_1_cost(scenario: Scenario, planning_problem: PlanningProblem,
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
-        # robustness that would lead to worst cost(critical cost) for the trajectory (of same length)
-        critical_c = [1.0] * len(ego_trajectory.state_list)
-        critical_cost = simps(critical_c, dx=scenario.dt) 
+        # max cost for the trajectory
+        critical_cost = simps([1.0] * len(rob_list), dx=scenario.dt) 
         # final unweighted cost
-        cost = simps(c, dx=scenario.dt)/(critical_cost) 
+        cost = simps(c, dx=scenario.dt)/critical_cost 
         return cost
     except Exception as ex:
         msg = "An exception occurred during calculation of 'safe distance' cost!"
@@ -56,17 +55,16 @@ def r_g_2_cost(scenario: Scenario, planning_problem: PlanningProblem,
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
-        # robustness that would lead to worst cost(critical cost) for the trajectory (of same length)
-        critical_c = [1.0] * len(ego_trajectory.state_list)
-        critical_cost = simps(critical_c, dx=scenario.dt)
+        critical_cost = simps([1.0] * len(rob_list), dx=scenario.dt)
         # final unweighted cost  
-        cost = simps(c, dx=scenario.dt)/(critical_cost)  
+        cost = simps(c, dx=scenario.dt)/critical_cost
         return cost  
     except Exception as ex:
         msg = "An exception occurred during calculation of 'unnecessary braking' cost!"
         raise PartialCostFunctionException(msg) from ex
     
     
+
 def r_g_3_cost(scenario: Scenario, planning_problem: PlanningProblem,
                ego_trajectory: Trajectory, properties) -> float:
                 
@@ -104,11 +102,9 @@ def r_g_4_cost(scenario: Scenario, planning_problem: PlanningProblem,
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
-        # robustness that would lead to worst cost(critical cost) for the trajectory (of same length)
-        critical_c = [1.0] * len(ego_trajectory.state_list)
-        critical_cost = simps(critical_c, dx=scenario.dt)
+        critical_cost = simps([1.0] * len(rob_list), dx=scenario.dt)
         # final unweighted cost
-        cost = simps(c, dx=scenario.dt)/(critical_cost)   
+        cost = simps(c, dx=scenario.dt)/critical_cost  
         return cost       
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'traffic flow' cost!"
@@ -131,10 +127,9 @@ def r_i_1_cost(scenario: Scenario, planning_problem: PlanningProblem,
                 for rob_val in rob_list
                 ]   
         # worst case binary (all 1s)   
-        critical_binary = [1.0] * len(ego_trajectory.state_list) 
-        critical_cost = simps(critical_binary, dx=scenario.dt) 
+        critical_cost = simps([1.0] * len(rob_list), dx=scenario.dt) # equivalent to (Tf-T0)*Dt
         # final unweighted cost 
-        cost = simps(binary, dx=scenario.dt)/(critical_cost)              
+        cost = simps(binary, dx=scenario.dt)/critical_cost             
         return cost  
         
     except Exception as ex:
@@ -157,11 +152,9 @@ def r_i_2_cost(scenario: Scenario, planning_problem: PlanningProblem,
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
-        # robustness that would lead to worst cost(critical cost) for the trajectory (of same length)
-        critical_c = [1.0] * len(ego_trajectory.state_list)
-        critical_cost = simps(critical_c, dx=scenario.dt)
+        critical_cost = simps([1.0] * len(rob_list), dx=scenario.dt)
         # final unweighted cost  
-        cost = simps(c, dx=scenario.dt)/(critical_cost)       
+        cost = simps(c, dx=scenario.dt)/critical_cost     
         return cost   
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'driving faster than left traffic' cost!"
@@ -184,10 +177,9 @@ def r_i_3_cost(scenario: Scenario, planning_problem: PlanningProblem,
                 for rob_val in rob_list
                 ]
         # worst case binary (all 1s)
-        critical_binary = [1.0] * len(ego_trajectory.state_list) 
-        critical_cost = simps(critical_binary, dx=scenario.dt)
+        critical_cost = simps([1.0] * len(rob_list), dx=scenario.dt)
         # final unweighted cost
-        cost = simps(binary, dx=scenario.dt)/(critical_cost)          
+        cost = simps(binary, dx=scenario.dt)/critical_cost         
         return cost  
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'reversing and turning' cost!"
@@ -210,10 +202,9 @@ def r_i_4_cost(scenario: Scenario, planning_problem: PlanningProblem,
                 for rob_val in rob_list
                 ]
         # worst case binary (all 1s)
-        critical_binary = [1.0] * len(ego_trajectory.state_list) 
-        critical_cost = simps(critical_binary, dx=scenario.dt) 
+        critical_cost = simps([1.0] * len(rob_list), dx=scenario.dt)
         # final unweighted cost
-        cost = simps(binary, dx=scenario.dt)/(critical_cost)       
+        cost = simps(binary, dx=scenario.dt)/critical_cost      
         return cost  
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'emergency lane' cost!"
@@ -236,10 +227,9 @@ def r_i_5_cost(scenario: Scenario, planning_problem: PlanningProblem,
                 for rob_val in rob_list
                 ]
         # worst case binary (all 1s)
-        critical_binary = [1.0] * len(ego_trajectory.state_list) 
-        critical_cost = simps(critical_binary, dx=scenario.dt) 
+        critical_cost = simps([1.0] * len(rob_list), dx=scenario.dt)
         # final unweighted cost  
-        cost = simps(binary, dx=scenario.dt)/(critical_cost)       
+        cost = simps(binary, dx=scenario.dt)/critical_cost   
         return cost  
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'consider entering vehicles' cost!"
