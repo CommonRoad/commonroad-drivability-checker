@@ -1,0 +1,36 @@
+<CommonRoadSolution benchmark_id="KS1:TR2:CHN_SIND-8101_376_T-451:2020a" date="2024-12-16T15:54:55">
+  <ksTrajectory planningProblem="100133">
+    <ksState>
+      <x>15.7293</x>
+      <y>-6.3648</y>
+      <steeringAngle>0.0</steeringAngle>
+      <velocity>1.8554</velocity>
+      <orientation>1.5673</orientation>
+      <time>72</time>
+    </ksState>
+    <ksState>
+      <x>15.6342</x>
+      <y>-5.4992</y>
+      <steeringAngle>0.0</steeringAngle>
+      <velocity>2.7867</velocity>
+      <orientation>1.5718</orientation>
+      <time>73</time>
+    </ksState>
+    <ksState>
+      <x>15.4754</x>
+      <y>-3.8185</y>
+      <steeringAngle>0.0</steeringAngle>
+      <velocity>3.7857</velocity>
+      <orientation>1.6648</orientation>
+      <time>74</time>
+    </ksState>
+    <ksState>
+      <x>15.157</x>
+      <y>-1.8191</y>
+      <steeringAngle>0.0</steeringAngle>
+      <velocity>4.49</velocity>
+      <orientation>1.7383</orientation>
+      <time>75</time>
+    </ksState>
+  </ksTrajectory>
+</CommonRoadSolution>

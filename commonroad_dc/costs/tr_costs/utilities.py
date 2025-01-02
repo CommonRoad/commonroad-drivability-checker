@@ -49,7 +49,7 @@ def create_ego_vehicle_from_trajectory(
     """
     ego_vehicle_param = config.get("ego_vehicle_param", {})
     
-    # Create a lanelet assignment for the ego vehicle , mapping maybe corrected
+    # Create a lanelet assignment for the ego vehicle
     lanelet_assignment = {
         state.time_step: set(
             road_network.lanelet_network.find_lanelet_by_position([state.position])[0]
@@ -74,7 +74,7 @@ def create_ego_vehicle_from_trajectory(
         )
         
     ego_vehicle = Vehicle(
-        0,
+        -1,  # ego vehicle ID
         obstacle_type=ObstacleType.CAR,
         vehicle_param=ego_vehicle_param,
         shape=Rectangle(

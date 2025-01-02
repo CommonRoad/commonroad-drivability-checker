@@ -1,0 +1,28 @@
+<CommonRoadSolution benchmark_id="KS1:TR2:DEU_LocationELower23-1_232933_T-3008:2020a" date="2024-12-16T15:50:56">
+  <ksTrajectory planningProblem="100786">
+    <ksState>
+      <x>390.745</x>
+      <y>-24.62</y>
+      <steeringAngle>0.0</steeringAngle>
+      <velocity>36.6055</velocity>
+      <orientation>-0.0174</orientation>
+      <time>0</time>
+    </ksState>
+    <ksState>
+      <x>398.085</x>
+      <y>-24.74</y>
+      <steeringAngle>0.0</steeringAngle>
+      <velocity>36.5554</velocity>
+      <orientation>-0.0172</orientation>
+      <time>1</time>
+    </ksState>
+    <ksState>
+      <x>405.4149</x>
+      <y>-24.86</y>
+      <steeringAngle>0.0</steeringAngle>
+      <velocity>36.5054</velocity>
+      <orientation>-0.0172</orientation>
+      <time>2</time>
+    </ksState>
+  </ksTrajectory>
+</CommonRoadSolution>

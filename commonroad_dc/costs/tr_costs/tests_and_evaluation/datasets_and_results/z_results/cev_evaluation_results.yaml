@@ -1,0 +1,144 @@
+- scenario: DEU_AachenBrand-1_431052_T-1127.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_431052_T-1127.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_431353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_431353_T-1428.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_431579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_431579_T-1654.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_431654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_431654_T-1729.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_431729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_431729_T-1804.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_431880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_431880_T-1955.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_431955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_431955_T-2030.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_43225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_43225_T-300.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_432707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_432707_T-2782.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_433308_T-3383.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_433308_T-3383.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_433609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_433609_T-3684.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_434963_T-5038.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_434963_T-5038.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_435038_T-5113.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_435038_T-5113.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_43526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_43526_T-601.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_435489_T-5564.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_435489_T-5564.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_435790_T-5865.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_435790_T-5865.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_435865_T-5940.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_435865_T-5940.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_435940_T-6015.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_435940_T-6015.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_436016_T-6091.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_436016_T-6091.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_436166_T-6174.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_436166_T-6174.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_AachenBrand-1_43902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_AachenBrand-1_43902_T-977.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_CologneButzweiler-1_11428_T-1503.cr.xml
+  solutions:
+  - solution_file: DEU_CologneButzweiler-1_11428_T-1503.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_CologneButzweiler-1_31278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_CologneButzweiler-1_31278_T-1353.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
+- scenario: DEU_CologneButzweiler-1_6225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_CologneButzweiler-1_6225_T-300.solution.xml
+    partial_costs:
+      CEV: 0.0
+    total_cost: 0.0
