@@ -23,7 +23,7 @@ data_directory = Path(__file__).parent.joinpath(
     
     #"highD"   # used for interstate partial cost functions
     #"SinD"    # used for intersection partial cost functios
-    "Cev_exid" # used for CEV parial function, due to presence of ramps
+    "exiD" # used for CEV parial function, due to presence of ramps
     )  
 
 output_file = Path(__file__).parent.joinpath(
