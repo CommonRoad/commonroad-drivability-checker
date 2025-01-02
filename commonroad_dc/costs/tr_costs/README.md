@@ -7,14 +7,14 @@ This repository contains the implementation of partial cost functions designed t
 
 ## Structure
 
-- **tr_cost/**
+- **tr_costs/**
   - **tr_evaluator.py**: The STL Rule Monitoring framework embedded into the `TrafficRuleEvaluator`.
   - **tr_partial_cost_functions.py**: All partial cost functions (e.g., safe distance, speed limits).
   - **utilities.py**: Helper functions (e.g., robustness rescaling, vehicle object creation).
   - **config.yaml**: Configuration for the road network and critical parameters.
 
   - **tests_and_evaluation/**
-    - **datasets_and_results/** : exiD, highD, and sinD datasets and evaluation results
+    - **datasets_and_results/** : exiD, highD, and sinD datasets and evaluation results.
     - **test_rules/** : Unittests for the partial cost functions.
 
 
