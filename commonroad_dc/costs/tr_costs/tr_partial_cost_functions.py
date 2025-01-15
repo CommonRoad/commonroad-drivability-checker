@@ -30,12 +30,12 @@ def r_g_1_cost(scenario: Scenario, planning_problem: PlanningProblem,
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
-        intitial_time_step = ego_trajectory.final_state.time_step
-        final_time_step = ego_trajectory.initial_time_step
+        intitial_time_step = ego_trajectory.initial_time_step
+        final_time_step = ego_trajectory.final_state.time_step
         trajectory_duration = (final_time_step-intitial_time_step)*scenario.dt
         # normalize cost with the duration of the trajectory
         cost = simps(c, dx=scenario.dt)/trajectory_duration
-        # scale cost, such that nominal it outputs 1 for a nominal distance robustness throught the trajectory
+        # scale cost, such that nominal it outputs 1 for a nominal distance robustness throughout the trajectory
         return NominalScaler.scale_distance_cost(cost) 
     except Exception as ex:
         msg = "An exception occurred during calculation of 'safe distance' cost!"
@@ -57,12 +57,12 @@ def r_g_2_cost(scenario: Scenario, planning_problem: PlanningProblem,
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
-        intitial_time_step = ego_trajectory.final_state.time_step
-        final_time_step = ego_trajectory.initial_time_step
+        intitial_time_step = ego_trajectory.initial_time_step
+        final_time_step = ego_trajectory.final_state.time_step
         trajectory_duration = (final_time_step-intitial_time_step)*scenario.dt
         # normalize cost with the duration of the trajectory
         cost = simps(c, dx=scenario.dt)/trajectory_duration
-        # scale cost, such that nominal it outputs 1 for a nominal acceleration robustness throught the trajectory
+        # scale cost, such that nominal it outputs 1 for a nominal acceleration robustness throughout the trajectory
         return NominalScaler.scale_acceleration_cost(cost)  
     except Exception as ex:
         msg = "An exception occurred during calculation of 'unnecessary braking' cost!"
@@ -106,12 +106,12 @@ def r_g_4_cost(scenario: Scenario, planning_problem: PlanningProblem,
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
-        intitial_time_step = ego_trajectory.final_state.time_step
-        final_time_step = ego_trajectory.initial_time_step
+        intitial_time_step = ego_trajectory.initial_time_step
+        final_time_step = ego_trajectory.final_state.time_step
         trajectory_duration = (final_time_step-intitial_time_step)*scenario.dt
         # normalize cost with the duration of the trajectory
         cost = simps(c, dx=scenario.dt)/trajectory_duration
-        # scale cost, such that nominal it outputs 1 for a nominal velocity robustness throught the trajectory
+        # scale cost, such that nominal it outputs 1 for a nominal velocity robustness throughout the trajectory
         return NominalScaler.scale_speed_cost(cost)       
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'traffic flow' cost!"
@@ -133,13 +133,12 @@ def r_i_1_cost(scenario: Scenario, planning_problem: PlanningProblem,
                 if rob_val < 0 else 0.0 
                 for rob_val in rob_list
                 ]   
-        intitial_time_step = ego_trajectory.final_state.time_step
-        final_time_step = ego_trajectory.initial_time_step
+        intitial_time_step = ego_trajectory.initial_time_step
+        final_time_step = ego_trajectory.final_state.time_step
         trajectory_duration = (final_time_step-intitial_time_step)*scenario.dt
         # normalize cost with the duration of the trajectory       
         cost = simps(indicator, dx=scenario.dt)/trajectory_duration            
-        return cost  
-        
+        return cost      
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'no stopping' cost!"
         raise PartialCostFunctionException(msg) from ex
@@ -160,12 +159,12 @@ def r_i_2_cost(scenario: Scenario, planning_problem: PlanningProblem,
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
-        intitial_time_step = ego_trajectory.final_state.time_step
-        final_time_step = ego_trajectory.initial_time_step
+        intitial_time_step = ego_trajectory.initial_time_step
+        final_time_step = ego_trajectory.final_state.time_step
         trajectory_duration = (final_time_step-intitial_time_step)*scenario.dt
         # normalize cost with the duration of the trajectory
         cost = simps(c, dx=scenario.dt)/trajectory_duration   
-        # scale cost, such that nominal it outputs 1 for a nominal velocity robustness throught the trajectory
+        # scale cost, such that nominal it outputs 1 for a nominal velocity robustness throughout the trajectory
         return NominalScaler.scale_speed_cost(cost)   
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'driving faster than left traffic' cost!"
@@ -187,13 +186,12 @@ def r_i_3_cost(scenario: Scenario, planning_problem: PlanningProblem,
                 if rob_val < 0 else 0.0 
                 for rob_val in rob_list
                 ]
-        intitial_time_step = ego_trajectory.final_state.time_step
-        final_time_step = ego_trajectory.initial_time_step
+        intitial_time_step = ego_trajectory.initial_time_step
+        final_time_step = ego_trajectory.final_state.time_step
         trajectory_duration = (final_time_step-intitial_time_step)*scenario.dt
         # normalize cost with the duration of the trajectory
         cost = simps(indicator, dx=scenario.dt)/trajectory_duration
-        return cost
-        
+        return cost   
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'reversing and turning' cost!"
         raise PartialCostFunctionException(msg) from ex
@@ -214,8 +212,8 @@ def r_i_4_cost(scenario: Scenario, planning_problem: PlanningProblem,
                 if rob_val < 0 else 0.0 
                 for rob_val in rob_list
                 ]
-        intitial_time_step = ego_trajectory.final_state.time_step
-        final_time_step = ego_trajectory.initial_time_step
+        intitial_time_step = ego_trajectory.initial_time_step
+        final_time_step = ego_trajectory.final_state.time_step
         trajectory_duration = (final_time_step-intitial_time_step)*scenario.dt
         # normalize cost with the duration of the trajectory
         cost = simps(indicator, dx=scenario.dt)/trajectory_duration  
@@ -240,8 +238,8 @@ def r_i_5_cost(scenario: Scenario, planning_problem: PlanningProblem,
                 if rob_val < 0 else 0.0 
                 for rob_val in rob_list
                 ]
-        intitial_time_step = ego_trajectory.final_state.time_step
-        final_time_step = ego_trajectory.initial_time_step
+        intitial_time_step = ego_trajectory.initial_time_step
+        final_time_step = ego_trajectory.final_state.time_step
         trajectory_duration = (final_time_step-intitial_time_step)*scenario.dt
         # normalize cost with the duration of the trajectory
         cost = simps(indicator, dx=scenario.dt)/trajectory_duration
