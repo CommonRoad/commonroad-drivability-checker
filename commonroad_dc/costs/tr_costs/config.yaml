@@ -4,7 +4,8 @@ road_network_param:
   polyline_resampling_step: 0.5
   merging_length: 10000
 
-critical_param:
-  critical_distance: 10 # for SD
-  critical_speed: 5.56 # for MSL, TF
-  critical_acceleration: 3 # UB
+# For duration-severity cost designs that access distance-, speed-,and acceleration-margins from thresholds
+nominal_unscaled_robustness: 
+  nominal_distance_rob: 10 
+  nominal_speed_rob: 5.56 
+  nominal_acceleration_rob: 3

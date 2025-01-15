@@ -90,34 +90,39 @@ def create_ego_vehicle_from_trajectory(
     return ego_vehicle
 
 
-class CriticalScaler:
+class NominalScaler:
     """
-    Class for re-scaling robustness values (distance, speed, and acceleration),
-    clipped to the range [-1, 1].
-
-    The parameter `critical_param` represents the upper bound for critical cost.
-    This parameter can be configured via the config file.
-    
+    For the duration-severity cost design, 
+    we define a scaling factor. 
+    This ensures that these partial cost functions assign a nominal cost J_{nominal} = 1.0
+    for a specified nominal robustness value.
+    We assume that the fine (weight) specified in BKatV for a rule violation corresponds to 
+    the penalty incurred if the vehicle maintains a nominal robustness value 
+    indicative of a critical violation throughout its trajectory.
     """
 
     def __init__(self):
         self.config = load_configuration(Path(__file__).parent.joinpath("config.yaml"))
-        self.critical_value = self.config.get("critical_param")
-
-    def _scale(self, rob, critical_value):
-        return np.clip(rob / critical_value, -1.0, 1.0)
-
+        self.critical_value = self.config.get("nominal_unscaled_robustness")
+        
     @classmethod
-    def scale_speed(cls, rob):
-        raw_rob = constants.MAX_SPEED * rob
-        return cls()._scale(raw_rob, cls().critical_value["critical_speed"])
-
+    def scale_distance_cost(cls, cost) -> float :
+        upper_bound = constants.MAX_LONG_DIST
+        unscaled_nominal_robustness = cls().critical_value["nominal_distance_rob"]
+        nominalized_cost = (upper_bound/unscaled_nominal_robustness) * cost
+        return nominalized_cost
+    
     @classmethod
-    def scale_distance(cls, rob):
-        raw_rob = constants.MAX_LONG_DIST * rob
-        return cls()._scale(raw_rob, cls().critical_value["critical_distance"])
-
+    def scale_speed_cost(cls, cost) -> float :
+        upper_bound = constants.MAX_SPEED
+        unscaled_nominal_robustness = cls().critical_value["nominal_speed_rob"]
+        nominalized_cost = (upper_bound/unscaled_nominal_robustness) * cost
+        return nominalized_cost
+        
     @classmethod
-    def scale_acceleration(cls, rob):
-        raw_rob = constants.MAX_ACC * rob
-        return cls()._scale(raw_rob, cls().critical_value["critical_acceleration"])
+    def scale_acceleration_cost(cls, cost) -> float :
+        upper_bound = constants.MAX_ACC
+        unscaled_nominal_robustness = cls().critical_value["nominal_acceleration_rob"]
+        nominalized_cost = (upper_bound/unscaled_nominal_robustness) * cost
+        return nominalized_cost 
+
