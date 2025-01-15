@@ -35,7 +35,7 @@ def r_g_1_cost(scenario: Scenario, planning_problem: PlanningProblem,
         trajectory_duration = (final_time_step-intitial_time_step)*scenario.dt
         # normalize cost with the duration of the trajectory
         cost = simps(c, dx=scenario.dt)/trajectory_duration
-        # scale cost, such that nominal it outputs 1 for a norminal distance robustness throught the trajectory
+        # scale cost, such that nominal it outputs 1 for a nominal distance robustness throught the trajectory
         return NominalScaler.scale_distance_cost(cost) 
     except Exception as ex:
         msg = "An exception occurred during calculation of 'safe distance' cost!"
@@ -62,7 +62,7 @@ def r_g_2_cost(scenario: Scenario, planning_problem: PlanningProblem,
         trajectory_duration = (final_time_step-intitial_time_step)*scenario.dt
         # normalize cost with the duration of the trajectory
         cost = simps(c, dx=scenario.dt)/trajectory_duration
-        # scale cost, such that nominal it outputs 1 for a norminal acceleration robustness throught the trajectory
+        # scale cost, such that nominal it outputs 1 for a nominal acceleration robustness throught the trajectory
         return NominalScaler.scale_acceleration_cost(cost)  
     except Exception as ex:
         msg = "An exception occurred during calculation of 'unnecessary braking' cost!"
@@ -111,7 +111,7 @@ def r_g_4_cost(scenario: Scenario, planning_problem: PlanningProblem,
         trajectory_duration = (final_time_step-intitial_time_step)*scenario.dt
         # normalize cost with the duration of the trajectory
         cost = simps(c, dx=scenario.dt)/trajectory_duration
-        # scale cost, such that nominal it outputs 1 for a norminal acceleration robustness throught the trajectory
+        # scale cost, such that nominal it outputs 1 for a nominal velocity robustness throught the trajectory
         return NominalScaler.scale_speed_cost(cost)       
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'traffic flow' cost!"
@@ -165,7 +165,7 @@ def r_i_2_cost(scenario: Scenario, planning_problem: PlanningProblem,
         trajectory_duration = (final_time_step-intitial_time_step)*scenario.dt
         # normalize cost with the duration of the trajectory
         cost = simps(c, dx=scenario.dt)/trajectory_duration   
-        # scale cost, such that nominal it outputs 1 for a norminal acceleration robustness throught the trajectory
+        # scale cost, such that nominal it outputs 1 for a nominal velocity robustness throught the trajectory
         return NominalScaler.scale_speed_cost(cost)   
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'driving faster than left traffic' cost!"
