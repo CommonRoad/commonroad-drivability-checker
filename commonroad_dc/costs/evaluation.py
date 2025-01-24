@@ -39,7 +39,7 @@ class PartialCostFunction(Enum):
     UB: Unecessary Braking,
     MSL: Maximum Speed Limit,
     TF: Traffic Flow
-    S: Stopping
+    ST: Stopping
     DFL: Drive Faster than Left Traffic
     RT: Reversing and Turning
     EL: Emergency Lane
@@ -70,7 +70,7 @@ class PartialCostFunction(Enum):
     MSL = "MSL"
     TF = "TF"
 #----interstate----
-    S = "S"
+    ST = "ST"
     DFL = "DFL"
     RT = "RT"
     EL = "EL"
@@ -102,7 +102,7 @@ PartialCostFunctionMapping = {
     PartialCostFunction.MSL: cost_functions_tr.r_g_3_cost,
     PartialCostFunction.TF: cost_functions_tr.r_g_4_cost,
     #----interstate----
-    PartialCostFunction.S: cost_functions_tr.r_i_1_cost,
+    PartialCostFunction.ST: cost_functions_tr.r_i_1_cost,
     PartialCostFunction.DFL: cost_functions_tr.r_i_2_cost,
     PartialCostFunction.RT: cost_functions_tr.r_i_3_cost,
     PartialCostFunction.EL: cost_functions_tr.r_i_4_cost,
@@ -168,15 +168,15 @@ cost_function_mapping =\
         ],  
         # Traffic Rules
         CostFunction.TR2: [
-            #(PartialCostFunction.SD, 25),
-            #(PartialCostFunction.UB, 20),
-            #(PartialCostFunction.MSL, 30),
-            #(PartialCostFunction.TF, 20),
-            #(PartialCostFunction.S, 35),
-            #(PartialCostFunction.DFL, 25), # Takes too long for some scenarios
+            (PartialCostFunction.SD, 25),
+            (PartialCostFunction.UB, 20),
+            (PartialCostFunction.MSL, 30),
+            (PartialCostFunction.TF, 20),
+            (PartialCostFunction.ST, 35),
+            (PartialCostFunction.DFL, 25), # Takes too long for some scenarios
             #(PartialCostFunction.RT, 75),
-            #(PartialCostFunction.EL, 200),  # Takes too long for some scenarios
-            (PartialCostFunction.CEV, 20),
+            (PartialCostFunction.EL, 200),  # Takes too long for some scenarios
+            #(PartialCostFunction.CEV, 20),
             #(PartialCostFunction.SS, 10), # To use, ensure scenario has at least an intersection
             #(PartialCostFunction.RL, 90), # To use, ensure scenario has at least an intersection
         ]
@@ -204,7 +204,7 @@ required_properties = {
     PartialCostFunction.UB: [], 
     PartialCostFunction.MSL: [],
     PartialCostFunction.TF: [], 
-    PartialCostFunction.S: [],
+    PartialCostFunction.ST: [],
     PartialCostFunction.DFL: [],
     PartialCostFunction.RT: [],
     PartialCostFunction.EL: [],

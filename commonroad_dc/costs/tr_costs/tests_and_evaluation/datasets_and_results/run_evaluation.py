@@ -1,3 +1,5 @@
+# Evaluatio file
+
 from commonroad.common.file_reader import CommonRoadFileReader
 from commonroad.common.solution import CommonRoadSolutionReader
 from commonroad_dc.costs.evaluation import CostFunctionEvaluator
@@ -21,16 +23,21 @@ def convert_numpy_to_python(data):
 data_directory = Path(__file__).parent.joinpath(
     # datasets
     
-    #"highD"   # used for interstate partial cost functions
+    #"highD"   # used for general and interstate partial cost functions, except CEV
     #"SinD"    # used for intersection partial cost functios
-    "exiD" # used for CEV parial function, due to presence of ramps
+    "exiD"     # used for CEV parial function, due to presence of ramps
     )  
 
 output_file = Path(__file__).parent.joinpath(
     # name the yaml file to save the evaluation result in the z_results/
     
-    "z_results/cev_evaluation_results.yaml"
+    #"z_results/cev_evaluation_results.yaml"
+    
+    "z_results/highD_overall.yaml"
+    
+     
     )
+
 results = []
 
 xml_files = sorted(data_directory.glob("*.xml"))
@@ -46,7 +53,7 @@ scenario_solution_path = {sce : soln
                      if os.path.splitext(os.path.splitext(sce)[0])[0] == os.path.splitext(os.path.splitext(soln)[0])[0] 
                      } 
 counter = 0
-max_iterations = 1000
+max_iterations = 1
 start_time = time.time()
 for scenario_file, solution_file in scenario_solution_path.items():
     
@@ -63,7 +70,8 @@ for scenario_file, solution_file in scenario_solution_path.items():
         cost_result = ce.evaluate_solution(scenario, planning_problem_set, solution)
         pp_result = next(iter(cost_result.pp_results.values())) # for non collaborative scenarios
         partial_costs = {
-        str(partial_cost_function.name): cost_value * pp_result.weights.get(partial_cost_function)
+        # weighting can be activated 
+        str(partial_cost_function.name): cost_value #* pp_result.weights.get(partial_cost_function) 
         for partial_cost_function, cost_value in pp_result.partial_costs.items()
         } 
         scenario_result["solutions"].append({
@@ -73,7 +81,7 @@ for scenario_file, solution_file in scenario_solution_path.items():
         })
         results.append(scenario_result) # Add scenario_result to results
         counter += 1 
-    # Will not happen for selected scenarios
+    # Will not happen for selected scenarios,
     except Exception as e:
         print(f"Error evaluating {scenario_file.name} : {e}") 
 end_time = time.time()

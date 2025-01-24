@@ -1,0 +1,1992 @@
+- scenario: CHN_SIND-7281_150_T-225.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-7281_150_T-225.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-7281_1_T-75.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-7281_1_T-75.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-7281_225_T-300.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-7281_225_T-300.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-7281_300_T-375.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-7281_300_T-375.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-7281_376_T-451.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-7281_376_T-451.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-7281_451_T-526.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-7281_451_T-526.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-7281_526_T-601.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-7281_526_T-601.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-7281_601_T-676.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-7281_601_T-676.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-7281_752_T-827.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-7281_752_T-827.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-7281_75_T-150.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-7281_75_T-150.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-7281_827_T-902.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-7281_827_T-902.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-7281_902_T-942.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-7281_902_T-942.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_1052_T-1127.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1052_T-1127.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_1128_T-1203.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1128_T-1203.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_1203_T-1278.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1203_T-1278.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_1278_T-1353.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1278_T-1353.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8021_1353_T-1428.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1353_T-1428.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8021_1428_T-1503.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1428_T-1503.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_1504_T-1579.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1504_T-1579.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_150_T-225.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_150_T-225.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8021_1579_T-1654.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1579_T-1654.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8021_1654_T-1729.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1654_T-1729.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_1729_T-1804.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1729_T-1804.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_1804_T-1879.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1804_T-1879.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_1880_T-1955.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1880_T-1955.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8021_1955_T-2030.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1955_T-2030.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_1_T-75.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_1_T-75.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_2030_T-2105.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_2030_T-2105.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8021_2105_T-2180.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_2105_T-2180.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_2180_T-2255.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_2180_T-2255.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8021_2256_T-2331.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_2256_T-2331.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_225_T-300.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_225_T-300.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_2331_T-2400.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_2331_T-2400.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_376_T-451.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_376_T-451.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_451_T-526.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_451_T-526.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_526_T-601.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_526_T-601.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_601_T-676.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_601_T-676.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_676_T-751.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_676_T-751.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_752_T-827.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_752_T-827.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8021_75_T-150.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_75_T-150.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_827_T-902.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_827_T-902.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_902_T-977.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_902_T-977.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8021_977_T-1052.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8021_977_T-1052.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8101_150_T-225.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8101_150_T-225.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8101_1_T-75.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8101_1_T-75.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8101_225_T-300.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8101_225_T-300.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8101_300_T-375.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8101_300_T-375.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8101_376_T-451.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8101_376_T-451.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8101_451_T-526.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8101_451_T-526.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8101_526_T-601.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8101_526_T-601.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8101_601_T-676.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8101_601_T-676.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8101_676_T-751.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8101_676_T-751.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8101_752_T-827.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8101_752_T-827.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8101_75_T-150.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8101_75_T-150.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8101_827_T-902.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8101_827_T-902.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8101_902_T-942.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8101_902_T-942.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_1052_T-1127.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1052_T-1127.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_1128_T-1203.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1128_T-1203.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_1203_T-1278.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1203_T-1278.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_1278_T-1353.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1278_T-1353.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_1353_T-1428.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1353_T-1428.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_1428_T-1503.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1428_T-1503.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_1504_T-1579.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1504_T-1579.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_150_T-225.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_150_T-225.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8111_1579_T-1654.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1579_T-1654.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_1654_T-1729.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1654_T-1729.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_1729_T-1804.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1729_T-1804.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8111_1804_T-1879.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1804_T-1879.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_1880_T-1955.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1880_T-1955.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8111_1955_T-2030.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1955_T-2030.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8111_1_T-75.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_1_T-75.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_2030_T-2105.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_2030_T-2105.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8111_2105_T-2180.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_2105_T-2180.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_2180_T-2227.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_2180_T-2227.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_225_T-300.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_225_T-300.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_300_T-375.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_300_T-375.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_376_T-451.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_376_T-451.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_451_T-526.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_451_T-526.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_526_T-601.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_526_T-601.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_601_T-676.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_601_T-676.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_676_T-751.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_676_T-751.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_752_T-827.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_752_T-827.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-8111_75_T-150.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_75_T-150.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_827_T-902.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_827_T-902.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-8111_902_T-977.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-8111_902_T-977.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_1052_T-1127.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1052_T-1127.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_1128_T-1203.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1128_T-1203.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-831_1203_T-1278.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1203_T-1278.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_1278_T-1353.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1278_T-1353.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-831_1353_T-1428.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1353_T-1428.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_1428_T-1503.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1428_T-1503.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_1504_T-1579.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1504_T-1579.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_150_T-225.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_150_T-225.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_1579_T-1654.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1579_T-1654.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_1654_T-1729.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1654_T-1729.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_1729_T-1804.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1729_T-1804.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_1804_T-1879.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1804_T-1879.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_1880_T-1955.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1880_T-1955.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_1955_T-2030.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1955_T-2030.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_1_T-75.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_1_T-75.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_2030_T-2105.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_2030_T-2105.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-831_2105_T-2180.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_2105_T-2180.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_2180_T-2255.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_2180_T-2255.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_2256_T-2331.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_2256_T-2331.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_225_T-300.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_225_T-300.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_2331_T-2406.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_2331_T-2406.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-831_2406_T-2481.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_2406_T-2481.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_2481_T-2556.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_2481_T-2556.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_2556_T-2616.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_2556_T-2616.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-831_300_T-375.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_300_T-375.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_376_T-451.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_376_T-451.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-831_451_T-526.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_451_T-526.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-831_526_T-601.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_526_T-601.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_601_T-676.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_601_T-676.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_676_T-751.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_676_T-751.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_752_T-827.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_752_T-827.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_75_T-150.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_75_T-150.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_827_T-902.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_827_T-902.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_902_T-977.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_902_T-977.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-831_977_T-1052.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-831_977_T-1052.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_1052_T-1127.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_1052_T-1127.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_1128_T-1203.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_1128_T-1203.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_1203_T-1278.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_1203_T-1278.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_1278_T-1353.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_1278_T-1353.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-834_1353_T-1428.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_1353_T-1428.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-834_1428_T-1503.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_1428_T-1503.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-834_1504_T-1579.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_1504_T-1579.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-834_150_T-225.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_150_T-225.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_1579_T-1654.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_1579_T-1654.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_1654_T-1729.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_1654_T-1729.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-834_1729_T-1804.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_1729_T-1804.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_1804_T-1879.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_1804_T-1879.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_1880_T-1955.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_1880_T-1955.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_1_T-75.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_1_T-75.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-834_2030_T-2105.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_2030_T-2105.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-834_2105_T-2180.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_2105_T-2180.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-834_2180_T-2255.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_2180_T-2255.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_2256_T-2331.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_2256_T-2331.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_225_T-300.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_225_T-300.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_2331_T-2406.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_2331_T-2406.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_2406_T-2459.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_2406_T-2459.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-834_300_T-375.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_300_T-375.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-834_376_T-451.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_376_T-451.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_451_T-526.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_451_T-526.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_526_T-601.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_526_T-601.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_601_T-676.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_601_T-676.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-834_676_T-751.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_676_T-751.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_752_T-827.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_752_T-827.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-834_75_T-150.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_75_T-150.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_827_T-902.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_827_T-902.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-834_902_T-977.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_902_T-977.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-834_977_T-1052.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-834_977_T-1052.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_1052_T-1127.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1052_T-1127.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_1128_T-1203.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1128_T-1203.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_1203_T-1278.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1203_T-1278.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-851_1278_T-1353.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1278_T-1353.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_1353_T-1428.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1353_T-1428.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_1428_T-1503.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1428_T-1503.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-851_1504_T-1579.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1504_T-1579.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-851_150_T-225.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_150_T-225.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_1579_T-1654.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1579_T-1654.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-851_1654_T-1729.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1654_T-1729.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_1729_T-1804.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1729_T-1804.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-851_1804_T-1879.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1804_T-1879.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_1880_T-1955.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1880_T-1955.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-851_1955_T-2030.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1955_T-2030.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_1_T-75.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_1_T-75.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-851_2030_T-2105.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_2030_T-2105.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_2105_T-2180.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_2105_T-2180.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_2180_T-2255.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_2180_T-2255.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_2256_T-2331.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_2256_T-2331.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_225_T-300.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_225_T-300.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_2331_T-2406.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_2331_T-2406.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_300_T-375.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_300_T-375.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-851_451_T-526.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_451_T-526.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_526_T-601.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_526_T-601.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-851_601_T-676.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_601_T-676.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_676_T-751.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_676_T-751.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-851_752_T-827.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_752_T-827.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_75_T-150.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_75_T-150.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_827_T-902.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_827_T-902.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_902_T-977.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_902_T-977.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-851_977_T-1052.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-851_977_T-1052.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_1052_T-1127.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_1052_T-1127.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-852_1128_T-1203.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_1128_T-1203.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_1203_T-1278.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_1203_T-1278.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-852_1278_T-1353.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_1278_T-1353.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_1353_T-1428.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_1353_T-1428.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_1428_T-1503.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_1428_T-1503.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_1504_T-1579.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_1504_T-1579.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_150_T-225.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_150_T-225.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-852_1654_T-1729.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_1654_T-1729.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_1729_T-1804.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_1729_T-1804.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-852_1804_T-1879.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_1804_T-1879.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_1880_T-1955.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_1880_T-1955.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_1955_T-2030.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_1955_T-2030.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_1_T-75.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_1_T-75.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_2030_T-2105.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_2030_T-2105.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_2105_T-2180.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_2105_T-2180.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_2180_T-2255.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_2180_T-2255.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-852_2256_T-2331.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_2256_T-2331.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_225_T-300.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_225_T-300.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-852_2331_T-2334.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_2331_T-2334.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_300_T-375.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_300_T-375.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-852_376_T-451.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_376_T-451.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_451_T-526.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_451_T-526.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_526_T-601.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_526_T-601.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_601_T-676.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_601_T-676.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-852_752_T-827.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_752_T-827.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-852_75_T-150.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_75_T-150.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-852_827_T-902.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_827_T-902.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-852_902_T-977.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_902_T-977.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-852_977_T-1052.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-852_977_T-1052.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-861_1052_T-1127.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_1052_T-1127.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-861_1128_T-1203.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_1128_T-1203.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_1203_T-1278.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_1203_T-1278.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-861_1278_T-1353.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_1278_T-1353.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-861_1353_T-1428.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_1353_T-1428.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_1428_T-1503.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_1428_T-1503.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_1504_T-1579.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_1504_T-1579.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-861_150_T-225.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_150_T-225.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_1579_T-1654.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_1579_T-1654.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_1654_T-1729.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_1654_T-1729.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_1804_T-1879.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_1804_T-1879.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-861_1880_T-1955.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_1880_T-1955.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_1955_T-2030.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_1955_T-2030.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_1_T-75.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_1_T-75.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_2030_T-2105.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_2030_T-2105.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_2105_T-2180.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_2105_T-2180.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_2180_T-2255.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_2180_T-2255.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-861_2256_T-2331.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_2256_T-2331.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_225_T-300.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_225_T-300.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_2331_T-2406.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_2331_T-2406.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_2406_T-2417.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_2406_T-2417.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-861_300_T-375.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_300_T-375.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_376_T-451.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_376_T-451.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-861_451_T-526.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_451_T-526.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_526_T-601.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_526_T-601.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-861_601_T-676.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_601_T-676.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_676_T-751.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_676_T-751.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-861_752_T-827.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_752_T-827.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_75_T-150.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_75_T-150.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-861_827_T-902.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_827_T-902.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-861_902_T-977.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-861_902_T-977.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_1052_T-1127.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1052_T-1127.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_1128_T-1203.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1128_T-1203.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-863_1203_T-1278.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1203_T-1278.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_1278_T-1353.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1278_T-1353.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-863_1353_T-1428.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1353_T-1428.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_1428_T-1503.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1428_T-1503.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-863_1504_T-1579.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1504_T-1579.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_150_T-225.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_150_T-225.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_1579_T-1654.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1579_T-1654.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-863_1654_T-1729.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1654_T-1729.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_1729_T-1804.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1729_T-1804.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-863_1804_T-1879.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1804_T-1879.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-863_1880_T-1955.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1880_T-1955.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_1955_T-2030.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1955_T-2030.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_1_T-75.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_1_T-75.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_2030_T-2105.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_2030_T-2105.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-863_2105_T-2180.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_2105_T-2180.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-863_2180_T-2228.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_2180_T-2228.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_225_T-300.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_225_T-300.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-863_300_T-375.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_300_T-375.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_376_T-451.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_376_T-451.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_451_T-526.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_451_T-526.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_526_T-601.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_526_T-601.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_601_T-676.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_601_T-676.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-863_676_T-751.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_676_T-751.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_752_T-827.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_752_T-827.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_75_T-150.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_75_T-150.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-863_827_T-902.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_827_T-902.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-863_902_T-977.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_902_T-977.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-863_977_T-1052.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-863_977_T-1052.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_1052_T-1127.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1052_T-1127.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-891_1128_T-1203.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1128_T-1203.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_1203_T-1278.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1203_T-1278.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_1278_T-1353.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1278_T-1353.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_1353_T-1428.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1353_T-1428.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-891_1428_T-1503.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1428_T-1503.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-891_1504_T-1579.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1504_T-1579.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_150_T-225.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_150_T-225.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-891_1579_T-1654.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1579_T-1654.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_1654_T-1729.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1654_T-1729.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-891_1729_T-1804.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1729_T-1804.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_1804_T-1879.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1804_T-1879.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-891_1880_T-1955.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1880_T-1955.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_1955_T-2030.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1955_T-2030.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_1_T-75.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_1_T-75.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_2030_T-2105.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_2030_T-2105.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_2105_T-2180.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_2105_T-2180.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_2180_T-2255.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_2180_T-2255.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_2256_T-2311.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_2256_T-2311.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_225_T-300.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_225_T-300.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-891_300_T-375.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_300_T-375.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_376_T-451.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_376_T-451.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_451_T-526.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_451_T-526.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-891_526_T-601.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_526_T-601.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_601_T-676.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_601_T-676.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_676_T-751.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_676_T-751.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-891_752_T-827.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_752_T-827.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-891_75_T-150.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_75_T-150.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_827_T-902.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_827_T-902.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_902_T-977.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_902_T-977.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-891_977_T-1052.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-891_977_T-1052.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_1052_T-1127.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_1052_T-1127.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_1128_T-1203.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_1128_T-1203.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-893_1203_T-1278.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_1203_T-1278.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_1278_T-1353.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_1278_T-1353.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_1353_T-1428.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_1353_T-1428.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-893_1428_T-1503.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_1428_T-1503.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-893_1504_T-1579.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_1504_T-1579.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-893_150_T-225.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_150_T-225.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-893_1579_T-1654.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_1579_T-1654.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_1654_T-1729.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_1654_T-1729.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_1729_T-1804.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_1729_T-1804.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-893_1804_T-1879.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_1804_T-1879.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-893_1880_T-1955.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_1880_T-1955.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-893_1_T-75.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_1_T-75.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-893_2030_T-2064.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_2030_T-2064.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_225_T-300.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_225_T-300.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_300_T-375.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_300_T-375.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_376_T-451.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_376_T-451.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_451_T-526.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_451_T-526.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_526_T-601.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_526_T-601.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_601_T-676.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_601_T-676.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_676_T-751.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_676_T-751.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_752_T-827.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_752_T-827.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_75_T-150.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_75_T-150.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_827_T-902.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_827_T-902.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
+- scenario: CHN_SIND-893_902_T-977.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_902_T-977.solution.xml
+    partial_costs:
+      SS: 1.0
+    total_cost: 10.0
+- scenario: CHN_SIND-893_977_T-1052.cr.xml
+  solutions:
+  - solution_file: CHN_SIND-893_977_T-1052.solution.xml
+    partial_costs:
+      SS: 0.0
+    total_cost: 0.0
