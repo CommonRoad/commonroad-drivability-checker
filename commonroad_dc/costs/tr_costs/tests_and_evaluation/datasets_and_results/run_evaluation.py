@@ -1,4 +1,4 @@
-# Evaluatio file
+# Evaluation file
 
 from commonroad.common.file_reader import CommonRoadFileReader
 from commonroad.common.solution import CommonRoadSolutionReader
