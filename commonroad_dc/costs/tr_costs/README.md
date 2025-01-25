@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains the implementation of partial cost functions designed to capture the semantics of traffic rules based on the robustness scores from the [commonRoad stl monitor](https://gitlab.lrz.de/cps/commonroad/commonroad-stl-monitor). Our work leverages the German "[Bundeseinheitlicher Tatbestandskatalog](https://www.kba.de/DE/Themen/ZentraleRegister/FAER/BT_KAT_OWI/bkat_owi_22_08_2024.pdf;jsessionid=861483D30B1A928AD641DAA0A78BB1C6.live21303?__blob=publicationFile&v=4)" to assign weights to the partial cost functions. These partial cost functions and their corresponding weights compose the overall cost function **[TR2]** in [evaluation.py](https://gitlab.lrz.de/cps/commonroad-drivability-checker/-/blob/local_development/commonroad_dc/costs/evaluation.py).
+This repository contains the implementation of partial cost functions designed to capture the semantics of traffic rules based on the robustness scores from the [commonroad stl monitor](https://gitlab.lrz.de/cps/commonroad/commonroad-stl-monitor). Our work leverages the German "[Bundeseinheitlicher Tatbestandskatalog](https://www.kba.de/DE/Themen/ZentraleRegister/FAER/BT_KAT_OWI/bkat_owi_22_08_2024.pdf;jsessionid=861483D30B1A928AD641DAA0A78BB1C6.live21303?__blob=publicationFile&v=4)" to assign weights to the partial cost functions. These partial cost functions and their corresponding weights compose the overall cost function **[TR2]** in [evaluation.py](https://gitlab.lrz.de/cps/commonroad-drivability-checker/-/blob/local_development/commonroad_dc/costs/evaluation.py).
 
 
 ## Structure
@@ -21,7 +21,7 @@ This repository contains the implementation of partial cost functions designed t
 ## Prerequisites
 
 - [commonroad_io](https://gitlab.lrz.de/cps/commonroad/commonroad-io)
-- [commonRoad stl monitor](https://gitlab.lrz.de/cps/commonroad/commonroad-stl-monitor)
+- [commonroad stl monitor](https://gitlab.lrz.de/cps/commonroad/commonroad-stl-monitor)
 - Python 3.8+
 
 
