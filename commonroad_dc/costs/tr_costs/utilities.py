@@ -92,13 +92,9 @@ def create_ego_vehicle_from_trajectory(
 
 class NominalScaler:
     """
-    For the duration-severity cost design, 
-    we define a scaling factor. 
-    This ensures that these partial cost functions assign a nominal cost J_{nominal} = 1.0
-    for a specified nominal robustness value.
-    We assume that the fine (weight) specified in BKatV for a rule violation corresponds to 
-    the penalty incurred if the vehicle maintains a nominal robustness value 
-    indicative of a critical violation throughout its trajectory.
+    Class to scale the costs for duration-severity cost design, such that when the ego
+    vehicle maintains a nominal violation robustness throughout its trajectory,
+    it incurs a cost, which is equal to the assigned weight from BKatV.
     """
 
     def __init__(self):
@@ -125,4 +121,5 @@ class NominalScaler:
         unscaled_nominal_robustness = cls().critical_value["nominal_acceleration_rob"]
         nominalized_cost = (upper_bound/unscaled_nominal_robustness) * cost
         return nominalized_cost 
+
 
