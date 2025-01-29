@@ -99,7 +99,7 @@ class NominalScaler:
 
     def __init__(self):
         self.config = load_configuration(Path(__file__).parent.joinpath("config.yaml"))
-        self.critical_value = self.config.get("nominal_unscaled_robustness")
+        self.critical_value = self.config.get("unscaled_nominal_robustness")
         
     @classmethod
     def scale_distance_cost(cls, cost) -> float :

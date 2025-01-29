@@ -84,8 +84,9 @@ def r_g_3_cost(scenario: Scenario, planning_problem: PlanningProblem,
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
+        #print(max(c))
         cost = np.max(c) 
-        return cost
+        return NominalScaler.scale_speed_cost(cost)
     except Exception as ex:
         msg = f"An exception occurred during calculation of 'maximum speed limit' cost!"
         raise PartialCostFunctionException(msg) from ex

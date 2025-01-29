@@ -23,15 +23,14 @@ def convert_numpy_to_python(data):
 data_directory = Path(__file__).parent.joinpath(
     # datasets
     
-    #"highD"   # used for general and interstate partial cost functions, except CEV
+    "highD"   # used for general and interstate partial cost functions, except CEV
     #"SinD"    # used for intersection partial cost functios
-    "exiD"     # used for CEV parial function, due to presence of ramps
+    #"exiD"     # used for CEV parial function, due to presence of ramps
     )  
 
 output_file = Path(__file__).parent.joinpath(
     # name the yaml file to save the evaluation result in the z_results/
     
-    #"z_results/cev_evaluation_results.yaml"
     
     "z_results/highD_overall.yaml"
     
@@ -75,7 +74,7 @@ for scenario_file, solution_file in scenario_solution_path.items():
         for partial_cost_function, cost_value in pp_result.partial_costs.items()
         } 
         scenario_result["solutions"].append({
-            "solution_file": solution_file.name,
+        #   "solution_file": solution_file.name,
             "partial_costs": convert_numpy_to_python(partial_costs),
             "total_cost": convert_numpy_to_python(cost_result.total_costs),
         })
