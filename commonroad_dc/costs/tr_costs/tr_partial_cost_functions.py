@@ -26,7 +26,7 @@ def r_g_1_cost(scenario: Scenario, planning_problem: PlanningProblem,
         rob_list = evaluator.evaluate_safe_distance()
         # extract rob values corresponding to violations
         c = [
-            -rob_val 
+            abs(rob_val)
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
@@ -53,7 +53,7 @@ def r_g_2_cost(scenario: Scenario, planning_problem: PlanningProblem,
         rob_list = evaluator.evaluate_unnecessary_braking()
         # extract rob values corresponding to violations
         c = [
-            -rob_val 
+            abs(rob_val) 
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
@@ -80,11 +80,10 @@ def r_g_3_cost(scenario: Scenario, planning_problem: PlanningProblem,
         rob_list = evaluator.evaluate_maximum_speed_limit()
         # extract and scale the violation robustness 
         c = [
-            -rob_val 
+            abs(rob_val)
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
-        #print(max(c))
         cost = np.max(c) 
         return NominalScaler.scale_speed_cost(cost)
     except Exception as ex:
@@ -103,7 +102,7 @@ def r_g_4_cost(scenario: Scenario, planning_problem: PlanningProblem,
         rob_list = evaluator.evaluate_traffic_flow()
         # extract and scale the violation robustness 
         c = [
-            -rob_val
+            abs(rob_val)
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
@@ -156,7 +155,7 @@ def r_i_2_cost(scenario: Scenario, planning_problem: PlanningProblem,
         rob_list = evaluator.evaluate_driving_faster_than_left_traffic()
         # extract and scale the violation robustness 
         c = [
-            -rob_val 
+            abs(rob_val) 
             if rob_val < 0 else 0.0
             for rob_val in rob_list
             ]
