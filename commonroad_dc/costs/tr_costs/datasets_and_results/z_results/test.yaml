@@ -1,0 +1,30 @@
+- scenario: DEU_LocationALower26-1_260_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_260_T-75.solution.xml
+    partial_costs:
+      SD: 0.0
+      UB: 0.0
+      MSL: 0.0
+      TF: 0.3112709832134291
+      S: 0.0
+    total_cost: 6.225419664268582
+- scenario: DEU_LocationALower26-1_261053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261053_T-1128.solution.xml
+    partial_costs:
+      SD: 0.0
+      UB: 0.0
+      MSL: 0.0
+      TF: 0.0
+      S: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261128_T-1203.solution.xml
+    partial_costs:
+      SD: 0.0
+      UB: 0.0
+      MSL: 0.0
+      TF: 0.0
+      S: 0.0
+    total_cost: 0.0
