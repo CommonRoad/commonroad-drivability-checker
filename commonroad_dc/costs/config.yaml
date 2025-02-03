@@ -1,0 +1,12 @@
+---
+road_network_param:
+  num_chankins_corner_cutting: 1
+  polyline_resampling_step: 0.5
+  merging_length: 10000
+
+# For duration-severity cost designs that access distance-, speed-,and acceleration-margins from thresholds
+unscaled_nominal_robustness: 
+  nominal_distance_rob: 10 
+  nominal_speed_rob: 5.56 
+  nominal_acceleration_rob: 3
+  
