@@ -1,0 +1,6000 @@
+- scenario: DEU_LocationALower26-1_260_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_260_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_26150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_26150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261579_T-1654.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_261955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_261955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_262030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_262030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_262105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_262105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_262181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_262181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_262256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_262256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_26225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_26225_T-300.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_262331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_262331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_262406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_262406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_262481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_262481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_262557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_262557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_262632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_262632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_262707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_262707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_262782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_262782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_262857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_262857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_262933_T-3008.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_262933_T-3008.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263008_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263008_T-3083.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_26301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_26301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_26376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_26376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_263985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_263985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_264061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_264061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_264136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_264136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_264211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_264211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_264286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_264286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_264361_T-4436.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_264361_T-4436.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_264437_T-4512.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_264437_T-4512.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_264512_T-4587.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_264512_T-4587.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_26451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_26451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_264587_T-4662.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_264587_T-4662.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_264662_T-4737.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_264662_T-4737.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_264737_T-4812.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_264737_T-4812.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_264813_T-4888.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_264813_T-4888.solution.xml
+    partial_costs:
+      UB: 0.0027524366471736537
+    total_cost: 0.055048732943473073
+- scenario: DEU_LocationALower26-1_264888_T-4963.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_264888_T-4963.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_264963_T-5038.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_264963_T-5038.solution.xml
+    partial_costs:
+      UB: 0.007114074074074083
+    total_cost: 0.14228148148148168
+- scenario: DEU_LocationALower26-1_265038_T-5113.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_265038_T-5113.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_265113_T-5188.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_265113_T-5188.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_265189_T-5264.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_265189_T-5264.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_265264_T-5339.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_265264_T-5339.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_26526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_26526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_265339_T-5414.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_265339_T-5414.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_265414_T-5489.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_265414_T-5489.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_265489_T-5564.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_265489_T-5564.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_265565_T-5602.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_265565_T-5602.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_26601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_26601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_26677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_26677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_26752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_26752_T-827.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_2675_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_2675_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_26827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_26827_T-902.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_26902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_26902_T-977.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower26-1_26977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower26-1_26977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_300_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_300_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_301053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_301053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_301128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_301128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_301203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_301203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_301278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_301278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_301353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_301353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_301429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_301429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_301504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_301504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_30150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_30150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_301579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_301579_T-1654.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_301654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_301654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_301729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_301729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_301805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_301805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_301880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_301880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_301955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_301955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_302030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_302030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_302105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_302105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_302181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_302181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_302256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_302256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_30225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_30225_T-300.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_302331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_302331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_302406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_302406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_302481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_302481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_302557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_302557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_302632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_302632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_302707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_302707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_302782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_302782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_302857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_302857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_302933_T-3008.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_302933_T-3008.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303008_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303008_T-3083.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_30301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_30301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_30376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_30376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_303985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_303985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_304061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_304061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_304136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_304136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_304211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_304211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_304286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_304286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_30451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_30451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_30526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_30526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_30601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_30601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_30677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_30677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_30752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_30752_T-827.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_3075_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_3075_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_30827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_30827_T-902.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_30902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_30902_T-977.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower30-1_30977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower30-1_30977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_360_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_360_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_361053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_361053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_361128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_361128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_361203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_361203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_361278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_361278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_361353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_361353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_361429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_361429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_361504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_361504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_36150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_36150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_361579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_361579_T-1654.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_361654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_361654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_361729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_361729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_361805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_361805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_361880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_361880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_361955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_361955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_362030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_362030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_362105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_362105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_362181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_362181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_362256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_362256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_36225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_36225_T-300.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_362331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_362331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_362406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_362406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_362481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_362481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_362557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_362557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_362632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_362632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_362707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_362707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_362782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_362782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_362857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_362857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_362933_T-3008.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_362933_T-3008.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363008_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363008_T-3083.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_36301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_36301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_36376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_36376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_363985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_363985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_364061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_364061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_364136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_364136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_364211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_364211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_364286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_364286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_364361_T-4436.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_364361_T-4436.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_364437_T-4512.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_364437_T-4512.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_364512_T-4587.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_364512_T-4587.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_36451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_36451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_364587_T-4662.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_364587_T-4662.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_364662_T-4737.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_364662_T-4737.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_364737_T-4812.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_364737_T-4812.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_364813_T-4888.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_364813_T-4888.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_364888_T-4963.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_364888_T-4963.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_364963_T-5038.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_364963_T-5038.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_365038_T-5113.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_365038_T-5113.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_365113_T-5188.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_365113_T-5188.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_365189_T-5264.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_365189_T-5264.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_365264_T-5339.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_365264_T-5339.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_36526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_36526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_365339_T-5414.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_365339_T-5414.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_365414_T-5489.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_365414_T-5489.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_365489_T-5564.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_365489_T-5564.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_365565_T-5640.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_365565_T-5640.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_365640_T-5715.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_365640_T-5715.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_365715_T-5790.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_365715_T-5790.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_365790_T-5865.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_365790_T-5865.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_365865_T-5940.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_365865_T-5940.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_365941_T-6016.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_365941_T-6016.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_366016_T-6091.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_366016_T-6091.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_36601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_36601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_366091_T-6166.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_366091_T-6166.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_366166_T-6207.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_366166_T-6207.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_36677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_36677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_36752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_36752_T-827.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_3675_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_3675_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_36827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_36827_T-902.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_36902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_36902_T-977.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower36-1_36977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower36-1_36977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_430_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_430_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_431053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_431053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_431128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_431128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_431203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_431203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_431278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_431278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_431353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_431353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_431429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_431429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_431504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_431504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_43150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_43150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_431579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_431579_T-1654.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_431654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_431654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_431729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_431729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_431805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_431805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_431880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_431880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_431955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_431955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_432030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_432030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_432105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_432105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_432181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_432181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_432256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_432256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_43225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_43225_T-300.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_432331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_432331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_432406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_432406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_432481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_432481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_432557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_432557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_432632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_432632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_432707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_432707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_432782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_432782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_432857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_432857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_432933_T-3008.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_432933_T-3008.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433008_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433008_T-3083.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_43301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_43301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_43376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_43376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_433985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_433985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_434061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_434061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_434136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_434136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_434211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_434211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_434286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_434286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_434361_T-4436.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_434361_T-4436.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_434437_T-4512.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_434437_T-4512.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_434512_T-4587.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_434512_T-4587.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_43451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_43451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_434587_T-4662.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_434587_T-4662.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_434662_T-4737.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_434662_T-4737.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_434737_T-4812.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_434737_T-4812.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_434813_T-4888.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_434813_T-4888.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_434888_T-4963.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_434888_T-4963.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_434963_T-5038.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_434963_T-5038.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_435038_T-5090.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_435038_T-5090.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_43526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_43526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_43601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_43601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_43677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_43677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_43752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_43752_T-827.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_4375_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_4375_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_43827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_43827_T-902.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_43902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_43902_T-977.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationALower43-1_43977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationALower43-1_43977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_260_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_260_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_261053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_261053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_261128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_261128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_261203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_261203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_261278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_261278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_261353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_261353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_261429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_261429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_261504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_261504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_26150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_26150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_261579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_261579_T-1654.solution.xml
+    partial_costs:
+      UB: 7.894919286223336e-17
+    total_cost: 1.5789838572446672e-15
+- scenario: DEU_LocationAUpper26-1_261654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_261654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_261729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_261729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_261805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_261805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_261880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_261880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_261955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_261955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_262030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_262030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_262105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_262105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_262181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_262181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_262256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_262256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_26225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_26225_T-300.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_262331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_262331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_262406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_262406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_262481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_262481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_262557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_262557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_262632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_262632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_262707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_262707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_262782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_262782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.03113361766842552
+    total_cost: 0.6226723533685103
+- scenario: DEU_LocationAUpper26-1_262857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_262857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_262933_T-3008.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_262933_T-3008.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_263008_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263008_T-3083.solution.xml
+    partial_costs:
+      UB: 0.23161442485889622
+    total_cost: 4.632288497177925
+- scenario: DEU_LocationAUpper26-1_26301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_26301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_263083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.06530533473846685
+    total_cost: 1.306106694769337
+- scenario: DEU_LocationAUpper26-1_263158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_263233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_263309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_263384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_263459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_263534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_263609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_263685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_263760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_26376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_26376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_263835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_263910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_263985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_263985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_264061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_264061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_264136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_264136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.023869281045751967
+    total_cost: 0.47738562091503933
+- scenario: DEU_LocationAUpper26-1_264211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_264211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_264286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_264286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_264361_T-4436.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_264361_T-4436.solution.xml
+    partial_costs:
+      UB: 0.03431714952925651
+    total_cost: 0.6863429905851303
+- scenario: DEU_LocationAUpper26-1_264437_T-4512.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_264437_T-4512.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_264512_T-4587.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_264512_T-4587.solution.xml
+    partial_costs:
+      UB: 0.09266802168021673
+    total_cost: 1.8533604336043346
+- scenario: DEU_LocationAUpper26-1_26451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_26451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_264587_T-4662.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_264587_T-4662.solution.xml
+    partial_costs:
+      UB: 0.38336111111111115
+    total_cost: 7.6672222222222235
+- scenario: DEU_LocationAUpper26-1_264662_T-4737.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_264662_T-4737.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_264737_T-4812.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_264737_T-4812.solution.xml
+    partial_costs:
+      UB: 2.4317566348615836e-05
+    total_cost: 0.00048635132697231673
+- scenario: DEU_LocationAUpper26-1_264813_T-4888.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_264813_T-4888.solution.xml
+    partial_costs:
+      UB: 0.002596296296296351
+    total_cost: 0.05192592592592701
+- scenario: DEU_LocationAUpper26-1_264888_T-4963.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_264888_T-4963.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_264963_T-5038.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_264963_T-5038.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_265038_T-5113.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_265038_T-5113.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_265113_T-5188.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_265113_T-5188.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_265189_T-5264.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_265189_T-5264.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_265264_T-5339.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_265264_T-5339.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_26526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_26526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_265339_T-5414.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_265339_T-5414.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_265414_T-5489.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_265414_T-5489.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_265489_T-5564.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_265489_T-5564.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_265565_T-5602.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_265565_T-5602.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_26601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_26601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_26677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_26677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_26752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_26752_T-827.solution.xml
+    partial_costs:
+      UB: 0.008442654050597844
+    total_cost: 0.1688530810119569
+- scenario: DEU_LocationAUpper26-1_2675_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_2675_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_26827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_26827_T-902.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_26902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_26902_T-977.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper26-1_26977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper26-1_26977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_300_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_300_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_301053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_301053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_301128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_301128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_301203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_301203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_301278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_301278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_301353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_301353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.00625953030035421
+    total_cost: 0.1251906060070842
+- scenario: DEU_LocationAUpper30-1_301429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_301429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.005789727508294939
+    total_cost: 0.11579455016589878
+- scenario: DEU_LocationAUpper30-1_301504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_301504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_30150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_30150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_301579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_301579_T-1654.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_301654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_301654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_301729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_301729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_301805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_301805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_301880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_301880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_301955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_301955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_302030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_302030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_302105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_302105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_302181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_302181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_302256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_302256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_30225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_30225_T-300.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_302331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_302331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_302406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_302406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_302481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_302481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_302557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_302557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_302632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_302632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_302707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_302707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_302782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_302782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_302857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_302857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_302933_T-3008.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_302933_T-3008.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303008_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303008_T-3083.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_30301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_30301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_30376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_30376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_303985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_303985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_304061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_304061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_304136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_304136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.002740740740741327
+    total_cost: 0.05481481481482654
+- scenario: DEU_LocationAUpper30-1_304211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_304211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_304286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_304286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_304361_T-4436.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_304361_T-4436.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_304437_T-4512.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_304437_T-4512.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_304512_T-4587.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_304512_T-4587.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_30451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_30451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_304587_T-4662.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_304587_T-4662.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_304662_T-4737.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_304662_T-4737.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_304737_T-4812.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_304737_T-4812.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_304813_T-4888.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_304813_T-4888.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_304888_T-4963.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_304888_T-4963.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_304963_T-5038.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_304963_T-5038.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_305038_T-5113.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_305038_T-5113.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_305113_T-5188.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_305113_T-5188.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_305189_T-5264.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_305189_T-5264.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_305264_T-5339.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_305264_T-5339.solution.xml
+    partial_costs:
+      UB: 0.0038137640957053008
+    total_cost: 0.07627528191410601
+- scenario: DEU_LocationAUpper30-1_30526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_30526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_305339_T-5414.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_305339_T-5414.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_305414_T-5489.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_305414_T-5489.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_305489_T-5564.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_305489_T-5564.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_305565_T-5640.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_305565_T-5640.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_305640_T-5715.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_305640_T-5715.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_305715_T-5790.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_305715_T-5790.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_305790_T-5865.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_305790_T-5865.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_305865_T-5940.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_305865_T-5940.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_305941_T-6010.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_305941_T-6010.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_30601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_30601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_30677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_30677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_30752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_30752_T-827.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_3075_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_3075_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_30827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_30827_T-902.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_30902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_30902_T-977.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper30-1_30977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper30-1_30977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_360_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_360_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_361053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_361053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_361128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_361128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_361203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_361203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_361278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_361278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_361353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_361353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_361429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_361429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_361504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_361504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_36150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_36150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_361579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_361579_T-1654.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_361654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_361654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_361729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_361729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_361805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_361805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_361880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_361880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_361955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_361955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_362030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_362030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_362105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_362105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_362181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_362181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_362256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_362256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_36225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_36225_T-300.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_362331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_362331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_362406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_362406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_362481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_362481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_362557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_362557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_362632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_362632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_362707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_362707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_362782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_362782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_362857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_362857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_362933_T-3008.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_362933_T-3008.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_363008_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363008_T-3083.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_36301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_36301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_363083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_363158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_363233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0011982570806101434
+    total_cost: 0.023965141612202867
+- scenario: DEU_LocationAUpper36-1_363309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_363384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_363459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_363534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.048387270838642416
+    total_cost: 0.9677454167728483
+- scenario: DEU_LocationAUpper36-1_363609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_363685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_363760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_36376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_36376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_363835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_363910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_363985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_363985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.053566825992924005
+    total_cost: 1.07133651985848
+- scenario: DEU_LocationAUpper36-1_364061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_364061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.02980643616432279
+    total_cost: 0.5961287232864558
+- scenario: DEU_LocationAUpper36-1_364136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_364136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_364211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_364211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_364286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_364286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_364361_T-4436.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_364361_T-4436.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_364437_T-4512.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_364437_T-4512.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_364512_T-4587.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_364512_T-4587.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_36451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_36451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_364587_T-4662.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_364587_T-4662.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_364662_T-4737.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_364662_T-4737.solution.xml
+    partial_costs:
+      UB: 0.014391334849577145
+    total_cost: 0.2878266969915429
+- scenario: DEU_LocationAUpper36-1_364737_T-4812.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_364737_T-4812.solution.xml
+    partial_costs:
+      UB: 0.0298181546595516
+    total_cost: 0.596363093191032
+- scenario: DEU_LocationAUpper36-1_364813_T-4888.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_364813_T-4888.solution.xml
+    partial_costs:
+      UB: 0.002614379084967543
+    total_cost: 0.05228758169935086
+- scenario: DEU_LocationAUpper36-1_364888_T-4963.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_364888_T-4963.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_364963_T-5038.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_364963_T-5038.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_365038_T-5113.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_365038_T-5113.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_365113_T-5188.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_365113_T-5188.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_365189_T-5264.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_365189_T-5264.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_365264_T-5339.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_365264_T-5339.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_36526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_36526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_365339_T-5414.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_365339_T-5414.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_365414_T-5489.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_365414_T-5489.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_365489_T-5564.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_365489_T-5564.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_365565_T-5640.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_365565_T-5640.solution.xml
+    partial_costs:
+      UB: 0.12493867370742842
+    total_cost: 2.4987734741485683
+- scenario: DEU_LocationAUpper36-1_365640_T-5715.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_365640_T-5715.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_365715_T-5790.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_365715_T-5790.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_365790_T-5865.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_365790_T-5865.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_365865_T-5940.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_365865_T-5940.solution.xml
+    partial_costs:
+      UB: 0.001813333333333339
+    total_cost: 0.03626666666666678
+- scenario: DEU_LocationAUpper36-1_365941_T-6016.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_365941_T-6016.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_366016_T-6091.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_366016_T-6091.solution.xml
+    partial_costs:
+      UB: 0.0009738562091504371
+    total_cost: 0.019477124183008742
+- scenario: DEU_LocationAUpper36-1_36601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_36601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_366091_T-6166.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_366091_T-6166.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_366166_T-6207.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_366166_T-6207.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_36677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_36677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_36752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_36752_T-827.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_3675_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_3675_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper36-1_36827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_36827_T-902.solution.xml
+    partial_costs:
+      UB: 0.04444633950899163
+    total_cost: 0.8889267901798326
+- scenario: DEU_LocationAUpper36-1_36902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_36902_T-977.solution.xml
+    partial_costs:
+      UB: 0.08482220205898494
+    total_cost: 1.6964440411796988
+- scenario: DEU_LocationAUpper36-1_36977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper36-1_36977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.017273146693406002
+    total_cost: 0.34546293386812005
+- scenario: DEU_LocationAUpper43-1_430_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_430_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_431053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_431053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0021436930394167146
+    total_cost: 0.04287386078833429
+- scenario: DEU_LocationAUpper43-1_431128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_431128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_431203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_431203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_431278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_431278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_431353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_431353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_431429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_431429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_431504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_431504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_43150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_43150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_431579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_431579_T-1654.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_431654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_431654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_431729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_431729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_431805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_431805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_431880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_431880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_431955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_431955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_432030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_432030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_432105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_432105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_432181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_432181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_432256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_432256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_43225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_43225_T-300.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_432331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_432331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_432406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_432406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_432481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_432481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_432557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_432557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_432632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_432632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_432707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_432707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_432782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_432782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_432857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_432857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_432933_T-3008.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_432933_T-3008.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433008_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433008_T-3083.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_43301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_43301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_43376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_43376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_433985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_433985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_434061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_434061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_434136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_434136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_434211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_434211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_434286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_434286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_434361_T-4436.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_434361_T-4436.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_434437_T-4512.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_434437_T-4512.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_434512_T-4587.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_434512_T-4587.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_43451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_43451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_434587_T-4662.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_434587_T-4662.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_434662_T-4737.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_434662_T-4737.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_434737_T-4812.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_434737_T-4812.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_434813_T-4888.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_434813_T-4888.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_434888_T-4963.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_434888_T-4963.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_434963_T-5038.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_434963_T-5038.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_435038_T-5090.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_435038_T-5090.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_43526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_43526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_43601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_43601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_43677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_43677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_43752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_43752_T-827.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_4375_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_4375_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_43827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_43827_T-902.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_43902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_43902_T-977.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationAUpper43-1_43977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationAUpper43-1_43977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_10_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_10_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_11053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_11053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_11128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_11128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_11203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_11203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_11278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_11278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_11353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_11353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_11429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_11429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_11504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_11504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_1150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_1150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_11579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_11579_T-1654.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_11654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_11654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_11729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_11729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_11805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_11805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_11880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_11880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_11955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_11955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_12030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_12030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_12105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_12105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_12181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_12181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_12256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_12256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_1225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_1225_T-300.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_12331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_12331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_12406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_12406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_12481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_12481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_12557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_12557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_12632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_12632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_12707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_12707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_12782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_12782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_12857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_12857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_12933_T-2954.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_12933_T-2954.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_1301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_1301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13041_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13041_T-3083.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_1376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_1376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_13985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_13985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_14061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_14061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_14136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_14136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_14211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_14211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_14286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_14286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_14361_T-4436.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_14361_T-4436.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_14437_T-4507.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_14437_T-4507.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_1451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_1451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_1526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_1526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_1601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_1601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_1677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_1677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_1752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_1752_T-827.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_175_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_175_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_1827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_1827_T-902.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_1902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_1902_T-977.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBLower1-1_1977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBLower1-1_1977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_10_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_10_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_11053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_11053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_11128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_11128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_11203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_11203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_11278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_11278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_11353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_11353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_11429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_11429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_11504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_11504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_1150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_1150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_11579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_11579_T-1654.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_11654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_11654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_11729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_11729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_11805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_11805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_11880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_11880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_11955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_11955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_12030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_12030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_12105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_12105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_12181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_12181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_12256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_12256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_1225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_1225_T-300.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_12331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_12331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_12406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_12406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_12481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_12481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_12557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_12557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_12632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_12632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_12707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_12707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_12782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_12782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_12857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_12857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_12933_T-3008.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_12933_T-3008.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_13008_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13008_T-3083.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_1301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_1301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_13083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.0004252136752135799
+    total_cost: 0.008504273504271598
+- scenario: DEU_LocationBUpper1-1_13158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_13233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_13309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_13384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_13459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_13534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_13609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_13685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_13760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_1376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_1376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_13835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_13910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_13985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_13985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_14061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_14061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_14136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_14136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_14211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_14211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_14286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_14286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_14361_T-4436.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_14361_T-4436.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_14437_T-4507.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_14437_T-4507.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_1451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_1451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_1526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_1526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_1601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_1601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_1677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_1677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_1752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_1752_T-827.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_175_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_175_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_1827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_1827_T-902.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_1902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_1902_T-977.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationBUpper1-1_1977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationBUpper1-1_1977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_60_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_60_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_61053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_61053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_61128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_61128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_61203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_61203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_61278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_61278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_61353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_61353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_61429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_61429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_61504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_61504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_6150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_6150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_61579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_61579_T-1654.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_61654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_61654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.013888888888888926
+    total_cost: 0.2777777777777785
+- scenario: DEU_LocationCLower6-1_61729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_61729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_61805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_61805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_61880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_61880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_61955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_61955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_62030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_62030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_62105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_62105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_62181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_62181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_62256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_62256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_6225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_6225_T-300.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_62331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_62331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_62406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_62406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_62481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_62481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_62557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_62557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_62632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_62632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_62707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_62707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_62782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_62782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_62857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_62857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_62933_T-3008.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_62933_T-3008.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63008_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63008_T-3083.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_6301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_6301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_6376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_6376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_63985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_63985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_64061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_64061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_64136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_64136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_64211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_64211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_64286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_64286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_64361_T-4436.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_64361_T-4436.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_64437_T-4512.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_64437_T-4512.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_64512_T-4587.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_64512_T-4587.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_6451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_6451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_64587_T-4662.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_64587_T-4662.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_64662_T-4737.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_64662_T-4737.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_64737_T-4812.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_64737_T-4812.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_64813_T-4888.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_64813_T-4888.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_64888_T-4963.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_64888_T-4963.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_64963_T-5038.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_64963_T-5038.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_65038_T-5113.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_65038_T-5113.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_65113_T-5188.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_65113_T-5188.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_65189_T-5264.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_65189_T-5264.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_65264_T-5339.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_65264_T-5339.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_6526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_6526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_65339_T-5414.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_65339_T-5414.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_65414_T-5489.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_65414_T-5489.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_65489_T-5564.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_65489_T-5564.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_65565_T-5640.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_65565_T-5640.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_65640_T-5715.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_65640_T-5715.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_65715_T-5790.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_65715_T-5790.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_65790_T-5865.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_65790_T-5865.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_65865_T-5940.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_65865_T-5940.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_65941_T-6016.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_65941_T-6016.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_66016_T-6061.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_66016_T-6061.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_6601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_6601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_6677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_6677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_6752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_6752_T-827.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_675_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_675_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_6827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_6827_T-902.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_6902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_6902_T-977.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCLower6-1_6977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCLower6-1_6977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_60_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_60_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_61053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_61053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_61128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_61128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_61203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_61203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_61278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_61278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_61353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_61353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_61429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_61429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_61504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_61504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_6150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_6150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_61579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_61579_T-1654.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_61654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_61654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_61729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_61729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_61805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_61805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_61880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_61880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_61955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_61955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_62030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_62030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.005653483992466847
+    total_cost: 0.11306967984933694
+- scenario: DEU_LocationCUpper6-1_62105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_62105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_62181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_62181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_62256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_62256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_6225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_6225_T-300.solution.xml
+    partial_costs:
+      UB: 0.13649444444444345
+    total_cost: 2.729888888888869
+- scenario: DEU_LocationCUpper6-1_62331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_62331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_62406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_62406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_62481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_62481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_62557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_62557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_62632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_62632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_62707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_62707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_62782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_62782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_62857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_62857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_62933_T-3008.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_62933_T-3008.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_63008_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63008_T-3083.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_6301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_6301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_63083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_63158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_63233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0004746749985250475
+    total_cost: 0.00949349997050095
+- scenario: DEU_LocationCUpper6-1_63309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_63384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_63459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_63534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_63609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_63685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_63760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_6376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_6376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_63835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_63910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_63985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_63985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_64061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_64061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_64136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_64136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_64211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_64211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_64286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_64286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_64361_T-4436.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_64361_T-4436.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_64437_T-4512.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_64437_T-4512.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_64512_T-4587.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_64512_T-4587.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_6451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_6451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_64587_T-4662.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_64587_T-4662.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_64662_T-4737.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_64662_T-4737.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_64737_T-4812.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_64737_T-4812.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_64813_T-4888.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_64813_T-4888.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_64888_T-4963.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_64888_T-4963.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_64963_T-5038.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_64963_T-5038.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_65038_T-5113.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_65038_T-5113.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_65113_T-5188.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_65113_T-5188.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_65189_T-5264.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_65189_T-5264.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_65264_T-5339.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_65264_T-5339.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_6526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_6526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_65339_T-5414.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_65339_T-5414.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_65414_T-5489.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_65414_T-5489.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_65489_T-5564.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_65489_T-5564.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_65565_T-5640.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_65565_T-5640.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_65640_T-5715.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_65640_T-5715.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_65715_T-5790.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_65715_T-5790.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_65790_T-5865.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_65790_T-5865.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_65865_T-5940.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_65865_T-5940.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_65941_T-6016.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_65941_T-6016.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_66016_T-6061.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_66016_T-6061.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_6601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_6601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_6677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_6677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_6752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_6752_T-827.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_675_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_675_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_6827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_6827_T-902.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_6902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_6902_T-977.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationCUpper6-1_6977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationCUpper6-1_6977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_230_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_230_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_231053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_231053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_231128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_231128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_231203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_231203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_231278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_231278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_231353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_231353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_231429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_231429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_231504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_231504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_23150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_23150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_231579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_231579_T-1654.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_231654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_231654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_231729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_231729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_231805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_231805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_231880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_231880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_231955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_231955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_232030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_232030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_232105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_232105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_232181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_232181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_232256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_232256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_23225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_23225_T-300.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_232331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_232331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_232406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_232406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_232481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_232481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_232557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_232557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_232632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_232632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_232707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_232707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_232782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_232782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_232857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_232857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_232933_T-3008.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_232933_T-3008.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233008_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233008_T-3083.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_23301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_23301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_23376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_23376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_233985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_233985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_234061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_234061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_234136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_234136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_234211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_234211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_234286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_234286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_234361_T-4436.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_234361_T-4436.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_234437_T-4512.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_234437_T-4512.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_234512_T-4587.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_234512_T-4587.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_23451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_23451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_234587_T-4662.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_234587_T-4662.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_234662_T-4737.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_234662_T-4737.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_234737_T-4783.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_234737_T-4783.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_23526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_23526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_23601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_23601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_23677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_23677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_23752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_23752_T-827.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_2375_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_2375_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_23827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_23827_T-902.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_23902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_23902_T-977.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationELower23-1_23977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationELower23-1_23977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_230_T-75.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_230_T-75.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_231053_T-1128.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_231053_T-1128.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_231128_T-1203.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_231128_T-1203.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_231203_T-1278.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_231203_T-1278.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_231278_T-1353.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_231278_T-1353.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_231353_T-1428.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_231353_T-1428.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_231429_T-1504.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_231429_T-1504.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_231504_T-1579.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_231504_T-1579.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_23150_T-225.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_23150_T-225.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_231579_T-1654.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_231579_T-1654.solution.xml
+    partial_costs:
+      UB: 0.012833062849756568
+    total_cost: 0.25666125699513137
+- scenario: DEU_LocationEUpper23-1_231654_T-1729.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_231654_T-1729.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_231729_T-1804.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_231729_T-1804.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_231805_T-1880.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_231805_T-1880.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_231880_T-1955.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_231880_T-1955.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_231955_T-2030.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_231955_T-2030.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_232030_T-2105.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_232030_T-2105.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_232105_T-2180.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_232105_T-2180.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_232181_T-2256.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_232181_T-2256.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_232256_T-2331.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_232256_T-2331.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_23225_T-300.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_23225_T-300.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_232331_T-2406.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_232331_T-2406.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_232406_T-2481.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_232406_T-2481.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_232481_T-2556.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_232481_T-2556.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_232557_T-2632.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_232557_T-2632.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_232632_T-2707.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_232632_T-2707.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_232707_T-2782.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_232707_T-2782.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_232782_T-2857.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_232782_T-2857.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_232857_T-2932.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_232857_T-2932.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_232933_T-3008.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_232933_T-3008.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233008_T-3083.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233008_T-3083.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_23301_T-376.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_23301_T-376.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233083_T-3158.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233083_T-3158.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233158_T-3233.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233158_T-3233.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233233_T-3308.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233233_T-3308.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233309_T-3384.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233309_T-3384.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233384_T-3459.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233384_T-3459.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233459_T-3534.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233459_T-3534.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233534_T-3609.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233534_T-3609.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233609_T-3684.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233609_T-3684.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233685_T-3760.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233685_T-3760.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233760_T-3835.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233760_T-3835.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_23376_T-451.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_23376_T-451.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233835_T-3910.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233835_T-3910.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233910_T-3985.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233910_T-3985.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_233985_T-4060.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_233985_T-4060.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_234061_T-4136.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_234061_T-4136.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_234136_T-4211.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_234136_T-4211.solution.xml
+    partial_costs:
+      UB: 0.014293389289392822
+    total_cost: 0.28586778578785643
+- scenario: DEU_LocationEUpper23-1_234211_T-4286.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_234211_T-4286.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_234286_T-4361.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_234286_T-4361.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_234361_T-4436.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_234361_T-4436.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_234437_T-4512.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_234437_T-4512.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_234512_T-4587.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_234512_T-4587.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_23451_T-526.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_23451_T-526.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_234587_T-4662.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_234587_T-4662.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_234662_T-4737.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_234662_T-4737.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_234737_T-4783.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_234737_T-4783.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_23526_T-601.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_23526_T-601.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_23601_T-676.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_23601_T-676.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_23677_T-752.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_23677_T-752.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_23752_T-827.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_23752_T-827.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_2375_T-150.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_2375_T-150.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_23827_T-902.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_23827_T-902.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_23902_T-977.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_23902_T-977.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
+- scenario: DEU_LocationEUpper23-1_23977_T-1052.cr.xml
+  solutions:
+  - solution_file: DEU_LocationEUpper23-1_23977_T-1052.solution.xml
+    partial_costs:
+      UB: 0.0
+    total_cost: 0.0
