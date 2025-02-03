@@ -26,7 +26,7 @@ def load_configuration(config_path: str) -> dict:
     Returns:
         dict: The loaded configuration as a dictionary.
     """
-    config = Path(config_path or Path(__file__).parent / "config.yaml")
+    config = Path(config_path or Path(__file__).parent.parent / "config.yaml")
     yaml_loader = YAML()
     with open(config, "r") as file:
         return yaml_loader.load(file)
@@ -98,7 +98,7 @@ class NominalScaler:
     """
 
     def __init__(self):
-        self.config = load_configuration(Path(__file__).parent.joinpath("config.yaml"))
+        self.config = load_configuration(Path(__file__).parent.parent.joinpath("config.yaml"))
         self.critical_value = self.config.get("unscaled_nominal_robustness")
         
     @classmethod
