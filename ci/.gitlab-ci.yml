@@ -83,6 +83,7 @@ build-test-python:
     paths:
       - ./doc/build
     expire_in: 30 minutes
+
 ### static test ###
 clang-tidy:
   stage: static-test
