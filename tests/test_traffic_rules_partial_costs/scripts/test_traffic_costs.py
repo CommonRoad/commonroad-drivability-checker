@@ -847,5 +847,10 @@ class TestStopAtTrafficLightCost(unittest.TestCase):
     
 
        
-if __name__ == '__main__':
-    unittest.main()       
+# if __name__ == '__main__':
+#     unittest.main()       
+
+if __name__ == "__main__":
+    import sys
+    if "unittest" not in sys.modules:
+        unittest.main()
