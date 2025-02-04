@@ -4,13 +4,6 @@ import sys
 from pathlib import Path
 
 
-
-# Ensure CI finds `commonroad_dc`
-project_root = os.path.abspath(os.path.dirname(__file__) + "/..")
-sys.path.insert(0, project_root)
-
-
-
 if __name__ == "__main__":
     print(os.getcwd())
     errors = 0
