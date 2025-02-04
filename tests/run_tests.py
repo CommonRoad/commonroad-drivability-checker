@@ -22,7 +22,7 @@ if __name__ == "__main__":
             
     # Run test_traffic_costs.py
     specific_test = Path(os.getcwd()) / "test_traffic_rules_partial_costs/scripts/test_traffic_costs.py"
-    assert specific_test.exists(), f"Error: Test file {specific_test} does not exist! Resolved path: {specific_test}"
+    assert specific_test.exists(), f"Error: Test file {specific_test} does not exist!"
     print(f"Running traffic rule specific partial cost function test: {specific_test}")
     all_tests = unittest.TestLoader().discover(os.path.dirname(specific_test), pattern="test_traffic_costs.py")
     b = unittest.TextTestRunner().run(all_tests)
@@ -30,18 +30,6 @@ if __name__ == "__main__":
     errors += len(b.errors)
     tests += b.testsRun
     
-    # # Run test_traffic_costs.py
-    # specific_test = "tests/test_traffic_rules_partial_costs/scripts/test_traffic_costs.py"
-    # if os.path.exists(specific_test):
-    #     print(f"Running traffic rule specific partial cost function test: {specific_test}")
-    #     all_tests = unittest.TestLoader().discover(os.path.dirname(specific_test), pattern="test_traffic_costs.py")
-    #     b = unittest.TextTestRunner().run(all_tests)
-    #     failures += len(b.failures)
-    #     errors += len(b.errors)
-    #     tests += b.testsRun
-
-
-
     print(
         'Executed {} tests; got {} fails and {} errors'.format(tests, failures, errors)
     )
