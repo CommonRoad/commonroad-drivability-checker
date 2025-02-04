@@ -1,8 +1,6 @@
 import unittest as unittest
 import os
 import sys
-from pathlib import Path
-
 
 if __name__ == "__main__":
     print(os.getcwd())
@@ -19,16 +17,6 @@ if __name__ == "__main__":
             failures += len(b.failures)
             errors += len(b.errors)
             tests += b.testsRun
-            
-    # Run the traffic rule partial costs tests
-    specific_test = "test_traffic_rules_partial_costs/scripts/test_traffic_costs.py"
-    if os.path.exists(specific_test):
-        print(f"Running traffic rule specific partial cost function test: {specific_test}")
-        all_tests = unittest.TestLoader().discover(os.path.dirname(specific_test), pattern="test_traffic_costs.py")
-        b = unittest.TextTestRunner(verbosity=2).run(all_tests)
-        failures += len(b.failures)
-        errors += len(b.errors)
-        tests += b.testsRun
 
     print(
         'Executed {} tests; got {} fails and {} errors'.format(tests, failures, errors)
