@@ -4,6 +4,13 @@ import sys
 from pathlib import Path
 
 
+
+# Ensure CI finds `commonroad_dc`
+project_root = os.path.abspath(os.path.dirname(__file__) + "/..")
+sys.path.insert(0, project_root)
+
+
+
 if __name__ == "__main__":
     print(os.getcwd())
     errors = 0
@@ -24,12 +31,12 @@ if __name__ == "__main__":
     test_script_path = os.path.join(os.getcwd(), "test_traffic_rules_partial_costs/scripts/test_traffic_costs.py")
     assert os.path.exists(test_script_path), f"Error: Test script {test_script_path} not found!"
     print(f"Now running {test_script_path}")
+    
     suite = unittest.defaultTestLoader.loadTestsFromName("test_traffic_rules_partial_costs.scripts.test_traffic_costs")
-    result = unittest.TextTestRunner().run(suite)
+    result = unittest.TextTestRunner(verbosity=2).run(suite)
     failures += len(result.failures)
     errors += len(result.errors)
     tests += result.testsRun
-
 
     print(
         'Executed {} tests; got {} fails and {} errors'.format(tests, failures, errors)
