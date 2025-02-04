@@ -6,11 +6,12 @@ This repository contains the implementation of partial cost functions designed t
 
 
 ## Structure
-- **config.yaml**: Configuration for the road network and nominal robustness.
+
 - **tr_costs/**
   - **tr_evaluator.py**: The STL Rule Monitoring framework embedded into the class `TrafficRuleEvaluator`.
   - **tr_partial_cost_functions.py**: Traffic-rule based partial cost functions (e.g., safe distance, speed limits).
   - **utilities.py**: Helper functions (e.g., vehicle object creation).
+  - **config.yaml**: Configuration for the road network and nominal robustness.
   - **datasets_and_results/** : exiD, highD, and sinD datasets and evaluation results.
 
 ## Prerequisites
@@ -22,7 +23,7 @@ This repository contains the implementation of partial cost functions designed t
 
 ## Key References
 
-- M. Althoff, M. Koschi, and S. Manzinger. “CommonRoad: Composable Bench-
+- M. Althoff, M. Koschi, and S. Manzinger. “CommonRoad: Composable Bench
   marks for Motion Planning on Roads.” In: Proc. of the IEEE Intelligent Vehicles
   Symposium. 2017, pp. 719–726.
 
