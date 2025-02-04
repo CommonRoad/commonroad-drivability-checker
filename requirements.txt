@@ -1,6 +1,6 @@
 commonroad-io>=2022.3
 commonroad-vehicle-models>=3.0.0
-numpy>=1.19
+numpy>=1.19, <2
 shapely>=1.6.4
 matplotlib>=3.2.2
 jupyter>=1.0.0
