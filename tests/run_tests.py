@@ -2,8 +2,10 @@ import unittest as unittest
 import os
 import sys
 
-os.system("pip install --no-cache-dir git+ssh://git@gitlab.lrz.de/cps/commonroad-stl-monitor")
-
+crmonitor_path = "/home/ugochukwu/miniconda3/envs/commonroad-py39/lib/python3.9/site-packages"
+if crmonitor_path not in sys.path:
+    sys.path.insert(0, crmonitor_path)
+    
 if __name__ == "__main__":
     print(os.getcwd())
     errors = 0
