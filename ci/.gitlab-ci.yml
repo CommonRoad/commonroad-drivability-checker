@@ -70,9 +70,12 @@ build-test-python:
   before_script:
     - source activate "commonroad-py$PYTHON_VER"
     - *python-prepare
-    # install pandoc from conda-forge for building the doc
     - conda install -c conda-forge pandoc
   script:
+    - echo "Current directory: $(pwd)"
+    - echo "PYTHONPATH: $PYTHONPATH"
+    - pip list
+    - pip install git+https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.lrz.de/cps/commonroad-stl-monitor
     - bash ./build.sh -j $BUILD_JOBS --cgal -i -d
     - cd tests
     - python run_tests.py
