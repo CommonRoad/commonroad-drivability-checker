@@ -21,8 +21,8 @@ if __name__ == "__main__":
             tests += b.testsRun
             
     # Run test_traffic_costs.py
-    specific_test = Path(os.getcwd()).joinpath("tests/test_traffic_rules_partial_costs/scripts/test_traffic_costs.py")
-    assert specific_test.exists(), f"Error: Test file {specific_test} does not exist!"
+    specific_test = Path(os.getcwd()) / "test_traffic_rules_partial_costs/scripts/test_traffic_costs.py"
+    assert specific_test.exists(), f"Error: Test file {specific_test} does not exist! Resolved path: {specific_test}"
     print(f"Running traffic rule specific partial cost function test: {specific_test}")
     all_tests = unittest.TestLoader().discover(os.path.dirname(specific_test), pattern="test_traffic_costs.py")
     b = unittest.TextTestRunner().run(all_tests)
