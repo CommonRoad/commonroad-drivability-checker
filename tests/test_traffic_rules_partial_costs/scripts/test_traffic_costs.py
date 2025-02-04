@@ -67,78 +67,78 @@ class TestSafeDistanceCost(unittest.TestCase):
             ),
             0,  
         )
-        # self.assertGreater(r_g_1_cost(
-        #     scenario=self.scenario_0,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory0_1002,
-        #     properties=None
-        #     ),
-        #     0, 
-        # )
-        # self.assertGreater(r_g_1_cost(
-        #     scenario=self.scenario_0,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory0_1003,
-        #     properties=None
-        #     ), 
-        #     0,
-        # )
-        # self.assertGreater(r_g_1_cost(
-        #     scenario=self.scenario_0,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory0_1004,
-        #     properties=None
-        #     ),
-        #     0, 
-        # )
-        # self.assertEqual(r_g_1_cost(
-        #     scenario=self.scenario_0,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory0_1005,
-        #     properties=None
-        #     ),
-        #     0,
-        # )
-        # self.assertEqual(r_g_1_cost(
-        #     scenario=self.scenario_0,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory0_1006,
-        #     properties=None
-        #     ),
-        #     0,
-        # )
-        # self.assertEqual(r_g_1_cost(
-        #     scenario=self.scenario_0,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory0_1007,
-        #     properties=None
-        #     ),
-        #     0, 
-        # )
-        # self.assertGreater(r_g_1_cost(
-        #     scenario=self.scenario_0,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory0_1008,
-        #     properties=None
-        #     ),
-        #     0, 
-        # )
-        # self.assertEqual(r_g_1_cost(
-        #     scenario=self.scenario_0,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory0_1009,
-        #     properties=None
-        #     ),
-        #     0,
-        # )
-        # self.assertEqual(r_g_1_cost(
-        #     scenario=self.scenario_0,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory0_1010,
-        #     properties=None
-        #     ),
-        #     0, 
-        # )
+        self.assertGreater(r_g_1_cost(
+            scenario=self.scenario_0,
+            planning_problem=None,
+            ego_trajectory=self.trajectory0_1002,
+            properties=None
+            ),
+            0, 
+        )
+        self.assertGreater(r_g_1_cost(
+            scenario=self.scenario_0,
+            planning_problem=None,
+            ego_trajectory=self.trajectory0_1003,
+            properties=None
+            ), 
+            0,
+        )
+        self.assertGreater(r_g_1_cost(
+            scenario=self.scenario_0,
+            planning_problem=None,
+            ego_trajectory=self.trajectory0_1004,
+            properties=None
+            ),
+            0, 
+        )
+        self.assertEqual(r_g_1_cost(
+            scenario=self.scenario_0,
+            planning_problem=None,
+            ego_trajectory=self.trajectory0_1005,
+            properties=None
+            ),
+            0,
+        )
+        self.assertEqual(r_g_1_cost(
+            scenario=self.scenario_0,
+            planning_problem=None,
+            ego_trajectory=self.trajectory0_1006,
+            properties=None
+            ),
+            0,
+        )
+        self.assertEqual(r_g_1_cost(
+            scenario=self.scenario_0,
+            planning_problem=None,
+            ego_trajectory=self.trajectory0_1007,
+            properties=None
+            ),
+            0, 
+        )
+        self.assertGreater(r_g_1_cost(
+            scenario=self.scenario_0,
+            planning_problem=None,
+            ego_trajectory=self.trajectory0_1008,
+            properties=None
+            ),
+            0, 
+        )
+        self.assertEqual(r_g_1_cost(
+            scenario=self.scenario_0,
+            planning_problem=None,
+            ego_trajectory=self.trajectory0_1009,
+            properties=None
+            ),
+            0,
+        )
+        self.assertEqual(r_g_1_cost(
+            scenario=self.scenario_0,
+            planning_problem=None,
+            ego_trajectory=self.trajectory0_1010,
+            properties=None
+            ),
+            0, 
+        )
         
        # scenario 1
         self.assertGreater(r_g_1_cost(
@@ -204,22 +204,22 @@ class TestUnnecessaryBrakingCost(unittest.TestCase):
             ),
             0
         )
-        # self.assertEqual(r_g_2_cost(
-        #     scenario=self.scenario,  
-        #     planning_problem=None, 
-        #     ego_trajectory=self.trajectory_1005, 
-        #     properties=None
-        #     ),
-        #     0, f"Vehicle 1005 is not unnecessarily braking hence the cost should be 0"
-        # )
-        # self.assertEqual(r_g_2_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1006,
-        #     properties=None
-        #     ),  
-        #     0, f"Vehicle 1006 is not unnecessarily braking hence the cost should be 0"
-        # )
+        self.assertEqual(r_g_2_cost(
+            scenario=self.scenario,  
+            planning_problem=None, 
+            ego_trajectory=self.trajectory_1005, 
+            properties=None
+            ),
+            0, f"Vehicle 1005 is not unnecessarily braking hence the cost should be 0"
+        )
+        self.assertEqual(r_g_2_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1006,
+            properties=None
+            ),  
+            0, f"Vehicle 1006 is not unnecessarily braking hence the cost should be 0"
+        )
         
              
 class TestMaximumSpeedLimitCost(unittest.TestCase):
@@ -257,22 +257,22 @@ class TestMaximumSpeedLimitCost(unittest.TestCase):
             ),
             0
         )
-        # self.assertGreater(r_g_3_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1002,
-        #     properties=None
-        #     ),
-        #     0
-        # )
-        # self.assertEqual(r_g_3_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1003,
-        #     properties=None
-        #     ),
-        #     0
-        # )
+        self.assertGreater(r_g_3_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1002,
+            properties=None
+            ),
+            0
+        )
+        self.assertEqual(r_g_3_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1003,
+            properties=None
+            ),
+            0
+        )
         
                
 class TestTrafficFlowCost(unittest.TestCase):
@@ -327,22 +327,22 @@ class TestTrafficFlowCost(unittest.TestCase):
             ),
             0, f"Vehicle 1003 is not preserving traffic flow hence the cost should be > 0"
         )
-        # self.assertEqual(r_g_4_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1004,
-        #     properties=None
-        #     ),
-        #     0
-        # )
-        # self.assertGreater(r_g_4_cost( 
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1005,
-        #     properties=None
-        #     ),
-        #     0, f"Vehicle 1005 is not preserving traffic flow hence the cost should be > 0"
-        # )
+        self.assertEqual(r_g_4_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1004,
+            properties=None
+            ),
+            0
+        )
+        self.assertGreater(r_g_4_cost( 
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1005,
+            properties=None
+            ),
+            0, f"Vehicle 1005 is not preserving traffic flow hence the cost should be > 0"
+        )
       
             
 class TestStoppingCost(unittest.TestCase):
@@ -387,78 +387,78 @@ class TestStoppingCost(unittest.TestCase):
             ),
             0, f"Vehicle 1001 is stopping hence the cost should be > 0"
         )
-        # self.assertEqual(r_i_1_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1002,
-        #     properties=None
-        #     ),
-        #     0
-        # )
-        # self.assertEqual(r_i_1_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1003,
-        #     properties=None
-        #     ),
-        #     0
-        # )
-        # self.assertEqual(r_i_1_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1004,
-        #     properties=None
-        #     ),
-        #     0
-        # )
-        # self.assertEqual(r_i_1_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1005,
-        #     properties=None
-        #     ),
-        #     0
-        # )
-        # self.assertEqual(r_i_1_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1006,
-        #     properties=None
-        #     ),
-        #     0
-        # )
-        # self.assertEqual(r_i_1_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1007,
-        #     properties=None
-        #     ),
-        #     0
-        # )
-        # self.assertEqual(r_i_1_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1008,
-        #     properties=None
-        #     ),
-        #     0
-        # )
-        # self.assertEqual(r_i_1_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1009,
-        #     properties=None
-        #     ),
-        #     0
-        # )
-        # self.assertEqual(r_i_1_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1010,
-        #     properties=None
-        #     ),
-        #     0
-        # )
+        self.assertEqual(r_i_1_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1002,
+            properties=None
+            ),
+            0
+        )
+        self.assertEqual(r_i_1_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1003,
+            properties=None
+            ),
+            0
+        )
+        self.assertEqual(r_i_1_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1004,
+            properties=None
+            ),
+            0
+        )
+        self.assertEqual(r_i_1_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1005,
+            properties=None
+            ),
+            0
+        )
+        self.assertEqual(r_i_1_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1006,
+            properties=None
+            ),
+            0
+        )
+        self.assertEqual(r_i_1_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1007,
+            properties=None
+            ),
+            0
+        )
+        self.assertEqual(r_i_1_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1008,
+            properties=None
+            ),
+            0
+        )
+        self.assertEqual(r_i_1_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1009,
+            properties=None
+            ),
+            0
+        )
+        self.assertEqual(r_i_1_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1010,
+            properties=None
+            ),
+            0
+        )
   
 
 class TestDrivingFasterThanLeftTrafficCost(unittest.TestCase):
@@ -516,22 +516,22 @@ class TestDrivingFasterThanLeftTrafficCost(unittest.TestCase):
             ),
             0, f"Vehicle 1001 is driving faster than left traffic hence the cost should be > 0"
         )
-        # self.assertEqual(r_i_2_cost(
-        #     scenario=self.scenario_0,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory0_1002,
-        #     properties=None
-        #     ),
-        #     0
-        # )
-        # self.assertEqual(r_i_2_cost(
-        #     scenario=self.scenario_0,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory0_1003,
-        #     properties=None
-        #     ),
-        #     0
-        # )
+        self.assertEqual(r_i_2_cost(
+            scenario=self.scenario_0,
+            planning_problem=None,
+            ego_trajectory=self.trajectory0_1002,
+            properties=None
+            ),
+            0
+        )
+        self.assertEqual(r_i_2_cost(
+            scenario=self.scenario_0,
+            planning_problem=None,
+            ego_trajectory=self.trajectory0_1003,
+            properties=None
+            ),
+            0
+        )
         
         # scenario 1 
         self.assertEqual(r_i_2_cost( 
@@ -588,22 +588,22 @@ class TestReversingAndTurningCost(unittest.TestCase):
             ), 
             0, f"Vehicle 1000 is reversing hence the cost should be > 0"
         )
-        # self.assertGreater(r_i_3_cost( 
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1001,
-        #     properties=None
-        #     ),
-        #     0, f"Vehicle 1001 is turning hence the cost should be > 0"
-        # )
-        # self.assertGreater(r_i_3_cost( 
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1002,
-        #     properties=None
-        #     ),
-        #     0, f"Vehicle 1002 is turning hence the cost should be > 0"
-        # )
+        self.assertGreater(r_i_3_cost( 
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1001,
+            properties=None
+            ),
+            0, f"Vehicle 1001 is turning hence the cost should be > 0"
+        )
+        self.assertGreater(r_i_3_cost( 
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1002,
+            properties=None
+            ),
+            0, f"Vehicle 1002 is turning hence the cost should be > 0"
+        )
         self.assertEqual(r_i_3_cost( 
             scenario=self.scenario,
             planning_problem=None,
@@ -679,30 +679,30 @@ class TestEmergencyLaneCost(unittest.TestCase):
             ),
             0
         )
-        # self.assertGreater(r_i_4_cost( 
-        #     scenario=self.scenario_1,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory1_1006,
-        #     properties=None
-        #     ),
-        #     0, f"Vehicle 1006 is driving on the emergency lane on narrow interstate hence the cost should be > 0"
-        # )
-        # self.assertGreater(r_i_4_cost( 
-        #     scenario=self.scenario_1,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory1_1007,
-        #     properties=None
-        #     ),
-        #     0, f"Vehicle 1007 is driving on the emergency lane on narrow interstate hence the cost should be > 0"
-        # )
-        # self.assertGreater(r_i_4_cost( 
-        #     scenario=self.scenario_1,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory1_1009,
-        #     properties=None
-        #     ),
-        #     0, f"Vehicle 1009 is causing congestion on narrow interstate hence the cost should be > 0"
-        # )
+        self.assertGreater(r_i_4_cost( 
+            scenario=self.scenario_1,
+            planning_problem=None,
+            ego_trajectory=self.trajectory1_1006,
+            properties=None
+            ),
+            0, f"Vehicle 1006 is driving on the emergency lane on narrow interstate hence the cost should be > 0"
+        )
+        self.assertGreater(r_i_4_cost( 
+            scenario=self.scenario_1,
+            planning_problem=None,
+            ego_trajectory=self.trajectory1_1007,
+            properties=None
+            ),
+            0, f"Vehicle 1007 is driving on the emergency lane on narrow interstate hence the cost should be > 0"
+        )
+        self.assertGreater(r_i_4_cost( 
+            scenario=self.scenario_1,
+            planning_problem=None,
+            ego_trajectory=self.trajectory1_1009,
+            properties=None
+            ),
+            0, f"Vehicle 1009 is causing congestion on narrow interstate hence the cost should be > 0"
+        )
 
      
 class TestConsiderEnteringVehicleCost(unittest.TestCase):
@@ -784,14 +784,14 @@ class TestStopAtStopSignCost(unittest.TestCase):
         #     ),
         #     0, f"Vehicle 1001 is not stopping at stop sign hence the cost should be > 0"
         # )
-        # self.assertGreater(r_in_1_cost(
-        #     scenario=self.scenario,
-        #     planning_problem=None,
-        #     ego_trajectory=self.trajectory_1002,
-        #     properties=None
-        #     ),
-        #     0, f"Vehicle 1002 is stopping at stop sign hence the cost should be > 0"
-        # )
+        self.assertEqual(r_in_1_cost(
+            scenario=self.scenario,
+            planning_problem=None,
+            ego_trajectory=self.trajectory_1002,
+            properties=None
+            ),
+            0, 
+        )
         # self.assertEqual(r_in_1_cost(
         #     scenario=self.scenario,
         #     planning_problem=None,

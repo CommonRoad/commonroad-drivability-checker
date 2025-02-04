@@ -169,16 +169,16 @@ cost_function_mapping =\
         # Traffic Rules
         CostFunction.TR2: [
             (PartialCostFunction.SD, 25),
-            #(PartialCostFunction.UB, 20),
-            #(PartialCostFunction.MSL, 30),
-            #(PartialCostFunction.TF, 20),
-            #(PartialCostFunction.ST, 35),
-            #(PartialCostFunction.DFL, 25), # Takes too long for some scenarios
-            #(PartialCostFunction.RT, 75),
-            #(PartialCostFunction.EL, 200),  # Takes too long for some scenarios
-            #(PartialCostFunction.CEV, 20),
-            #(PartialCostFunction.SS, 10), # To use, ensure scenario has at least an intersection
-            #(PartialCostFunction.RL, 90), # To use, ensure scenario has at least an intersection
+            (PartialCostFunction.UB, 20),
+            (PartialCostFunction.MSL, 30),
+            (PartialCostFunction.TF, 20),
+            (PartialCostFunction.ST, 35),
+            (PartialCostFunction.DFL, 25), 
+            (PartialCostFunction.RT, 75),
+            (PartialCostFunction.EL, 200), 
+            (PartialCostFunction.CEV, 20),
+            (PartialCostFunction.SS, 10), 
+            (PartialCostFunction.RL, 90), 
         ]
     }
 
