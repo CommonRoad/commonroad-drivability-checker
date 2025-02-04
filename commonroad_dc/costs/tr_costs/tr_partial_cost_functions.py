@@ -13,7 +13,7 @@ from .tr_evaluator import TrafficRuleEvaluator
 from .utilities import NominalScaler
 
 
-  
+
 #------------------------------------Partial--Cost-Functions---------------------------------
 
 def r_g_1_cost(scenario: Scenario, planning_problem: PlanningProblem,
