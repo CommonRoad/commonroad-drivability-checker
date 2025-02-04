@@ -2,6 +2,8 @@ import unittest as unittest
 import os
 import sys
 
+os.system("pip install --no-cache-dir git+ssh://git@gitlab.lrz.de/cps/commonroad-stl-monitor")
+
 if __name__ == "__main__":
     print(os.getcwd())
     errors = 0
