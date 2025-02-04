@@ -70,8 +70,10 @@ build-test-python:
   before_script:
     - source activate "commonroad-py$PYTHON_VER"
     - *python-prepare
-    # install pandoc from conda-forge for building the doc
     - conda install -c conda-forge pandoc
+    - pip install --no-cache-dir git+ssh://git@gitlab.lrz.de/cps/commonroad-stl-monitor
+    - export PYTHONPATH="${PYTHONPATH}:/opt/conda/envs/commonroad-py$PYTHON_VER/lib/python3.9/site-packages"
+    - pip freeze | grep crmonitor || true
   script:
     - bash ./build.sh -j $BUILD_JOBS --cgal -i -d
     - cd tests
