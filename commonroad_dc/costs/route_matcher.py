@@ -3,35 +3,32 @@ from collections import defaultdict
 from copy import deepcopy
 from enum import Enum
 from functools import lru_cache
+from typing import List, Dict, Tuple
 from typing import Union, Any, Optional
 
+import matplotlib.pyplot as plt
+import numpy as np
 import shapely
 import shapely.geometry
 from commonroad.common.solution import VehicleType
+from commonroad.common.util import Interval, subtract_orientations
+from commonroad.scenario.lanelet import LaneletNetwork, Lanelet
 from commonroad.scenario.scenario import Scenario
+from commonroad.scenario.state import FloatExactOrInterval, CustomState, PMState, TraceState
 from commonroad.scenario.traffic_sign import SupportedTrafficSignCountry
 from commonroad.scenario.traffic_sign_interpreter import TrafficSignInterpreter
 from commonroad.scenario.trajectory import Trajectory
-from commonroad.scenario.state import FloatExactOrInterval, CustomState, PMState, TraceState
-from commonroad_dc.collision.collision_detection.scenario import create_collision_checker_scenario
+from commonroad.visualization.mp_renderer import MPRenderer
+from commonroad_dc.pycrcc import CollisionObject, CollisionChecker, Circle, RectAABB
+from commonroad_dc.pycrccosy import CurvilinearCoordinateSystem
 from scipy.signal import savgol_filter
+from shapely.geometry import Polygon
 
 from commonroad_dc import pycrcc
 from commonroad_dc.collision.collision_detection.pycrcc_collision_dispatch import create_collision_object
+from commonroad_dc.collision.collision_detection.scenario import create_collision_checker_scenario
 from commonroad_dc.feasibility.vehicle_dynamics import VehicleParameterMapping
 from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline
-from commonroad_dc.pycrcc import CollisionObject, CollisionChecker, Circle, RectAABB
-
-from typing import List, Dict, Tuple
-import numpy as np
-import matplotlib.pyplot as plt
-from commonroad.common.util import Interval, subtract_orientations
-
-from commonroad.scenario.lanelet import LaneletNetwork, Lanelet
-from commonroad.visualization.mp_renderer import MPRenderer
-
-from commonroad_dc.pycrccosy import CurvilinearCoordinateSystem
-from shapely.geometry import Polygon
 
 draw_lanelet_path = True
 use_shapely = True

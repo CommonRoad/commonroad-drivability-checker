@@ -1,16 +1,24 @@
 import itertools
+import logging
 from enum import Enum
 from typing import Dict, List, Tuple
 
+from commonroad.common.solution import Solution, CostFunction, VehicleType
 from commonroad.planning.planning_problem import PlanningProblem, PlanningProblemSet
 from commonroad.scenario.scenario import Scenario
 from commonroad.scenario.trajectory import Trajectory
-from commonroad_dc.costs.route_matcher import LaneletRouteMatcher, SolutionProperties, merge_trajectories
-
-from commonroad.common.solution import Solution, CostFunction, VehicleType
 
 import commonroad_dc.costs.partial_cost_functions as cost_functions
-import commonroad_dc.costs.tr_costs.tr_partial_cost_functions as cost_functions_tr
+using_traffic_rule_cost_functions = True
+try:
+    import commonroad_dc.costs.tr_costs.tr_partial_cost_functions as cost_functions_tr
+except ModuleNotFoundError:
+    logging.warning("Traffic rule cost functions are not available, as the crmonitor is not installed. "
+                    "Other cost functions are not affected. To install the crmonitor, please visit: \n"
+                    "https://gitlab.lrz.de/cps/commonroad/commonroad-stl-monitor/")
+    using_traffic_rule_cost_functions = False
+
+from commonroad_dc.costs.route_matcher import LaneletRouteMatcher, SolutionProperties
 
 
 class PartialCostFunction(Enum):
@@ -36,7 +44,7 @@ class PartialCostFunction(Enum):
 
   
     SD: Safe Distance,
-    UB: Unecessary Braking,
+    UB: Unnecessary Braking,
     MSL: Maximum Speed Limit,
     TF: Traffic Flow
     ST: Stopping
@@ -95,92 +103,101 @@ PartialCostFunctionMapping = {
     PartialCostFunction.L:  cost_functions.path_length_cost,
     PartialCostFunction.T:  cost_functions.time_cost,
     PartialCostFunction.ID:  cost_functions.inverse_duration_cost,
-    # Traffic Rules Specific Cost Functions
-    #----general----    
-    PartialCostFunction.SD: cost_functions_tr.r_g_1_cost,
-    PartialCostFunction.UB: cost_functions_tr.r_g_2_cost,
-    PartialCostFunction.MSL: cost_functions_tr.r_g_3_cost,
-    PartialCostFunction.TF: cost_functions_tr.r_g_4_cost,
-    #----interstate----
-    PartialCostFunction.ST: cost_functions_tr.r_i_1_cost,
-    PartialCostFunction.DFL: cost_functions_tr.r_i_2_cost,
-    PartialCostFunction.RT: cost_functions_tr.r_i_3_cost,
-    PartialCostFunction.EL: cost_functions_tr.r_i_4_cost,
-    PartialCostFunction.CEV: cost_functions_tr.r_i_5_cost,
-    #----intersection/urban----
-    PartialCostFunction.SS: cost_functions_tr.r_in_1_cost,
-    PartialCostFunction.RL: cost_functions_tr.r_in_2_cost,
-    
 }
 
+if using_traffic_rule_cost_functions:
+    PartialCostFunctionMapping.update(
+        {
+            # Traffic Rules Specific Cost Functions
+            # ----general----
+            PartialCostFunction.SD: cost_functions_tr.r_g_1_cost,
+            PartialCostFunction.UB: cost_functions_tr.r_g_2_cost,
+            PartialCostFunction.MSL: cost_functions_tr.r_g_3_cost,
+            PartialCostFunction.TF: cost_functions_tr.r_g_4_cost,
+            # ----interstate----
+            PartialCostFunction.ST: cost_functions_tr.r_i_1_cost,
+            PartialCostFunction.DFL: cost_functions_tr.r_i_2_cost,
+            PartialCostFunction.RT: cost_functions_tr.r_i_3_cost,
+            PartialCostFunction.EL: cost_functions_tr.r_i_4_cost,
+            PartialCostFunction.CEV: cost_functions_tr.r_i_5_cost,
+            # ----intersection/urban----
+            PartialCostFunction.SS: cost_functions_tr.r_in_1_cost,
+            PartialCostFunction.RL: cost_functions_tr.r_in_2_cost
+        }
+    )
 
-cost_function_mapping =\
-    {
-        CostFunction.JB1: [
-            (PartialCostFunction.T, 1.0)
-        ],
-        CostFunction.MW1: [
-            (PartialCostFunction.Jlat, 5.0),
-            (PartialCostFunction.Jlon, 0.5),
-            (PartialCostFunction.Vlon, 0.2),
-            (PartialCostFunction.ID, 1.0)
-        ],
-        CostFunction.SA1: [
-            (PartialCostFunction.SA, 0.1),
-            (PartialCostFunction.SR, 0.1),
-            (PartialCostFunction.D, 100000.0),
-        ],
-        CostFunction.SM1: [
-            (PartialCostFunction.A, 50.0),
-            (PartialCostFunction.SA, 50.0),
-            (PartialCostFunction.SR, 50.0),
-            (PartialCostFunction.L, 1.0),
-            (PartialCostFunction.V, 20.0),
-            (PartialCostFunction.O, 50.0),
-        ],
-        CostFunction.SM2: [
-            (PartialCostFunction.A, 50.0),
-            (PartialCostFunction.SA, 50.0),
-            (PartialCostFunction.SR, 50.0),
-            (PartialCostFunction.L, 1.0),
-            (PartialCostFunction.O, 50.0),
-        ],
-        CostFunction.SM3: [
-            (PartialCostFunction.A, 50.0),
-            (PartialCostFunction.SA, 50.0),
-            (PartialCostFunction.SR, 50.0),
-            (PartialCostFunction.V, 20.0),
-            (PartialCostFunction.O, 50.0),
-        ],
-        CostFunction.WX1: [
-            (PartialCostFunction.T, 10.0),
-            (PartialCostFunction.V, 1.0),
-            (PartialCostFunction.A, 0.1),
-            (PartialCostFunction.J, 0.1),
-            (PartialCostFunction.D, 0.1),
-            (PartialCostFunction.L, 10.0),
-        ],
-        CostFunction.TR1: [
-            (PartialCostFunction.Jlon, 0.01),
-            (PartialCostFunction.SR, 22),
-            (PartialCostFunction.D, 8),
-            (PartialCostFunction.LC, 0.5),
-        ],  
-        # Traffic Rules
-        CostFunction.TR2: [
-            (PartialCostFunction.SD, 25),
-            (PartialCostFunction.UB, 20),
-            (PartialCostFunction.MSL, 30),
-            (PartialCostFunction.TF, 20),
-            (PartialCostFunction.ST, 35),
-            (PartialCostFunction.DFL, 25), 
-            (PartialCostFunction.RT, 75),
-            (PartialCostFunction.EL, 200), 
-            (PartialCostFunction.CEV, 20),
-            (PartialCostFunction.SS, 10), 
-            (PartialCostFunction.RL, 90), 
-        ]
-    }
+
+cost_function_mapping = {
+    CostFunction.JB1: [
+        (PartialCostFunction.T, 1.0)
+    ],
+    CostFunction.MW1: [
+        (PartialCostFunction.Jlat, 5.0),
+        (PartialCostFunction.Jlon, 0.5),
+        (PartialCostFunction.Vlon, 0.2),
+        (PartialCostFunction.ID, 1.0)
+    ],
+    CostFunction.SA1: [
+        (PartialCostFunction.SA, 0.1),
+        (PartialCostFunction.SR, 0.1),
+        (PartialCostFunction.D, 100000.0),
+    ],
+    CostFunction.SM1: [
+        (PartialCostFunction.A, 50.0),
+        (PartialCostFunction.SA, 50.0),
+        (PartialCostFunction.SR, 50.0),
+        (PartialCostFunction.L, 1.0),
+        (PartialCostFunction.V, 20.0),
+        (PartialCostFunction.O, 50.0),
+    ],
+    CostFunction.SM2: [
+        (PartialCostFunction.A, 50.0),
+        (PartialCostFunction.SA, 50.0),
+        (PartialCostFunction.SR, 50.0),
+        (PartialCostFunction.L, 1.0),
+        (PartialCostFunction.O, 50.0),
+    ],
+    CostFunction.SM3: [
+        (PartialCostFunction.A, 50.0),
+        (PartialCostFunction.SA, 50.0),
+        (PartialCostFunction.SR, 50.0),
+        (PartialCostFunction.V, 20.0),
+        (PartialCostFunction.O, 50.0),
+    ],
+    CostFunction.WX1: [
+        (PartialCostFunction.T, 10.0),
+        (PartialCostFunction.V, 1.0),
+        (PartialCostFunction.A, 0.1),
+        (PartialCostFunction.J, 0.1),
+        (PartialCostFunction.D, 0.1),
+        (PartialCostFunction.L, 10.0),
+    ],
+    CostFunction.TR1: [
+        (PartialCostFunction.Jlon, 0.01),
+        (PartialCostFunction.SR, 22),
+        (PartialCostFunction.D, 8),
+        (PartialCostFunction.LC, 0.5),
+    ]
+}
+
+if using_traffic_rule_cost_functions:
+    cost_function_mapping.update(
+        {   # Traffic Rules
+            CostFunction.TR2: [
+                (PartialCostFunction.SD, 25),
+                (PartialCostFunction.UB, 20),
+                (PartialCostFunction.MSL, 30),
+                (PartialCostFunction.TF, 20),
+                (PartialCostFunction.ST, 35),
+                (PartialCostFunction.DFL, 25),
+                (PartialCostFunction.RT, 75),
+                (PartialCostFunction.EL, 200),
+                (PartialCostFunction.CEV, 20),
+                (PartialCostFunction.SS, 10),
+                (PartialCostFunction.RL, 90),
+            ]
+        }
+    )
 
 # additional attributes that need to be computed before evaluation
 required_properties = {
@@ -199,18 +216,24 @@ required_properties = {
     PartialCostFunction.L: [],
     PartialCostFunction.T: [],
     PartialCostFunction.ID: [],
-    
-    PartialCostFunction.SD: [],
-    PartialCostFunction.UB: [], 
-    PartialCostFunction.MSL: [],
-    PartialCostFunction.TF: [], 
-    PartialCostFunction.ST: [],
-    PartialCostFunction.DFL: [],
-    PartialCostFunction.RT: [],
-    PartialCostFunction.EL: [],
-    PartialCostFunction.CEV: [],
-    PartialCostFunction.SS: [],
-    PartialCostFunction.RL: [],}
+}
+
+if using_traffic_rule_cost_functions:
+    required_properties.update(
+        {
+            PartialCostFunction.SD: [],
+            PartialCostFunction.UB: [],
+            PartialCostFunction.MSL: [],
+            PartialCostFunction.TF: [],
+            PartialCostFunction.ST: [],
+            PartialCostFunction.DFL: [],
+            PartialCostFunction.RT: [],
+            PartialCostFunction.EL: [],
+            PartialCostFunction.CEV: [],
+            PartialCostFunction.SS: [],
+            PartialCostFunction.RL: [],
+        }
+    )
 
 
 class CostFunctionEvaluator:

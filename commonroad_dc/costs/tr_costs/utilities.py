@@ -1,19 +1,15 @@
 # utility functions and class
 
 from pathlib import Path
-from ruamel.yaml import YAML
-from vehiclemodels import parameters_vehicle2
 
-from crmonitor.common.world import RoadNetwork, Vehicle, CurvilinearStateManager
+from commonroad.geometry.shape import Rectangle
 from commonroad.scenario.obstacle import ObstacleType
 from commonroad.scenario.state import CustomState
 from commonroad.scenario.trajectory import Trajectory
-from commonroad.geometry.shape import Rectangle
+from crmonitor.common.world import RoadNetwork, Vehicle, CurvilinearStateManager
 from crmonitor.predicates.scaling import RobustnessScalingConstants as constants
-
-import numpy as np
-
-
+from ruamel.yaml import YAML
+from vehiclemodels import parameters_vehicle2
 
 
 def load_configuration(config_path: str) -> dict:
