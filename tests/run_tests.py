@@ -11,7 +11,7 @@ if __name__ == "__main__":
         # TODO costs tests need to be fixed and are temporarily disabled in CI
         # TODO some feasibility tests have a scipy-related bug and is temporarily disabled in CI
         # TODO for traffic rules costs related tests, fix the CI environment to include the stl monitor
-        if not '__' in x[0] and not '.' in x[0] and not 'costs' in x[0] and not 'feasibility' in x[0] and not 'traffic_rules_costs' in x[0]:
+        if not '__' in x[0] and not '.' in x[0] and not 'costs' in x[0] and not 'feasibility' in x[0]:
             print(x[0])
             all_tests = unittest.TestLoader().discover(x[0], pattern='test_*.py')
             b = unittest.TextTestRunner().run(all_tests)
