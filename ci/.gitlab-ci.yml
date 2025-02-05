@@ -19,6 +19,9 @@ before_script:
   - python -m pip install --upgrade pip
   - pip install -r ./requirements.txt
   - pip install -r ./test_requirements.txt
+  - git clone --recurse-submodules git@gitlab.lrz.de:cps/commonroad/commonroad-stl-monitor.git
+  - python -m pip install commonroad-stl-monitor/
+  # - pip install git+ssh://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.lrz.de/cps/commonroad-stl-monitor  # install commonroad-stl-monitor (not publicly available yet)
 
 .python-versions: &python-versions
   - "3.9"
