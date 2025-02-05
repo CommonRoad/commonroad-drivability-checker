@@ -1,7 +1,9 @@
+import logging
 import unittest as unittest
 import os
 import sys
 from pathlib import Path
+from importlib.util import find_spec
 
 if __name__ == "__main__":
     print(os.getcwd())
@@ -20,14 +22,17 @@ if __name__ == "__main__":
             tests += b.testsRun
     
     # Run Traffic Rule Test
-    specific_test = Path(os.path.abspath("traffic_rules_costs/scripts/test_traffic_rules_costs.py"))
-    assert specific_test.exists(), f"Test file {specific_test} does not exist!"
-    print(f"Running traffic rule specific partial cost function test: {specific_test}")
-    tr_tests = unittest.TestLoader().discover(os.path.dirname(specific_test), pattern="test_traffic_rules_costs.py")
-    results = unittest.TextTestRunner().run(tr_tests)
-    failures += len(results.failures)
-    errors += len(results.errors)
-    tests += results.testsRun
+    if not find_spec("crmonitor"):
+        logging.warning("No crmonitor package found. Skipping traffic rule specific partial cost function test.")
+    else:
+        specific_test = Path(os.path.abspath("traffic_rules_costs/scripts/test_traffic_rules_costs.py"))
+        assert specific_test.exists(), f"Test file {specific_test} does not exist!"
+        print(f"Running traffic rule specific partial cost function test: {specific_test}")
+        tr_tests = unittest.TestLoader().discover(os.path.dirname(specific_test), pattern="test_traffic_rules_costs.py")
+        results = unittest.TextTestRunner().run(tr_tests)
+        failures += len(results.failures)
+        errors += len(results.errors)
+        tests += results.testsRun
 
 
     print(

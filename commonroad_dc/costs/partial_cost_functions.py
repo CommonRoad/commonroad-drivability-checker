@@ -1,6 +1,5 @@
-from typing import List, Tuple, Dict, Any
+from typing import List, Dict, Any
 
-import matplotlib.pyplot as plt
 import numpy as np
 from commonroad.common.util import Interval
 from commonroad.geometry.shape import ShapeGroup
@@ -8,8 +7,9 @@ from commonroad.planning.planning_problem import PlanningProblem
 from commonroad.scenario.lanelet import Lanelet
 from commonroad.scenario.scenario import Scenario
 from commonroad.scenario.trajectory import Trajectory
-from commonroad_dc.costs.route_matcher import SolutionProperties
 from scipy.integrate import simpson
+
+from commonroad_dc.costs.route_matcher import SolutionProperties
 
 
 class PartialCostFunctionException(Exception):

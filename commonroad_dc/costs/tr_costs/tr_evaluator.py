@@ -3,9 +3,8 @@ from commonroad.scenario.scenario import Scenario
 from commonroad.scenario.trajectory import Trajectory
 from crmonitor.common.world import World, RoadNetwork
 from crmonitor.evaluation.evaluation import RuleEvaluator
+
 from .utilities import load_configuration, create_ego_vehicle_from_trajectory
-
-
 
 
 class TrafficRuleEvaluator:

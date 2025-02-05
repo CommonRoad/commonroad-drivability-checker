@@ -1,18 +1,12 @@
 import unittest
 from commonroad.scenario.scenario import Scenario
 from commonroad.common.file_reader import CommonRoadFileReader
-import os
 from pathlib import Path
 
 from commonroad_dc.costs.tr_costs.tr_partial_cost_functions import(r_g_1_cost, r_g_2_cost, r_g_3_cost, 
-                                                                   r_g_4_cost, r_i_1_cost,  r_i_2_cost,
+                                                                   r_g_4_cost, r_i_1_cost, r_i_2_cost,
                                                                    r_i_3_cost, r_i_4_cost, r_i_5_cost,
-                                                                   r_in_1_cost,r_in_2_cost
-                                                                   )
-
-
-
-
+                                                                   r_in_1_cost,r_in_2_cost)
 
 
 class TestSafeDistanceCost(unittest.TestCase):
@@ -844,8 +838,6 @@ class TestStopAtTrafficLightCost(unittest.TestCase):
             0, f"Vehicle 37 is stopping at red traffic light hence the cost should be 0"
         )
     
-    
 
-       
 if __name__ == '__main__':
     unittest.main()       

@@ -1,17 +1,14 @@
 # Traffic rule based partial cost functions
 
 import numpy as np
-from scipy.integrate import simpson
-
 from commonroad.planning.planning_problem import PlanningProblem
 from commonroad.scenario.scenario import Scenario
 from commonroad.scenario.trajectory import Trajectory
+from scipy.integrate import simpson
 
 from commonroad_dc.costs.partial_cost_functions import PartialCostFunctionException
-
 from .tr_evaluator import TrafficRuleEvaluator
 from .utilities import NominalScaler
-
 
 
 #------------------------------------Partial--Cost-Functions---------------------------------

@@ -1,12 +1,14 @@
 # Evaluation file
 
+import os
+import time
+from pathlib import Path
+
+import yaml
 from commonroad.common.file_reader import CommonRoadFileReader
 from commonroad.common.solution import CommonRoadSolutionReader
+
 from commonroad_dc.costs.evaluation import CostFunctionEvaluator
-import yaml
-from pathlib import Path
-import time
-import os
 
 
 # Function to convert numpy types to native Python types
