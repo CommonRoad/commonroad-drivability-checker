@@ -1,6 +1,7 @@
 import unittest as unittest
 import os
 import sys
+from pathlib import Path
 
 if __name__ == "__main__":
     print(os.getcwd())
@@ -10,7 +11,6 @@ if __name__ == "__main__":
     for x in os.walk(os.getcwd()):
         # TODO costs tests need to be fixed and are temporarily disabled in CI
         # TODO some feasibility tests have a scipy-related bug and is temporarily disabled in CI
-        # TODO for traffic rules costs related tests, fix the CI environment to include the stl monitor
         if not '__' in x[0] and not '.' in x[0] and not 'costs' in x[0] and not 'feasibility' in x[0]:
             print(x[0])
             all_tests = unittest.TestLoader().discover(x[0], pattern='test_*.py')
@@ -18,6 +18,17 @@ if __name__ == "__main__":
             failures += len(b.failures)
             errors += len(b.errors)
             tests += b.testsRun
+    
+    # Run Traffic Rule Test
+    specific_test = Path(os.path.abspath("traffic_rules_costs/scripts/test_traffic_rules_costs.py"))
+    assert specific_test.exists(), f"Test file {specific_test} does not exist!"
+    print(f"Running traffic rule specific partial cost function test: {specific_test}")
+    all_tests = unittest.TestLoader().discover(os.path.dirname(specific_test), pattern="test_traffic_costs.py")
+    b = unittest.TextTestRunner().run(all_tests)
+    failures += len(b.failures)
+    errors += len(b.errors)
+    tests += b.testsRun
+
 
     print(
         'Executed {} tests; got {} fails and {} errors'.format(tests, failures, errors)
