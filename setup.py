@@ -159,7 +159,6 @@ class CMakeBuild(build_ext):
 
         # copy to commonroad_dc/
         shutil.copy(os.path.join(lib_dir, 'libcrcc.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
-        shutil.copy(os.path.join(lib_dir, 'libcrccosy.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
         shutil.copy(os.path.join(lib_dir, 'libgpc.a'), os.path.join(os.getcwd(), 'commonroad_dc'))
         try:
             shutil.copy(os.path.join(lib_dir, 'libtriangle.a'), os.path.join(os.getcwd(), 'commonroad_dc'))

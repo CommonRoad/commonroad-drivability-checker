@@ -74,7 +74,6 @@ endif(NOT WIN32)
 
 find_package(Eigen3 REQUIRED)
 
-#find_package(OpenMP)
 
 OPTION (USE_OpenMP "Use OpenMP to enamble <omp.h>" ON)
 
@@ -107,13 +106,6 @@ endif()
 if(USE_OpenMP)
   find_package(OpenMP REQUIRED)
 endif(USE_OpenMP)
-
-
-
-#if (OPENMP_FOUND)
-#    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-#    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-#endif(OPENMP_FOUND)
 
 
 # Targets/Python modules to be installed
@@ -188,17 +180,6 @@ if(WIN32)
 set(INSTALL_MODULES ${INSTALL_MODULES} s11n)
 endif(WIN32)
 
-### Definition of crccosy
-
-if(ADD_MODULE_GEOMETRY)
-    set(CRCCOSY_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/geometry)
-    include(${CMAKE_CURRENT_SOURCE_DIR}/geometry/CMakeLists.txt)
-
-
-    set(INSTALL_MODULES ${INSTALL_MODULES} crccosy)
-    set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrccosy)
-endif(ADD_MODULE_GEOMETRY)
-
 if(BUILD_S11N)
     set(INSTALL_MODULES ${INSTALL_MODULES} s11n)
 endif()
@@ -259,16 +240,9 @@ if(ADD_MODULE_COLLISION)
   )
 endif()
 
-if(ADD_MODULE_GEOMETRY)
-  install(
-      DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/geometry/include/
-      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    )
-endif()
-
 if(BUILD_DOC)
-    if(NOT (ADD_PYTHON_BINDINGS AND ADD_MODULE_COLLISION AND ADD_MODULE_GEOMETRY))
-        message(FATAL_ERROR "BUILD_DOC requires ADD_PYTHON_BINDINGS, ADD_MODULE_COLLISION and ADD_MODULE_GEOMETRY")
+    if(NOT (ADD_PYTHON_BINDINGS AND ADD_MODULE_COLLISION))
+        message(FATAL_ERROR "BUILD_DOC requires ADD_PYTHON_BINDINGS, ADD_MODULE_COLLISION")
     endif()
     add_subdirectory(../doc doc)
 endif()

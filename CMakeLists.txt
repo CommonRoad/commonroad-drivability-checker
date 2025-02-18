@@ -7,7 +7,6 @@ option(BUILD_SHARED_LIBS "Build dc as a shared library" OFF)
 # commonroad_dc flags
 option(ADD_TESTS "unit tests" OFF)
 option(BUILD_DOC "generate the doc target." OFF)
-option(ADD_MODULE_GEOMETRY "add geometry module" ON)
 option(ADD_MODULE_COLLISION "add collision module" ON)
 option(ADD_PYTHON_BINDINGS "add Python bindings" OFF)
 option(ADD_TRIANGLE "Use a non-free Triangle library" OFF)
