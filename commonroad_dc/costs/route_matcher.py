@@ -19,7 +19,6 @@ from scipy.signal import savgol_filter
 from commonroad_dc import pycrcc
 from commonroad_dc.collision.collision_detection.pycrcc_collision_dispatch import create_collision_object
 from commonroad_dc.feasibility.vehicle_dynamics import VehicleParameterMapping
-from commonroad_dc.geometry.util import chaikins_corner_cutting, resample_polyline
 from commonroad_dc.pycrcc import CollisionObject, CollisionChecker, Circle, RectAABB
 
 from typing import List, Dict, Tuple
@@ -30,8 +29,17 @@ from commonroad.common.util import Interval, subtract_orientations
 from commonroad.scenario.lanelet import LaneletNetwork, Lanelet
 from commonroad.visualization.mp_renderer import MPRenderer
 
-from commonroad_dc.pycrccosy import CurvilinearCoordinateSystem
 from shapely.geometry import Polygon
+
+try:
+    from commonroad_clcs.util import chaikins_corner_cutting, resample_polyline
+    from commonroad_clcs.pycrccosy import CurvilinearCoordinateSystem
+except ImportError:
+    raise ImportError(
+        f"The CommonRoad Curvilinear Coordinate System package is required to use the RouteMatcher. \n"
+        f"Please install via 'pip install commonroad-clcs'."
+    )
+
 
 draw_lanelet_path = True
 use_shapely = True

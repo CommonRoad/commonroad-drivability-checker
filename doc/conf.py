@@ -43,13 +43,7 @@ try:
 except ImportError:
     raise ImportError("Sphinx Error: Library pycrcc is required to build the documentation and can not be found")
 
-try:
-    import commonroad_dc.pycrccosy as pycrccosy
-except ImportError:
-    raise ImportError("Sphinx Error: Library pycrccosy is required to build the documentation and can not be found")
-
 print("building documentation for the library {}".format(pycrcc.__file__))
-print("building documentation for the library {}".format(pycrccosy.__file__))
 
 # -- Project information -----------------------------------------------------
 
