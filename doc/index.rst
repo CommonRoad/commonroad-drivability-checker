@@ -12,8 +12,6 @@ The CommonRoad Drivability Checker consists of five core modules:
 
 - **feasibility**: The feasibility module builds on top of the vehicle models provided by CommonRoad. It determines the feasibility of a given trajectory by reconstructing the input to the corresponding (non-linear) vehicle model. Trajectories are feasible if the obtained input respects the constraints of the vehicle model, e.g., limited steering rate.
 
-- **geometry**: The geometry module creates a curvilinear coordinate system aligned to the given reference path. The unique projection domain along the reference path is automatically computed.
-
 - **costs**: The costs module implements costs functions of the CommonRoad Benchmark. More specific details can be found in the `cost function documentation <https://gitlab.lrz.de/tum-cps/commonroad-cost-functions/-/blob/master/costFunctions_commonRoad.pdf>`_
 
 Getting Started 
