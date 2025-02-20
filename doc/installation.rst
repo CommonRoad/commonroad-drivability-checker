@@ -82,7 +82,6 @@ We assume that the following libraries are already installed on your system:
 
 * `Eigen3 <https://eigen.tuxfamily.org/dox/>`_ (version >=3.3.7 - preferably the newest version)
 * `Boost libraries <https://www.boost.org/>`_ (version >= 1.58)
-* `OpenMP <https://www.openmp.org/>`_ (for the geometry submodule support)
 
 For the documentation, we require the libraries `Pandoc <https://pandoc.org>`__ and `Doxygen <http://www.doxygen.nl>`_.
 All aforementioned libraries can be installed on Ubunutu via apt-get.

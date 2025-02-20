@@ -49,12 +49,11 @@ add_custom_command(OUTPUT ${SPHINX_INDEX_FILE}
                    ${CMAKE_CURRENT_SOURCE_DIR}
                    ${DOXYGEN_INDEX_FILE}
                    pycrcc
-                   pycrccosy
                    MAIN_DEPENDENCY ${SPHINX_SOURCE}/conf.py
                    COMMENT "Generating documentation with Sphinx")
 
 # Nice named target so we can run the job easily
-add_custom_target(Sphinx ALL DEPENDS ${SPHINX_INDEX_FILE} pycrcc pycrccosy)
+add_custom_target(Sphinx ALL DEPENDS ${SPHINX_INDEX_FILE} pycrcc)
 
 # Add an install target to install the docs
 # include(GNUInstallDirs)

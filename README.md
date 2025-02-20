@@ -1,6 +1,13 @@
 CommonRoad Drivability Checker
 ------------------------------
 
+#### :warning: Deprecation Notice
+> :warning: Starting from version 2025.1 the curvilinear coordinate system has been moved to a
+> standalone package (commonroad-clcs). 
+> 
+> To continue using it and the commonroad_dc.geometry submodule either install the standalone package
+> (`pip install commonroad-clcs`) and update your imports **OR** use commonroad-drivability-checker == 2024.1. 
+
 Collision avoidance, kinematic feasibility, and road-compliance must be
 validated to ensure the drivability of planned motions for autonomous
 vehicles. The CommonRoad Drivability Checker toolbox unifies these checks
