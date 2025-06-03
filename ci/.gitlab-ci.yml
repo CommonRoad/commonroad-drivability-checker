@@ -352,7 +352,7 @@ pages:
   # at https://cps.pages.gitlab.lrz.de/commonroad-drivability-checker/
   stage: deploy
   script:
-    - mv ./build/doc/build/sphinx public
+    - mv ./build/doc/sphinx public
   needs:
     - job: build-sphinx
       artifacts: true
