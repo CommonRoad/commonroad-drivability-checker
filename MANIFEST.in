@@ -1,4 +1,0 @@
-include README.md LICENSE CMakeLists.txt setup_options.py
-graft commonroad_dc
-graft cpp
-graft third_party

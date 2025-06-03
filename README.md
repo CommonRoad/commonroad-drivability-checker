@@ -16,7 +16,7 @@ algorithms. It is compatible with the CommonRoad benchmark suite, which
 additionally facilitates and drastically reduces the effort of the development
 of motion planning algorithms.
 
-Please post questions, bug reports, etc. related to our tools or website in our [forum](https://commonroad.in.tum.de/forum/).
+Please post questions, bug reports, etc. related to our tools or website in our [forum](https://github.com/CommonRoad/commonroad-drivability-checker/discussions).
 
 
 Installation
@@ -37,13 +37,13 @@ We provide two installation options: Installation as a Python package or buildin
 
 System Requirements
 -------------------
-The software is written in Python 3.7 and C++17 and tested on MacOS and Linux (Ubuntu 18.04, 20.04 and 22.04). 
+The software is written in Python 3.10 and C++17 and tested on MacOS and Linux (Ubuntu 18.04, 20.04 and 22.04). 
 
 The usage of the **[Anaconda](http://www.anaconda.com/download/#download9) Python distribution** is strongly recommended. 
 
 For building the code from source, the following minimum versions are required:
   * **GCC and G++**: version 10 or above
-  * **CMake**: version 3.18 or above.
+  * **CMake**: version 3.20 or above.
   * **Pip**: version 21.3 or above
 
 **Note for MacOS users (M1 or Intel):** 
@@ -57,20 +57,22 @@ The following third-party dependencies of the C++ code are only required for bui
 
 **Essential dependencies**:
 
-Not included as submodules:
-* [Eigen3](https://eigen.tuxfamily.org/dox/)
-* [Boost](https://www.boost.org/)
+Manual installation required:
 * [OpenMP](https://www.openmp.org/)
 
-Included as submodules:
+Automatic installation via CMake FetchContent:
+* [Eigen3](https://eigen.tuxfamily.org/dox/)
+* [Boost](https://www.boost.org/)
 * [Box2D](https://github.com/erincatto/box2d)
 * [FCL](https://github.com/flexible-collision-library/fcl)
 * [libccd](https://github.com/danfis/libccd)
 * [gpc](https://github.com/rickbrew/GeneralPolygonClipper)
-* [pybind11](https://github.com/pybind/pybind11)
+
+Source code included:
 * [libs11n](http://www.s11n.net/)
 
 **Optional dependencies**:
+* [pybind11](https://github.com/pybind/pybind11) (optional for building Python bindings directly without using pip)
 * [Triangle](https://www.cs.cmu.edu/~quake/triangle.html) (optional library for triangulation, not built by default)
 * [CGAL](https://github.com/CGAL/cgal) (optional library for triangulation, not built by default)
 * [Pandoc](https://pandoc.org) (optional for building documentation)
@@ -79,7 +81,7 @@ Included as submodules:
 **Note**: Please be aware of the specific licensing conditions when including the optional dependencies Triangle and CGAL.
 See also `notes.txt` and the licensing information on the respective package websites for more details.
 
-The Python dependencies are listed in `requirements.txt`.
+The Python dependencies are listed in `pyproject.toml`.
 
 
 Documentation

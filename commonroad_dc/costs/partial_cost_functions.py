@@ -9,7 +9,7 @@ from commonroad.scenario.lanelet import Lanelet
 from commonroad.scenario.scenario import Scenario
 from commonroad.scenario.trajectory import Trajectory
 from commonroad_dc.costs.route_matcher import SolutionProperties
-from scipy.integrate import simps
+from scipy.integrate import simpson
 
 
 class PartialCostFunctionException(Exception):
@@ -48,7 +48,7 @@ def acceleration_cost(
         velocity = [state.velocity for state in trajectory.state_list]
         acceleration = np.diff(velocity) / scenario.dt
         acceleration_sq = np.square(acceleration)
-        cost = simps(acceleration_sq, dx=scenario.dt)
+        cost = simpson(acceleration_sq, dx=scenario.dt)
         return cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of acceleration cost!"
@@ -67,7 +67,7 @@ def jerk_cost(
         acceleration = np.diff(velocity) / scenario.dt
         jerk = np.diff(acceleration) / scenario.dt
         jerk_sq = np.square(jerk)
-        cost = simps(jerk_sq, dx=scenario.dt)
+        cost = simpson(jerk_sq, dx=scenario.dt)
         return cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of jerk cost!"
@@ -84,7 +84,7 @@ def jerk_lat_cost(
     try:
         lat_jerk = [state.lat_jerk for state in trajectory.state_list]
         jerk_sq = np.square(lat_jerk)
-        cost = simps(jerk_sq, dx=scenario.dt)
+        cost = simpson(jerk_sq, dx=scenario.dt)
         return cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of lateraljerk cost!"
@@ -101,7 +101,7 @@ def jerk_lon_cost(
     try:
         lon_jerk = [state.lon_jerk for state in trajectory.state_list]
         jerk_sq = np.square(lon_jerk)
-        cost = simps(jerk_sq, dx=scenario.dt)
+        cost = simpson(jerk_sq, dx=scenario.dt)
         return cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of longitudinal jerk cost!"
@@ -118,7 +118,7 @@ def steering_angle_cost(
     try:
         steering_angle = [state.steering_angle for state in trajectory.state_list]
         steering_angle_sq = np.square(steering_angle)
-        cost = simps(steering_angle_sq, dx=scenario.dt)
+        cost = simpson(steering_angle_sq, dx=scenario.dt)
         return cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of steering angle cost!"
@@ -136,7 +136,7 @@ def steering_rate_cost(
         steering_angle = [state.steering_angle for state in trajectory.state_list]
         steering_rate = np.diff(steering_angle) / scenario.dt
         steering_rate_sq = np.square(steering_rate)
-        cost = simps(steering_rate_sq, dx=scenario.dt)
+        cost = simpson(steering_rate_sq, dx=scenario.dt)
         return cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of steering rate cost!"
@@ -154,7 +154,7 @@ def yaw_cost(
         orientation = [state.orientation for state in trajectory.state_list]
         yaw_rate = np.diff(orientation) / scenario.dt
         yaw_rate_sq = np.square(yaw_rate)
-        cost = simps(yaw_rate_sq, dx=scenario.dt)
+        cost = simpson(yaw_rate_sq, dx=scenario.dt)
         return cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of yaw cost!"
@@ -170,7 +170,7 @@ def path_length_cost(
     """
     try:
         velocity = [state.velocity for state in trajectory.state_list]
-        cost = simps(velocity, dx=scenario.dt)
+        cost = simpson(velocity, dx=scenario.dt)
         return cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of path length cost!"
@@ -221,7 +221,7 @@ def lane_center_offset_cost(
     """
     try:
         dists_to_lane_centers_sq = np.square([s.lat_position for s in trajectory.state_list])
-        cost = simps(dists_to_lane_centers_sq, dx=scenario.dt)
+        cost = simpson(dists_to_lane_centers_sq, dx=scenario.dt)
         return cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of lane center offset cost!"
@@ -238,7 +238,7 @@ def orientation_offset_cost(
     """
     try:
         orientation_rel_lane_centers = np.square([s.delta_orientation for s in trajectory.state_list])
-        cost = simps(orientation_rel_lane_centers, dx=scenario.dt)
+        cost = simpson(orientation_rel_lane_centers, dx=scenario.dt)
         return cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of orientation offset cost!"
@@ -269,7 +269,7 @@ def velocity_offset_cost(
             velocity_diffs.append(diff)
 
         velocity_diffs_sq = np.square(velocity_diffs)
-        cost = simps(velocity_diffs_sq, dx=scenario.dt)
+        cost = simpson(velocity_diffs_sq, dx=scenario.dt)
         return cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of velocity offset cost!"
@@ -301,7 +301,7 @@ def longitudinal_velocity_offset_cost(
             velocity_diffs.append(diff)
 
         velocity_diffs_sq = np.square(velocity_diffs)
-        cost = simps(velocity_diffs_sq, dx=scenario.dt)
+        cost = simpson(velocity_diffs_sq, dx=scenario.dt)
         return cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of velocity offset cost!"
@@ -331,7 +331,7 @@ def distance_to_obstacle_cost(
             min_dists.append(np.min(properties[SolutionProperties.LonDistanceObstacles][state.time_step]))
         neg_min_dists = -0.2 * np.array(min_dists)
         exp_dists = np.array([np.math.exp(val) for val in neg_min_dists])
-        cost = simps(exp_dists, dx=scenario.dt)
+        cost = simpson(exp_dists, dx=scenario.dt)
         return cost
     except Exception as ex:
         msg = f"An exception occurred during calculation of distance to obstacles cost!"

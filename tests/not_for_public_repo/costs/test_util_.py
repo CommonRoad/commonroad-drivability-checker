@@ -2,7 +2,7 @@ import unittest
 import os
 import matplotlib
 from commonroad.common.solution import CommonRoadSolutionReader
-from commonroad_dc import pycrccosy
+from commonroad_clcs import pycrccosy
 
 matplotlib.use('TkAgg')
 

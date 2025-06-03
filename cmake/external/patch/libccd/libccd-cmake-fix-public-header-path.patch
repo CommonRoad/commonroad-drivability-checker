@@ -1,0 +1,34 @@
+From a1ef10f8a393c4c8f7acc358a3d6f9b56385ea93 Mon Sep 17 00:00:00 2001
+From: Florian Lercher <florian.lercher@tum.de>
+Date: Sun, 25 May 2025 17:22:15 +0200
+Subject: [PATCH] Fix public header path
+
+This is required for editable installs of the Python package.
+Otherwise, CMake looks for the public headers in the wrong location.
+---
+ src/CMakeLists.txt | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 77811c1..4c9dfcb 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -19,11 +19,11 @@ endif()
+ configure_file(ccd/config.h.cmake.in ccd/config.h)
+
+ set(CCD_INCLUDES
+-  ccd/ccd.h
+-  ccd/compiler.h
+-  ccd/ccd_export.h
+-  ccd/quat.h
+-  ccd/vec3.h
++  "${CMAKE_CURRENT_LIST_DIR}/ccd/ccd.h"
++  "${CMAKE_CURRENT_LIST_DIR}/ccd/compiler.h"
++  "${CMAKE_CURRENT_LIST_DIR}/ccd/ccd_export.h"
++  "${CMAKE_CURRENT_LIST_DIR}/ccd/quat.h"
++  "${CMAKE_CURRENT_LIST_DIR}/ccd/vec3.h"
+   "${CMAKE_CURRENT_BINARY_DIR}/ccd/config.h")
+
+ set(CCD_SOURCES
+--
+2.34.1

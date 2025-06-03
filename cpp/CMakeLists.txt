@@ -1,248 +1,264 @@
-if(WIN32)
-set(CMAKE_INTERPROCEDURAL_OPTIMIZATION FALSE)
-endif(WIN32)
+set(COLLISION_SRC
+        src/raytrace_primitive.cc
+        src/shape_group.cc
+        src/collision_object.cc
+        src/collision_checker.cc
+        src/primitive_collision_checker.cc
+        src/raytrace_utils.cc
+        src/collision_object_ex.cc
+        src/time_variant_collision_object.cc
+        src/solvers/distance_queries.cc
+        src/solvers/detail/collision_containers.cc
+        src/solvers/collision_queries.cc
+        src/solvers/trajectory_queries.cc
+        src/solvers/geometry_queries.cc
+        src/solvers/collision_solver_default.cc
+        src/solvers/collision_solver_fcl.cc
+        src/solvers/collision_solver_primitive.cc
 
-# Add modules for discovering Sphinx etc.
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules" ${CMAKE_MODULE_PATH})
+        src/solvers/fcl/fcl_collision_checker.cc
+        src/solvers/fcl/fcl_distance_queries.cc
+        src/solvers/fcl/fcl_broadphase_manager_factories.cc
+        src/solvers/fcl/fcl_distance_requests.cc
+        src/solvers/fcl/fcl_collision_queries.cc
+        src/solvers/fcl/fcl_collision_object_group.cc
+        src/solvers/fcl/fcl_collision_requests.cc
+        src/solvers/fcl/fcl_collision_object.cc
+        src/solvers/fcl/fcl_entity_factory.cc
+        src/solvers/fcl/performance_timers.cc
+        src/solvers/fcl/solver_entity_fcl.cc
 
-if(APPLE)
-   # do nothing
-else()
+        src/solvers/boost/solver_entity_boost.cc
+        src/solvers/boost/boost_collision_object.cc
+        src/solvers/boost/boost_object_polygon.cc
+        src/solvers/boost/boost_collision_queries.cc
+        src/solvers/boost/boost_geometry_queries.cc
 
-message(STATUS "Using full rpaths")
-# use, i.e. don't skip the full RPATH for the build tree
-set(CMAKE_SKIP_BUILD_RPATH FALSE)
+        src/plugins/triangulation/triangulate.cc
 
-# when building, don't use the install RPATH already
-# (but later on when installing)
-set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+        src/serialize/serialize_rectangle_aabb.cc
+        src/serialize/serialize_collision_checker.cc
+        src/serialize/serialize_rectangle_obb.cc
+        src/serialize/serialize_tv_object.cc
+        src/serialize/serialize_point.cc
+        src/serialize/serialize_triangle.cc
+        src/serialize/serialize_container_cc_obj.cc
+        src/serialize/serialize_container_obj_obj.cc
+        src/serialize/serialize_polygon.cc
+        src/serialize/serialize_shape_group.cc
+        src/serialize/serialize.cc
+        src/serialize/serialize_sphere.cc
+        src/serialize/public/serialize_public.cc
+        src/serialize/final/collision_object_export_final.cc
+        src/narrowphase/polygon.cc
+        src/narrowphase/rectangle_aabb.cc
+        src/narrowphase/triangle.cc
+        src/narrowphase/rectangle_obb.cc
+        src/narrowphase/shape.cc
+        src/narrowphase/point.cc
+        src/narrowphase/sphere.cc
+        src/narrowphase/detail/aabb.cc
+        src/solvers/sat2d/sat2d_checks.cc
 
-set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-
-# add the automatically determined parts of the RPATH
-# which point to directories outside the build tree to the install RPATH
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
-# the RPATH to be used when installing, but only if it's not a system directory
-list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
-if("${isSystemDir}" STREQUAL "-1")
-    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib:$ORIGIN/")
-endif("${isSystemDir}" STREQUAL "-1")
-
-endif()
-
-
-if(ADD_PYTHON_BINDINGS)
-
-
-	message(STATUS ${PYTHON_VER})
-
-	if((PYTHON_VER) AND (PATH_TO_PYTHON_ENVIRONMENT))
-		if (${PYTHON_VER} GREATER_EQUAL 3.8)
-			set(PYTHON_INCLUDE_DIR ${PATH_TO_PYTHON_ENVIRONMENT}/include/python${PYTHON_VER})
-			set(PYTHON_LIBRARY ${PATH_TO_PYTHON_ENVIRONMENT}/lib/libpython${PYTHON_VER}.so)
-			set(PYTHON_EXECUTABLE ${PATH_TO_PYTHON_ENVIRONMENT}/bin/python${PYTHON_VER})
-		else()
-			set(PYTHON_INCLUDE_DIR ${PATH_TO_PYTHON_ENVIRONMENT}/include/python${PYTHON_VER}m)
-			set(PYTHON_LIBRARY ${PATH_TO_PYTHON_ENVIRONMENT}/lib/libpython${PYTHON_VER}m.so)
-			set(PYTHON_EXECUTABLE ${PATH_TO_PYTHON_ENVIRONMENT}/bin/python${PYTHON_VER}m)
-		endif()
-	else()
-		if((NOT PYTHON_INCLUDE_DIR) OR (NOT PYTHON_LIBRARY) OR (NOT PYTHON_EXECUTABLE))
-			#find_package(Python3 COMPONENTS Interpreter Development)
-		endif()
-	endif()
-
-
-
-	message(STATUS ${PYTHON_INCLUDE_DIR})
-	message(STATUS ${PYTHON_LIBRARY})
-	message(STATUS ${PYTHON_EXECUTABLE})
-endif()
-
-### Shared configuration
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-### Discover dependencies
-
-if(NOT WIN32)
-#find_package(s11n)
-endif(NOT WIN32)
-
-find_package(Eigen3 REQUIRED)
-
-
-OPTION (USE_OpenMP "Use OpenMP to enamble <omp.h>" ON)
-
-# Find OpenMP
-if(APPLE AND USE_OpenMP)
-
-    if (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "arm64")
-        set(MAC_LIBOMP_PATH /opt/homebrew/opt/libomp)
-    else ()
-        set(MAC_LIBOMP_PATH /usr/local/opt/libomp)
-    endif ()
-
-    list(APPEND CMAKE_PREFIX_PATH ${MAC_LIBOMP_PATH})
-
-    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-        foreach(_lang IN ITEMS C CXX)
-            set(OpenMP_${_lang}_LIB_NAMES "omp")
-            set(OpenMP_${_lang}_FLAGS "-Xclang -fopenmp")
-            set(OpenMP_${_lang}_INCLUDE_DIR ${MAC_LIBOMP_PATH}/include)
-        endforeach()
-    endif()
-
-    find_library(OpenMP_omp_LIBRARY
-        NAMES omp
-        PATHS ${MAC_LIBOMP_PATH}/lib
-    )
-
-endif()
-
-if(USE_OpenMP)
-  find_package(OpenMP REQUIRED)
-endif(USE_OpenMP)
-
-
-# Targets/Python modules to be installed
-set(INSTALL_MODULES "")
-set(INSTALL_PYTHON_MODULES "")
-
-# Provides configure_package_config_file
-include(CMakePackageConfigHelpers)
-
-# Includes sane defaults for installation paths (CMAKE_INSTALL_LIBDIR, CMAKE_INSTALL_BINDIR etc.)
-include(GNUInstallDirs)
-
-if(WIN32)
-
-set(S11_SRC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libs11n/windows/src)
-
-set(S11_SRC
-
-${S11_SRC_ROOT}/argv_parser.cpp
-${S11_SRC_ROOT}/data_node_io.cpp
-${S11_SRC_ROOT}/exception.cpp
-${S11_SRC_ROOT}/path_finder.cpp
-${S11_SRC_ROOT}/plugin.cpp
-${S11_SRC_ROOT}/s11n.cpp
-${S11_SRC_ROOT}/s11nlite.cpp
-${S11_SRC_ROOT}/s11n_node.cpp
-${S11_SRC_ROOT}/strtool.cpp
+        src/tests/online_tests/broadphase_test.cc
+        src/tests/online_tests/test_common.cc
 )
 
-set(S11_PLUGINS
+set(COLLISION_HDR
+        include/collision/collision_object_types.h
+        include/collision/i_collision_object_export.h
+        include/collision/i_collision_checker_export.h
+        include/collision/raytrace_primitive.h
+        include/collision/collision_object.h
+        include/collision/i_collision_container.h
+        include/collision/i_collision_checker.h
+        include/collision/raytrace_utils.h
+        include/collision/application.h
+        include/collision/application_settings.h
+        include/collision/shape_group.h
+        include/collision/collision_object_ex.h
+        include/collision/collision_checker.h
+        include/collision/plugins/triangulation/triangulate.h
+        include/collision/primitive_collision_checker.h
+        include/collision/time_variant_collision_object.h
+        include/collision/line_segment.h
 
-${S11_SRC_ROOT}/compact.flex.cpp
-${S11_SRC_ROOT}/compact_serializer.cpp
+        include/collision/solvers/accelerators/declarations.h
+        include/collision/solvers/accelerators/detail/container_grid.h
+        include/collision/solvers/accelerators/detail/container_grid_common.h
+        include/collision/solvers/accelerators/detail/container_box2d.h
+        include/collision/solvers/accelerators/detail/container_fcl.h
+        include/collision/solvers/accelerators/detail/container_fcl_inl.h
+        include/collision/solvers/accelerators/detail/container_grid_inl.h
+        include/collision/solvers/accelerators/detail/container_box2d_inl.h
+        include/collision/solvers/accelerators/detail/common.h
+        include/collision/solvers/accelerators/detail/common_impl.h
+        include/collision/solvers/collision_queries.h
+        include/collision/solvers/collision_requests.h
+        include/collision/solvers/trajectory_queries.h
+        include/collision/solvers/geometry_queries.h
+        include/collision/solvers/fcl/fcl_distance_queries.h
+        include/collision/solvers/fcl/fcl_collision_requests.h
+        include/collision/solvers/fcl/fcl_helpers.h
+        include/collision/solvers/fcl/fcl_broadphase_manager_factory.h
+        include/collision/solvers/fcl/solver_entity_fcl.h
+        include/collision/solvers/fcl/fcl_collision_checker.h
+        include/collision/solvers/fcl/performance_timers.h
+        include/collision/solvers/fcl/fcl_transform.h
+        include/collision/solvers/fcl/fcl_collision_object_group.h
+        include/collision/solvers/fcl/i_solver_entity_fcl.h
+        include/collision/solvers/fcl/fcl_collision_queries.h
+        include/collision/solvers/fcl/solver_entity_fcl_factory.h
+        include/collision/solvers/fcl/fcl_collision_object.h
+        include/collision/solvers/fcl/fcl_distance_requests.h
+        include/collision/solvers/fcl/i_fcl_collision_object_group.h
+        include/collision/solvers/fcl/i_fcl_collision_object.h
+        include/collision/solvers/fcl/fcl_decl.h
+        include/collision/solvers/fcl/fcl_entity_type.h
+        include/collision/solvers/distance_requests.h
+        include/collision/solvers/collision_solver_primitive.h
+        include/collision/solvers/distance_queries.h
+        include/collision/solvers/primitive_collision_queries.h
+        include/collision/solvers/collision_solver_fcl.h
+        include/collision/solvers/sat2d/triangle_sat2d.h
+        include/collision/solvers/sat2d/sat2d_checks.h
+        include/collision/solvers/sat2d/aabb_sat2d.h
+        include/collision/solvers/sat2d/obb_sat2d.h
+        include/collision/solvers/boost/solver_entity_boost.h
+        include/collision/solvers/boost/boost_entity_type.h
+        include/collision/solvers/boost/boost_collision_object.h
+        include/collision/solvers/boost/boost_geometry_queries.h
+        include/collision/solvers/boost/boost_helpers.h
+        include/collision/solvers/boost/i_boost_collision_object.h
+        include/collision/solvers/boost/boost_object_internal.h
+        include/collision/solvers/boost/boost_collision_queries.h
+        include/collision/solvers/boost/solver_entity_boost_factory.h
+        include/collision/solvers/boost/boost_object_polygon.h
+        include/collision/solvers/boost/i_solver_entity_boost.h
+        include/collision/solvers/collision_solvers.h
+
+        include/collision/serialize/triangle_export.h
+        include/collision/serialize/vector2d_export.h
+        include/collision/serialize/shape_export.h
+        include/collision/serialize/i_collision_object_export.h
+        include/collision/serialize/final/collision_object_export_final.h
+        include/collision/serialize/point_export.h
+        include/collision/serialize/rectangle_aabb_export.h
+        include/collision/serialize/i_collision_checker_export.h
+        include/collision/serialize/vector2d_export_streams.h
+        include/collision/serialize/polygon_export.h
+        include/collision/serialize/collision_checker_export.h
+        include/collision/serialize/shape_group_export.h
+        include/collision/serialize/basic_types.h
+        include/collision/serialize/rectangle_obb_export.h
+        include/collision/serialize/export_structs/rectangle_obb_export_struct.h
+        include/collision/serialize/export_structs/sphere_export_struct.h
+        include/collision/serialize/export_structs/point_export_struct.h
+        include/collision/serialize/export_structs/tv_object_export_struct.h
+        include/collision/serialize/export_structs/rectangle_aabb_export_struct.h
+        include/collision/serialize/export_structs/polygon_export_struct.h
+        include/collision/serialize/export_structs/triangle_export_struct.h
+        include/collision/serialize/export_structs/vertex_export_struct.h
+        include/collision/serialize/broadphase_failure_export.h
+        include/collision/serialize/collision_object_export_s11.h
+        include/collision/serialize/public/serialize_public.h
+        include/collision/serialize/broadphase_failure_cc_obj_export.h
+        include/collision/serialize/broadphase_failure_obj_obj_export.h
+        include/collision/serialize/tv_object_export.h
+        include/collision/serialize/serialize.h
+        include/collision/serialize/serialize_reg_impl.h
+        include/collision/serialize/sphere_export.h
+
+        include/collision/tests/test_common.h
+        include/collision/tests/broadphase_test.h
+        include/collision/tests/broadphase_failure.h
+        include/collision/tests/collision_tests.h
+
+        include/collision/narrowphase/point.h
+        include/collision/narrowphase/rectangle_obb.h
+        include/collision/narrowphase/shape.h
+        include/collision/narrowphase/utils.h
+        include/collision/narrowphase/sphere.h
+        include/collision/narrowphase/polygon.h
+        include/collision/narrowphase/rectangle_aabb.h
+        include/collision/narrowphase/detail/aabb.h
+        include/collision/narrowphase/detail/obb.h
+        include/collision/narrowphase/triangle.h
 )
 
-set(s11n_FOUND ON)
+add_library(crcc ${COLLISION_SRC})
 
-add_library(s11n STATIC ${S11_SRC} ${S11_PLUGINS})
+target_sources(crcc PRIVATE ${CR_CLCS_HDR_FILES})
 
-target_compile_features(s11n PUBLIC cxx_std_98)
+if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.23.0)
+    target_sources(crcc
+            INTERFACE
+            FILE_SET crcc_headers
+            TYPE HEADERS
+            BASE_DIRS include
+            FILES ${CR_CLCS_HDR_FILES})
+endif ()
 
-set_property(TARGET s11n PROPERTY CXX_STANDARD 98)
+#target_compile_definitions(crcc PRIVATE -DENABLE_COLLISION_TESTS=1)
 
-set_property(TARGET s11n PROPERTY POSITION_INDEPENDENT_CODE ON)
+target_compile_features(crcc PUBLIC cxx_lambdas cxx_auto_type)
 
-target_compile_definitions(s11n PRIVATE -DWIN32=1)
+target_include_directories(crcc
+        PUBLIC
+        $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/cpp/include>
+)
 
-target_include_directories(s11n
-    PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libs11n/windows/include>
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libs11n/windows/include
-    )
+target_link_libraries(crcc
+        PRIVATE
+        gpc
+)
 
-add_library(s11n::s11n ALIAS s11n)
+target_link_libraries(crcc
+        PUBLIC
+        fcl
+        ccd
+        box2d
+        Eigen3::Eigen
+        Boost::align
+        Boost::geometry
+        Boost::headers
+        Boost::polygon
+)
 
-endif(WIN32)
+if (APPLE)
+    # Required to find library -lomp on mac
+    # MAC_LIBOMP_PATH defined in root CMakeLists.txt
+    target_link_directories(env_model INTERFACE "${MAC_LIBOMP_PATH}/lib")
+endif ()
 
-### Definition of crcc
+# Serialization and pickling support
+if (CR_DC_BUILD_S11N)
+    message(STATUS "Serialization and pickling support have been ENABLED for crcc")
+    target_link_libraries(crcc PUBLIC s11n::s11n)
+    target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=1)
+else ()
+    message(STATUS "Serialization and pickling support have been DISABLED for crcc")
+    target_compile_definitions(crcc PRIVATE -DENABLE_SERIALIZER=0)
+endif ()
 
-if(ADD_MODULE_COLLISION)
-    set(COLLISION_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/collision)
-    include(${CMAKE_CURRENT_SOURCE_DIR}/collision/CMakeLists.txt)
-    set(INSTALL_MODULES ${INSTALL_MODULES} crcc gpc box2d)
-    if(ADD_TRIANGLE)
-        set(INSTALL_MODULES ${INSTALL_MODULES} triangle)
-    endif()
-    set(INSTALL_PYTHON_MODULES ${INSTALL_PYTHON_MODULES} pycrcc)
-endif(ADD_MODULE_COLLISION)
+if (CR_DC_USE_TRIANGLE)
+    target_compile_definitions(crcc PUBLIC ENABLE_TRIANGLE=1)
+    target_link_libraries(crcc PRIVATE triangle)
+endif ()
 
-if(WIN32)
-set(INSTALL_MODULES ${INSTALL_MODULES} s11n)
-endif(WIN32)
+add_library(CommonRoadDC::crcc ALIAS crcc)
 
-if(BUILD_S11N)
-    set(INSTALL_MODULES ${INSTALL_MODULES} s11n)
-endif()
-
-if(ADD_PYTHON_BINDINGS)
-    set(PYBIND_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/python_binding)
-    include(${CMAKE_CURRENT_SOURCE_DIR}/python_binding/CMakeLists.txt)
-
-endif()
-
-if(ADD_TESTS)
-    add_subdirectory(tests)
-endif()
-
-if(ADD_PYTHON_BINDINGS)
-    install(TARGETS ${INSTALL_PYTHON_MODULES}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/python
-      )
-endif()
-
-install(TARGETS ${INSTALL_MODULES}
-    EXPORT ${PROJECT_NAME}_Targets
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-  )
-
-configure_package_config_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-  INSTALL_DESTINATION
-    ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-  )
-
-# Export target configuration (for installation)
-install(EXPORT ${PROJECT_NAME}_Targets
-  FILE ${PROJECT_NAME}Targets.cmake
-  NAMESPACE ${PROJECT_NAME}::
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-  )
-
-install(FILES
-  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-  )
-
-# Export target configuration (for local building)
-export(EXPORT ${PROJECT_NAME}_Targets
-  FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake"
-  NAMESPACE ${PROJECT_NAME}::
-  )
-
-if(ADD_MODULE_COLLISION)
-  install(
-      DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/collision/include/
-      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-  )
-endif()
-
-if(BUILD_DOC)
-    if(NOT (ADD_PYTHON_BINDINGS AND ADD_MODULE_COLLISION))
-        message(FATAL_ERROR "BUILD_DOC requires ADD_PYTHON_BINDINGS, ADD_MODULE_COLLISION")
-    endif()
-    add_subdirectory(../doc doc)
-endif()
+if (${PROJECT_NAME}_IS_TOP_LEVEL)
+    foreach (target IN ITEMS crcc)
+        # this adds many warnings to the build. They usually help to find some bugs
+        # TODO: Check whether each warning flag is actually supported by the compiler before adding it
+        if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
+            target_compile_options(${target} PRIVATE -Wall -Wextra -Wconversion
+                    -pedantic -Wfatal-errors -Wno-unused-parameter -Wno-unused-function -Wno-unused-but-set-variable)
+        endif ()
+        if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+            target_compile_options(${target} PRIVATE /W3)
+        endif ()
+    endforeach ()
+endif ()

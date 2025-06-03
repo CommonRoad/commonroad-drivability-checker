@@ -1,0 +1,25 @@
+From fd5661929f65195adfe39e5efd995daf61bcb91e Mon Sep 17 00:00:00 2001
+From: Florian Lercher <florian.lercher@tum.de>
+Date: Fri, 23 May 2025 13:07:09 +0200
+Subject: [PATCH] Disable install EXPORT
+
+By using FetchContent, we vendor the library, so we want to do the exports ourselves.
+---
+ src/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 1407080..77811c1 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -68,7 +68,7 @@ install(TARGETS ccd
+   LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+   PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/ccd"
+   RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
+-install(EXPORT ccd-targets DESTINATION "${CMAKE_INSTALL_LIBDIR}/ccd")
++#install(EXPORT ccd-targets DESTINATION "${CMAKE_INSTALL_LIBDIR}/ccd")
+
+ macro (check_compiler_visibility)
+   include (CheckCXXCompilerFlag)
+--
+2.34.1
