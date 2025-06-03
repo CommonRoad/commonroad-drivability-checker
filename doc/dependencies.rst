@@ -3,12 +3,12 @@
 System Requirements
 -------------------
 
-The software is written in Python 3.6/3.7 and tested on MacOs and Linux. The usage of the Anaconda_ Python distribution
-is strongly recommended. The requirements are a C++11 compiler and CMake. The requirements for the Python wrapper
-are C++11 compiler, CMake, and min. Python 3.6 with development headers. The following minimum versions of CMake and pip
+The software is written in Python 3.10 and tested on MacOs and Linux. The usage of the Anaconda_ Python distribution
+is strongly recommended. The requirements are a C++17 compiler and CMake. The requirements for the Python wrapper
+are C++17 compiler, CMake, and at least Python 3.10 with development headers. The following minimum versions of CMake and pip
 are required:
 
-* **CMake**: version 3.10 or above
+* **CMake**: version 3.20 or above
 * **Pip**: version 21.3 or above
 
 If you are a Mac user, we additionally recommend you to use Homebrew_, allowing you to install required dependencies such as Eigen.
@@ -30,27 +30,26 @@ Third-party libraries
 * `Eigen3 <https://eigen.tuxfamily.org/dox/>`_ 
 * `Boost <https://www.boost.org/>`_
 * `pybind11 <https://github.com/pybind/pybind11>`_
-* `OpenMP <https://www.openmp.org/>`_ (for the geometry submodule)
+* `OpenMP <https://www.openmp.org/>`_
 * `Pandoc <https://pandoc.org>`__ (for the documentation)
 * `Doxygen <http://www.doxygen.nl>`_ (for the documentation)
 
-Python packages (see also requirements file)
+Python packages (see also `pyproject.toml`)
 
-* `commonroad-io <https://pypi.org/project/commonroad-io/>`_ (>=2020.2)
-* `commonroad-vehicle-models <https://pypi.org/project/commonroad-vehicle-models/>`_ (>=1.0.0)
-* `numpy <https://pypi.org/project/numpy/>`_ (>=1.19)
-* `Shapely <https://pypi.org/project/Shapely/>`_ (>=1.6.4)
-* `matplotlib <https://pypi.org/project/matplotlib/>`_ (>=3.2.2)
-* `Jupyter <https://pypi.org/project/jupyter/>`_ (>=1.0.0, for the tutorials)
-* `Triangle <https://pypi.org/project/triangle/>`_ (>=20200424)
-* `scipy <https://pypi.org/project/scipy/>`_ (>=1.4.1)
-* `pandoc <https://pypi.org/project/pandoc/>`__ (>=1.0.2)
-* `sphinx_rtd_theme <https://pypi.org/project/sphinx-rtd-theme/>`_ (>=0.4.3)
-* `sphinx <https://pypi.org/project/Sphinx/>`_ (>=3.0.3)
-* `nbsphinx_link <https://pypi.org/project/nbsphinx-link/>`_ (>=1.3.0)
-* `nbsphinx <https://pypi.org/project/nbsphinx/>`_ (>=0.6.1)
-* `breathe <https://pypi.org/project/breathe/>`_ (>=4.18.0)
-* `polygon3 <https://pypi.org/project/Polygon/>`_ (>=3.0.8)
+* `commonroad-io <https://pypi.org/project/commonroad-io/>`_
+* `commonroad-vehicle-models <https://pypi.org/project/commonroad-vehicle-models/>`_
+* `numpy <https://pypi.org/project/numpy/>`_
+* `Shapely <https://pypi.org/project/Shapely/>`_
+* `matplotlib <https://pypi.org/project/matplotlib/>`_
+* `Jupyter <https://pypi.org/project/jupyter/>`_ (for the tutorials)
+* `Triangle <https://pypi.org/project/triangle/>`_
+* `scipy <https://pypi.org/project/scipy/>`_
+* `sphinx_rtd_theme <https://pypi.org/project/sphinx-rtd-theme/>`_
+* `sphinx <https://pypi.org/project/Sphinx/>`_
+* `nbsphinx_link <https://pypi.org/project/nbsphinx-link/>`_
+* `nbsphinx <https://pypi.org/project/nbsphinx/>`_
+* `breathe <https://pypi.org/project/breathe/>`_
+* `polygon3 <https://pypi.org/project/Polygon/>`_
 
 
 Optional Third Party Libraries

@@ -10,46 +10,14 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import os
-import sys
-from pathlib import Path
-import shutil
 
-# set required paths
-current_file_dir = Path(__file__).parent
-root_dir = current_file_dir.parent
-build_dir = list(root_dir.glob("./build/temp.*"))[0]
-build_python_bindings = list(build_dir.joinpath('build/cpp').resolve().glob('./*.so'))
-
-print('documentation root {}'.format(os.path.abspath(root_dir)))
-
-# NOTE:
-# The python binding libraries (pycrcc.*.so and pycrcc.*.so) need to be copied to the source directory such that Sphinx
-# can properly import them for building the documentation
-# If building the documentation is deactivated, this step is done in setup.py
-for file in build_python_bindings:
-    if not file.exists():
-        raise FileNotFoundError("Sphinx Error: Library pycrcc can not be found at {}". format(os.path.abspath(file)))
-    shutil.copy(str(file), os.path.join(str(root_dir.resolve()), 'commonroad_dc'))
-
-# Add source root and tutorial folder to sys.path
-sys.path.insert(0, str((root_dir / 'tutorials').resolve()))
-sys.path.insert(0, str(root_dir))
-
-# If you get an import error in the following line: See note above
 from commonroad_dc.__version__ import __version__
-try:
-    import commonroad_dc.pycrcc as pycrcc
-except ImportError:
-    raise ImportError("Sphinx Error: Library pycrcc is required to build the documentation and can not be found")
-
-print("building documentation for the library {}".format(pycrcc.__file__))
 
 # -- Project information -----------------------------------------------------
 
 project = 'CommonRoad Drivability Checker'
-copyright = '2023, Technical University of Munich, Professorship Cyber-Physical Systems'
-author = 'Technical University of Munich, Professorship Cyber-Physical Systems'
+copyright = '2025, Technical University of Munich, Professorship of Cyber-Physical Systems'
+author = 'Technical University of Munich, Professorship of Cyber-Physical Systems'
 
 # The full version, including alpha/beta/rc tags
 release = __version__

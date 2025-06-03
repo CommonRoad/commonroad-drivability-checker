@@ -8,87 +8,86 @@ The following steps are necessary if you intend to use the CommonRoad Drivabilit
 Checker from a C++ project. They are *not* necessary if you only intend to use
 the CommonRoad Drivability Checker from Python.
 
-In order to install CommonRoad Drivability Checker, we first need to install essential third party libraries,
-followed by installation of optional third party libraries, and finally the installation of CommonRoad Drivability
-Checker itself. All required steps are described in the following sections.
+We recommend consuming the CommonRoad drivability checker via the CMake `FetchContent` module.
+Alternatively, you can also install the CommonRoad Drivability Checker as a library.
+In any case, we first need to install essential and optional third party libraries,
 
-Prerequisites
-*************
+Installation of Essential Third Party Libraries
+***********************************************
 
-We assume that the following libraries are already installed on your system:
+The following dependencies need to be installed manually:
 
-* `Eigen3 <https://eigen.tuxfamily.org/dox/>`_ (version >=3.3.7 - preferably the newest version)
-* `Boost libraries <https://www.boost.org/>`_ (version >= 1.58)
-
-For the documentation, we require the libraries `Pandoc <https://pandoc.org>`__ and `Doxygen <http://www.doxygen.nl>`_.
-All aforementioned libraries can be installed on Ubunutu via apt-get.
-
-Installation of Essential Third Party Libraries and Packages
-************************************************************
-
-The following dependencies are *not* included in this repository and need to
-be installed externally, e.g. by using a package manager:
-
-* `Boost <https://www.boost.org/>`_ (only `Boost.Thread`, `Boost.Test`, `Boost.Filesystem`)
-* `Eigen <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_
+* `OpenMP <https://www.openmp.org/>`_
+* `Pandoc <https://pandoc.org>`__ (only required for building the documentation)
+* `Doxygen <http://www.doxygen.nl>`_ (only required for building the documentation)
 
 Installation on Linux (e.g. using apt-get for Debian derivatives):
 
 .. code-block:: bash
 
-    $ sudo apt-get install build-essential cmake git wget unzip libboost-dev libboost-thread-dev libboost-test-dev libboost-filesystem-dev libeigen3-dev libomp-dev
+    $ sudo apt-get install libomp-dev doxygen pandoc
 
 Installation on macOS using `Homebrew <https://brew.sh/>`_:
 
 .. code-block:: bash
 
-    $ brew install cmake eigen boost
+    $ brew install doxygen pandoc
 
-On macOS, it is also necessary to install the OpenMP library manually. The version of the OpenMP library must correspond to the version of the Apple C++ compiler currently installed on your Mac (g++ --version). One can download the corresponding version of the library from https://mac.r-project.org/openmp/ and follow the installation instructions.
+On macOS, the OpenMP library needs to be installed manually.
+The version of the OpenMP library must correspond to the version of the Apple C++ compiler currently installed on your Mac (g++ --version).
+You can download the corresponding version of the library from https://mac.r-project.org/openmp/ and follow the installation instructions.
 
 
-The following third party libraries are included as submodules:
+The following third party libraries will automatically be downloaded and compiled by the build system:
 
+* `Boost <https://www.boost.org/>`_
+* `Eigen <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_
 * `Box2D <https://github.com/erincatto/box2d>`_
 * `FCL -- The Flexible Collision Library <https://github.com/flexible-collision-library/fcl>`_
 * `libccd <https://github.com/danfis/libccd>`_
-* `pybind11 <https://github.com/pybind/pybind11>`_
 * `Triangle <https://pypi.org/project/triangle/>`_ (for the C++ library)
+* `pybind11 <https://github.com/pybind/pybind11>`_
 
-In order to initialize the bundled submodules,
-run the following commands in the root folder of the CommonRoad Drivability Checker:
-
-.. code-block:: bash
-
-        $ git submodule update --init
-
-*N.B.* If you are using Conda, make sure your environment is activated!
+To speed up the build, you may also install these libraries manually.
 
 Installation of Optional Third Party Libraries
 **********************************************
 
 For the installation of CGAL, please refer to `their website <https://github.com/CGAL/cgal>`_.
 
-Installation of the CommonRoad Drivability Checker
-**************************************************
+Using the CommonRoad Drivability Checker via CMake FetchContent (recommended)
+*****************************************************************************
 
-After installing all essential third party libraries and packages, you can now install the CommonRoad Drivability Checker.
+Recent CMake versions provide the `FetchContent` module which greatly simplifies the integration in many scenarios.
+Simply insert the following snippet somewhere in your `CMakeLists.txt`:
+
+.. code-block:: cmake
+
+    include(FetchContent)
+
+    FetchContent_Declare(
+            CommonRoadDC
+            SYSTEM  # Treat this as a system package, i.e., don't issue warnings from its headers
+            GIT_REPOSITORY https://github.com/CommonRoad/commonroad-drivability-checker.git
+            # You can specify any reference here, but prefer specifying a concrete commit if possible
+            # as that will speed up the build since Git won't need to check whether the branch moved in the meantime
+            GIT_TAG <reference to commit, branch, tag...>
+    )
+    FetchContent_MakeAvailable(CommonRoadDC)
+
+Then, add the CommonRoad Drivability Checker as a dependency to the targets which require it:
+
+.. code-block:: cmake
+
+    target_link_libraries(<MyLibraryOrExecutable> PUBLIC CommonRoadDC::crcc)
+
+
+Installation of the CommonRoad Drivability Checker as a library (not recommended)
+*********************************************************************************
+
+After installing all essential third party libraries, you can now install the CommonRoad Drivability Checker.
 
 #. Open your console in the root folder of the CommonRoad Drivability Checker.
-
-#. Create a build directory and change into it
-
-    .. code-block:: bash
-
-            $ mkdir build-debug
-            $ cd build-debug
-
-   **NB:** You can in theory use ``build`` as a name for the build folder,
-   however keep in mind that Python's setuptools will always use the ``build`` folder
-   for their build process.
-   This normally shouldn't cause any issues since the file names
-   used by setuptools don't clash with any names CMake uses currently,
-   but you should still consider using separate folders just in case.
 
 #. Decide on a *install prefix path* for the following commands.
    The Drivability Checker uses a superbuild system for first building
@@ -116,17 +115,23 @@ After installing all essential third party libraries and packages, you can now i
 
         .. code-block:: bash
 
-            $ cmake -DCMAKE_INSTALL_PREFIX=/install/prefix/see/note/above -DCMAKE_BUILD_TYPE=Release ..
-            $ cmake --build . -- -j JOB_COUNT
-        
+            $ cmake -DCMAKE_INSTALL_PREFIX=/install/prefix/see/note/above -DCMAKE_BUILD_TYPE=Release -B build-cmake -S .
+            $ cmake --build build-cmake -j JOB_COUNT
+
         **Note that you have to replace**
          - *JOB_COUNT*  with the number of jobs you are willing to allocate to cmake, for example *-j 2*.
-           Each job (possibly) will use a core, so specify this number according to your system and free cores. 
+           Each job (possibly) will use a core, so specify this number according to your system and free cores.
+
+        We recommend using the ``Ninja`` build system for building the CommonRoad Drivability Checker as it is
+        generally faster than the default Makefile build system.
+        Moreover, Ninja supports parallel builds out of the box, so you don't need to specify the ``-j JOB_COUNT`` option.
+        To use Ninja, you can install it via your package manager (e.g., ``apt-get install ninja-build`` on Debian-based systems)
+        and then pass ``-G Ninja`` to the first CMake invocation above.
 
 
 #. Install the CommonRoad Drivability Checker library by running
 
         .. code-block:: bash
 
-            $ cmake --install .
+            $ cmake --install build-cmake
 

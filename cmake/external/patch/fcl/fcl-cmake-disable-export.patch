@@ -1,0 +1,31 @@
+From 39ea34c5a2b7eeed1e631c500038a7fc3695002c Mon Sep 17 00:00:00 2001
+From: Florian Lercher <florian.lercher@tum.de>
+Date: Fri, 23 May 2025 12:52:16 +0200
+Subject: [PATCH] Disable install EXPORT
+
+By using FetchContent, we vendor the library, so we want to do the exports ourselves.
+---
+ src/CMakeLists.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 05ed2ae..5537517 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -137,10 +137,10 @@ install(TARGETS ${PROJECT_NAME}
+   INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+ )
+
+-install(EXPORT ${PROJECT_NAME}-targets
+-  DESTINATION ${FCL_INSTALL_CONFIGDIR}
+-  COMPONENT Development
+-)
++#install(EXPORT ${PROJECT_NAME}-targets
++#  DESTINATION ${FCL_INSTALL_CONFIGDIR}
++#  COMPONENT Development
++#)
+
+ # Setup the coveralls target and tell it to gather coverage data for all the lib sources.
+ if(FCL_COVERALLS)
+--
+2.34.1

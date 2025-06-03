@@ -8,3 +8,4 @@ Moritz Klischat
 Gerald Würsching
 Alexander Zhu
 Sebastian Söntges
+Florian Lercher (build system modernization)
