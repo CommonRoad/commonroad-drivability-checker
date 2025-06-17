@@ -78,7 +78,7 @@ auto bind_rectangle_aabb(const nb::module_ &module) {
                  })
             .def_prop_ro("r_x", &collision::RectangleAABB::r_x)
             .def("draw",
-                 [](const collision::RectangleAABB &c,
+                 [](const std::shared_ptr<collision::RectangleAABB> &c,
                     nb::object renderer, nb::object draw_params) {
                      nb::object pycrcc = nb::module_::import_(
                          "commonroad_dc.collision.visualization.drawing");
@@ -130,7 +130,7 @@ auto bind_rectangle_obb(const nb::module_ &module) {
                  })
 
             .def("draw",
-                 [](const collision::RectangleOBB &c,
+                 [](const std::shared_ptr<collision::RectangleOBB> &c,
                     nb::object renderer, nb::object draw_params
          ) {
                      nb::object pycrcc = nb::module_::import_(
@@ -206,7 +206,7 @@ auto bind_sphere(const nb::module_ &module) {
             .def("x", &collision::Sphere::get_x, "x-coordinate of center")
             .def("y", &collision::Sphere::get_y, "y-coordinate of center")
             .def("draw",
-                 [](const collision::Sphere &c, nb::object renderer,
+                 [](const std::shared_ptr<collision::Sphere> &c, nb::object renderer,
                     nb::object draw_params) {
                      nb::object pycrcc = nb::module_::import_(
                          "commonroad_dc.collision.visualization.drawing");
@@ -230,7 +230,7 @@ auto bind_tvo(const nb::module_ &module) {
             .def("time_end_idx", &collision::TimeVariantCollisionObject::time_end_idx)
             .def("obstacle_at_time", &collision::TimeVariantCollisionObject::getObstacleAtTime)
             .def("draw",
-                 [](const collision::TimeVariantCollisionObject &c,
+                 [](const std::shared_ptr<collision::TimeVariantCollisionObject> &c,
                     nb::object renderer, nb::object draw_params) {
                      nb::object pycrcc = nb::module_::import_(
                          "commonroad_dc.collision.visualization.drawing");
@@ -275,7 +275,7 @@ auto bind_shape_group(const nb::module_ &module) {
 
             .def("unpack", &collision::ShapeGroup::unpack)
             .def("draw",
-                 [](const collision::ShapeGroup &c,
+                 [](const std::shared_ptr<collision::ShapeGroup> &c,
                     nb::object renderer, nb::object draw_params) {
                      nb::object pycrcc = nb::module_::import_(
                          "commonroad_dc.collision.visualization.drawing");
@@ -406,7 +406,7 @@ auto bind_polygon(const nb::module_ &module) {
                  })
 
             .def("draw",
-                 [](const collision::Polygon &c, nb::object renderer,
+                 [](const std::shared_ptr<collision::Polygon> &c, nb::object renderer,
                     nb::object draw_params) {
                      nb::object pycrcc = nb::module_::import_(
                          "commonroad_dc.collision.visualization.drawing");
