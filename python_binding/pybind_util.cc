@@ -17,6 +17,7 @@
 
 #include <Eigen/Dense>
 #include <nanobind/eigen/dense.h>
+#include <nanobind/stl/array.h>
 #include <nanobind/stl/shared_ptr.h>
 #include <nanobind/stl/vector.h>
 
