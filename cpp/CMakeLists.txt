@@ -5,9 +5,7 @@ set(COLLISION_SRC
         src/collision_checker.cc
         src/primitive_collision_checker.cc
         src/raytrace_utils.cc
-        src/collision_object_ex.cc
         src/time_variant_collision_object.cc
-        src/solvers/distance_queries.cc
         src/solvers/detail/collision_containers.cc
         src/solvers/collision_queries.cc
         src/solvers/trajectory_queries.cc
@@ -17,18 +15,13 @@ set(COLLISION_SRC
         src/solvers/collision_solver_primitive.cc
 
         src/solvers/fcl/fcl_collision_checker.cc
-        src/solvers/fcl/fcl_distance_queries.cc
-        src/solvers/fcl/fcl_broadphase_manager_factories.cc
-        src/solvers/fcl/fcl_distance_requests.cc
         src/solvers/fcl/fcl_collision_queries.cc
         src/solvers/fcl/fcl_collision_object_group.cc
         src/solvers/fcl/fcl_collision_requests.cc
         src/solvers/fcl/fcl_collision_object.cc
         src/solvers/fcl/fcl_entity_factory.cc
         src/solvers/fcl/performance_timers.cc
-        src/solvers/fcl/solver_entity_fcl.cc
 
-        src/solvers/boost/solver_entity_boost.cc
         src/solvers/boost/boost_collision_object.cc
         src/solvers/boost/boost_object_polygon.cc
         src/solvers/boost/boost_collision_queries.cc

@@ -22,6 +22,12 @@
 #include "collision/collision_object_types.h"
 #include "collision/line_segment.h"
 
+#include "collision/i_collision_container.h"
+#include "collision/solvers/fcl/solver_entity_fcl.h"
+#include "collision/solvers/boost/solver_entity_boost.h"
+#include "collision/solvers/boost/i_solver_entity_boost.h"
+#include "collision/solvers/fcl/i_solver_entity_fcl.h"
+
 namespace collision {
 
 class Shape;
@@ -39,6 +45,9 @@ class ICollisionContainer;
 
 typedef std::shared_ptr<CollisionObject> CollisionObjectPtr;
 typedef std::shared_ptr<const CollisionObject> CollisionObjectConstPtr;
+
+using namespace solvers::solverFCL;
+using namespace solvers::solverBoost;
 
 /*!
   \brief Base class for CollisionObjects and some of their groups
@@ -64,17 +73,9 @@ class CollisionObject : public std::enable_shared_from_this<CollisionObject> {
     return CollisionObjectClass::OBJ_CLASS_UNKNOWN;
   }
 
-  virtual bool collide(
-      const CollisionObject &c,
-      const collision::CollisionRequest &req = CollisionRequest()) const = 0;
-
   virtual void print(std::ostringstream &stream) const { return; }
 
   virtual void toString(std::ostringstream &stream) const { print(stream); }
-
-  virtual bool BVCheck(CollisionObjectConstPtr obj2) const = 0;
-
-  virtual std::shared_ptr<const collision::RectangleAABB> getAABB() const = 0;
 
   virtual void addParentMap(
       std::unordered_map<const CollisionObject *,
@@ -92,7 +93,47 @@ class CollisionObject : public std::enable_shared_from_this<CollisionObject> {
                         std::vector<LineSegment> &intersect) const {
     return false;
   }
+
+  virtual bool collide(
+        const CollisionObject &c,
+        const collision::CollisionRequest &req = CollisionRequest()) const;
+
+    virtual bool BVCheck(CollisionObjectConstPtr obj2) const;
+
+    virtual std::shared_ptr<const collision::RectangleAABB> getAABB() const;
+
+    virtual int getSolverEntity(solvers::solverFCL::SolverEntity_FCL *&ptr) const;
+    virtual int getSolverEntity(
+        solvers::solverBoost::SolverEntity_Boost *&ptr) const;
+
+    virtual const ICollisionContainer *getContainerInterface(void) const {
+      return nullptr;
+    }
+
+    virtual const solvers::solverFCL::ISolverEntity_FCL *getFclInterface(
+        void) const {
+      return nullptr;
+    }
+
+    virtual const solvers::solverBoost::ISolverEntity_Boost *getBoostInterface(
+        void) const {
+      return nullptr;
+    }
+
+  protected:
+    void invalidateCollisionEntityCache(void);
+
+  private:
+    mutable std::unique_ptr<solvers::solverFCL::SolverEntity_FCL>
+        fcl_entity_;
+    mutable bool fcl_solver_entity_valid_ = false;
+
+    mutable std::unique_ptr<solvers::solverBoost::SolverEntity_Boost>
+        boost_entity_;
+    mutable bool boost_solver_entity_valid_ = false;
 };
+
+
 
 typedef std::shared_ptr<Shape> ShapePtr;
 typedef std::shared_ptr<const Shape> ShapeConstPtr;

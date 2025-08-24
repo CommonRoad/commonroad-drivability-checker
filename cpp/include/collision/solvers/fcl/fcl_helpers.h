@@ -1,5 +1,4 @@
 #pragma once
-#include "collision/collision_object_ex.h"
 #include "collision/solvers/fcl/fcl_collision_object.h"
 #include "collision/solvers/fcl/fcl_collision_object_group.h"
 #include "collision/solvers/fcl/fcl_entity_type.h"
@@ -10,12 +9,10 @@ namespace solvers {
 namespace solverFCL {
 inline FCL_COLLISION_ENTITY_TYPE get_object_fcl_entity_type(
     const CollisionObject *obj2) {
-  const CollisionObjectEx *obj = static_cast<const CollisionObjectEx *>(obj2);
-  if (!obj) return FCL_COLLISION_ENTITY_TYPE::FCL_COLLISION_ENTITY_TYPE_INVALID;
   SolverEntity_FCL *req_entity;
-  obj->getSolverEntity(req_entity);
+  obj2->getSolverEntity(req_entity);
   if (!req_entity) {
-    if (obj->getCollisionObjectClass() ==
+    if (obj2->getCollisionObjectClass() ==
         CollisionObjectClass::OBJ_CLASS_TVOBSTACLE) {
       return FCL_COLLISION_ENTITY_TYPE::FCL_COLLISION_ENTITY_TYPE_TVOBJECT;
     } else
@@ -26,10 +23,8 @@ inline FCL_COLLISION_ENTITY_TYPE get_object_fcl_entity_type(
 
 inline const FCLCollisionObjectGroup *get_fcl_object_group_ptr(
     const CollisionObject *obj) {
-  const CollisionObjectEx *obj_ex = static_cast<const CollisionObjectEx *>(obj);
-  if (!obj_ex) return nullptr;
   SolverEntity_FCL *fcl_entity;
-  obj_ex->getSolverEntity(fcl_entity);
+  obj->getSolverEntity(fcl_entity);
   if (fcl_entity &&
       fcl_entity->getFclEntityType() == COLLISION_ENTITY_TYPE_FCL_OBJECTGROUP) {
     return static_cast<const FCLCollisionObjectGroup *>(fcl_entity);
@@ -39,10 +34,8 @@ inline const FCLCollisionObjectGroup *get_fcl_object_group_ptr(
 
 inline const FCLCollisionObject *get_fcl_object_ptr(
     const CollisionObject *obj) {
-  const CollisionObjectEx *obj_ex = static_cast<const CollisionObjectEx *>(obj);
-  if (!obj_ex) return nullptr;
   SolverEntity_FCL *fcl_entity;
-  obj_ex->getSolverEntity(fcl_entity);
+  obj->getSolverEntity(fcl_entity);
 
   if (fcl_entity &&
       fcl_entity->getFclEntityType() == COLLISION_ENTITY_TYPE_FCL_OBJECT) {
@@ -53,8 +46,7 @@ inline const FCLCollisionObject *get_fcl_object_ptr(
 
 inline FCL_COLLISION_ENTITY_TYPE get_object_fcl_entity_type(
     CollisionObjectConstPtr obj2, SolverEntity_FCL *&req_entity) {
-  const CollisionObjectEx *obj =
-      static_cast<const CollisionObjectEx *>(obj2.get());
+  const CollisionObject *obj = obj2.get();
   if (!obj) return FCL_COLLISION_ENTITY_TYPE::FCL_COLLISION_ENTITY_TYPE_INVALID;
   obj->getSolverEntity(req_entity);
   if (!req_entity) {
@@ -69,11 +61,9 @@ inline FCL_COLLISION_ENTITY_TYPE get_object_fcl_entity_type(
 
 inline FCL_COLLISION_ENTITY_TYPE get_object_fcl_entity_type(
     const CollisionObject *obj2, SolverEntity_FCL *&req_entity) {
-  const CollisionObjectEx *obj = static_cast<const CollisionObjectEx *>(obj2);
-  if (!obj) return FCL_COLLISION_ENTITY_TYPE::FCL_COLLISION_ENTITY_TYPE_INVALID;
-  obj->getSolverEntity(req_entity);
+  obj2->getSolverEntity(req_entity);
   if (!req_entity) {
-    if (obj->getCollisionObjectClass() ==
+    if (obj2->getCollisionObjectClass() ==
         CollisionObjectClass::OBJ_CLASS_TVOBSTACLE) {
       return FCL_COLLISION_ENTITY_TYPE::FCL_COLLISION_ENTITY_TYPE_TVOBJECT;
     } else

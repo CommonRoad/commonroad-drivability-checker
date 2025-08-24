@@ -28,12 +28,6 @@ class FCLCollisionObject : public SolverEntity_FCL {
     invaldateCollisionObjectCache();
   }
 
-  FCLCollisionObject(const FCLCollisionObject &copy) {
-    m_parent = copy.m_parent;
-    m_parent_fcl_interface = copy.m_parent_fcl_interface;
-    invaldateCollisionObjectCache();
-  };
-
   virtual FCL_COLLISION_ENTITY_TYPE getFclEntityType(void) const {
     return FCL_COLLISION_ENTITY_TYPE::COLLISION_ENTITY_TYPE_FCL_OBJECT;
   }
@@ -42,13 +36,6 @@ class FCLCollisionObject : public SolverEntity_FCL {
 
   std::shared_ptr<fcl::CollisionObject<FCL_PRECISION>> getCollisionObject_fcl(
       void) const;
-
-  int calculateDistance(const CollisionObject &obj2, FCL_PRECISION &distance,
-                        FCL_PRECISION tolerance = 1e-6) const;
-  int calculateDistanceNegTolerance(
-      const CollisionObject &obj2, double &distance,
-      FCL_TOLERANCE_CHECK_TYPE check_type = TOLERANCE_CHECK_NARROWPHASE,
-      FCL_PRECISION tolerance = 1e-6) const;
 
   virtual bool BVCheck(CollisionObjectConstPtr obj2) const;
 

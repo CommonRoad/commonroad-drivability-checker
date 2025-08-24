@@ -13,7 +13,7 @@ SolverEntity_FCL *createFCLSolverEntity(CollisionObject *obj,
   switch (entity->getFclEntityType()) {
     case COLLISION_ENTITY_TYPE_FCL_OBJECTGROUP:
       return new FCLCollisionObjectGroup(
-          (static_cast<CollisionObjectEx *>(obj))->getContainerInterface(), obj,
+          obj->getContainerInterface(), obj,
           static_cast<IFCLCollisionObjectGroup *>(entity));
       break;
     case COLLISION_ENTITY_TYPE_FCL_OBJECT:

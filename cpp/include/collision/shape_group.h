@@ -30,7 +30,7 @@ typedef std::shared_ptr<const ShapeGroup> ShapeGroupConstPtr;
  * collision
  */
 
-class ShapeGroup : public CollisionObjectEx,
+class ShapeGroup : public CollisionObject,
                    public ICollisionContainer,
                    public IFCLCollisionObjectGroup {
 #if ENABLE_COLLISION_TESTS == 1

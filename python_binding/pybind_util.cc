@@ -10,7 +10,6 @@
 #include "collision/time_variant_collision_object.h"
 #include "collision/solvers/boost/boost_geometry_queries.h"
 #include "collision/solvers/boost/boost_helpers.h"
-#include "collision/solvers/distance_queries.h"
 #include "collision/solvers/geometry_queries.h"
 #include "collision/solvers/trajectory_queries.h"
 #include "collision/solvers/accelerators/declarations.h"
@@ -598,34 +597,4 @@ void export_util(nb::module_ &module) {
 
                   return sg_triangles;
               });
-
-    // Note: The function below is EXPERIMENTAL (alpha version).
-    // The underlying implementations of the experimental tolerance verification
-    // function (in FCL and libccd) may have bugs or crash for some object types.
-    // Many pairs of shape types are not supported. The function is exported only
-    // for test purposes, and its results should not be relied upon. Distance
-    // queries are not implemented in the collision checker. FCL does not support
-    // them for many shape types.
-
-    mutil_experimental.def(
-        "tolerance_negative_query",
-        [](collision::CollisionObjectConstPtr obj1,
-           collision::CollisionObjectConstPtr obj2, bool aabb_only = false,
-           double computation_tolerance = 1e-6, double compare_tolerance = 1e-6) {
-            collision::DistanceRequest req;
-            req.dist_request_type = collision::DRT_TOLERANCE_NEG;
-            if (aabb_only)
-                req.dist_node_type = collision::DNT_AABB;
-            else
-                req.dist_node_type = collision::DNT_NARROWPHASE;
-            req.computation_tolerance = computation_tolerance;
-            req.compare_tolerance = compare_tolerance;
-
-            collision::DistanceResult res;
-            int ret = collision::distance(*obj1, *obj2, res, req);
-            nb::list ret_list;
-            ret_list.append(res.getTolerancePassed());
-            ret_list.append(ret != 0);
-            return ret_list;
-        });
 }
