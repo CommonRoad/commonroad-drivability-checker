@@ -43,6 +43,11 @@ class RectangleAABB : public Shape {
   serialize::ICollisionObjectExport *exportThis(void) const override;
 #endif
   RectangleAABB(const RectangleAABB &copy);
+
+  RectangleAABB(RectangleAABB &&) = default;
+  RectangleAABB& operator=(RectangleAABB&&) = default;
+  RectangleAABB& operator=(const RectangleAABB&) = delete;
+
   RectangleAABB *clone() const;
 
   void print(std::ostringstream &stream) const;

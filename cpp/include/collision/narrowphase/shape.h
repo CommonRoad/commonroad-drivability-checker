@@ -35,6 +35,11 @@ class Shape : public CollisionObject, IFCLCollisionObject {
   }
 
   Shape(const Shape &copy);
+
+  Shape(Shape &&) = default;
+  Shape& operator=(Shape&&) = default;
+  Shape& operator=(const Shape&) = delete;
+
   virtual Shape *clone() const = 0;
 
   //! Get geometric center of shape
@@ -70,7 +75,7 @@ class Shape : public CollisionObject, IFCLCollisionObject {
 
  protected:
   Eigen::Vector2d center_;
-  double radius_;
+  double radius_ = 0;
 };
 
 typedef std::shared_ptr<const Shape> ShapeConstPtr;

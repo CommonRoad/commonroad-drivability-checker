@@ -36,6 +36,12 @@ class Triangle : public Shape {
     return CollisionObjectType::OBJ_TYPE_TRIANGLE;
   }
 
+  Triangle(Triangle &&) = default;
+  Triangle& operator=(Triangle&&) = default;
+  Triangle& operator=(const Triangle&) = delete;
+
+  Triangle(const Triangle& other);
+
   Triangle *clone() const;
 
   void print(std::ostringstream &stream) const;
@@ -83,7 +89,7 @@ class Triangle : public Shape {
   Eigen::Vector2d v2_;
   Eigen::Vector2d v3_;
 
-  double incircle_radius_;
+  double incircle_radius_ = 0;
   Eigen::Vector2d incenter_;
 
   static constexpr ShapeType type_ = TYPE_TRIANGLE;

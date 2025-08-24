@@ -41,8 +41,6 @@ bool RectangleAABB::rayTrace(const Eigen::Vector2d &point1,
 RectangleAABB *RectangleAABB::clone() const { return new RectangleAABB(*this); }
 
 RectangleAABB::RectangleAABB(const RectangleAABB &copy) : Shape(copy) {
-  center_ = copy.center();  // not needed? It is already set in Shape(copy)
-  radius_ = copy.radius();
   r_ = copy.r();
   min_ = copy.min();
   max_ = copy.max();

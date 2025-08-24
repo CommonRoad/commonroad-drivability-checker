@@ -22,7 +22,12 @@ class Point : public Shape {
 
   ~Point() {}
 
+  Point(Point &&) = default;
+  Point& operator=(Point&&) = default;
+  Point& operator=(const Point&) = delete;
+
   Point(const Point &copy);
+
   Point *clone() const;
 
   void print(std::ostringstream &stream) const;

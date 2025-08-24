@@ -215,7 +215,9 @@ void export_collision(const nb::module_ &module) {
                         throw std::invalid_argument("pickle error - invalid input");
                     }
                     // We can safely move the data out of the shared_ptr, since no one else has access to it
-                    new (&obj) collision::CollisionChecker(std::move(*c));
+                    auto c_ptr = const_cast<collision::CollisionChecker*>(c.get());
+                    new (&obj) collision::CollisionChecker(std::move(*c_ptr));
+
                     // reset the shared_ptr to avoid dangling references
                     c.reset();
                 })

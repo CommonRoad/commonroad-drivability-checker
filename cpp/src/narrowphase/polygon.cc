@@ -81,8 +81,6 @@ bool Polygon::rayTrace(const Eigen::Vector2d &point1,
 Polygon *Polygon::clone() const { return new Polygon(*this); }
 
 Polygon::Polygon(const Polygon &copy) : Shape(copy) {
-  center_ = copy.center();  // not needed? It is already set in Shape(copy)
-  radius_ = copy.radius();
   vertices_ = copy.getVertices();
   hole_vertices_ = copy.getHoleVertices();
   mesh_triangles_ = copy.getTriangleMesh();

@@ -113,6 +113,7 @@ int test_polygon() {
   } else
     return -1;
 
+
   return 0;
 }
 }  // namespace test

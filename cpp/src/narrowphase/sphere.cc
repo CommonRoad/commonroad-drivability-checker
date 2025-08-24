@@ -89,8 +89,6 @@ bool Sphere::rayTrace(const Eigen::Vector2d &point1,
 Sphere *Sphere::clone() const { return new Sphere(*this); }
 
 Sphere::Sphere(const Sphere &copy) : Shape(copy) {
-  center_ = copy.center();
-  radius_ = copy.radius();
 }
 
 void Sphere::print(std::ostringstream &stream) const {

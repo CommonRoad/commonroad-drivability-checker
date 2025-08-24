@@ -55,7 +55,30 @@ using namespace solvers::solverBoost;
 */
 class CollisionObject : public std::enable_shared_from_this<CollisionObject> {
  public:
-  virtual ~CollisionObject() {}
+  
+  CollisionObject() {};
+  virtual ~CollisionObject() {};
+  CollisionObject(CollisionObject&& other) {
+    // when the object is moved, all pointers to solvers (e.g. fcl_entity) are to become invalid
+      other.fcl_entity_.reset();
+      other.fcl_solver_entity_valid_ = false;
+      other.boost_entity_.reset();
+      other.boost_solver_entity_valid_ = false;
+  }
+  
+  CollisionObject& operator=(CollisionObject&& other) {
+    // when the object is moved, all pointers to solvers (e.g. fcl_entity) are to become invalid
+    if (this != &other) {
+      other.fcl_entity_.reset();
+      other.fcl_solver_entity_valid_ = false;
+      other.boost_entity_.reset();
+      other.boost_solver_entity_valid_ = false;
+    }
+    return *this;
+  }
+  CollisionObject(const CollisionObject&) = delete;
+  CollisionObject& operator=(const CollisionObject&) = delete;
+  
 #if ENABLE_SERIALIZER
   virtual serialize::ICollisionObjectExport *exportThis(void) const {
     return nullptr;
@@ -132,8 +155,6 @@ class CollisionObject : public std::enable_shared_from_this<CollisionObject> {
         boost_entity_;
     mutable bool boost_solver_entity_valid_ = false;
 };
-
-
 
 typedef std::shared_ptr<Shape> ShapePtr;
 typedef std::shared_ptr<const Shape> ShapeConstPtr;

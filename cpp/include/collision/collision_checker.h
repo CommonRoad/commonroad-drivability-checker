@@ -49,7 +49,12 @@ class CollisionChecker : public ICollisionChecker {
 
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-  CollisionChecker() : fcl_cc_(*this){};
+  CollisionChecker() {
+	  fcl_cc_ = std::move(std::make_unique<FCLCollisionChecker>(*this));
+  };
+
+  CollisionChecker(CollisionChecker&&) = default;
+  CollisionChecker& operator=(CollisionChecker&&) = default;
 
   CollisionCheckerPtr clone_shared(void) const;
 
@@ -103,7 +108,7 @@ class CollisionChecker : public ICollisionChecker {
 
  private:
   std::vector<CollisionObjectConstPtr> collision_objects_;
-  FCLCollisionChecker fcl_cc_;
+  std::unique_ptr<FCLCollisionChecker> fcl_cc_;
 };
 }  // namespace collision
 #endif

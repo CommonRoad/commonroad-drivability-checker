@@ -111,14 +111,16 @@ class RectangleOBB : public Shape {
 
   RectangleOBB(const RectangleOBB &copy)
       : Shape(copy), is_fastAABB_cached_(false) {
-    center_ = copy.center();
-    radius_ = copy.radius();
     local_axes_ = copy.local_axes();
     r_ = copy.r();
     segments_ = copy.segments();
     cached_orientation_ = copy.cached_orientation_;
     is_orientation_cached_ = copy.is_orientation_cached_;
   }
+
+  RectangleOBB(RectangleOBB &&) = default;
+  RectangleOBB& operator=(RectangleOBB&&) = default;
+  RectangleOBB& operator=(const RectangleOBB&) = delete;
 
   double orientation() const;
 
@@ -195,12 +197,12 @@ class RectangleOBB : public Shape {
 
   static constexpr ShapeType type_ = TYPE_RECTANGLE_OBB;
 
-  mutable bool is_fastAABB_cached_;
+  mutable bool is_fastAABB_cached_ = false;
 
   mutable AABB fast_aabb_;
 
-  mutable double cached_orientation_;
-  mutable bool is_orientation_cached_;
+  mutable double cached_orientation_ = 0;
+  mutable bool is_orientation_cached_ = false;
 
   void compute_orientation(void) const;
 };

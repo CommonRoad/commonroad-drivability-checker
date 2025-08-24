@@ -47,6 +47,10 @@ class Polygon : public Shape, solvers::solverBoost::IBoostCollisionObject {
 	*/
 #endif
 
+  Polygon(Polygon &&) = default;
+  Polygon& operator=(Polygon&&) = default;
+  Polygon& operator=(const Polygon&) = delete;
+
   Polygon(const Polygon &copy);
 
   Polygon *clone() const;

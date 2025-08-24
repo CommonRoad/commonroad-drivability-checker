@@ -24,7 +24,7 @@ CollisionCheckerPtr CollisionChecker::clone_shared(void) const {
 */
 void CollisionChecker::addCollisionObject(CollisionObjectConstPtr co) {
   collision_objects_.push_back(co);
-  fcl_cc_.addCollisionObject(co);
+  fcl_cc_->addCollisionObject(co);
 }
 
 /*!
@@ -71,7 +71,7 @@ bool CollisionChecker::collide(CollisionObjectConstPtr co,
 #endif
 
   // STACK_TIMER tim(TIMER_collide);
-  return fcl_cc_.collideHelper(co, collision_time, 0);
+  return fcl_cc_->collideHelper(co, collision_time, 0);
 
   bool collides = false;
 }
@@ -117,7 +117,7 @@ bool CollisionChecker::collide(CollisionObjectConstPtr co,
 #endif
 
   std::vector<CollisionObjectConstPtr> obstacles;
-  bool res = fcl_cc_.collideHelper(co, 0, &obstacles, 1, ungroup_shape_groups,
+  bool res = fcl_cc_->collideHelper(co, 0, &obstacles, 1, ungroup_shape_groups,
                                    ungroup_TV_obstacles);
   if (res) {
     if (obstacles.size() > 0) {
@@ -238,7 +238,7 @@ bool CollisionChecker::collide(CollisionObjectConstPtr co,
                                bool ungroup_TV_obstacles) const {
 #endif
 
-  return fcl_cc_.collideHelper(co, 0, &obstacles, -1, ungroup_shape_groups,
+  return fcl_cc_->collideHelper(co, 0, &obstacles, -1, ungroup_shape_groups,
                                ungroup_TV_obstacles);
 
   bool collides = false;
@@ -266,7 +266,7 @@ PrimitiveCollisionCheckerPtr CollisionChecker::windowQueryPrimitive(
   PrimitiveCollisionCheckerPtr cc_ret =
       std::make_shared<PrimitiveCollisionChecker>();
 
-  fcl_cc_.windowQuery_helper(aabb, *(cc_ret.get()));
+  fcl_cc_->windowQuery_helper(aabb, *(cc_ret.get()));
 
   return cc_ret;
 }
@@ -287,7 +287,7 @@ CollisionCheckerPtr CollisionChecker::windowQuery(
   // STACK_TIMER tim(TIMER_windowQuery);
 
   CollisionCheckerPtr cc_ret = std::make_shared<CollisionChecker>();
-  fcl_cc_.windowQuery_helper(aabb, *(cc_ret.get()));
+  fcl_cc_->windowQuery_helper(aabb, *(cc_ret.get()));
 
   return cc_ret;
 }

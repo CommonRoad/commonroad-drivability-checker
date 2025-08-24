@@ -64,6 +64,7 @@ class ShapeGroup : public CollisionObject,
   ShapeGroup() {}
 
   ShapeGroup(ShapeGroup &&) = default;
+  ShapeGroup& operator=(ShapeGroup&&) = default;
 
   void toString(std::ostringstream &stream) const;
 

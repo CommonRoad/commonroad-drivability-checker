@@ -4,7 +4,7 @@ namespace collision {
 
 Shape::~Shape() {}
 
-Shape::Shape(const Shape &copy) : center_(copy.center()) {}
+Shape::Shape(const Shape &copy) : center_(copy.center()), radius_(copy.radius()) {}
 
 // void Shape::print(std::ostringstream &stream) const {}
 

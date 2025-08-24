@@ -40,6 +40,11 @@ class Sphere : public Shape {
   };
 
   Sphere(const Sphere &copy);
+
+  Sphere(Sphere &&) = default;
+  Sphere& operator=(Sphere&&) = default;
+  Sphere& operator=(const Sphere&) = delete;
+
   Sphere *clone() const;
 
   void print(std::ostringstream &stream) const;

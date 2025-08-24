@@ -11,6 +11,12 @@
 
 namespace collision {
 
+Triangle::Triangle(const Triangle& copy): Shape(copy), v1_(copy.v1_), v2_(copy.v2_), v3_(copy.v3_) {
+	segments_ = copy.segments_;
+	incircle_radius_ = copy.incircle_radius_;
+	incenter_ = copy.incenter_;
+}
+
 Triangle *Triangle::clone() const { return new Triangle(*this); }
 
 bool Triangle::rayTrace(const Eigen::Vector2d &point1,
