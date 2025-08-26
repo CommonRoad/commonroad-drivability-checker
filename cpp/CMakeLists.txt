@@ -22,7 +22,6 @@ set(COLLISION_SRC
         src/solvers/fcl/fcl_entity_factory.cc
         src/solvers/fcl/performance_timers.cc
 
-        src/solvers/boost/boost_collision_object.cc
         src/solvers/boost/boost_object_polygon.cc
         src/solvers/boost/boost_collision_queries.cc
         src/solvers/boost/boost_geometry_queries.cc

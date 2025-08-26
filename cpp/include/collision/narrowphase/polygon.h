@@ -9,12 +9,19 @@
 #include "collision/narrowphase/shape.h"
 #include "collision/narrowphase/triangle.h"
 #include "collision/plugins/triangulation/triangulate.h"
+#include "collision/solvers/boost/boost_object_internal.h"
 
 namespace collision {
 
 class Polygon;
 
 class ShapeGroup;
+
+namespace solvers {
+namespace solverBoost {
+class BoostPolygon;
+}
+}
 
 typedef std::shared_ptr<ShapeGroup> ShapeGroupPtr;
 typedef std::shared_ptr<const ShapeGroup> ShapeGroupConstPtr;
@@ -26,7 +33,7 @@ typedef std::shared_ptr<const Polygon> PolygonConstPtr;
   \brief Polygon contains Triangles and Vertices
 
 */
-class Polygon : public Shape, solvers::solverBoost::IBoostCollisionObject {
+class Polygon : public Shape {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -64,11 +71,6 @@ class Polygon : public Shape, solvers::solverBoost::IBoostCollisionObject {
 
   bool isWithin(const Polygon &poly2) const;
 
-  virtual const solvers::solverBoost::ISolverEntity_Boost *getBoostInterface()
-      const override {
-    return this;
-  }
-
   virtual void toString(std::ostringstream &stream) const;
   virtual void print(std::ostringstream &stream) const;
   virtual CollisionObjectConstPtr timeSlice(
@@ -84,6 +86,8 @@ class Polygon : public Shape, solvers::solverBoost::IBoostCollisionObject {
     return CollisionObjectType::OBJ_TYPE_POLYGON;
   }
 
+  solvers::solverBoost::BoostPolygon* getOrCreateBoostPolygon(void) const;
+
 #if ENABLE_SERIALIZER
   serialize::ICollisionObjectExport *exportThis(void) const override;
 #endif
@@ -96,6 +100,8 @@ class Polygon : public Shape, solvers::solverBoost::IBoostCollisionObject {
       const std::shared_ptr<fcl::CollisionGeometry<FCL_PRECISION>> &)
       const override;
 
+  mutable std::unique_ptr<solvers::solverBoost::BoostObjectInternal> boost_polygon_;
+  mutable bool has_boost_polygon_ = false;
   std::vector<Eigen::Vector2d> vertices_;
   std::vector<std::vector<Eigen::Vector2d>> hole_vertices_;
   std::vector<TriangleConstPtr> mesh_triangles_;

@@ -24,8 +24,6 @@
 
 #include "collision/i_collision_container.h"
 #include "collision/solvers/fcl/solver_entity_fcl.h"
-#include "collision/solvers/boost/solver_entity_boost.h"
-#include "collision/solvers/boost/i_solver_entity_boost.h"
 #include "collision/solvers/fcl/i_solver_entity_fcl.h"
 
 namespace collision {
@@ -47,7 +45,6 @@ typedef std::shared_ptr<CollisionObject> CollisionObjectPtr;
 typedef std::shared_ptr<const CollisionObject> CollisionObjectConstPtr;
 
 using namespace solvers::solverFCL;
-using namespace solvers::solverBoost;
 
 /*!
   \brief Base class for CollisionObjects and some of their groups
@@ -62,8 +59,6 @@ class CollisionObject : public std::enable_shared_from_this<CollisionObject> {
     // when the object is moved, all pointers to solvers (e.g. fcl_entity) are to become invalid
       other.fcl_entity_.reset();
       other.fcl_solver_entity_valid_ = false;
-      other.boost_entity_.reset();
-      other.boost_solver_entity_valid_ = false;
   }
   
   CollisionObject& operator=(CollisionObject&& other) {
@@ -71,8 +66,6 @@ class CollisionObject : public std::enable_shared_from_this<CollisionObject> {
     if (this != &other) {
       other.fcl_entity_.reset();
       other.fcl_solver_entity_valid_ = false;
-      other.boost_entity_.reset();
-      other.boost_solver_entity_valid_ = false;
     }
     return *this;
   }
@@ -126,19 +119,12 @@ class CollisionObject : public std::enable_shared_from_this<CollisionObject> {
     virtual std::shared_ptr<const collision::RectangleAABB> getAABB() const;
 
     virtual int getSolverEntity(solvers::solverFCL::SolverEntity_FCL *&ptr) const;
-    virtual int getSolverEntity(
-        solvers::solverBoost::SolverEntity_Boost *&ptr) const;
 
     virtual const ICollisionContainer *getContainerInterface(void) const {
       return nullptr;
     }
 
     virtual const solvers::solverFCL::ISolverEntity_FCL *getFclInterface(
-        void) const {
-      return nullptr;
-    }
-
-    virtual const solvers::solverBoost::ISolverEntity_Boost *getBoostInterface(
         void) const {
       return nullptr;
     }
@@ -150,10 +136,6 @@ class CollisionObject : public std::enable_shared_from_this<CollisionObject> {
     mutable std::unique_ptr<solvers::solverFCL::SolverEntity_FCL>
         fcl_entity_;
     mutable bool fcl_solver_entity_valid_ = false;
-
-    mutable std::unique_ptr<solvers::solverBoost::SolverEntity_Boost>
-        boost_entity_;
-    mutable bool boost_solver_entity_valid_ = false;
 };
 
 typedef std::shared_ptr<Shape> ShapePtr;

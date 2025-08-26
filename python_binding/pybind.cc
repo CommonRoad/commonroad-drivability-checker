@@ -6,7 +6,6 @@
 #include "collision/collision_checker.h"
 
 #include "collision/solvers/boost/boost_geometry_queries.h"
-#include "collision/solvers/boost/boost_helpers.h"
 
 #include "collision/solvers/geometry_queries.h"
 #include "collision/solvers/trajectory_queries.h"

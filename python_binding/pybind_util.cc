@@ -9,7 +9,6 @@
 #include "collision/shape_group.h"
 #include "collision/time_variant_collision_object.h"
 #include "collision/solvers/boost/boost_geometry_queries.h"
-#include "collision/solvers/boost/boost_helpers.h"
 #include "collision/solvers/geometry_queries.h"
 #include "collision/solvers/trajectory_queries.h"
 #include "collision/solvers/accelerators/declarations.h"

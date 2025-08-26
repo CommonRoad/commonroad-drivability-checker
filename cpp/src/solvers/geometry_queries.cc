@@ -10,6 +10,8 @@
 
 namespace collision {
 
+using namespace solvers::solverBoost;
+
 namespace detail {
 namespace geometry_queries {
 int fillFclOBBHelper(const RectangleOBB* obb,

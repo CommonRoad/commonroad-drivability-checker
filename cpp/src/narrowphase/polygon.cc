@@ -5,9 +5,9 @@
 #include "collision/raytrace_utils.h"
 #include "collision/shape_group.h"
 #include "collision/solvers/boost/boost_collision_queries.h"
-#include "collision/solvers/boost/boost_helpers.h"
 #include "collision/solvers/fcl/fcl_decl.h"
 #include "collision/solvers/fcl/fcl_transform.h"
+
 
 #include "collision/narrowphase/polygon.h"
 
@@ -102,17 +102,13 @@ void Polygon::toString(std::ostringstream &stream) const {
 
 bool Polygon::isWithin(const Polygon &poly2) const {
   using namespace collision::solvers::solverBoost;
-  const BoostCollisionObject *this_boost =
-      collision::solvers::solverBoost::get_boost_object_ptr(this);
-  const BoostCollisionObject *other_boost =
-      collision::solvers::solverBoost::get_boost_object_ptr(&poly2);
+  const BoostPolygon *this_boost =
+      getOrCreateBoostPolygon();
+  const BoostPolygon *other_boost = poly2.getOrCreateBoostPolygon();
   if (!this_boost || !other_boost) {
     throw 0;
   }
-  return boost_within(*(static_cast<const BoostPolygon *>(
-                          this_boost->getCollisionObject_boost().get())),
-                      *(static_cast<const BoostPolygon *>(
-                          other_boost->getCollisionObject_boost().get())));
+  return boost_within(*this_boost, *other_boost);
 }
 
 fcl::CollisionGeometry<FCL_PRECISION> *Polygon::createFCLCollisionGeometry(
@@ -152,6 +148,14 @@ std::vector<Eigen::Vector2d> Polygon::getVertices() const { return vertices_; }
 
 std::vector<std::vector<Eigen::Vector2d>> Polygon::getHoleVertices() const {
   return hole_vertices_;
+}
+
+BoostPolygon* Polygon::getOrCreateBoostPolygon(void) const {
+	if (!has_boost_polygon_) {
+		boost_polygon_.reset(new BoostPolygon(this));
+		has_boost_polygon_ = true;
+	}
+	return static_cast<BoostPolygon*>(boost_polygon_.get());
 }
 
 #if ENABLE_SERIALIZER

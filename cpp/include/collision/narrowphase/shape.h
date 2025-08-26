@@ -5,7 +5,6 @@
 #include <iostream>
 
 #include "collision/collision_object.h"
-#include "collision/solvers/boost/i_boost_collision_object.h"
 #include "collision/solvers/fcl/i_fcl_collision_object.h"
 
 namespace collision {

@@ -6,7 +6,6 @@
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
 
-#include "collision/solvers/boost/boost_collision_object.h"
 #include "collision/solvers/boost/boost_object_polygon.h"
 
 namespace test {
@@ -62,57 +61,44 @@ int test_polygon() {
   collision::PolygonConstPtr poly_2 = collision::PolygonConstPtr(
       new collision::Polygon(verts, holeverts, trimesh));
 
-  collision::solvers::solverBoost::SolverEntity_Boost* boost_ent;
+  BoostPolygon* bp3 = poly_2->getOrCreateBoostPolygon();
 
-  poly_2->getSolverEntity(boost_ent);
+  polygon_type poly2 = *(bp3->getInternal());
+  if (boost::geometry::equals(poly, poly2)) {
+    auto bp_ch = bp3->convexHull();
+    auto boost_ch = *(bp_ch->getInternal());
+    polygon_type hull;
+    boost::geometry::convex_hull(poly, hull);
+    if (boost::geometry::equals(boost_ch, hull)) {
+      collision::RectangleAABBConstPtr aabb1(
+          new collision::RectangleAABB(1, 1));
 
-  if (boost_ent->getBoostEntityType() ==
-      BOOST_COLLISION_ENTITY_TYPE::COLLISION_ENTITY_TYPE_BOOST_OBJECT) {
-    BoostCollisionObject* boostObj =
-        static_cast<BoostCollisionObject*>(boost_ent);
-    auto bp_ent = boostObj->getCollisionObject_boost();
-    BoostPolygonConstPtr bp3 =
-        std::static_pointer_cast<const BoostPolygon>(bp_ent);
-    polygon_type poly2 = *(bp3->getInternal());
-    if (boost::geometry::equals(poly, poly2)) {
-      auto bp_ch = bp3->convexHull();
-      auto boost_ch = *(bp_ch->getInternal());
-      polygon_type hull;
-      boost::geometry::convex_hull(poly, hull);
-      if (boost::geometry::equals(boost_ch, hull)) {
-        collision::RectangleAABBConstPtr aabb1(
-            new collision::RectangleAABB(1, 1));
-
-        BoostPolygonConstPtr bp4 =
-            std::make_shared<const BoostPolygon>(aabb1.get());
-        if (bp4->within(*bp3)) {
-          collision::RectangleOBBConstPtr obb1(
-              new collision::RectangleOBB(1, 1, 0));
-          BoostPolygonConstPtr bp5 =
-              std::make_shared<const BoostPolygon>(obb1.get());
-          if (bp5->within(*bp3)) {
-            BoostPolygonConstPtr bp6 =
-                std::make_shared<const BoostPolygon>(*(bp5->getInternal()));
-            if (bp6->within(*bp3)) {
-              if (aabb1->collide(*poly_2)) {
-                return 0;
-              } else
-                return -7;
-
+      BoostPolygonConstPtr bp4 =
+          std::make_shared<const BoostPolygon>(aabb1.get());
+      if (bp4->within(*bp3)) {
+        collision::RectangleOBBConstPtr obb1(
+            new collision::RectangleOBB(1, 1, 0));
+        BoostPolygonConstPtr bp5 =
+            std::make_shared<const BoostPolygon>(obb1.get());
+        if (bp5->within(*bp3)) {
+          BoostPolygonConstPtr bp6 =
+              std::make_shared<const BoostPolygon>(*(bp5->getInternal()));
+          if (bp6->within(*bp3)) {
+            if (aabb1->collide(*poly_2)) {
+              return 0;
             } else
               return -6;
-          } else
+           } else
             return -5;
-        } else {
+        } else
           return -4;
-        }
-      } else
+      } else {
         return -3;
+      }
     } else
       return -2;
   } else
     return -1;
-
 
   return 0;
 }

@@ -4,7 +4,6 @@
 #include "collision/serialize/public/serialize_public.h"
 #endif
 
-#include "collision/solvers/boost/solver_entity_boost_factory.h"
 #include "collision/solvers/collision_queries.h"
 #include "collision/solvers/fcl/i_solver_entity_fcl.h"
 #include "collision/solvers/fcl/solver_entity_fcl.h"
@@ -87,9 +86,6 @@ void CollisionObject::invalidateCollisionEntityCache(void) {
   if (fcl_solver_entity_valid_) {
     fcl_entity_->invalidateSolverEntityCache();
   }
-  if (boost_solver_entity_valid_) {
-    boost_entity_->invalidateSolverEntityCache();
-  }
 }
 int CollisionObject::getSolverEntity(SolverEntity_FCL *&ptr) const {
   SolverEntity_FCL *cur_value = fcl_entity_.get();
@@ -106,21 +102,4 @@ int CollisionObject::getSolverEntity(SolverEntity_FCL *&ptr) const {
     return 0;
   }
 }
-int CollisionObject::getSolverEntity(SolverEntity_Boost *&ptr) const {
-  SolverEntity_Boost *cur_value = boost_entity_.get();
-  if (boost_solver_entity_valid_) {
-    ptr = cur_value;
-    return 0;
-  } else {
-    // Boost
-    boost_entity_ = std::move(
-        std::unique_ptr<SolverEntity_Boost>(
-            createBoostSolverEntity(this)));
-    boost_solver_entity_valid_ = true;
-    ptr = boost_entity_.get();
-    return 0;
-  }
-}
-
-
 }  // namespace collision
