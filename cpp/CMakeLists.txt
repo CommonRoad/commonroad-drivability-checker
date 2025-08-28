@@ -52,8 +52,7 @@ set(COLLISION_SRC
         src/narrowphase/detail/aabb.cc
         src/solvers/sat2d/sat2d_checks.cc
 
-        src/tests/online_tests/broadphase_test.cc
-        src/tests/online_tests/test_common.cc
+        src/tests/online_tests/broadphase_test2.cc
 )
 
 set(COLLISION_HDR

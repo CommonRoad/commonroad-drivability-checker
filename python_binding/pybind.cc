@@ -2,6 +2,7 @@
 
 #include "pybind_shapes.h"
 #include "pybind_util.h"
+#include "pybind_test.h"
 
 #include "collision/collision_checker.h"
 
@@ -43,6 +44,7 @@ Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
 NB_MODULE(pycrcc, module) {
     export_collision(module);
     export_util(module);
+    export_test(module);
 }
 
 void export_collision(const nb::module_ &module) {

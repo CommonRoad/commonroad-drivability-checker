@@ -73,7 +73,7 @@ std::shared_ptr<const collision::RectangleAABB> CollisionObject::getAABB()
     const {
   SolverEntity_FCL *entity;
   getSolverEntity(entity);
-  if (entity->getFclEntityType() ==
+  if (entity && entity->getFclEntityType() ==
       FCL_COLLISION_ENTITY_TYPE::COLLISION_ENTITY_TYPE_FCL_OBJECT) {
     return (static_cast<FCLCollisionObject *>(entity))->getAABB();
   }
