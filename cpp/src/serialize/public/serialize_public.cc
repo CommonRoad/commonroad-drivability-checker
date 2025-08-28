@@ -14,46 +14,7 @@
 
 namespace collision {
 namespace serialize {
-int serialize(const test::BroadphaseFailureObjObj &object,
-              std::ostream &output_stream, const char *format) {
-  BroadphaseFailure_obj_objExport bf_export(object);
-  std::ios_base::fmtflags fmt_flags = output_stream.flags();
-  std::streamsize old_precision = output_stream.precision();
-  // std::hexfloat(output_stream); // hexadecimal float representation
-  output_stream.precision(std::numeric_limits<double>::max_digits10 - 1);
 
-  s11nlite::serializer_class(format);
-  typedef s11nlite::micro_api<BroadphaseFailure_obj_objExport> BFExportAPI;
-  BFExportAPI bf_export_api(format);
-  if (bf_export_api.save(bf_export, output_stream)) {
-    output_stream.precision(old_precision);
-    output_stream.flags(fmt_flags);  // restore flags
-    return 0;
-  }
-  output_stream.precision(old_precision);
-  output_stream.flags(fmt_flags);  // restore flags
-  return -1;
-}
-int serialize(const test::BroadphaseFailureCCObj &object,
-              std::ostream &output_stream, const char *format) {
-  BroadphaseFailure_cc_objExport bf_export(object);
-  std::ios_base::fmtflags fmt_flags = output_stream.flags();
-  std::streamsize old_precision = output_stream.precision();
-  // std::hexfloat(output_stream); // hexadecimal float representation
-  output_stream.precision(std::numeric_limits<double>::max_digits10 - 1);
-
-  s11nlite::serializer_class(format);
-  typedef s11nlite::micro_api<BroadphaseFailure_cc_objExport> BFExportAPI;
-  BFExportAPI bf_export_api(format);
-  if (bf_export_api.save(bf_export, output_stream)) {
-    output_stream.precision(old_precision);
-    output_stream.flags(fmt_flags);  // restore flags
-    return 0;
-  }
-  output_stream.precision(old_precision);
-  output_stream.flags(fmt_flags);  // restore flags
-  return -1;
-}
 int serialize(const CollisionObject &collision_object,
               std::ostream &output_stream, const char *format) {
   std::ios_base::fmtflags fmt_flags = output_stream.flags();
@@ -138,62 +99,6 @@ int deserialize(CollisionCheckerConstPtr &collision_checker,
   } else {
     return 0;
   }
-}
-
-int deserialize(test::BroadphaseFailureObjObj &bf_object,
-                std::istream &input_stream, const char *format) {
-  std::ios_base::fmtflags fmt_flags = input_stream.flags();
-  // std::hexfloat(input_stream); // hexadecimal float representation
-  std::streamsize old_precision = input_stream.precision();
-
-  input_stream.precision(std::numeric_limits<double>::max_digits10 - 1);
-  s11nlite::serializer_class(format);
-  typedef s11nlite::micro_api<BroadphaseFailure_obj_objExport> BFImportAPI;
-  BFImportAPI obj_import_api(format);
-  std::shared_ptr<BroadphaseFailure_obj_objExport> loaded_obj_final_ptr(
-      obj_import_api.load(input_stream));
-
-  if (!loaded_obj_final_ptr.get() ||
-      !loaded_obj_final_ptr.get()->getFailure()) {
-    input_stream.precision(old_precision);
-    input_stream.flags(fmt_flags);  // restore flags
-    return -1;
-  }
-
-  bf_object = *(static_cast<const test::BroadphaseFailureObjObj *>(
-      loaded_obj_final_ptr.get()->getFailure()));
-
-  input_stream.precision(old_precision);
-  input_stream.flags(fmt_flags);  // restore flags
-  return 0;
-}
-
-int deserialize(test::BroadphaseFailureCCObj &bf_object,
-                std::istream &input_stream, const char *format) {
-  std::ios_base::fmtflags fmt_flags = input_stream.flags();
-  // std::hexfloat(input_stream); // hexadecimal float representation
-  std::streamsize old_precision = input_stream.precision();
-
-  input_stream.precision(std::numeric_limits<double>::max_digits10 - 1);
-  s11nlite::serializer_class(format);
-  typedef s11nlite::micro_api<BroadphaseFailure_cc_objExport> BFImportAPI;
-  BFImportAPI obj_import_api(format);
-  std::shared_ptr<BroadphaseFailure_cc_objExport> loaded_obj_final_ptr(
-      obj_import_api.load(input_stream));
-
-  if (!loaded_obj_final_ptr.get() ||
-      !loaded_obj_final_ptr.get()->getFailure()) {
-    input_stream.precision(old_precision);
-    input_stream.flags(fmt_flags);  // restore flags
-    return -1;
-  }
-
-  bf_object = *(static_cast<const test::BroadphaseFailureCCObj *>(
-      loaded_obj_final_ptr.get()->getFailure()));
-
-  input_stream.precision(old_precision);
-  input_stream.flags(fmt_flags);  // restore flags
-  return 0;
 }
 
 int deserialize(CollisionObjectConstPtr &collision_object,

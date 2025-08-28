@@ -80,12 +80,4 @@
 #define S11N_TYPE_NAME "CollisionCheckerExport"
 #include <s11n.net/s11n/reg_s11n_traits.hpp>
 
-#define S11N_TYPE collision::serialize::BroadphaseFailure_obj_objExport
-#define S11N_TYPE_NAME "BroadphaseFailure_obj_objExport"
-#include <s11n.net/s11n/reg_s11n_traits.hpp>
-
-#define S11N_TYPE collision::serialize::BroadphaseFailure_cc_objExport
-#define S11N_TYPE_NAME "BroadphaseFailure_cc_objExport"
-#include <s11n.net/s11n/reg_s11n_traits.hpp>
-
 #endif

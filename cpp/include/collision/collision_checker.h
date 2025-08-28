@@ -43,9 +43,6 @@ class CollisionChecker;
 
 */
 class CollisionChecker : public ICollisionChecker {
-#if ENABLE_COLLISION_TESTS == 1
-  friend class collision::test::CollisionCheckerTest;
-#endif
 
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -74,19 +71,7 @@ class CollisionChecker : public ICollisionChecker {
                 bool remove_overlaps = true);
 
   int collisionTime(CollisionObjectConstPtr co) const;
-#if (ENABLE_COLLISION_TESTS)
-  bool collide(CollisionObjectConstPtr co, int *collision_time = 0,
-               bool enable_test = true) const;
-  bool collide(CollisionObjectConstPtr co, CollisionObjectConstPtr &obstacle,
-               bool ungroup_shape_groups = false,
-               bool ungroup_TV_obstacles = false,
-               bool enable_test = true) const;
-  bool collide(CollisionObjectConstPtr co,
-               std::vector<CollisionObjectConstPtr> &obstacles,
-               bool ungroup_shape_groups = false,
-               bool ungroup_TV_obstacles = false,
-               bool enable_test = true) const;
-#else
+
   bool collide(CollisionObjectConstPtr co, int *collision_time = 0) const;
   bool collide(CollisionObjectConstPtr co, CollisionObjectConstPtr &obstacle,
                bool ungroup_shape_groups = false,
@@ -95,7 +80,6 @@ class CollisionChecker : public ICollisionChecker {
                std::vector<CollisionObjectConstPtr> &obstacles,
                bool ungroup_shape_groups = false,
                bool ungroup_TV_obstacles = false) const;
-#endif
 
   CollisionCheckerPtr windowQuery(const RectangleAABB &aabb) const;
   PrimitiveCollisionCheckerPtr windowQueryPrimitive(

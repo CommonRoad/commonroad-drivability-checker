@@ -2,8 +2,8 @@
 
 #include "collision/collision_checker.h"
 #include "collision/shape_group.h"
-#include "collision/tests/broadphase_test2.h"
 #include <nanobind/stl/shared_ptr.h>
+#include "collision/tests/broadphase_test.h"
 
 namespace nb = nanobind;
 

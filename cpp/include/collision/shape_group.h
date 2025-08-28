@@ -19,6 +19,10 @@
 
 namespace collision {
 
+namespace test {
+  class ShapeGroupTest;
+}
+
 typedef std::shared_ptr<ShapeGroup> ShapeGroupPtr;
 typedef std::shared_ptr<const ShapeGroup> ShapeGroupConstPtr;
 
@@ -33,9 +37,8 @@ typedef std::shared_ptr<const ShapeGroup> ShapeGroupConstPtr;
 class ShapeGroup : public CollisionObject,
                    public ICollisionContainer,
                    public IFCLCollisionObjectGroup {
-#if ENABLE_COLLISION_TESTS == 1
+
   friend class collision::test::ShapeGroupTest;
-#endif
 
 
  public:
