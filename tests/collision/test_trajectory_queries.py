@@ -1,8 +1,12 @@
 import commonroad_dc.collision.trajectory_queries.trajectory_queries as trajectory_queries
 import commonroad_dc.pycrcc as pycrcc
 import numpy as np
-from random_object_creator import RandomObjectCreator
 
+if __name__ == "__main__":
+    from random_object_creator import RandomObjectCreator
+else:
+    from .random_object_creator import RandomObjectCreator
+from tqdm import tqdm
 
 creator = RandomObjectCreator(-20, 20, -20, 20, 500, 500)
 
@@ -32,13 +36,13 @@ def get_gt_result(traj_list, dyn_obstacles):
 
 
 def verify_tolerance(obj1, obj2):
-    tol_res = [True]
+    tol_res = True
     try:
-        tol_res = pycrcc.Util.experimental.tolerance_negative_query(obj1, obj2, False, 1e-10, 1e-6)
+        tol_res = pycrcc.Test.is_borderline_case_aabb_tvobstacle_support(obj1, obj2)
     except(Exception):
         pass
 
-    return tol_res[0]
+    return tol_res
 
 
 def verify_differences(res_1, res_2, traj_list, dyn_obstacles):
@@ -52,7 +56,7 @@ def verify_differences(res_1, res_2, traj_list, dyn_obstacles):
 
         obj1 = traj.obstacle_at_time(ind)
         if obj1 is None:
-            print('sanity check failed: the trajectory has no object at the returned index')
+            print('test_trajectory_queries: sanity check failed: the trajectory has no object at the returned index')
             return False
         sg_obstacles = pycrcc.ShapeGroup()
         for dyn_obst in dyn_obstacles:
@@ -61,16 +65,7 @@ def verify_differences(res_1, res_2, traj_list, dyn_obstacles):
                 sg_obstacles.add_shape(obj2)
         tol_res = verify_tolerance(obj1, sg_obstacles)
         if tol_res == False:
-            """
-            plt.figure(figsize=(10, 10))
-            draw_object(obj1, draw_params={'collision': {'facecolor': 'green'}})
-            draw_object(sg_obstacles, draw_params={'collision': {'facecolor': 'red'}})
-
-            plt.autoscale()
-            plt.axis('equal')
-            plt.show()
-            """
-            print('trajectory query failure')
+            print('test_trajectory_queries: trajectory query failure')
             return False
         return True
 
@@ -95,36 +90,40 @@ def generate_random_trajectory():
     return tvobst
 
 
-iter_max = 5000
-iter = 0
-while iter <= iter_max:
-    iter = iter + 1
-    traj_list = list()
-    for i in range(10):
-        traj = generate_random_trajectory()
-        traj_list.append(traj)
-    dyn_obstacles = list()
-    for i in range(3):
-        dyn_obstacles.append(generate_random_trajectory())
+def run_test():
+    iter_max = 10000
+    is_correct = True
+    for iter in tqdm(range(iter_max)):
+        traj_list = list()
+        for i in range(10):
+            traj = generate_random_trajectory()
+            traj_list.append(traj)
+        dyn_obstacles = list()
+        for i in range(3):
+            dyn_obstacles.append(generate_random_trajectory())
 
-    res_grid = np.asarray(
-        trajectory_queries.trajectories_collision_dynamic_obstacles(traj_list, dyn_obstacles, method='grid'))
-    res_fcl = np.asarray(
-        trajectory_queries.trajectories_collision_dynamic_obstacles(traj_list, dyn_obstacles, method='fcl'))
-    res_box2d = np.asarray(
-        trajectory_queries.trajectories_collision_dynamic_obstacles(traj_list, dyn_obstacles, method='box2d'))
-    res_gt = np.asarray(get_gt_result(traj_list, dyn_obstacles))
+        res_grid = np.asarray(
+            trajectory_queries.trajectories_collision_dynamic_obstacles(traj_list, dyn_obstacles, method='grid'))
+        res_fcl = np.asarray(
+            trajectory_queries.trajectories_collision_dynamic_obstacles(traj_list, dyn_obstacles, method='fcl'))
+        res_box2d = np.asarray(
+            trajectory_queries.trajectories_collision_dynamic_obstacles(traj_list, dyn_obstacles, method='box2d'))
+        res_gt = np.asarray(get_gt_result(traj_list, dyn_obstacles))
 
-    if not (np.array_equal(res_grid, res_fcl) and np.array_equal(res_grid, res_box2d)):
-        verify_differences(res_grid, res_fcl, traj_list, dyn_obstacles)
-        verify_differences(res_grid, res_box2d, traj_list, dyn_obstacles)
+        if not (np.array_equal(res_grid, res_fcl) and np.array_equal(res_grid, res_box2d)):
+            is_correct = is_correct and verify_differences(res_grid, res_fcl, traj_list, dyn_obstacles)
+            is_correct = is_correct and verify_differences(res_grid, res_box2d, traj_list, dyn_obstacles)
 
-        print('differences between 3 methods')
-    if not np.array_equal(res_fcl, res_gt):
-        print('difference between fcl and gt')
-        if verify_differences(res_fcl, res_gt, traj_list, dyn_obstacles) == False:
-            incorrect = get_gt_result(traj_list, dyn_obstacles)
-    if iter % 1000 == 0:
-        print(iter)
+            print('test_trajectory_queries: differences between 3 methods')
+        if not np.array_equal(res_fcl, res_gt):
+            print('test_trajectory_queries: difference between fcl and gt')
+            if verify_differences(res_fcl, res_gt, traj_list, dyn_obstacles) == False:
+                is_correct = False
+                incorrect = get_gt_result(traj_list, dyn_obstacles)
 
-    pass
+    return is_correct == False
+
+
+if __name__ == "__main__":
+    if (run_test() == True):
+        exit(1)

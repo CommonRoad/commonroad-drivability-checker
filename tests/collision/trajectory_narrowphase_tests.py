@@ -1,7 +1,11 @@
-from random_object_creator import RandomObjectCreator
+if __name__ == "__main__":
+    from random_object_creator import RandomObjectCreator
+else:
+    from .random_object_creator import RandomObjectCreator
 import commonroad_dc.collision.trajectory_queries.trajectory_queries as trajectory_queries
-
 import commonroad_dc.pycrcc as pycrcc
+import shapely
+from tqdm import tqdm
 
 creator = RandomObjectCreator(-20, 20, -20, 20, 500, 500)
 
@@ -18,39 +22,61 @@ def trajectory_narrowphase_query(method, obj1, obj2):
     return ret
 
 
-def verify_tolerance_narrowphase(obj1, obj2):
-    tol_res = [True]
-    try:
-        tol_res = pycrcc.Util.experimental.tolerance_negative_query(obj1, obj2, False, 1e-10, 1e-6)
-    except(Exception):
-        pass
-
-    return tol_res[0]
-
-
 import os
 import pickle
 
 
 def dump_narrowphase_failure(obj1, obj2):
     i = 0
-    while os.path.exists("dumps/narrowphase_dump_1_%s.xml" % i):
+    while os.path.exists("dumps/trajectory_narrowphase_dump_1_%s.xml" % i):
         i += 1
-    with open("dumps/narrowphase_dump_1_%s.xml" % i, 'wb') as f:
+    with open("dumps/trajectory_narrowphase_dump_1_%s.xml" % i, 'wb') as f:
         pickle.dump(obj1, f)
-    with open("dumps/narrowphase_dump_2_%s.xml" % i, 'wb') as f:
+    with open("dumps/trajectory_narrowphase_dump_2_%s.xml" % i, 'wb') as f:
         pickle.dump(obj2, f)
+
+
+def construct_shapely_polygon_obb(obb):
+    v1 = obb.center() - obb.r_x() * obb.local_x_axis() + obb.r_y() * obb.local_y_axis()
+    v2 = obb.center() + obb.r_x() * obb.local_x_axis() + obb.r_y() * obb.local_y_axis()
+    v3 = obb.center() + obb.r_x() * obb.local_x_axis() - obb.r_y() * obb.local_y_axis()
+    v4 = obb.center() - obb.r_x() * obb.local_x_axis() - obb.r_y() * obb.local_y_axis()
+
+    return shapely.Polygon([v1, v2, v3, v4])
+
+
+def construct_shapely_polygon_tri(tri):
+    return shapely.Polygon(tri.vertices())
+
+
+def construct_shapely_polygon(obj):
+    if obj.__class__.__name__ == "RectOBB":
+        return construct_shapely_polygon_obb(obj)
+    else:
+        if obj.__class__.__name__ == "Triangle":
+            return construct_shapely_polygon_tri(obj)
+    raise Exception("narrowphase type is not supported for the construction of shapely polygons")
+
+
+def intersect_at_the_border(obj1, obj2, eps=1e-12):
+    poly1 = construct_shapely_polygon(obj1)
+    poly2 = construct_shapely_polygon(obj2)
+    if (poly1.intersection(poly2).area <= eps and poly1.distance(poly2) <= eps):
+        return True
+    return False
 
 
 def narrowphase_test(obj1, obj2):
     col_res_fcl = obj1.collide(obj2)
     col_res_traj_narrowphase = trajectory_narrowphase_query('grid', obj1, obj2)
     if col_res_fcl != col_res_traj_narrowphase:
-        res = True  # verify_tolerance_narrowphase(obj1,obj2)
-        if True:  # dump all suspicious cases including very small numeric differences
+        if obj1.__class__.__name__ == "ShapeGroup":
+            res = intersect_at_the_border(obj1.unpack()[0], obj2)
+        else:
+            res = intersect_at_the_border(obj1, obj2)
+        if res == False:
             dump_narrowphase_failure(obj1, obj2)
             print('case dumped')
-
         return res
     else:
         return True
@@ -94,17 +120,26 @@ def sg_test():
     return narrowphase_test(sg1, obj2)
 
 
-iter = 0
-iter_max = 5000
-while iter <= iter_max:
-    iter = iter + 1
-    passed = True
-    passed = passed and obb_obb_test()
-    passed = passed and obb_triangle_test()
-    passed = passed and tri_tri_test()
-    # passed=passed and random_shape_test()
-    passed = passed and sg_test()
-    if passed == False:
-        print('test failed')
-    if iter % 10000 == 0:
-        print(iter)
+def run_test():
+    os.makedirs("dumps", exist_ok=True)
+    iter_max = 10000
+    has_error = False
+    for iter in tqdm(range(iter_max)):
+        passed = True
+        ret = obb_obb_test()
+        passed = passed and ret
+        ret = obb_triangle_test()
+        passed = passed and ret
+        ret = tri_tri_test()
+        passed = passed and ret
+        ret = sg_test()
+        passed = passed and ret
+        if passed == False:
+            print('trajectory_narrowphase_tests: test failed')
+            has_error = True
+    return has_error
+
+
+if __name__ == "__main__":
+    if run_test() == True:
+        exit(1)

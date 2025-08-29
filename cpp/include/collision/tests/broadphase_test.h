@@ -14,6 +14,9 @@ class ShapeGroup;
 namespace collision {
 namespace test {
 
+bool is_borderline_case_tvobstacle_support(CollisionObjectConstPtr obj,
+		CollisionObjectConstPtr co);
+
 class CollisionCheckerTest {
  public:
   static bool run_test_collide(CollisionObjectConstPtr co,

@@ -19,6 +19,9 @@ bool test_tolerance_check(CollisionObjectConstPtr co,
                           const CollisionChecker *cc);
 int aabb_tolerance_check(CollisionObjectConstPtr obj1, CollisionObjectConstPtr obj2, bool& tolerance_result, double& distance);
 
+bool is_borderline_case_sg_support(CollisionObjectConstPtr obj1,
+		CollisionObjectConstPtr obj2);
+
 #define AABB_TOLERANCE_THRESHOLD 1e-10;
 
 // tests collision checker broadphase algorithms
@@ -501,16 +504,17 @@ bool ShapeGroupTest::run_test_collide(CollisionObjectConstPtr co,
                                       const ShapeGroup *sg) {
   bool res = test_collide(co, sg);
   if (!res) {
-    bool local_failure1 = false;
+    bool no_failure = false;
     for (auto el : sg->unpack()) {
       bool tolerance_result = false;
       double distance = 0;
-		if (!aabb_tolerance_check(co, el, tolerance_result, distance) && !tolerance_result) {
-			local_failure1 = true;
+		if (!aabb_tolerance_check(co, el, tolerance_result, distance) && tolerance_result) {
+			// there is a shape with AABB colliding on the border
+			no_failure = true;
 			break;
 		}
     }
-    if (local_failure1) {
+    if (!no_failure) {
     	return false;
     }
   }
@@ -520,24 +524,41 @@ bool ShapeGroupTest::run_test_collide(CollisionObjectConstPtr co,
 bool ShapeGroupTest::run_test_collide(const ShapeGroup *sg1,
                                       const ShapeGroup *sg2) {
   bool res = test_collide(sg1, sg2);
+  bool res_true_failure = !res && !is_borderline_case_sg_support(sg1->shared_from_this(), sg2->shared_from_this());
 
   bool res2 = test_overlap_map(sg1, sg2);
-  if (!res || !res2)
+  if (res_true_failure || !res2)
   {
     res = test_collide(sg1, sg2);
     res2 = test_overlap_map(sg1, sg2);
   }
-  return res && res2;
+  return !res_true_failure && res2;
 }
 
 bool CollisionCheckerTest::run_test_collide(CollisionObjectConstPtr co,
-                                            const CollisionChecker *cc) {
-  return test_collide(co, cc);
+		const CollisionChecker *cc) {
+	bool res = test_collide(co, cc);
+	if (!res) {
+		bool tolerance_result = test_tolerance_check(co, cc);
+		if (tolerance_result) {
+			// there are no objects with AABBs very close to each other, intersecting just on the border
+			return false;
+		}
+	}
+	return true;
 }
 
-bool CollisionCheckerTest::run_test_collide_obstacle(
-    CollisionObjectConstPtr co, const CollisionChecker *cc) {
-  return test_collide_obstacle(co, cc);
+bool CollisionCheckerTest::run_test_collide_obstacle(CollisionObjectConstPtr co,
+		const CollisionChecker *cc) {
+	bool res = test_collide_obstacle(co, cc);
+	if (!res) {
+		bool tolerance_result = test_tolerance_check(co, cc);
+		if (tolerance_result) {
+			// there are no objects with AABBs very close to each other, intersecting just on the border
+			return false;
+		}
+	}
+	return true;
 }
 
 bool CollisionCheckerTest::run_test_collide_obstacles(
@@ -551,15 +572,16 @@ bool CollisionCheckerTest::run_test_collide_obstacles(
     for (auto &obst : missed_obstacles) {
       bool naive_collide = obst->collide(*co, CollisionRequest(COL_DEFAULT));
       bool non_naive_collide = obst->collide(*co, CollisionRequest(COL_FCL));
-      std::cout << "[CollisionCheckerTest::run_test_collide_obstacles]: CollisionChecker broadphase missed an obstacle as "
-    		  "compared to using bruteforce collision checking. Checking if there are objects with AABBs that intersect just on the border.\n";
+      std::cout << "Warning [CollisionCheckerTest::run_test_collide_obstacles]: CollisionChecker broadphase missed an obstacle as "
+    		  "compared to using bruteforce collision checking. This is not considered to be an error if there are objects with AABBs "
+    		  "that intersect just on the border. Checking if this is the case...\n";
       cc2.addCollisionObject(obst);
     }
     for (auto &obst : missed_obstacles_primit) {
       bool naive_collide = obst->collide(*co, CollisionRequest(COL_DEFAULT));
       bool non_naive_collide = obst->collide(*co, CollisionRequest(COL_FCL));
-      std::cout << "[CollisionCheckerTest::run_test_collide_obstacles]: Bruteforce collision check missed an obstacle "
-    		  "as compared to using FCL broadphase. Checking if there are objects with AABBs that intersect just on the border.\n";
+      std::cout << "Warning [CollisionCheckerTest::run_test_collide_obstacles]: Bruteforce collision check missed an obstacle "
+    		  "as compared to using FCL broadphase. Checking if there are objects with AABBs that intersect just on the border...\n";
     }
     bool tolerance_result = test_tolerance_check(co, &cc2);
     if (tolerance_result) {

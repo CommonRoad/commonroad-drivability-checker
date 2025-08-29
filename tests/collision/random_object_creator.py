@@ -72,7 +72,16 @@ class RandomObjectCreator:
         p1 = self.generate_random_vector()
         p2 = self.generate_random_vector()
         p3 = self.generate_random_vector()
-        return pycrcc.Triangle(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1])
+        vertices = [p1, p2, p3]
+        signed_area_sum = 0.
+        for i in range(len(vertices)):
+            x1, y1 = vertices[i]
+            x2, y2 = vertices[(i + 1) % len(vertices)]
+            signed_area_sum += (x1 * y2 - x2 * y1)
+        if signed_area_sum > 0.:
+            return pycrcc.Triangle(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1])
+        else:
+            return pycrcc.Triangle(p1[0], p1[1], p3[0], p3[1], p2[0], p2[1])
 
     def create_random_polygon(self, tri_count=-1):
         if tri_count == -1:
@@ -97,7 +106,7 @@ class RandomObjectCreator:
     def create_random_shape_group(self, shape_count=-1):
         if shape_count == -1:
             shape_count = np.random.choice(range(1, 50))
-        assert ((shape_count > 0) and (shape_count == int(shape_count)))
+        assert ((shape_count >= 0) and (shape_count == int(shape_count)))
         shapes = list()
         for i in range(shape_count):
             new_shape = self.create_random_shape()

@@ -1,7 +1,6 @@
 # import matplotlib.pyplot as plt
 
 import commonroad_dc.pycrcc as pycrcc
-
 import unittest
 
 

@@ -42,5 +42,10 @@ void export_test(nb::module_ &module) {
 				return CollisionCheckerTest::run_test_collide_obstacles(obj,
 						cc.get());
 			});
+	mtest.def("is_borderline_case_aabb_tvobstacle_support",
+			[](collision::CollisionObjectConstPtr obj1,
+					collision::CollisionObjectConstPtr obj2) {
+				return is_borderline_case_tvobstacle_support(obj1, obj2);
+			});
 
 }
