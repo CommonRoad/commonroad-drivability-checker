@@ -53,7 +53,7 @@ class FCLCollisionObject : public SolverEntity_FCL {
   }
 
  private:
-  mutable bool object_cached;
+  mutable bool object_cached = false;
   mutable std::shared_ptr<fcl::CollisionObject<FCL_PRECISION>> fcl_col_obj;
   mutable std::shared_ptr<fcl::CollisionGeometry<FCL_PRECISION>> fcl_geometry;
   const CollisionObject *m_parent;

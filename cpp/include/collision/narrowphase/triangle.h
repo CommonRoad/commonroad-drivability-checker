@@ -27,6 +27,7 @@ class Triangle : public Shape {
     segments_.push_back(LineSegment(_v1, _v2));
     segments_.push_back(LineSegment(_v2, _v3));
     segments_.push_back(LineSegment(_v3, _v1));
+    compute_is_valid();
   }
 
   bool rayTrace(const Eigen::Vector2d &point1, const Eigen::Vector2d &point2,
@@ -70,6 +71,10 @@ class Triangle : public Shape {
 
   std::vector<LineSegment> segments(void) const { return segments_; };
 
+  bool is_valid() const override {
+	  return is_valid_;
+  }
+
  private:
   fcl::CollisionGeometry<FCL_PRECISION> *createFCLCollisionGeometry(
       void) const override;
@@ -81,6 +86,7 @@ class Triangle : public Shape {
 
   Eigen::Vector2d compute_center();
   void compute_incircle_radius_and_center();
+  bool compute_is_valid();
 
   using Shape::center_;
   using Shape::radius_;
@@ -90,6 +96,7 @@ class Triangle : public Shape {
   Eigen::Vector2d v3_;
 
   double incircle_radius_ = 0;
+  bool is_valid_;
   Eigen::Vector2d incenter_;
 
   static constexpr ShapeType type_ = TYPE_TRIANGLE;

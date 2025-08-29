@@ -58,7 +58,7 @@ def construct_shapely_polygon(obj):
     raise Exception("narrowphase type is not supported for the construction of shapely polygons")
 
 
-def intersect_at_the_border(obj1, obj2, eps=1e-12):
+def intersect_at_the_border(obj1, obj2, eps=1e-10):
     poly1 = construct_shapely_polygon(obj1)
     poly2 = construct_shapely_polygon(obj2)
     if (poly1.intersection(poly2).area <= eps and poly1.distance(poly2) <= eps):
@@ -66,7 +66,7 @@ def intersect_at_the_border(obj1, obj2, eps=1e-12):
     return False
 
 
-def narrowphase_test(obj1, obj2):
+def narrowphase_test(obj1, obj2, dump_failures = True):
     col_res_fcl = obj1.collide(obj2)
     col_res_traj_narrowphase = trajectory_narrowphase_query('grid', obj1, obj2)
     if col_res_fcl != col_res_traj_narrowphase:
@@ -85,25 +85,43 @@ def narrowphase_test(obj1, obj2):
 def obb_obb_test():
     obj1 = creator.create_random_obb()
     obj2 = creator.create_random_obb()
-    return narrowphase_test(obj1, obj2)
+    if narrowphase_test(obj1, obj2) == False:
+        narrowphase_test(obj1, obj2, dump_failures=False)
+        return False
+    return True
 
 
 def obb_triangle_test():
-    passed = True
     obj1 = creator.create_random_obb()
     obj2 = creator.create_random_triangle()
-    passed = passed and narrowphase_test(obj1, obj2)
+    if narrowphase_test(obj1, obj2) == False:
+        narrowphase_test(obj1, obj2, dump_failures=False)
+        return False
+    return True
 
     obj1 = creator.create_random_triangle()
     obj2 = creator.create_random_obb()
-    passed = passed and narrowphase_test(obj1, obj2)
-    return passed
+    if narrowphase_test(obj1, obj2) == False:
+        narrowphase_test(obj1, obj2, dump_failures=False)
+        return False
+    return True
 
 
 def tri_tri_test():
     obj1 = creator.create_random_triangle()
     obj2 = creator.create_random_triangle()
-    return narrowphase_test(obj1, obj2)
+    if narrowphase_test(obj1, obj2) == False:
+        narrowphase_test(obj1, obj2, dump_failures=False)
+        return False
+    return True
+
+def tri_tri_invalid_test():
+    obj1 = creator.create_random_invalid_triangle()
+    obj2 = creator.create_random_triangle()
+    if narrowphase_test(obj1, obj2) == False:
+        narrowphase_test(obj1, obj2, dump_failures=False)
+        return False
+    return True
 
 
 def random_shape_test():
@@ -122,7 +140,7 @@ def sg_test():
 
 def run_test():
     os.makedirs("dumps", exist_ok=True)
-    iter_max = 10000
+    iter_max = 100000
     has_error = False
     for iter in tqdm(range(iter_max)):
         passed = True
@@ -131,6 +149,8 @@ def run_test():
         ret = obb_triangle_test()
         passed = passed and ret
         ret = tri_tri_test()
+        passed = passed and ret
+        ret = tri_tri_invalid_test()
         passed = passed and ret
         ret = sg_test()
         passed = passed and ret

@@ -8,7 +8,7 @@ namespace solverFCL {
 CollisionObjectConstPtr errObj;
 
 CollisionObject *getParentPointerFromFclObj(
-    fcl::CollisionObject<FCL_PRECISION> *fcl_obj) {
+    const fcl::CollisionObject<FCL_PRECISION> *fcl_obj) {
   CollisionObjectConstPtr ret_obj;
 
   if (fcl_obj) {

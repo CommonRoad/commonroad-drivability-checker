@@ -12,11 +12,35 @@ class Triangle_SAT2D {
     corner.col(1) = tri.v2();
     corner.col(2) = tri.v3();
 
+
+    double area = 0.0;
+    area += (tri.v1().x() * tri.v2().y() - tri.v2().x() * tri.v1().y());
+    area += (tri.v2().x() * tri.v3().y() - tri.v3().x() * tri.v2().y());
+    area += (tri.v3().x() * tri.v1().y() - tri.v1().x() * tri.v3().y());
+
+    area = fabs(area / 2.0);
+
+    auto side1=corner.col(1) - corner.col(0);
+    auto side2=corner.col(2) - corner.col(0);
+    auto side3=corner.col(2) - corner.col(1);
+    auto side1_sqn=side1.squaredNorm();
+    auto side2_sqn=side2.squaredNorm();
+    auto side3_sqn=side3.squaredNorm();
+
+    auto max_side = sqrt(std::max({side1_sqn, side2_sqn, side3_sqn}));
+    auto min_side = sqrt(std::min({side1_sqn, side2_sqn, side3_sqn}));
+
+    // if a side is too small or the smallest altitude is too small then the triangle is invalid
+    if ((min_side < 1e-10) || (area / max_side) < 1e-10) {
+    	bValid = false;
+    	return;
+    }
+
     // axes computation
 
-    axes.col(0) = normal_vector(corner.col(1) - corner.col(0));
-    axes.col(1) = normal_vector(corner.col(2) - corner.col(0));
-    axes.col(2) = normal_vector(corner.col(2) - corner.col(1));
+    axes.col(0) = normal_vector(side1);
+    axes.col(1) = normal_vector(side2);
+    axes.col(2) = normal_vector(side3);
 
     for (int c1 = 0; c1 < 3; c1++) {
       axes.col(c1).normalize();

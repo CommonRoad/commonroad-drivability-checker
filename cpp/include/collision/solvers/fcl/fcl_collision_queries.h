@@ -74,7 +74,7 @@ inline bool fcl_collide(const fcl::CollisionObject<FCL_PRECISION> &object_A,
   fcl::CollisionResult<FCL_PRECISION> collisionResult;
   collisionRequest.enable_cost = false;
   collisionRequest.gjk_solver_type = FCL_SOLVER_TYPE;
-  fcl::collide(&object_A, &object_B, collisionRequest, collisionResult);
+  collide_with_validity_check(&object_A, &object_B, collisionRequest, collisionResult);
   return collisionResult.isCollision();
 }
 

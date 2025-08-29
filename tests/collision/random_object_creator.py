@@ -83,6 +83,27 @@ class RandomObjectCreator:
         else:
             return pycrcc.Triangle(p1[0], p1[1], p3[0], p3[1], p2[0], p2[1])
 
+    def create_random_invalid_triangle(self):
+        v3=np.zeros(2)
+        v1=np.zeros(2)
+        while (np.linalg.norm(v3-v1)==0.):
+            v1 = np.asarray(self.generate_random_vector())
+            v3 = np.asarray(self.generate_random_vector())
+        v3_v1 = v3 - v1
+        v3_v1 /= np.linalg.norm(v3_v1)
+        normal = np.asarray([v3_v1[1], -1 * v3_v1[0]])
+        v2 = v3 + (v3 - v1) / 3 + normal * 1e-20
+        vertices = [v1, v2, v3]
+        signed_area_sum = 0.
+        for i in range(len(vertices)):
+            x1, y1 = vertices[i]
+            x2, y2 = vertices[(i + 1) % len(vertices)]
+            signed_area_sum += (x1 * y2 - x2 * y1)
+        if signed_area_sum > 0.:
+            return pycrcc.Triangle(v1[0], v1[1], v2[0], v2[1], v3[0], v3[1])
+        else:
+            return pycrcc.Triangle(v1[0], v1[1], v3[0], v3[1], v2[0], v2[1])
+
     def create_random_polygon(self, tri_count=-1):
         if tri_count == -1:
             tri_count = np.random.choice(range(1, 50))

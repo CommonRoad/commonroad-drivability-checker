@@ -128,7 +128,7 @@ class CollisionObject : public std::enable_shared_from_this<CollisionObject> {
         void) const {
       return nullptr;
     }
-
+    virtual bool is_valid() const { return true;}
   protected:
     void invalidateCollisionEntityCache(void);
 
