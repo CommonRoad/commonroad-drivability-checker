@@ -7,7 +7,7 @@
 #include "collision/solvers/boost/boost_collision_queries.h"
 #include "collision/solvers/fcl/fcl_decl.h"
 #include "collision/solvers/fcl/fcl_transform.h"
-
+#include "collision/solvers/accelerators/declarations.h"
 
 #include "collision/narrowphase/polygon.h"
 
@@ -113,21 +113,38 @@ bool Polygon::isWithin(const Polygon &poly2) const {
 
 fcl::CollisionGeometry<FCL_PRECISION> *Polygon::createFCLCollisionGeometry(
     void) const {
-  fcl::BVHModel<fcl::AABB<FCL_PRECISION>> *model =
-      new fcl::BVHModel<fcl::AABB<FCL_PRECISION>>();
-  model->beginModel(mesh_triangles_.size(), mesh_triangles_.size() * 3);
-  fcl::Vector3<FCL_PRECISION> v3(0, 0, 0);
+
+  // exclude invalid triangles from the fcl model
+  aligned_vector<const Triangle*> tris;
+  tris.reserve(mesh_triangles_.size());
   for (auto &tr : mesh_triangles_) {
-    Eigen::Vector2d v2d = tr->v1();
-    fcl::Vector3<FCL_PRECISION> v1(v2d[0], v2d[1], 0);
-    v2d = tr->v2();
-    fcl::Vector3<FCL_PRECISION> v2(v2d[0], v2d[1], 0);
-    v2d = tr->v3();
-    fcl::Vector3<FCL_PRECISION> v3(v2d[0], v2d[1], 0);
-    model->addTriangle(v1, v2, v3);
+	  if(tr->is_valid()) {
+		  tris.push_back(tr.get());
+	  }
   }
-  model->endModel();
-  return model;
+  if (tris.size()) {
+	  fcl::BVHModel<fcl::AABB<FCL_PRECISION>> *model =
+	      new fcl::BVHModel<fcl::AABB<FCL_PRECISION>>();
+	  model->beginModel(tris.size(), tris.size() * 3);
+	  fcl::Vector3<FCL_PRECISION> v3(0, 0, 0);
+	  for (auto tr : tris) {
+		Eigen::Vector2d v2d = tr->v1();
+		fcl::Vector3<FCL_PRECISION> v1(v2d[0], v2d[1], 0);
+		v2d = tr->v2();
+		fcl::Vector3<FCL_PRECISION> v2(v2d[0], v2d[1], 0);
+		v2d = tr->v3();
+		fcl::Vector3<FCL_PRECISION> v3(v2d[0], v2d[1], 0);
+		model->addTriangle(v1, v2, v3);
+	  }
+	  model->endModel();
+	  return model;
+  } else {
+	  is_valid_ = false;
+	  fcl::BVHModel<fcl::AABB<FCL_PRECISION>> *model =
+	  	      new fcl::BVHModel<fcl::AABB<FCL_PRECISION>>();
+	  return model;
+	  // will crash upon collision detection with the created fcl collision object unless is_valid_ is checked
+  }
 }
 fcl::CollisionObject<FCL_PRECISION> *Polygon::createFCLCollisionObject(
     const std::shared_ptr<fcl::CollisionGeometry<FCL_PRECISION>> &col_geom)

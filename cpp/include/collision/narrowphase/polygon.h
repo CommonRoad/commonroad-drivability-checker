@@ -64,6 +64,8 @@ class Polygon : public Shape {
 
   ShapeType type(void) const;
 
+  bool is_valid() const { return is_valid_;}
+
   bool rayTrace(const Eigen::Vector2d &point1, const Eigen::Vector2d &point2,
                 std::vector<LineSegment> &intersect) const override;
 
@@ -105,6 +107,7 @@ class Polygon : public Shape {
   std::vector<Eigen::Vector2d> vertices_;
   std::vector<std::vector<Eigen::Vector2d>> hole_vertices_;
   std::vector<TriangleConstPtr> mesh_triangles_;
+  mutable bool is_valid_ = true;
 };
 
 }  // namespace collision
