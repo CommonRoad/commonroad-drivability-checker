@@ -47,5 +47,9 @@ void export_test(nb::module_ &module) {
 					collision::CollisionObjectConstPtr obj2) {
 				return is_borderline_case_tvobstacle_support(obj1, obj2);
 			});
-
+	mtest.def("collide", [](collision::CollisionObjectConstPtr obj1,
+			collision::CollisionObjectConstPtr obj2, int solver_type) {
+		collision::CollisionRequest req(static_cast<collision::CollisionSolverType>(solver_type));
+		return obj1->collide(*obj2, req);
+	});
 }

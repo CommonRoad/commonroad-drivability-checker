@@ -86,7 +86,7 @@ class Triangle : public Shape {
 
   Eigen::Vector2d compute_center();
   void compute_incircle_radius_and_center();
-  bool compute_is_valid();
+  void compute_is_valid();
 
   using Shape::center_;
   using Shape::radius_;

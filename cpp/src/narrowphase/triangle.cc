@@ -104,30 +104,30 @@ Eigen::Vector2d Triangle::compute_center() {
   return Eigen::Vector2d(x, y);
 }
 
-bool Triangle::compute_is_valid() {
-    double area = 0.0;
-    area += (v1().x() * v2().y() - v2().x() * v1().y());
-    area += (v2().x() * v3().y() - v3().x() * v2().y());
-    area += (v3().x() * v1().y() - v1().x() * v3().y());
+void Triangle::compute_is_valid() {
+	double area = 0.0;
+	area += (v1().x() * v2().y() - v2().x() * v1().y());
+	area += (v2().x() * v3().y() - v3().x() * v2().y());
+	area += (v3().x() * v1().y() - v1().x() * v3().y());
 
-    area = fabs(area / 2.0);
+	area = fabs(area / 2.0);
 
-    auto side1=v2() - v1();
-    auto side2=v3() - v1();
-    auto side3=v3() - v2();
-    auto side1_sqn=side1.squaredNorm();
-    auto side2_sqn=side2.squaredNorm();
-    auto side3_sqn=side3.squaredNorm();
+	auto side1 = v2() - v1();
+	auto side2 = v3() - v1();
+	auto side3 = v3() - v2();
+	double side1_sqn = side1.squaredNorm();
+	double side2_sqn = side2.squaredNorm();
+	double side3_sqn = side3.squaredNorm();
 
-    auto max_side = sqrt(std::max({side1_sqn, side2_sqn, side3_sqn}));
-    auto min_side = sqrt(std::min({side1_sqn, side2_sqn, side3_sqn}));
+	auto max_side = sqrt(std::max( { side1_sqn, side2_sqn, side3_sqn }));
+	auto min_side = sqrt(std::min( { side1_sqn, side2_sqn, side3_sqn }));
 
-    // if a side is too small or the smallest altitude is too small then the triangle is invalid
-    if ((min_side < 1e-10) || (area / max_side) < 1e-10) {
-    	is_valid_ = false;
-    } else {
-    	is_valid_ = true;
-    }
+	// if a side is too small or the smallest altitude is too small then the triangle is invalid
+	if ((min_side < 1e-10) || (area / max_side) < 1e-10) {
+		is_valid_ = false;
+	} else {
+		is_valid_ = true;
+	}
 }
 
 void Triangle::compute_incircle_radius_and_center() {

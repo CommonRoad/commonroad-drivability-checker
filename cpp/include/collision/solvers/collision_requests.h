@@ -1,7 +1,7 @@
 #pragma once
 namespace collision {
 
-enum CollisionSolverType { COL_DEFAULT = 0, COL_FCL = 1 };
+enum CollisionSolverType { COL_DEFAULT = 0, COL_FCL = 1, COL_PRIMITIVE = 2 };
 
 /*!
 \brief Structure holding result for a collision request
