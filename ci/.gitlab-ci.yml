@@ -16,11 +16,15 @@ default:
   before_script:
     - *update-git-config
 
+variables:
+  CXX_TEST_TARGET: "cpp_unit_tests"
+
 .python-versions: &python-versions
   - &default-python-version "3.10"
   - "3.11"
   - "3.12"
   - "3.13"
+  - "3.14"
 
 
 ### static test ###
@@ -87,6 +91,21 @@ build-clang:
     - cmake -G "Ninja Multi-Config" -S . -B build
     - cmake --build build --config Release
   needs: [ ]
+
+build-test:
+  stage: compile
+  cache:
+    <<: *cache_dependency_archives
+  script:
+    - cmake -G "Ninja Multi-Config" -S . -B build
+    - cmake --build build --config RelWithDebInfo --target $CXX_TEST_TARGET
+  needs: [ ]
+  artifacts:
+    paths:
+      - build/RelWithDebInfo/$CXX_TEST_TARGET
+      - build/**/*.so
+      - build/**/*.so.*
+    expire_in: 30 minutes
 
 
 ### build wheels ###
@@ -188,6 +207,15 @@ build-wheel-cibw:
         CIBW_BUILD: "*-manylinux_x86_64"
 
 ### run unit tests ###
+run-cpp-test:
+  stage: test
+  script:
+    - cd build
+    - RelWithDebInfo/$CXX_TEST_TARGET
+  needs:
+    - job: build-test
+      artifacts: true
+
 .test-setup:
   &test-setup
   stage: test
