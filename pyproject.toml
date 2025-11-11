@@ -1,6 +1,6 @@
 [project]
 name = "commonroad-drivability-checker"
-requires-python = ">=3.10,<3.14"
+requires-python = ">=3.10"
 version = "2025.3.1"
 description = "Drivability checker for CommonRoad scenarios."
 readme = { file = "README.md", content-type = "text/markdown" }
@@ -21,13 +21,13 @@ classifiers = [
 ]
 
 dependencies = [
-    "commonroad-io (>=2023.1, <2025.0)",
-    "commonroad-vehicle-models (>=3.0.0, <4.0.0)",
-    "numpy (>=1.20, <3.0)",
-    "scipy (>=1.7.0, <2.0)",
-    "polygon3 (>=3.0.8, <4.0.0)",
-    "shapely (>=2.0.0, <3.0.0)",
-    "matplotlib (>=3.2.2, <4.0.0)",
+    "commonroad-io>=2023.1",
+    "commonroad-vehicle-models>=3.0.0",
+    "numpy>=1.20",
+    "scipy>=1.7.0",
+    "polygon3>=3.0.8",
+    "shapely>=2.0.0",
+    "matplotlib>=3.2.2",
 ]
 
 [project.urls]
@@ -37,7 +37,7 @@ Source = "https://github.com/CommonRoad/commonroad-drivability-checker"
 
 [project.optional-dependencies]
 clcs = [
-    "commonroad-clcs (>=2025.1.0, <2026.0.0)",
+    "commonroad-clcs>=2025.1.0",
 ]
 triangle = [
     "triangle>=20250106",
@@ -78,7 +78,7 @@ wheel.packages = ["commonroad_dc"]
 build-dir = "build/{build_type}_{wheel_tag}"
 install.components = ["pycrcc"]
 
-minimum-version = "0.8"
+minimum-version = "0.11.0"
 cmake.version = ">=3.24"
 
 [tool.scikit-build.cmake.define]
