@@ -219,7 +219,7 @@ run-cpp-test:
 .test-setup:
   &test-setup
   stage: test
-  image: python:${PYTHON_VERSION}-slim-bullseye
+  image: python:${PYTHON_VERSION}-slim-bookworm
   before_script:
     # we need build-essential, since Polygon3 has to be compiled from source
     - apt-get update && apt-get install -y --no-install-recommends git build-essential
@@ -282,7 +282,7 @@ run-collision-test-cibw:
 # build the documentation (Doxygen + Sphinx)
 build-sphinx:
   stage: docs
-  image: python:${PYTHON_VERSION}-slim-bullseye
+  image: python:${PYTHON_VERSION}-slim-bookworm
   variables:
     PYTHON_VERSION: *default-python-version
   before_script:
