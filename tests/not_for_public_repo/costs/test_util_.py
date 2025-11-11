@@ -1,10 +1,7 @@
 import unittest
 import os
-import matplotlib
 from commonroad.common.solution import CommonRoadSolutionReader
 from commonroad_clcs import pycrccosy
-
-matplotlib.use('TkAgg')
 
 from commonroad.common.file_reader import CommonRoadFileReader
 from commonroad_dc.costs.route_matcher import *
@@ -46,9 +43,6 @@ class TestLaneletNetworkMatcher(unittest.TestCase):
 
                 plt.pause(0.01)
 
-        if self.draw is True:
-            plt.pause(1000)
-
     def test_find_lanelet_by_trajectory_oncoming_in_intersection(self):
         """Test whether correct path is found in intersection where vehicle drives into oncoming lane
         (no adjacency relation given)"""
@@ -79,7 +73,7 @@ class TestLaneletNetworkMatcher(unittest.TestCase):
         self.assertEqual([31740], lanelets)
 
     def test_compute_curvilinear_coordinates(self):
-        cy = pycrccosy.CurvilinearCoordinateSystem([[1.0, 1.0], [2.0, 1.0], [3.0, 1.0], [4.0, 1.0]])
+        cy = pycrccosy.CurvilinearCoordinateSystem(np.array([[1.0, 1.0], [2.0, 1.0], [3.0, 1.0], [4.0, 1.0]]))
 
         scenario_name = "USA_US101-23_1_T-1.xml"
         scenario, pp = CommonRoadFileReader(os.path.join(self.test_scenario_dir, scenario_name)).open()

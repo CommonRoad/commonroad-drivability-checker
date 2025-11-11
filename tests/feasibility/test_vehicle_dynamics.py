@@ -1,4 +1,6 @@
 import math
+from pathlib import Path
+
 import numpy as np
 import unittest
 import pickle
@@ -8,8 +10,10 @@ from commonroad.scenario.state import InputState, PMInputState, LKSInputState
 from scipy.integrate import odeint
 
 from commonroad_dc.feasibility.vehicle_dynamics import VehicleDynamics, LinearizedKSDynamics
-from dummy_data_generator import DummyDataGenerator
+from .dummy_data_generator import DummyDataGenerator
 
+
+THIS_DIR = Path(__file__).parent.absolute()
 
 class TestVehicleDynamics(unittest.TestCase):
 
@@ -39,7 +43,7 @@ class TestVehicleDynamics(unittest.TestCase):
 
         # instantiate LKS VehicleDynamics
         # load precomputed positions and orientations of reference path (here the reference path is simply a straight line)
-        with open('ref_pos_ref_theta.pkl', "rb") as f:
+        with open(THIS_DIR / "ref_pos_ref_theta.pkl", "rb") as f:
             ref_pos = pickle.load(f)
             ref_theta = pickle.load(f)
         cls.lks_dynamics = VehicleDynamics.LKS(VehicleType.BMW_320i, ref_pos=ref_pos, ref_theta=ref_theta)

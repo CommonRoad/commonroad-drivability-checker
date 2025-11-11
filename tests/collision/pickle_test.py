@@ -1,12 +1,8 @@
 import commonroad_dc.pycrcc as pycrcc
 import pickle
-import numpy as np
 from tqdm import tqdm
 
-if __name__ == "__main__":
-    from random_object_creator import RandomObjectCreator
-else:
-    from .random_object_creator import RandomObjectCreator
+from .random_object_creator import RandomObjectCreator
 
 
 def run_test():

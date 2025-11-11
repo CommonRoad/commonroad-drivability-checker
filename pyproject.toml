@@ -44,6 +44,7 @@ triangle = [
 ]
 test = [
     "pytest>=5.3.2",
+    "tqdm>=4.67.1",
 ]
 docs = [
     "sphinx_rtd_theme>=0.4.3",

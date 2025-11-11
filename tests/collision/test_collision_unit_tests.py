@@ -260,7 +260,3 @@ class TestCollision(unittest.TestCase):
 # def testTrajectory_Group:
 
 # def testTrajectory_Obj_:
-
-
-if __name__ == '__main__':
-    unittest.main()

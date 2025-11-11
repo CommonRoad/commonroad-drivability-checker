@@ -1,12 +1,9 @@
 import commonroad_dc.collision.trajectory_queries.trajectory_queries as trajectory_queries
 import commonroad_dc.pycrcc as pycrcc
 import numpy as np
-
-if __name__ == "__main__":
-    from random_object_creator import RandomObjectCreator
-else:
-    from .random_object_creator import RandomObjectCreator
 from tqdm import tqdm
+
+from .random_object_creator import RandomObjectCreator
 
 creator = RandomObjectCreator(-20, 20, -20, 20, 500, 500)
 

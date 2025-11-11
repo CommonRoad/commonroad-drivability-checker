@@ -11,13 +11,13 @@ from commonroad.planning.goal import GoalRegion
 from commonroad.planning.planning_problem import PlanningProblemSet, PlanningProblem
 from commonroad.scenario.scenario import ScenarioID
 from commonroad.scenario.trajectory import Trajectory
-from commonroad.scenario.state import InputState, PMInputState, PMState, KSState, STState, MBState, \
+from commonroad.scenario.state import State, InputState, PMInputState, PMState, KSState, STState, MBState, \
     CustomState
 
 import commonroad_dc.feasibility.feasibility_checker as feasibility_checker
 from commonroad_dc.feasibility.solution_checker import starts_at_correct_state, SolutionCheckerException
 from commonroad_dc.feasibility.vehicle_dynamics import VehicleDynamics
-from dummy_data_generator import DummyDataGenerator
+from .dummy_data_generator import DummyDataGenerator
 
 
 class TestFeasibilityChecker(unittest.TestCase):
@@ -151,7 +151,7 @@ class TestFeasibilityChecker(unittest.TestCase):
         init_state = DummyDataGenerator.create_random_initial_state(pos_min=-100.0, pos_max=100.0,
                                                                     v_min=-5, v_max=5,
                                                                     yaw_rate_max=np.pi / 10)
-        init_state_solution = copy.deepcopy(init_state)
+        init_state_solution = copy.deepcopy(init_state).convert_state_to_state(KSState())
         traj = Trajectory(0, state_list=[init_state_solution])
         pp_sol = PlanningProblemSolution(1, VehicleModel.KS, VehicleType.FORD_ESCORT, cost_function=CostFunction.SM1,
                                          trajectory=traj)
@@ -167,7 +167,7 @@ class TestFeasibilityChecker(unittest.TestCase):
         init_state = DummyDataGenerator.create_random_initial_state(pos_min=-100.0, pos_max=100.0,
                                                                     v_min=-5, v_max=5,
                                                                     yaw_rate_max=np.pi / 10)
-        init_state_solution = copy.deepcopy(init_state)
+        init_state_solution = copy.deepcopy(init_state).convert_state_to_state(KSState())
         init_state_solution.position[0] = 1000
         traj = Trajectory(0, state_list=[init_state_solution])
         pp_sol = PlanningProblemSolution(1, VehicleModel.KS, VehicleType.FORD_ESCORT, cost_function=CostFunction.SM1,
@@ -189,7 +189,7 @@ class TestFeasibilityChecker(unittest.TestCase):
         init_state = DummyDataGenerator.create_random_initial_state(pos_min=-100.0, pos_max=100.0,
                                                                     v_min=-5, v_max=5,
                                                                     yaw_rate_max=np.pi / 10)
-        init_state_solution = copy.deepcopy(init_state)
+        init_state_solution = copy.deepcopy(init_state).convert_state_to_state(KSState())
         init_state_solution.velocity = 1000
         traj = Trajectory(0, state_list=[init_state_solution])
         pp_sol = PlanningProblemSolution(1, VehicleModel.KS, VehicleType.FORD_ESCORT, cost_function=CostFunction.SM1,
