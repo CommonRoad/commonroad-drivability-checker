@@ -200,9 +200,9 @@ build-wheel-cibw:
     # use pip-tools to generate a requirements_test.txt (including test dependencies)
     # we want to install the packages from the previously built wheel and not pull the PyPi packages
     - pip install pip-tools
-    - pip-compile --extra=test -o requirements_test.txt pyproject.toml
+    - pip-compile --extra=test --extra=clcs --extra=triangle -o requirements_test.txt pyproject.toml
     - pip install -r requirements_test.txt
-    - pip install --no-index --find-links=wheelhouse/ commonroad-drivability-checker[test]
+    - pip install --no-index --find-links=wheelhouse/ commonroad-drivability-checker[test,clcs,triangle]
   parallel:
     matrix:
       - PYTHON_VERSION: *python-versions
@@ -230,13 +230,26 @@ build-wheel-cibw:
   <<: *test-setup
   script:
     - cd tests
-    - python run_tests.py
+    - pytest --import-mode append .
 
 run-pytest:
   <<: [ *pytest-setup, *source-manual ]
 
 run-pytest-cibw:
   <<: [ *pytest-setup, *source-cibw ]
+
+.collision-test-setup:
+  &collision-test-setup
+  <<: *test-setup
+  script:
+    - cd tests
+    - python run_collision_tests.py
+
+run-collision-test:
+  <<: [ *collision-test-setup, *source-manual ]
+
+run-collision-test-cibw:
+  <<: [ *collision-test-setup, *source-cibw ]
 
 
 ### documentation ###
