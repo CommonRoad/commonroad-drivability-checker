@@ -229,7 +229,7 @@ class LaneletRouteMatcher:
             cc = CollisionChecker()
         co2lanelet: Dict[CollisionObject, int] = {}
         for l in ln.lanelets:
-            poly = l.convert_to_polygon()
+            poly = l.polygon
             # assert poly.shapely_object.is_valid
             if use_shapely is True:
                 cc[l.lanelet_id] = poly.shapely_object
