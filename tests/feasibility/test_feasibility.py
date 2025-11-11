@@ -150,7 +150,7 @@ class TestFeasibilityChecker(unittest.TestCase):
         # correct state
         init_state = DummyDataGenerator.create_random_initial_state(pos_min=-100.0, pos_max=100.0,
                                                                     v_min=-5, v_max=5,
-                                                                    yaw_rate_max=np.math.pi / 10)
+                                                                    yaw_rate_max=np.pi / 10)
         init_state_solution = copy.deepcopy(init_state)
         traj = Trajectory(0, state_list=[init_state_solution])
         pp_sol = PlanningProblemSolution(1, VehicleModel.KS, VehicleType.FORD_ESCORT, cost_function=CostFunction.SM1,
@@ -166,7 +166,7 @@ class TestFeasibilityChecker(unittest.TestCase):
         # alter position
         init_state = DummyDataGenerator.create_random_initial_state(pos_min=-100.0, pos_max=100.0,
                                                                     v_min=-5, v_max=5,
-                                                                    yaw_rate_max=np.math.pi / 10)
+                                                                    yaw_rate_max=np.pi / 10)
         init_state_solution = copy.deepcopy(init_state)
         init_state_solution.position[0] = 1000
         traj = Trajectory(0, state_list=[init_state_solution])
@@ -188,7 +188,7 @@ class TestFeasibilityChecker(unittest.TestCase):
         # alter velocity
         init_state = DummyDataGenerator.create_random_initial_state(pos_min=-100.0, pos_max=100.0,
                                                                     v_min=-5, v_max=5,
-                                                                    yaw_rate_max=np.math.pi / 10)
+                                                                    yaw_rate_max=np.pi / 10)
         init_state_solution = copy.deepcopy(init_state)
         init_state_solution.velocity = 1000
         traj = Trajectory(0, state_list=[init_state_solution])
@@ -210,7 +210,7 @@ class TestFeasibilityChecker(unittest.TestCase):
         # PM model no exception
         init_state = DummyDataGenerator.create_random_initial_state(pos_min=-100.0, pos_max=100.0,
                                                                     v_min=-5, v_max=5,
-                                                                    yaw_rate_max=np.math.pi / 10)
+                                                                    yaw_rate_max=np.pi / 10)
         init_state.velocity = abs(init_state.velocity)
         init_state_solution = PMState(position=init_state.position,
                                       time_step=init_state.time_step,
@@ -232,7 +232,7 @@ class TestFeasibilityChecker(unittest.TestCase):
         # PM model exception
         init_state = DummyDataGenerator.create_random_initial_state(pos_min=-100.0, pos_max=100.0,
                                                                     v_min=-5, v_max=5,
-                                                                    yaw_rate_max=np.math.pi / 10)
+                                                                    yaw_rate_max=np.pi / 10)
         init_state.velocity = abs(init_state.velocity)
         init_state_solution = PMState(position=init_state.position, time_step=init_state.time_step,
                                       velocity=init_state.velocity * math.cos(init_state.orientation),
