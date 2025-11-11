@@ -92,5 +92,6 @@ environment = { PIP_DISABLE_PIP_VERSION_CHECK = "1" }
 build-verbosity = 1
 
 test-skip = "*i686 *-musllinux*"
-test-extras = ["test"]
-test-command = "cd {package}/tests && python run_tests.py"
+test-extras = ["clcs,test,triangle"]
+# use --import-mode=append to test the installed package and not the source
+test-command = "python -m pytest {package}/tests --import-mode append"

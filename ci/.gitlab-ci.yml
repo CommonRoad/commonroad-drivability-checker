@@ -160,8 +160,6 @@ build-wheel-cibw:
     # For example, use git push -o ci.variable="CIBW_BUILD_VERBOSITY=1"
     # to make cibuildwheel verbose in the pipeline created for the pushed commit.
     CIBW_BUILD_VERBOSITY: 1
-    # We skip pytest for this stage, since we have a separate stage for running pytest
-    CIBW_TEST_SKIP: "*"
     # We only use the artifacts (sdist/wheels) from previous jobs, so skip all Git operations
     GIT_STRATEGY: none
   script:
