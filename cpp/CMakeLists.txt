@@ -229,7 +229,7 @@ target_link_libraries(crcc
 if (APPLE)
     # Required to find library -lomp on mac
     # MAC_LIBOMP_PATH defined in root CMakeLists.txt
-    target_link_directories(env_model INTERFACE "${MAC_LIBOMP_PATH}/lib")
+    target_link_directories(crcc INTERFACE "${MAC_LIBOMP_PATH}/lib")
 endif ()
 
 # Serialization and pickling support
