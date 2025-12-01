@@ -226,12 +226,6 @@ target_link_libraries(crcc
         Boost::polygon
 )
 
-if (APPLE)
-    # Required to find library -lomp on mac
-    # MAC_LIBOMP_PATH defined in root CMakeLists.txt
-    target_link_directories(env_model INTERFACE "${MAC_LIBOMP_PATH}/lib")
-endif ()
-
 # Serialization and pickling support
 if (CR_DC_BUILD_S11N)
     message(STATUS "Serialization and pickling support have been ENABLED for crcc")
