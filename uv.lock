@@ -255,7 +255,7 @@ wheels = [
 
 [[package]]
 name = "commonroad-clcs"
-version = "2025.1.1"
+version = "2025.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "commonroad-io" },
@@ -266,16 +266,12 @@ dependencies = [
     { name = "scipy" },
     { name = "shapely" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b2/f3/94838f340f50c10d7fc1c00ab560c05fc48a715c6f471f3ae57d763369ae/commonroad_clcs-2025.1.1.tar.gz", hash = "sha256:6266b56091d0d68cb2081539a18884d8059421538844b6ccc620a47bb12bc6bf", size = 3047174, upload-time = "2025-02-20T16:27:01.766Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d5/28/2b189ca41cb50e6103f582e5cecf93ffc53f311422b36798c7a820483c9c/commonroad_clcs-2025.2.0.tar.gz", hash = "sha256:f62d05fea6a2558a8f7fde2e717ef4ec8326ae34485fc7a2e5cdb63876559779", size = 3046594, upload-time = "2025-06-03T09:27:02.625Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9d/2d/728dd16b29de67d30a6f4b1ad449c3125eef75031b5e5246b8f50694b489/commonroad_clcs-2025.1.1-cp310-cp310-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:bbdeba22c8314a3997b0dd4a6d77b1d80bbce9ad09a19a3dfe4fa50bd6f05e85", size = 890855, upload-time = "2025-02-20T16:26:36.53Z" },
-    { url = "https://files.pythonhosted.org/packages/92/df/b19b78e8c9305f3957f50bfdd8a2ac84d9fdd0cd0c6312172e040fc63fee/commonroad_clcs-2025.1.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:530acaf6803a1bcdd49b9f461848e8747ee3ba91adaec4e6e5f54778684f3e79", size = 853051, upload-time = "2025-02-20T16:26:39.138Z" },
-    { url = "https://files.pythonhosted.org/packages/54/f7/d912317c2ad5ebec351ca3fdea05907b9ba0797521348b0910dee7834dc7/commonroad_clcs-2025.1.1-cp310-cp310-musllinux_1_1_i686.whl", hash = "sha256:ab9259f7b03025f7e225471acbe7b9ca9a3470cb174a9dc7bf2b632f101b6693", size = 1471518, upload-time = "2025-02-20T16:26:41.933Z" },
-    { url = "https://files.pythonhosted.org/packages/da/8c/69db3e02386055d2fb8c92a230b2b6a87e0d52ac2a8459eb2e6e9290d990/commonroad_clcs-2025.1.1-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:de4b55359da4b601c78f9ff98b19bb60a92c374e26a064d93ca87ff3cf5e3fe4", size = 1376814, upload-time = "2025-02-20T16:26:44.357Z" },
-    { url = "https://files.pythonhosted.org/packages/0f/84/7b224d0a963960cb87a88388237e1b04e1aeca9b306fe3fc2004b7a6e760/commonroad_clcs-2025.1.1-cp311-cp311-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:7cbf46df76cb26778758064a3b23f4e0542a859d2f8b0fadd00685d59404403d", size = 892393, upload-time = "2025-02-20T16:26:46.082Z" },
-    { url = "https://files.pythonhosted.org/packages/51/5f/8ec8e4dcdc24d58b02a84efe6e9b0447d184f4cc55853328b7dd72ea8fe0/commonroad_clcs-2025.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:23f8dbdd9019e5e81ce379ae5720045d76483bbb1ad740bd68471d382366047c", size = 855352, upload-time = "2025-02-20T16:26:49.01Z" },
-    { url = "https://files.pythonhosted.org/packages/cf/67/522ba6f0bc8d18020f31ae03e59d6bb44b077cd1fcb00964cd13656b4f5d/commonroad_clcs-2025.1.1-cp311-cp311-musllinux_1_1_i686.whl", hash = "sha256:045f32b8993dbfa6b86dfd34fba28ec67aa8af72982c0a5a00611b0a2d892321", size = 1472167, upload-time = "2025-02-20T16:26:50.702Z" },
-    { url = "https://files.pythonhosted.org/packages/f2/7b/2a862186e97621ded0aa169e82fd4a5eeaaf77104bbe7ee744dd995dddca/commonroad_clcs-2025.1.1-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:8ebd87564db071956db7809788ca138e7f2f67696f749b4be02e8670649cd5a1", size = 1377288, upload-time = "2025-02-20T16:26:52.341Z" },
+    { url = "https://files.pythonhosted.org/packages/bb/04/390b272b8a250a805feae72d74bca3f156766bcc9a7c90aa878e9f513220/commonroad_clcs-2025.2.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f791cf9c70fe681cc177e80420298a3999d3a6ec6588f787c1f6c4a23e2f545e", size = 810972, upload-time = "2025-06-03T09:26:52.007Z" },
+    { url = "https://files.pythonhosted.org/packages/90/20/be3cbcb496b1931efdd34008646be58835e54f8a164dd7c63fb79ed7177b/commonroad_clcs-2025.2.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:74462bbd55519950c3f22b43511740eeb94b82bab9480b8e6f4065a290d207a5", size = 810788, upload-time = "2025-06-03T09:26:54.227Z" },
+    { url = "https://files.pythonhosted.org/packages/93/49/baa6ff40e6cc1f6d8765b0d720735270cf5ecb2fe073c51ef12f655d719f/commonroad_clcs-2025.2.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:de4b876ba4941afbcc709312581929e19674f4dc071041d247d74baf06b0eba9", size = 809468, upload-time = "2025-06-03T09:26:56.737Z" },
+    { url = "https://files.pythonhosted.org/packages/35/fe/104344a6088d2159b2585b9ad6b1fcaf9fa033e6f973482fade207c5260e/commonroad_clcs-2025.2.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b4bdae23f3230cda55829ef9edf0b52f44f72f7c8dd2fba4cc1f948b6162a7ff", size = 809470, upload-time = "2025-06-03T09:26:59.437Z" },
 ]
 
 [[package]]
@@ -327,7 +323,7 @@ requires-dist = [
     { name = "breathe", marker = "extra == 'docs'", specifier = ">=4.18.0" },
     { name = "cmake", marker = "extra == 'build'", specifier = ">=3.24,<4.0" },
     { name = "cmake", marker = "extra == 'docs'", specifier = ">=3.24,<4.0" },
-    { name = "commonroad-clcs", marker = "extra == 'clcs'", specifier = ">=2025.1.0" },
+    { name = "commonroad-clcs", marker = "extra == 'clcs'", specifier = ">=2025.2.0" },
     { name = "commonroad-io", specifier = ">=2023.1" },
     { name = "commonroad-vehicle-models", specifier = ">=3.0.0" },
     { name = "ipython", marker = "extra == 'docs'", specifier = ">=8.36.0" },
@@ -495,7 +491,7 @@ name = "exceptiongroup"
 version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0b/9f/a65090624ecf468cdca03533906e7c69ed7588582240cfe7cc9e770b50eb/exceptiongroup-1.3.0.tar.gz", hash = "sha256:b241f5885f560bc56a59ee63ca4c6a8bfa46ae4ad651af316d4e81817bb9fd88", size = 29749, upload-time = "2025-05-10T17:42:51.123Z" }
 wheels = [

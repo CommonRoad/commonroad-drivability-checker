@@ -38,7 +38,7 @@ Source = "https://github.com/CommonRoad/commonroad-drivability-checker"
 
 [project.optional-dependencies]
 clcs = [
-    "commonroad-clcs>=2025.1.0",
+    "commonroad-clcs>=2025.2.0",
 ]
 triangle = [
     "triangle>=20250106",
