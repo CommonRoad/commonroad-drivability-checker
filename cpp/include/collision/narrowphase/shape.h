@@ -4,8 +4,7 @@
 #include <Eigen/Dense>
 #include <iostream>
 
-#include "collision/collision_object_ex.h"
-#include "collision/solvers/boost/i_boost_collision_object.h"
+#include "collision/collision_object.h"
 #include "collision/solvers/fcl/i_fcl_collision_object.h"
 
 namespace collision {
@@ -22,7 +21,7 @@ enum ShapeType {
 typedef ShapeType ShapeType;
 
 //! Base prototype for the shape of an obstacle
-class Shape : public CollisionObjectEx, IFCLCollisionObject {
+class Shape : public CollisionObject, IFCLCollisionObject {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -35,6 +34,11 @@ class Shape : public CollisionObjectEx, IFCLCollisionObject {
   }
 
   Shape(const Shape &copy);
+
+  Shape(Shape &&) = default;
+  Shape& operator=(Shape&&) = default;
+  Shape& operator=(const Shape&) = delete;
+
   virtual Shape *clone() const = 0;
 
   //! Get geometric center of shape
@@ -70,7 +74,7 @@ class Shape : public CollisionObjectEx, IFCLCollisionObject {
 
  protected:
   Eigen::Vector2d center_;
-  double radius_;
+  double radius_ = 0;
 };
 
 typedef std::shared_ptr<const Shape> ShapeConstPtr;

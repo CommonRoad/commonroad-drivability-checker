@@ -2,11 +2,11 @@
 
 #include "pybind_shapes.h"
 #include "pybind_util.h"
+#include "pybind_test.h"
 
 #include "collision/collision_checker.h"
 
 #include "collision/solvers/boost/boost_geometry_queries.h"
-#include "collision/solvers/boost/boost_helpers.h"
 
 #include "collision/solvers/geometry_queries.h"
 #include "collision/solvers/trajectory_queries.h"
@@ -44,6 +44,7 @@ Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
 NB_MODULE(pycrcc, module) {
     export_collision(module);
     export_util(module);
+    export_test(module);
 }
 
 void export_collision(const nb::module_ &module) {
@@ -215,7 +216,9 @@ void export_collision(const nb::module_ &module) {
                         throw std::invalid_argument("pickle error - invalid input");
                     }
                     // We can safely move the data out of the shared_ptr, since no one else has access to it
-                    new (&obj) collision::CollisionChecker(std::move(*c));
+                    auto c_ptr = const_cast<collision::CollisionChecker*>(c.get());
+                    new (&obj) collision::CollisionChecker(std::move(*c_ptr));
+
                     // reset the shared_ptr to avoid dangling references
                     c.reset();
                 })

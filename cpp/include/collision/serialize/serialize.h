@@ -27,12 +27,6 @@
 
 #include "collision/serialize/collision_checker_export.h"
 
-#include "collision/serialize/broadphase_failure_export.h"
-
-#include "collision/serialize/broadphase_failure_obj_obj_export.h"
-
-#include "collision/serialize/broadphase_failure_cc_obj_export.h"
-
 #include <Eigen/Dense>
 
 #endif

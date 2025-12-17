@@ -7,6 +7,8 @@ nanobind_add_module(${python_module_name} MODULE
         pybind_shapes.cc
         pybind_util.h
         pybind_util.cc
+        pybind_test.h
+        pybind_test.cc
 )
 target_link_libraries(${python_module_name} PRIVATE crcc)
 

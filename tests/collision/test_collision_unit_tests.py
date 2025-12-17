@@ -1,8 +1,8 @@
 # import matplotlib.pyplot as plt
 
 import commonroad_dc.pycrcc as pycrcc
-
 import unittest
+import numpy as np
 
 
 # Test TVObstacles with each other and ShapeGroups
@@ -100,6 +100,31 @@ class TestCollision(unittest.TestCase):
         obb8 = pycrcc.RectOBB(1, 1.3, 0.6, 10.6, 1)
 
         self.assertEqual(polyg.collide(obb8), 1)
+
+        def create_invalid_triangle():
+            v1=np.asarray([-16.47294589178357, 14.78957915831663])
+            v3=np.asarray([-7.334669338677354, -17.27454909819639])
+            v3_v1 = v3 - v1
+            v3_v1 /= np.linalg.norm(v3_v1)
+            normal = np.asarray([v3_v1[1], -1 * v3_v1[0]])
+            v2 = v3 + (v3 - v1) / 3 + normal * 1e-20
+            vertices = [v1, v2, v3]
+            signed_area_sum = 0.
+            for i in range(len(vertices)):
+                x1, y1 = vertices[i]
+                x2, y2 = vertices[(i + 1) % len(vertices)]
+                signed_area_sum += (x1 * y2 - x2 * y1)
+            if signed_area_sum > 0.:
+                return pycrcc.Triangle(v1[0], v1[1], v2[0], v2[1], v3[0], v3[1])
+            else:
+                return pycrcc.Triangle(v1[0], v1[1], v3[0], v3[1], v2[0], v2[1])
+        tri_invalid = create_invalid_triangle()
+        poly = pycrcc.Polygon(tri_invalid.vertices(), list(), [tri_invalid])
+        poly2 = pycrcc.Polygon(tri_invalid.vertices(), list(), [tri_invalid])
+        self.assertEqual(poly.collide(poly2), False)
+        self.assertEqual(polyg.collide(poly2), False)
+        poly3=pycrcc.Polygon(vertices, list(), triangles + [tri_invalid])
+        self.assertEqual(polyg.collide(poly3), True)
 
     def test_cc(self):
         aabb = pycrcc.RectAABB(2, 3, 3, 1.8)
@@ -235,7 +260,3 @@ class TestCollision(unittest.TestCase):
 # def testTrajectory_Group:
 
 # def testTrajectory_Obj_:
-
-
-if __name__ == '__main__':
-    unittest.main()

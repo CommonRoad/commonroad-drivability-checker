@@ -182,4 +182,5 @@ class BoostPolygon : public BoostObjectInternal {
 
 }  // namespace solverBoost
 }  // namespace solvers
+using BoostPolygon = solvers::solverBoost::BoostPolygon;
 }  // namespace collision

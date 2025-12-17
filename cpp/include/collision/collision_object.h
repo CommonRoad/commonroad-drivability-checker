@@ -22,6 +22,10 @@
 #include "collision/collision_object_types.h"
 #include "collision/line_segment.h"
 
+#include "collision/i_collision_container.h"
+#include "collision/solvers/fcl/solver_entity_fcl.h"
+#include "collision/solvers/fcl/i_solver_entity_fcl.h"
+
 namespace collision {
 
 class Shape;
@@ -40,13 +44,34 @@ class ICollisionContainer;
 typedef std::shared_ptr<CollisionObject> CollisionObjectPtr;
 typedef std::shared_ptr<const CollisionObject> CollisionObjectConstPtr;
 
+using namespace solvers::solverFCL;
+
 /*!
   \brief Base class for CollisionObjects and some of their groups
 
 */
 class CollisionObject : public std::enable_shared_from_this<CollisionObject> {
  public:
-  virtual ~CollisionObject() {}
+  
+  CollisionObject() {};
+  virtual ~CollisionObject() {};
+  CollisionObject(CollisionObject&& other) {
+    // when the object is moved, all pointers to solvers (e.g. fcl_entity) are to become invalid
+      other.fcl_entity_.reset();
+      other.fcl_solver_entity_valid_ = false;
+  }
+  
+  CollisionObject& operator=(CollisionObject&& other) {
+    // when the object is moved, all pointers to solvers (e.g. fcl_entity) are to become invalid
+    if (this != &other) {
+      other.fcl_entity_.reset();
+      other.fcl_solver_entity_valid_ = false;
+    }
+    return *this;
+  }
+  CollisionObject(const CollisionObject&) = delete;
+  CollisionObject& operator=(const CollisionObject&) = delete;
+  
 #if ENABLE_SERIALIZER
   virtual serialize::ICollisionObjectExport *exportThis(void) const {
     return nullptr;
@@ -64,17 +89,9 @@ class CollisionObject : public std::enable_shared_from_this<CollisionObject> {
     return CollisionObjectClass::OBJ_CLASS_UNKNOWN;
   }
 
-  virtual bool collide(
-      const CollisionObject &c,
-      const collision::CollisionRequest &req = CollisionRequest()) const = 0;
-
   virtual void print(std::ostringstream &stream) const { return; }
 
   virtual void toString(std::ostringstream &stream) const { print(stream); }
-
-  virtual bool BVCheck(CollisionObjectConstPtr obj2) const = 0;
-
-  virtual std::shared_ptr<const collision::RectangleAABB> getAABB() const = 0;
 
   virtual void addParentMap(
       std::unordered_map<const CollisionObject *,
@@ -92,6 +109,33 @@ class CollisionObject : public std::enable_shared_from_this<CollisionObject> {
                         std::vector<LineSegment> &intersect) const {
     return false;
   }
+
+  virtual bool collide(
+        const CollisionObject &c,
+        const collision::CollisionRequest &req = CollisionRequest()) const;
+
+    virtual bool BVCheck(CollisionObjectConstPtr obj2) const;
+
+    virtual std::shared_ptr<const collision::RectangleAABB> getAABB() const;
+
+    virtual int getSolverEntity(solvers::solverFCL::SolverEntity_FCL *&ptr) const;
+
+    virtual const ICollisionContainer *getContainerInterface(void) const {
+      return nullptr;
+    }
+
+    virtual const solvers::solverFCL::ISolverEntity_FCL *getFclInterface(
+        void) const {
+      return nullptr;
+    }
+    virtual bool is_valid() const { return true;}
+  protected:
+    void invalidateCollisionEntityCache(void);
+
+  private:
+    mutable std::unique_ptr<solvers::solverFCL::SolverEntity_FCL>
+        fcl_entity_;
+    mutable bool fcl_solver_entity_valid_ = false;
 };
 
 typedef std::shared_ptr<Shape> ShapePtr;

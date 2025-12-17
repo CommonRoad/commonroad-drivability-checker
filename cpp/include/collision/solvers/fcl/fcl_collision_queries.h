@@ -74,7 +74,7 @@ inline bool fcl_collide(const fcl::CollisionObject<FCL_PRECISION> &object_A,
   fcl::CollisionResult<FCL_PRECISION> collisionResult;
   collisionRequest.enable_cost = false;
   collisionRequest.gjk_solver_type = FCL_SOLVER_TYPE;
-  fcl::collide(&object_A, &object_B, collisionRequest, collisionResult);
+  collide_with_validity_check(&object_A, &object_B, collisionRequest, collisionResult);
   return collisionResult.isCollision();
 }
 
@@ -91,27 +91,10 @@ inline bool fcl_generic_collisionDetection(const FCLCollisionObject &obj_first,
 
   return fcl_collide(*col_obj_1, *col_obj_2);
 }
-#if ENABLE_COLLISION_TESTS
-// TODO: throw exception on malloc failure
-inline bool fcl_generic_collisionDetection(
-    const FCLCollisionObjectGroup &group_first,
-    const FCLCollisionObject &obj_second, bool test_enable = true) {
-  if (test_enable) {
-    collision::test::ShapeGroupTest sg_test;
-    sg_test.run_test_collide(
-        obj_second.getParent()->shared_from_this(),
-        static_cast<const ShapeGroup *>(group_first.getParent()));
-#if ENABLE_COLLISION_TESTS_NARROWPHASE
-    sg_test.run_test_narrowphase(
-        obj_second.getParent()->shared_from_this(),
-        static_cast<const ShapeGroup *>(group_first.getParent()));
-#endif
-  }
-#else
+
 inline bool fcl_generic_collisionDetection(
     const FCLCollisionObjectGroup &group_first,
     const FCLCollisionObject &obj_second) {
-#endif
 
   bool result = false;
   fcl::BroadPhaseCollisionManager<FCL_PRECISION> *mngr;
@@ -168,26 +151,9 @@ inline int fcl_group_overlap(
   return 0;
 }
 
-#if ENABLE_COLLISION_TESTS
-inline bool fcl_generic_collisionDetection(
-    const FCLCollisionObjectGroup &group_first,
-    const FCLCollisionObjectGroup &group_second, bool enable_test = true) {
-  if (enable_test) {
-    collision::test::ShapeGroupTest sg_test;
-    const ShapeGroup *gr_first =
-        static_cast<const ShapeGroup *>(group_first.getParent());
-    const ShapeGroup *gr_second =
-        static_cast<const ShapeGroup *>(group_second.getParent());
-    sg_test.run_test_collide(gr_first, gr_second);
-#if ENABLE_COLLISION_TESTS_NARROWPHASE
-    sg_test.run_test_narrowphase(gr_first, gr_second);
-#endif
-  }
-#else
 inline bool fcl_generic_collisionDetection(
     const FCLCollisionObjectGroup &group_first,
     const FCLCollisionObjectGroup &group_second) {
-#endif
   bool result = false;
   fcl::BroadPhaseCollisionManager<FCL_PRECISION> *mngr1;
   group_first.getManager_fcl(mngr1);

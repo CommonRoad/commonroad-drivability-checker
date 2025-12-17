@@ -11,12 +11,6 @@
 #define STACK_TIMER
 #endif
 
-#if ENABLE_COLLISION_TESTS == 1
-
-#include "collision/tests/collision_tests.h"
-
-#endif
-
 static void tim(int a) {
   // placeholder
 }

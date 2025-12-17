@@ -33,7 +33,7 @@ from shapely.geometry import Polygon
 
 try:
     from commonroad_clcs.util import chaikins_corner_cutting, resample_polyline
-    from commonroad_clcs.pycrccosy import CurvilinearCoordinateSystem
+    from commonroad_clcs.pycrccosy import CurvilinearCoordinateSystem, CartesianProjectionDomainError
 except ImportError:
     raise ImportError(
         f"The CommonRoad Curvilinear Coordinate System package is required to use the RouteMatcher. \n"
@@ -229,7 +229,7 @@ class LaneletRouteMatcher:
             cc = CollisionChecker()
         co2lanelet: Dict[CollisionObject, int] = {}
         for l in ln.lanelets:
-            poly = l.convert_to_polygon()
+            poly = l.polygon
             # assert poly.shapely_object.is_valid
             if use_shapely is True:
                 cc[l.lanelet_id] = poly.shapely_object
@@ -551,7 +551,7 @@ class LaneletRouteMatcher:
             try:
                 s, d = cosys[i_c].convert_to_curvilinear_coords(state.position[0], state.position[1])
 
-            except ValueError:
+            except CartesianProjectionDomainError:
                 if debug_plot is True:
                     rnd = MPRenderer()
                     self.lanelet_network.draw(rnd, draw_params={'lanelet': {'show_label':True}})
@@ -580,7 +580,7 @@ class LaneletRouteMatcher:
             if i_c + 1 < len(cosys):
                 try:
                     s2, d2 = cosys[i_c + 1].convert_to_curvilinear_coords(state.position[0], state.position[1])
-                except ValueError:
+                except CartesianProjectionDomainError:
                     pass
 
                 if not (s is None and s2 is None):

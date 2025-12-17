@@ -32,10 +32,10 @@ class DummyDataGenerator:
             position=np.array([cls.create_random_float(pos_min, pos_max),
                                cls.create_random_float(pos_min, pos_max)]),
             velocity=cls.create_random_float(v_min, v_max),
-            orientation=cls.create_random_float(-np.math.pi, np.math.pi),
+            orientation=cls.create_random_float(-np.pi, np.pi),
             acceleration=0.0,
             yaw_rate=cls.create_random_float(-yaw_rate_max, yaw_rate_max),
-            slip_angle=cls.create_random_float(-np.math.pi / 12, np.math.pi / 12),
+            slip_angle=cls.create_random_float(-np.pi / 12, np.pi / 12),
             time_step=0
         )
 
@@ -122,7 +122,7 @@ class DummyDataGenerator:
                                0]),
             steering_angle=cls.create_random_float(-steering_angle_max, steering_angle_max),
             velocity=cls.create_random_float(v_min, v_max),
-            orientation=cls.create_random_float(-np.math.pi, np.math.pi),
+            orientation=cls.create_random_float(-np.pi, np.pi),
             time_step=time_step
         )
 
@@ -133,7 +133,7 @@ class DummyDataGenerator:
                                0]),
             steering_angle=cls.create_random_float(-steering_angle_max, steering_angle_max),
             velocity=cls.create_random_float(v_min, v_max),
-            orientation=cls.create_random_float(-np.math.pi, np.math.pi),
+            orientation=cls.create_random_float(-np.pi, np.pi),
             time_step=time_step,
             hitch_angle=cls.create_random_float(-0.5, 0.5)
         )
@@ -145,9 +145,9 @@ class DummyDataGenerator:
                                0]),
             steering_angle=cls.create_random_float(-steering_angle_max, steering_angle_max),
             velocity=cls.create_random_float(v_min, v_max),
-            orientation=cls.create_random_float(-np.math.pi, np.math.pi),
+            orientation=cls.create_random_float(-np.pi, np.pi),
             yaw_rate=cls.create_random_float(-yaw_rate_max, yaw_rate_max),
-            slip_angle=cls.create_random_float(-np.math.pi / 12, np.math.pi / 12),
+            slip_angle=cls.create_random_float(-np.pi / 12, np.pi / 12),
             time_step=time_step
         )
 
@@ -155,7 +155,7 @@ class DummyDataGenerator:
     def create_random_mb_state(cls, vehicle_parameters, v_min=-11.2, v_max=41.7, steering_angle_max=0.910,
                                yaw_rate_max=0.4, time_step=0):
         velocity = cls.create_random_float(v_min, v_max)
-        orientation = cls.create_random_float(-np.math.pi, np.math.pi)
+        orientation = cls.create_random_float(-np.pi, np.pi)
         yaw_rate = cls.create_random_float(-yaw_rate_max, yaw_rate_max)
         velocity_x = math.cos(orientation) * velocity
         velocity_y = math.sin(orientation) * velocity

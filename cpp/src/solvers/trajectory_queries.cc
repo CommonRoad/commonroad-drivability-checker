@@ -1,6 +1,4 @@
 #include "collision/solvers/boost/boost_collision_queries.h"
-#include "collision/solvers/boost/boost_helpers.h"
-
 #include "collision/solvers/accelerators/detail/container_box2d_inl.h"
 #include "collision/solvers/accelerators/detail/container_fcl_inl.h"
 #include "collision/solvers/accelerators/detail/container_grid_inl.h"
@@ -10,6 +8,8 @@
 #include "collision/solvers/trajectory_queries.h"
 
 namespace collision {
+
+using namespace solvers::solverBoost;
 
 namespace detail {
 using namespace accelerators;
@@ -371,10 +371,7 @@ int trajectories_enclosure_polygons_static_grid(
   for (auto poly : obj.unpack()) {
     auto poly_obj = poly.get();
     if (poly_obj->getCollisionObjectType() == collision::OBJ_TYPE_POLYGON) {
-      polygons_vec.push_back(static_cast<collision::BoostPolygon*>(
-          collision::solvers::solverBoost::get_boost_object_ptr(poly_obj)
-              ->getCollisionObject_boost()
-              .get()));
+      polygons_vec.push_back(static_cast<const Polygon*>(poly_obj)->getOrCreateBoostPolygon());
     } else {
       throw std::invalid_argument(
           "the shape group for enclosure checks can contain only "

@@ -24,7 +24,7 @@ CollisionCheckerPtr CollisionChecker::clone_shared(void) const {
 */
 void CollisionChecker::addCollisionObject(CollisionObjectConstPtr co) {
   collision_objects_.push_back(co);
-  fcl_cc_.addCollisionObject(co);
+  fcl_cc_->addCollisionObject(co);
 }
 
 /*!
@@ -57,21 +57,13 @@ int CollisionChecker::collisionTime(CollisionObjectConstPtr co) const {
  \warning The function is not thread-safe
 
 */
-#if (ENABLE_COLLISION_TESTS)
-bool CollisionChecker::collide(CollisionObjectConstPtr co, int *collision_time,
-                               bool enable_test) const {
-  if (enable_test) {
-    collision::test::CollisionCheckerTest cc_test;
-    cc_test.run_test_collide(co, this);
-  }
-#else
+
 bool CollisionChecker::collide(CollisionObjectConstPtr co,
                                int *collision_time) const {
 
-#endif
 
   // STACK_TIMER tim(TIMER_collide);
-  return fcl_cc_.collideHelper(co, collision_time, 0);
+  return fcl_cc_->collideHelper(co, collision_time, 0);
 
   bool collides = false;
 }
@@ -97,27 +89,13 @@ output Vector.
 
 */
 
-#if (ENABLE_COLLISION_TESTS)
-bool CollisionChecker::collide(CollisionObjectConstPtr co,
-                               CollisionObjectConstPtr &obstacle,
-                               bool ungroup_shape_groups,
-                               bool ungroup_TV_obstacles,
-                               bool enable_test) const {
-  if (enable_test) {
-    std::cout << "testing";
-    collision::test::CollisionCheckerTest cc_test;
-    cc_test.run_test_collide_obstacle(co, this);
-  }
-#else
 bool CollisionChecker::collide(CollisionObjectConstPtr co,
                                CollisionObjectConstPtr &obstacle,
                                bool ungroup_shape_groups,
                                bool ungroup_TV_obstacles) const {
 
-#endif
-
   std::vector<CollisionObjectConstPtr> obstacles;
-  bool res = fcl_cc_.collideHelper(co, 0, &obstacles, 1, ungroup_shape_groups,
+  bool res = fcl_cc_->collideHelper(co, 0, &obstacles, 1, ungroup_shape_groups,
                                    ungroup_TV_obstacles);
   if (res) {
     if (obstacles.size() > 0) {
@@ -221,24 +199,13 @@ void CollisionChecker::toString(std::ostringstream &stream) const {
 
 */
 
-#if (ENABLE_COLLISION_TESTS)
-bool CollisionChecker::collide(CollisionObjectConstPtr co,
-                               std::vector<CollisionObjectConstPtr> &obstacles,
-                               bool ungroup_shape_groups,
-                               bool ungroup_TV_obstacles,
-                               bool enable_test) const {
-  if (enable_test) {
-    collision::test::CollisionCheckerTest cc_test;
-    cc_test.run_test_collide_obstacles(co, this);
-  }
-#else
+
 bool CollisionChecker::collide(CollisionObjectConstPtr co,
                                std::vector<CollisionObjectConstPtr> &obstacles,
                                bool ungroup_shape_groups,
                                bool ungroup_TV_obstacles) const {
-#endif
 
-  return fcl_cc_.collideHelper(co, 0, &obstacles, -1, ungroup_shape_groups,
+  return fcl_cc_->collideHelper(co, 0, &obstacles, -1, ungroup_shape_groups,
                                ungroup_TV_obstacles);
 
   bool collides = false;
@@ -266,7 +233,7 @@ PrimitiveCollisionCheckerPtr CollisionChecker::windowQueryPrimitive(
   PrimitiveCollisionCheckerPtr cc_ret =
       std::make_shared<PrimitiveCollisionChecker>();
 
-  fcl_cc_.windowQuery_helper(aabb, *(cc_ret.get()));
+  fcl_cc_->windowQuery_helper(aabb, *(cc_ret.get()));
 
   return cc_ret;
 }
@@ -287,7 +254,7 @@ CollisionCheckerPtr CollisionChecker::windowQuery(
   // STACK_TIMER tim(TIMER_windowQuery);
 
   CollisionCheckerPtr cc_ret = std::make_shared<CollisionChecker>();
-  fcl_cc_.windowQuery_helper(aabb, *(cc_ret.get()));
+  fcl_cc_->windowQuery_helper(aabb, *(cc_ret.get()));
 
   return cc_ret;
 }

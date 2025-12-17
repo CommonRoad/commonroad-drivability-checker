@@ -1,8 +1,6 @@
 
 #include "collision/shape_group.h"
-#include "collision/solvers/boost/boost_helpers.h"
 #include "collision/solvers/boost/boost_object_polygon.h"
-
 #include "collision/solvers/boost/boost_geometry_queries.h"
 
 namespace collision {
@@ -18,10 +16,7 @@ collision::ShapeGroupPtr lane_polygons_postprocess(
   for (auto obj : sg_polys.unpack()) {
     if (obj->getCollisionObjectType() == collision::OBJ_TYPE_POLYGON) {
       auto poly_ptr = static_cast<const collision::Polygon *>(obj.get());
-      candidate_polygons_boost.push_back(static_cast<collision::BoostPolygon *>(
-          collision::solvers::solverBoost::get_boost_object_ptr(poly_ptr)
-              ->getCollisionObject_boost()
-              .get()));
+      candidate_polygons_boost.push_back(poly_ptr->getOrCreateBoostPolygon());
     } else {
       throw std::invalid_argument(
           "The shape group for the postprocessing of lane polygons can contain "

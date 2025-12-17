@@ -19,6 +19,10 @@
 
 namespace collision {
 
+namespace test {
+  class ShapeGroupTest;
+}
+
 typedef std::shared_ptr<ShapeGroup> ShapeGroupPtr;
 typedef std::shared_ptr<const ShapeGroup> ShapeGroupConstPtr;
 
@@ -30,12 +34,11 @@ typedef std::shared_ptr<const ShapeGroup> ShapeGroupConstPtr;
  * collision
  */
 
-class ShapeGroup : public CollisionObjectEx,
+class ShapeGroup : public CollisionObject,
                    public ICollisionContainer,
                    public IFCLCollisionObjectGroup {
-#if ENABLE_COLLISION_TESTS == 1
+
   friend class collision::test::ShapeGroupTest;
-#endif
 
 
  public:
@@ -64,6 +67,7 @@ class ShapeGroup : public CollisionObjectEx,
   ShapeGroup() {}
 
   ShapeGroup(ShapeGroup &&) = default;
+  ShapeGroup& operator=(ShapeGroup&&) = default;
 
   void toString(std::ostringstream &stream) const;
 

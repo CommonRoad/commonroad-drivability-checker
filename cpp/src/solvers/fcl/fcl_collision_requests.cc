@@ -120,9 +120,6 @@ bool CollisionRequestDataMultipleObstacles::addRequestResultObstacle(
 
     } else {
       // std::cout << "parent obj not found";
-#if ENABLE_COLLISION_TESTS
-//			collision::test::log_parentmap_failure(obst->shared_from_this());
-#endif
     }
   }
   return false;

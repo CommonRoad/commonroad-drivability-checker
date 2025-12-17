@@ -35,17 +35,18 @@ inline std::size_t collide_binary_helper<typename solvers::FCLSolver *>(
 }
 
 // primitive solver
-/*
- template<> inline std::size_t collide_binary_helper<typename
- solvers::PRIMITIVE_SOLVER>(const CollisionObject& obj1, const CollisionObject&
- obj2, CollisionResult& res, const CollisionRequest& req)
- {
- static solvers::PRIMITIVE_SOLVER solver;
- static solvers::CollisionFunctionMatrix matr_default(solver);
- auto func = matr_default.getSolverBoolFunction(obj1.getCollisionObjectType(),
- obj2.getCollisionObjectType()); return func(obj1, obj2, res, req);
- }
- */
+
+template<> inline std::size_t collide_binary_helper<
+		typename solvers::PrimitiveSolver*>(const CollisionObject &obj1,
+		const CollisionObject &obj2, CollisionResult &res,
+		const CollisionRequest &req) {
+	static solvers::PrimitiveSolver solver;
+	static solvers::CollisionFunctionMatrix matr_default(&solver);
+	auto func = matr_default.getSolverBoolFunction(
+			obj1.getCollisionObjectType(), obj2.getCollisionObjectType());
+	return func(obj1, obj2, res, req);
+}
+
 }  // namespace detail
 
 std::size_t collide_binary(const CollisionObject &obj1,
@@ -60,13 +61,13 @@ std::size_t collide_binary(const CollisionObject &obj1,
       return detail::collide_binary_helper<solvers::FCLSolver *>(obj1, obj2,
                                                                  res, req);
       break;
+	case COL_PRIMITIVE:
+		return detail::collide_binary_helper<solvers::PrimitiveSolver*>(obj1,
+				obj2, res, req);
+		break;
     default:
       return -1;
       break;
-      // case COL_PRIMITIVE:
-      //	return
-      // detail::collide_binary_helper<solvers::PRIMITIVE_SOLVER>(obj1, obj2,
-      // res, req); 	break;
   }
 }
 

@@ -11,6 +11,13 @@
 
 namespace collision {
 
+Triangle::Triangle(const Triangle& copy): Shape(copy), v1_(copy.v1_), v2_(copy.v2_), v3_(copy.v3_) {
+	segments_ = copy.segments_;
+	incircle_radius_ = copy.incircle_radius_;
+	incenter_ = copy.incenter_;
+	is_valid_ = copy.is_valid_;
+}
+
 Triangle *Triangle::clone() const { return new Triangle(*this); }
 
 bool Triangle::rayTrace(const Eigen::Vector2d &point1,
@@ -95,6 +102,32 @@ Eigen::Vector2d Triangle::compute_center() {
   double x = (v1_(0) + v2_(0) + v3_(0)) / 3.0;
   double y = (v1_(1) + v2_(1) + v3_(1)) / 3.0;
   return Eigen::Vector2d(x, y);
+}
+
+void Triangle::compute_is_valid() {
+	double area = 0.0;
+	area += (v1().x() * v2().y() - v2().x() * v1().y());
+	area += (v2().x() * v3().y() - v3().x() * v2().y());
+	area += (v3().x() * v1().y() - v1().x() * v3().y());
+
+	area = fabs(area / 2.0);
+
+	auto side1 = v2() - v1();
+	auto side2 = v3() - v1();
+	auto side3 = v3() - v2();
+	double side1_sqn = side1.squaredNorm();
+	double side2_sqn = side2.squaredNorm();
+	double side3_sqn = side3.squaredNorm();
+
+	auto max_side = sqrt(std::max( { side1_sqn, side2_sqn, side3_sqn }));
+	auto min_side = sqrt(std::min( { side1_sqn, side2_sqn, side3_sqn }));
+
+	// if a side is too small or the smallest altitude is too small then the triangle is invalid
+	if ((min_side < 1e-10) || (area / max_side) < 1e-10) {
+		is_valid_ = false;
+	} else {
+		is_valid_ = true;
+	}
 }
 
 void Triangle::compute_incircle_radius_and_center() {

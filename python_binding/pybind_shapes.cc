@@ -429,7 +429,7 @@ void bind_all_shapes(const nb::module_ &module) {
 
     // Deferred definition - required to ensure correct signature
     // See https://pybind11.readthedocs.io/en/latest/advanced/misc.html#avoiding-cpp-types-in-docstrings
-    shape.def("getAABB", &collision::CollisionObjectEx::getAABB);
+    shape.def("getAABB", &collision::CollisionObject::getAABB);
 
 #if ENABLE_SERIALIZER
     // Add pickling support to all shapes

@@ -2,8 +2,9 @@
 #define COLLISION_FCL_FCL_COLLISION_OBJECT_GROUP_H_
 
 #include <fcl/narrowphase/collision_object.h>
+#include <fcl/broadphase/broadphase_collision_manager.h>
+#include <fcl/broadphase/broadphase_dynamic_AABB_tree.h>
 #include <Eigen/Dense>
-#include "collision/solvers/fcl/fcl_broadphase_manager_factory.h"
 #include "collision/solvers/fcl/fcl_collision_object.h"
 #include "collision/solvers/fcl/fcl_decl.h"
 
@@ -28,20 +29,10 @@ class FCLCollisionObjectGroup : public SolverEntity_FCL {
     return FCL_COLLISION_ENTITY_TYPE::COLLISION_ENTITY_TYPE_FCL_OBJECTGROUP;
   }
 
-  int replaceBroadphaseFactory(
-      BroadPhaseManagerFactoryConstPtr broadphase_factory);
-
-  int calculateDistance(const CollisionObject &obj2, FCL_PRECISION &distance,
-                        FCL_PRECISION tolerance = 1e-6) const;
-  int calculateDistanceNegTolerance(
-      const CollisionObject &obj2, double &distance,
-      FCL_TOLERANCE_CHECK_TYPE check_type = TOLERANCE_CHECK_NARROWPHASE,
-      FCL_PRECISION tolerance = 1e-6) const;
-
   virtual ~FCLCollisionObjectGroup(void) {}
 
   int getManager_fcl(fcl::BroadPhaseCollisionManager<FCL_PRECISION> *&)
-      const;  // TODO: create and/or cache an appropriate broadphase manager
+      const;
 
   const ICollisionContainer *getContainer(void) const {
     return m_CollisionContainer;
@@ -67,9 +58,8 @@ class FCLCollisionObjectGroup : public SolverEntity_FCL {
   const IFCLCollisionObjectGroup *m_parent_interface;
   mutable std::unique_ptr<fcl::BroadPhaseCollisionManager<FCL_PRECISION>>
       m_group_manager;
-  mutable BroadPhaseManagerFactoryConstPtr m_broadphase_factory;
-  mutable bool manager_cached;
-  mutable bool manager_instance_cached;
+  mutable bool manager_cached = false;
+  mutable bool manager_instance_cached = false;
 };
 }  // namespace solverFCL
 }  // namespace solvers

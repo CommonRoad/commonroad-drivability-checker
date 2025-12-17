@@ -27,9 +27,13 @@ namespace collision {
 
 
 */
-class TimeVariantCollisionObject : public CollisionObjectEx {
+class TimeVariantCollisionObject : public CollisionObject {
  public:
   TimeVariantCollisionObject(int time_start_idx);
+
+  TimeVariantCollisionObject(TimeVariantCollisionObject &&) = default;
+  TimeVariantCollisionObject& operator=(TimeVariantCollisionObject&&) = default;
+
   CollisionObjectConstPtr getObstacleAtTime(int time_idx) const;
   const CollisionObject *getObstacleAtTimePtr(int time_idx) const;
   const CollisionObject *getFirstObstaclePtr() const

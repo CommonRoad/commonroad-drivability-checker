@@ -20,8 +20,23 @@ typedef std::shared_ptr<const CollisionChecker> CollisionCheckerConstPtr;
 
 namespace solvers {
 namespace solverFCL {
+
 CollisionObject *getParentPointerFromFclObj(
-    fcl::CollisionObject<FCL_PRECISION> *fcl_obj);
+    const fcl::CollisionObject<FCL_PRECISION> *fcl_obj);
+
+inline std::size_t collide_with_validity_check(const fcl::CollisionObject<FCL_PRECISION>* o1, const fcl::CollisionObject<FCL_PRECISION>* o2,
+                    const fcl::CollisionRequest<FCL_PRECISION>& request,
+                    fcl::CollisionResult<FCL_PRECISION>& result) {
+	const CollisionObject* obj1_entity=getParentPointerFromFclObj(o1);
+	const CollisionObject* obj2_entity=getParentPointerFromFclObj(o2);
+	if (obj1_entity && !(obj1_entity->is_valid())){
+		return 0;
+	}
+	if (obj2_entity && !(obj2_entity->is_valid())){
+		return 0;
+	}
+	return collide(o1, o2, request, result);
+}
 
 class CollisionRequestData {};
 
@@ -262,7 +277,7 @@ bool defaultCollisionFunction(fcl::CollisionObject<S> *o1,
 
   if (cdata->done) return true;
 
-  collide(o1, o2, request, result);
+  collide_with_validity_check(o1, o2, request, result);
 
   if (!request.enable_cost && (result.isCollision()) &&
       (result.numContacts() >= request.num_max_contacts))
@@ -290,7 +305,7 @@ bool defaultCollisionFunctionOverlap(fcl::CollisionObject<S> *o1,
   auto search = checked_pairs.find(pair_obj);
   if (search != checked_pairs.end()) return false;
 
-  fcl::collide(o1, o2, *request, *result);
+  collide_with_validity_check(o1, o2, *request, *result);
 
   checked_pairs.emplace(pair_obj);
 
@@ -377,7 +392,7 @@ bool defaultCollisionFunctionListOfObstacles(fcl::CollisionObject<S> *o1,
 
   if (!(cdata->self_reqData.testPair(pair_obj))) return false;
 
-  collide(obst, subj, request, cdata->result);
+  collide_with_validity_check(obst, subj, request, cdata->result);
 
   if (cdata->result.isCollision()) {
     cdata->set_result(true);

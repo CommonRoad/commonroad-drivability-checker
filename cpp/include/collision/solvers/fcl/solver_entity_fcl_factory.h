@@ -1,6 +1,5 @@
 #pragma once
 
-#include "collision/collision_object_ex.h"
 #include "collision/solvers/fcl/fcl_collision_object.h"
 #include "collision/solvers/fcl/fcl_collision_object_group.h"
 #include "collision/solvers/fcl/i_fcl_collision_object.h"
@@ -10,7 +9,7 @@
 namespace collision {
 namespace solvers {
 namespace solverFCL {
-SolverEntity_FCL *createFCLSolverEntity(const CollisionObjectEx *obj) {
+SolverEntity_FCL *createFCLSolverEntity(const CollisionObject *obj) {
   const ISolverEntity_FCL *entity = obj->getFclInterface();
   if (!entity) return nullptr;
   switch (entity->getFclEntityType()) {

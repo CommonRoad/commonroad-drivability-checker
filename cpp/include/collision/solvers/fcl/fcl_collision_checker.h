@@ -19,15 +19,21 @@
 
 #include "collision/i_collision_checker.h"
 
+#include <boost/noncopyable.hpp>
+
 namespace collision {
 class CollisionChecker;
 
 namespace solvers {
 namespace solverFCL {
-class FCLCollisionChecker {
+class FCLCollisionChecker : private boost::noncopyable {
+// the fcl::DynamicAABBTreeCollisionManager can not be copied safely
+
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   FCLCollisionChecker(ICollisionChecker &cc);
+
+  ~FCLCollisionChecker(){};
 
   void addCollisionObject(CollisionObjectConstPtr co);
   void windowQuery_helper(const RectangleAABB &aabb,

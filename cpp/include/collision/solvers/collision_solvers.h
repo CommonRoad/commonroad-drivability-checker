@@ -17,7 +17,7 @@ typedef std::size_t (*collide_bool_func_t)(const CollisionObject &obj1,
 
 class CollisionFunctionMatrix {
  public:
-  // CollisionFunctionMatrix(const solvers::PrimitiveSolver* solver);
+  CollisionFunctionMatrix(const solvers::PrimitiveSolver* solver);
   CollisionFunctionMatrix(const solvers::FCLSolver *solver);
   CollisionFunctionMatrix(const solvers::DefaultSolver *solver);
   collide_bool_func_t getSolverBoolFunction(

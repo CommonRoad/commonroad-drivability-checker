@@ -16,11 +16,15 @@ default:
   before_script:
     - *update-git-config
 
+variables:
+  CXX_TEST_TARGET: "cpp_unit_tests"
+
 .python-versions: &python-versions
   - &default-python-version "3.10"
   - "3.11"
   - "3.12"
   - "3.13"
+#  - "3.14"
 
 
 ### static test ###
@@ -88,6 +92,21 @@ build-clang:
     - cmake --build build --config Release
   needs: [ ]
 
+build-test:
+  stage: compile
+  cache:
+    <<: *cache_dependency_archives
+  script:
+    - cmake -G "Ninja Multi-Config" -S . -B build
+    - cmake --build build --config RelWithDebInfo --target $CXX_TEST_TARGET
+  needs: [ ]
+  artifacts:
+    paths:
+      - build/RelWithDebInfo/$CXX_TEST_TARGET
+      - build/**/*.so
+      - build/**/*.so.*
+    expire_in: 30 minutes
+
 
 ### build wheels ###
 # build wheel rules
@@ -125,7 +144,7 @@ build-wheel:
     matrix:
       - PYTHON_VERSION: *python-versions
   script:
-    - python$PYTHON_VERSION -m pip wheel -v -w built_wheel dist/*.tar.gz
+    - python$PYTHON_VERSION -m pip wheel --no-deps -v -w built_wheel dist/*.tar.gz
     - auditwheel repair -w wheelhouse built_wheel/commonroad_drivability_checker-*.whl
   needs:
     - job: build-sdist
@@ -160,8 +179,6 @@ build-wheel-cibw:
     # For example, use git push -o ci.variable="CIBW_BUILD_VERBOSITY=1"
     # to make cibuildwheel verbose in the pipeline created for the pushed commit.
     CIBW_BUILD_VERBOSITY: 1
-    # We skip pytest for this stage, since we have a separate stage for running pytest
-    CIBW_TEST_SKIP: "*"
     # We only use the artifacts (sdist/wheels) from previous jobs, so skip all Git operations
     GIT_STRATEGY: none
   script:
@@ -190,19 +207,28 @@ build-wheel-cibw:
         CIBW_BUILD: "*-manylinux_x86_64"
 
 ### run unit tests ###
+run-cpp-test:
+  stage: test
+  script:
+    - cd build
+    - RelWithDebInfo/$CXX_TEST_TARGET
+  needs:
+    - job: build-test
+      artifacts: true
+
 .test-setup:
   &test-setup
   stage: test
-  image: python:${PYTHON_VERSION}-slim-bullseye
+  image: python:${PYTHON_VERSION}-slim-bookworm
   before_script:
     # we need build-essential, since Polygon3 has to be compiled from source
     - apt-get update && apt-get install -y --no-install-recommends git build-essential
     # use pip-tools to generate a requirements_test.txt (including test dependencies)
     # we want to install the packages from the previously built wheel and not pull the PyPi packages
     - pip install pip-tools
-    - pip-compile --extra=test -o requirements_test.txt pyproject.toml
+    - pip-compile --extra=test --extra=clcs --extra=triangle -o requirements_test.txt pyproject.toml
     - pip install -r requirements_test.txt
-    - pip install --no-index --find-links=wheelhouse/ commonroad-drivability-checker[test]
+    - pip install --no-index --find-links=wheelhouse/ commonroad-drivability-checker[test,clcs,triangle]
   parallel:
     matrix:
       - PYTHON_VERSION: *python-versions
@@ -230,7 +256,7 @@ build-wheel-cibw:
   <<: *test-setup
   script:
     - cd tests
-    - python run_tests.py
+    - pytest --import-mode append .
 
 run-pytest:
   <<: [ *pytest-setup, *source-manual ]
@@ -238,12 +264,25 @@ run-pytest:
 run-pytest-cibw:
   <<: [ *pytest-setup, *source-cibw ]
 
+.collision-test-setup:
+  &collision-test-setup
+  <<: *test-setup
+  script:
+    - cd tests
+    - python run_collision_tests.py
+
+run-collision-test:
+  <<: [ *collision-test-setup, *source-manual ]
+
+run-collision-test-cibw:
+  <<: [ *collision-test-setup, *source-cibw ]
+
 
 ### documentation ###
 # build the documentation (Doxygen + Sphinx)
 build-sphinx:
   stage: docs
-  image: python:${PYTHON_VERSION}-slim-bullseye
+  image: python:${PYTHON_VERSION}-slim-bookworm
   variables:
     PYTHON_VERSION: *default-python-version
   before_script:

@@ -16,8 +16,9 @@ class TestSolutionEvaluationBase(unittest.TestCase):
 
         self.all_scenario_dir = os.path.normpath(os.path.join(os.path.dirname(__file__),
                                                               "../../../../commonroad-scenarios/scenarios"))
-        assert os.path.isdir(self.all_scenario_dir), f"{self.all_scenario_dir} is not a directory. You need to clone" \
-                                                     f"https://gitlab.lrz.de/tum-cps/commonroad-scenarios!"
+
+        self.scenarios_cloned = os.path.isdir(self.all_scenario_dir)
+
         self.cost_funcs = [CostFunction.JB1,
                            CostFunction.MW1,
                            CostFunction.SA1,
@@ -35,6 +36,8 @@ class TestSolutionEvaluationBase(unittest.TestCase):
     def _open_scenario_by_id(self, scenario_id: ScenarioID):
         paths = self._get_scenario_paths(scenario_id)
         if not paths:
+            if not self.scenarios_cloned:
+                warnings.warn(f"{self.all_scenario_dir} is not a directory. You need to clone https://gitlab.lrz.de/tum-cps/commonroad-scenarios!")
             raise ValueError(f"No scenario with ID {scenario_id} found in path {self.all_scenario_dir}")
         scenario, pp = CommonRoadFileReader(paths[0]).open()
         if not scenario.scenario_id == scenario_id:

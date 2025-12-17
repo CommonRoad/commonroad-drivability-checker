@@ -5,9 +5,7 @@ set(COLLISION_SRC
         src/collision_checker.cc
         src/primitive_collision_checker.cc
         src/raytrace_utils.cc
-        src/collision_object_ex.cc
         src/time_variant_collision_object.cc
-        src/solvers/distance_queries.cc
         src/solvers/detail/collision_containers.cc
         src/solvers/collision_queries.cc
         src/solvers/trajectory_queries.cc
@@ -17,19 +15,13 @@ set(COLLISION_SRC
         src/solvers/collision_solver_primitive.cc
 
         src/solvers/fcl/fcl_collision_checker.cc
-        src/solvers/fcl/fcl_distance_queries.cc
-        src/solvers/fcl/fcl_broadphase_manager_factories.cc
-        src/solvers/fcl/fcl_distance_requests.cc
         src/solvers/fcl/fcl_collision_queries.cc
         src/solvers/fcl/fcl_collision_object_group.cc
         src/solvers/fcl/fcl_collision_requests.cc
         src/solvers/fcl/fcl_collision_object.cc
         src/solvers/fcl/fcl_entity_factory.cc
         src/solvers/fcl/performance_timers.cc
-        src/solvers/fcl/solver_entity_fcl.cc
 
-        src/solvers/boost/solver_entity_boost.cc
-        src/solvers/boost/boost_collision_object.cc
         src/solvers/boost/boost_object_polygon.cc
         src/solvers/boost/boost_collision_queries.cc
         src/solvers/boost/boost_geometry_queries.cc
@@ -42,8 +34,6 @@ set(COLLISION_SRC
         src/serialize/serialize_tv_object.cc
         src/serialize/serialize_point.cc
         src/serialize/serialize_triangle.cc
-        src/serialize/serialize_container_cc_obj.cc
-        src/serialize/serialize_container_obj_obj.cc
         src/serialize/serialize_polygon.cc
         src/serialize/serialize_shape_group.cc
         src/serialize/serialize.cc
@@ -61,7 +51,6 @@ set(COLLISION_SRC
         src/solvers/sat2d/sat2d_checks.cc
 
         src/tests/online_tests/broadphase_test.cc
-        src/tests/online_tests/test_common.cc
 )
 
 set(COLLISION_HDR
@@ -159,20 +148,14 @@ set(COLLISION_HDR
         include/collision/serialize/export_structs/polygon_export_struct.h
         include/collision/serialize/export_structs/triangle_export_struct.h
         include/collision/serialize/export_structs/vertex_export_struct.h
-        include/collision/serialize/broadphase_failure_export.h
         include/collision/serialize/collision_object_export_s11.h
         include/collision/serialize/public/serialize_public.h
-        include/collision/serialize/broadphase_failure_cc_obj_export.h
-        include/collision/serialize/broadphase_failure_obj_obj_export.h
         include/collision/serialize/tv_object_export.h
         include/collision/serialize/serialize.h
         include/collision/serialize/serialize_reg_impl.h
         include/collision/serialize/sphere_export.h
 
-        include/collision/tests/test_common.h
         include/collision/tests/broadphase_test.h
-        include/collision/tests/broadphase_failure.h
-        include/collision/tests/collision_tests.h
 
         include/collision/narrowphase/point.h
         include/collision/narrowphase/rectangle_obb.h
@@ -198,8 +181,6 @@ if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.23.0)
             BASE_DIRS include
             FILES ${CR_CLCS_HDR_FILES})
 endif ()
-
-#target_compile_definitions(crcc PRIVATE -DENABLE_COLLISION_TESTS=1)
 
 target_compile_features(crcc PUBLIC cxx_lambdas cxx_auto_type)
 
