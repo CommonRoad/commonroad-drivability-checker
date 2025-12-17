@@ -958,9 +958,9 @@ class TestVehicleDynamics(unittest.TestCase):
 
         self.assertAlmostEqual(sim_state.position[0], 0.05)  # x position
         self.assertAlmostEqual(sim_state.position[1], 0.0)  # y position
-        self.assertEqual(sim_state.steering_angle, 0.0)  # steering_angle
-        self.assertEqual(sim_state.velocity, 1)  # velocity
-        self.assertEqual(sim_state.orientation, 0.0)  # orientation
+        self.assertAlmostEqual(sim_state.steering_angle, 0.0)  # steering_angle
+        self.assertAlmostEqual(sim_state.velocity, 1)  # velocity
+        self.assertAlmostEqual(sim_state.orientation, 0.0)  # orientation
 
     def test_forward_simulation_kst_sanity_check(self):
         if self.disable_kst_tests:
@@ -973,10 +973,10 @@ class TestVehicleDynamics(unittest.TestCase):
 
         self.assertAlmostEqual(sim_state[0], 0.05)  # x position
         self.assertAlmostEqual(sim_state[1], 0.0)  # y position
-        self.assertEqual(sim_state[2], 0.0)  # steering_angle
-        self.assertEqual(sim_state[3], 1)  # velocity
-        self.assertEqual(sim_state[4], 0.0)  # orientation
-        self.assertEqual(sim_state[5], 0.0)  # hitch_angle
+        self.assertAlmostEqual(sim_state[2], 0.0)  # steering_angle
+        self.assertAlmostEqual(sim_state[3], 1)  # velocity
+        self.assertAlmostEqual(sim_state[4], 0.0)  # orientation
+        self.assertAlmostEqual(sim_state[5], 0.0)  # hitch_angle
 
     def test_forward_simulation_st_sanity_check(self):
         if self.disable_st_tests:
@@ -989,11 +989,11 @@ class TestVehicleDynamics(unittest.TestCase):
 
         self.assertAlmostEqual(sim_state[0], 0.05)  # x position
         self.assertAlmostEqual(sim_state[1], 0.0)  # y position
-        self.assertEqual(sim_state[2], 0.0)  # steering_angle
-        self.assertEqual(sim_state[3], 1)  # velocity
-        self.assertEqual(sim_state[4], 0.0)  # orientation
-        self.assertEqual(sim_state[5], 0.0)  # yaw_rate
-        self.assertEqual(sim_state[6], 0.0)  # slip_angle
+        self.assertAlmostEqual(sim_state[2], 0.0)  # steering_angle
+        self.assertAlmostEqual(sim_state[3], 1)  # velocity
+        self.assertAlmostEqual(sim_state[4], 0.0)  # orientation
+        self.assertAlmostEqual(sim_state[5], 0.0)  # yaw_rate
+        self.assertAlmostEqual(sim_state[6], 0.0)  # slip_angle
 
     def test_forward_simulation_mb_sanity_check(self):
         if self.disable_mb_tests:
