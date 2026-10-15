@@ -255,8 +255,7 @@ run-cpp-test:
   &pytest-setup
   <<: *test-setup
   script:
-    - cd tests
-    - pytest --import-mode append .
+    - pytest --import-mode append tests/
 
 run-pytest:
   <<: [ *pytest-setup, *source-manual ]
