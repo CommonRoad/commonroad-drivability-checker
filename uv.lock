@@ -276,7 +276,7 @@ wheels = [
 
 [[package]]
 name = "commonroad-drivability-checker"
-version = "2025.3.1"
+version = "2026.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "commonroad-io" },
@@ -324,7 +324,7 @@ requires-dist = [
     { name = "cmake", marker = "extra == 'build'", specifier = ">=3.24,<4.0" },
     { name = "cmake", marker = "extra == 'docs'", specifier = ">=3.24,<4.0" },
     { name = "commonroad-clcs", marker = "extra == 'clcs'", specifier = ">=2025.2.0" },
-    { name = "commonroad-io", specifier = ">=2023.1" },
+    { name = "commonroad-io", specifier = ">=2026.1" },
     { name = "commonroad-vehicle-models", specifier = ">=3.0.0" },
     { name = "ipython", marker = "extra == 'docs'", specifier = ">=8.36.0" },
     { name = "matplotlib", specifier = ">=3.2.2" },
@@ -349,7 +349,7 @@ provides-extras = ["clcs", "triangle", "test", "docs", "build"]
 
 [[package]]
 name = "commonroad-io"
-version = "2024.3"
+version = "2026.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "commonroad-vehicle-models" },
@@ -366,9 +366,9 @@ dependencies = [
     { name = "shapely" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3b/cf/5b36ccfc79fe874c34876525d8b0dfd3b72c643f1769b9098faba908c0cf/commonroad_io-2024.3.tar.gz", hash = "sha256:9561464469e83e518675cfc8e1a782eaff535aeda93803cc7facf62237b11ff3", size = 2175074, upload-time = "2024-12-20T11:01:33.38Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/34/89/baf49b0acbfae2225840995af0588cec266d670f6a2268c405ac7e6fa921/commonroad_io-2026.1.tar.gz", hash = "sha256:fe0297cb5eea04c003fc44ea5acebfe00cae7e7f3913b4939f185303d324e651", size = 2188856, upload-time = "2026-04-27T15:47:00.781Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/eb/b0/46670cd60a6e4435a1e7cabd6a309fc48e7f92765b70521c0c7968c4693f/commonroad_io-2024.3-py3-none-any.whl", hash = "sha256:2994cda71550903ca93834c472ab14bd7f5f8aadbded8576a02055f0e01b1530", size = 2376054, upload-time = "2024-12-20T11:01:31.172Z" },
+    { url = "https://files.pythonhosted.org/packages/0d/23/b6158c0aff647f12b938a5afb2a11a93c7c0ae06d5883249c6e4ee378e7b/commonroad_io-2026.1-py3-none-any.whl", hash = "sha256:6f138197081c83884dcca4a0627444552e4e0be66ee9158a88cf69f1bcbe40f5", size = 2426284, upload-time = "2026-04-27T15:47:03.474Z" },
 ]
 
 [[package]]
@@ -491,7 +491,7 @@ name = "exceptiongroup"
 version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0b/9f/a65090624ecf468cdca03533906e7c69ed7588582240cfe7cc9e770b50eb/exceptiongroup-1.3.0.tar.gz", hash = "sha256:b241f5885f560bc56a59ee63ca4c6a8bfa46ae4ad651af316d4e81817bb9fd88", size = 29749, upload-time = "2025-05-10T17:42:51.123Z" }
 wheels = [
@@ -592,17 +592,17 @@ resolution-markers = [
     "python_full_version < '3.11'",
 ]
 dependencies = [
-    { name = "colorama", marker = "python_full_version < '3.11' and sys_platform == 'win32'" },
-    { name = "decorator", marker = "python_full_version < '3.11'" },
-    { name = "exceptiongroup", marker = "python_full_version < '3.11'" },
-    { name = "jedi", marker = "python_full_version < '3.11'" },
-    { name = "matplotlib-inline", marker = "python_full_version < '3.11'" },
-    { name = "pexpect", marker = "python_full_version < '3.11' and sys_platform != 'emscripten' and sys_platform != 'win32'" },
-    { name = "prompt-toolkit", marker = "python_full_version < '3.11'" },
-    { name = "pygments", marker = "python_full_version < '3.11'" },
-    { name = "stack-data", marker = "python_full_version < '3.11'" },
-    { name = "traitlets", marker = "python_full_version < '3.11'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "decorator" },
+    { name = "exceptiongroup" },
+    { name = "jedi" },
+    { name = "matplotlib-inline" },
+    { name = "pexpect", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "prompt-toolkit" },
+    { name = "pygments" },
+    { name = "stack-data" },
+    { name = "traitlets" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a2/9f/d9a73710df947b7804bd9d93509463fb3a89e0ddc99c9fcc67279cddbeb6/ipython-8.36.0.tar.gz", hash = "sha256:24658e9fe5c5c819455043235ba59cfffded4a35936eefceceab6b192f7092ff", size = 5604997, upload-time = "2025-04-25T18:03:38.031Z" }
 wheels = [
@@ -618,17 +618,17 @@ resolution-markers = [
     "python_full_version >= '3.11' and python_full_version < '3.13'",
 ]
 dependencies = [
-    { name = "colorama", marker = "python_full_version >= '3.11' and sys_platform == 'win32'" },
-    { name = "decorator", marker = "python_full_version >= '3.11'" },
-    { name = "ipython-pygments-lexers", marker = "python_full_version >= '3.11'" },
-    { name = "jedi", marker = "python_full_version >= '3.11'" },
-    { name = "matplotlib-inline", marker = "python_full_version >= '3.11'" },
-    { name = "pexpect", marker = "python_full_version >= '3.11' and sys_platform != 'emscripten' and sys_platform != 'win32'" },
-    { name = "prompt-toolkit", marker = "python_full_version >= '3.11'" },
-    { name = "pygments", marker = "python_full_version >= '3.11'" },
-    { name = "stack-data", marker = "python_full_version >= '3.11'" },
-    { name = "traitlets", marker = "python_full_version >= '3.11'" },
-    { name = "typing-extensions", marker = "python_full_version == '3.11.*'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "decorator" },
+    { name = "ipython-pygments-lexers" },
+    { name = "jedi" },
+    { name = "matplotlib-inline" },
+    { name = "pexpect", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "prompt-toolkit" },
+    { name = "pygments" },
+    { name = "stack-data" },
+    { name = "traitlets" },
+    { name = "typing-extensions", marker = "python_full_version < '3.12'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9d/02/63a84444a7409b3c0acd1de9ffe524660e0e5d82ee473e78b45e5bfb64a4/ipython-9.2.0.tar.gz", hash = "sha256:62a9373dbc12f28f9feaf4700d052195bf89806279fc8ca11f3f54017d04751b", size = 4424394, upload-time = "2025-04-25T17:55:40.498Z" }
 wheels = [
@@ -640,7 +640,7 @@ name = "ipython-pygments-lexers"
 version = "1.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pygments", marker = "python_full_version >= '3.11'" },
+    { name = "pygments" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ef/4c/5dd1d8af08107f88c7f741ead7a40854b8ac24ddf9ae850afbcf698aa552/ipython_pygments_lexers-1.1.1.tar.gz", hash = "sha256:09c0138009e56b6854f9535736f4171d855c8c08a563a0dcd8022f78355c7e81", size = 8393, upload-time = "2025-01-17T11:24:34.505Z" }
 wheels = [
