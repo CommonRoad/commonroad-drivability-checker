@@ -3,7 +3,16 @@
 
 namespace collision {
 namespace detail {
-// default solver
+
+/*!
+ \brief Helper function for the default collision solver
+ It dispatches the collision query to the necessary collision detection function of the solver.
+ \param[in] obj1 - first collision object
+ \param[in] obj2 - second collision object
+ \param[out] res - result of the collision checking
+ \param[in] req - parameters for collision detection
+*/
+
 template <typename T>
 inline std::size_t collide_binary_helper(const CollisionObject &obj1,
                                          const CollisionObject &obj2,
@@ -22,7 +31,15 @@ inline std::size_t collide_binary_helper(const CollisionObject &obj1,
                                          CollisionResult &res,
                                          const CollisionRequest &req);
 
-// solverFCL solver
+/*!
+ \brief Helper function for using the FCL library collision solver
+ It dispatches the collision query to the necessary collision detection function of the solver.
+ \param[in] obj1 - first collision object
+ \param[in] obj2 - second collision object
+ \param[out] res - result of the collision checking
+ \param[in] req - parameters for collision detection
+*/
+
 template <>
 inline std::size_t collide_binary_helper<typename solvers::FCLSolver *>(
     const CollisionObject &obj1, const CollisionObject &obj2,
@@ -34,7 +51,14 @@ inline std::size_t collide_binary_helper<typename solvers::FCLSolver *>(
   return func(obj1, obj2, res, req);
 }
 
-// primitive solver
+/*!
+ \brief Helper function for using the in-built 2D collision solver.
+ It dispatches the collision query to the necessary collision detection function of the solver.
+ \param[in] obj1 - first collision object
+ \param[in] obj2 - second collision object
+ \param[out] res - result of the collision checking
+ \param[in] req - parameters for collision detection
+*/
 
 template<> inline std::size_t collide_binary_helper<
 		typename solvers::PrimitiveSolver*>(const CollisionObject &obj1,
@@ -48,6 +72,14 @@ template<> inline std::size_t collide_binary_helper<
 }
 
 }  // namespace detail
+
+/*!
+ \brief Checks whether two collision objects collide or not.
+ \param[in] obj1 - first collision object
+ \param[in] obj2 - second collision object
+ \param[out] res - result of the collision checking
+ \param[in] req - parameters for collision detection
+*/
 
 std::size_t collide_binary(const CollisionObject &obj1,
                            const CollisionObject &obj2, CollisionResult &res,

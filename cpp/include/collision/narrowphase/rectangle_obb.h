@@ -168,6 +168,7 @@ class RectangleOBB : public Shape {
   void set_local_y_axis(const Eigen::Vector2d &y_axis);
   void set_r_x(double _r_x);
   void set_r_y(double _r_y);
+  void set_center(const Eigen::Vector2d &_center) override;
 
   //
   // @brief Computes the square distance between a point and

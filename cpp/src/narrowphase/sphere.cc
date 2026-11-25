@@ -14,10 +14,19 @@
 
 namespace collision {
 
+/*!
+ \brief creates FCL collision geometry for a Sphere. This is a FCL library internal representation used for collision checking.
+*/
+
 fcl::CollisionGeometry<FCL_PRECISION> *Sphere::createFCLCollisionGeometry(
     void) const {
   return new fcl::Sphere<FCL_PRECISION>(this->radius());
 }
+
+/*!
+ \brief creates FCL collision object for a Sphere. This is a FCL library internal representation used for collision checking.
+ \param[in] col_geom - corresponding FCL collision geometry
+*/
 
 fcl::CollisionObject<FCL_PRECISION> *Sphere::createFCLCollisionObject(
     const std::shared_ptr<fcl::CollisionGeometry<FCL_PRECISION>> &col_geom)
@@ -26,6 +35,14 @@ fcl::CollisionObject<FCL_PRECISION> *Sphere::createFCLCollisionObject(
       col_geom,
       collision::FCLTransform::fcl_get_3d_translation(this->center()));
 }
+
+/*!
+ \brief A helper function that is called from the rayTracePrimitive function.
+ Given the query line segment [point1, point2], it outputs the part(s) of the line segment that intersect with the Sphere.
+ \param[in] point1 - start of the query line segment
+ \param[in] point2 - end of the query line segment
+ \param[out] intersect - vector to which the output line segments are to be appended
+*/
 
 bool Sphere::rayTrace(const Eigen::Vector2d &point1,
                       const Eigen::Vector2d &point2,
@@ -86,10 +103,23 @@ bool Sphere::rayTrace(const Eigen::Vector2d &point1,
   return false;
 }
 
+/*!
+ \brief Clones the Sphere
+*/
+
 Sphere *Sphere::clone() const { return new Sphere(*this); }
+
+/*!
+ \brief Copy constructor for a Sphere
+*/
 
 Sphere::Sphere(const Sphere &copy) : Shape(copy) {
 }
+
+/*!
+ \brief Prints out important information about the Sphere
+ \param[out] stream - output stringstream to print the information to
+*/
 
 void Sphere::print(std::ostringstream &stream) const {
   stream << "Sphere:\n"
@@ -97,10 +127,19 @@ void Sphere::print(std::ostringstream &stream) const {
          << "radius: " << radius_ << std::endl;
 }
 
+/*!
+ \brief setter for radius_
+ \param[in] _radius - new radius
+*/
+
 void Sphere::set_radius(double _radius) {
   radius_ = _radius;
   invalidateCollisionEntityCache();
 }
+
+/*!
+ \brief Returns the type of the Shape
+*/
 
 ShapeType Sphere::type() const { return type_; }
 
@@ -109,6 +148,10 @@ ShapeType Sphere::type() const { return type_; }
 namespace serialize {
 ICollisionObjectExport *exportObject(const collision::Sphere &);
 }
+
+/*!
+ \brief Exports the Sphere into a serializable object. S11n library is used for serialization.
+*/
 
 serialize::ICollisionObjectExport *Sphere::exportThis(void) const {
   return serialize::exportObject(*this);

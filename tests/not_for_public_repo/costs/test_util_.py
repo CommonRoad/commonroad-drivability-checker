@@ -12,7 +12,7 @@ class TestLaneletNetworkMatcher(unittest.TestCase):
     def setUp(self) -> None:
         self.test_ressources_dir = os.path.join(os.path.dirname(__file__), "ressources")
         self.test_scenario_dir = os.path.join(self.test_ressources_dir, "scenarios")
-        self.draw = True
+        self.draw = False
 
     def test_find_lanelet_by_trajectory(self):
         scenario_name = "USA_Lanker-2_23_T-1.xml"

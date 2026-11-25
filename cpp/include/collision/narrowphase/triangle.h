@@ -18,16 +18,28 @@ class Triangle : public Shape {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+  void set_cached_fields() {
+	set_center(compute_center());
+	compute_incircle_radius_and_center();
+	segments_.push_back(LineSegment(v1_, v2_));
+	segments_.push_back(LineSegment(v2_, v3_));
+	segments_.push_back(LineSegment(v3_, v1_));
+	compute_is_valid();
+  }
+
   Triangle(const Eigen::Vector2d &_v1 = Eigen::Vector2d(0, 0),
            const Eigen::Vector2d &_v2 = Eigen::Vector2d(0, 0),
            const Eigen::Vector2d &_v3 = Eigen::Vector2d(0, 0))
-      : Shape(Eigen::Vector2d(0, 0)), v1_(_v1), v2_(_v2), v3_(_v3) {
-    set_center(compute_center());
-    compute_incircle_radius_and_center();
-    segments_.push_back(LineSegment(_v1, _v2));
-    segments_.push_back(LineSegment(_v2, _v3));
-    segments_.push_back(LineSegment(_v3, _v1));
-    compute_is_valid();
+      : Shape(Eigen::Vector2d(0, 0)) {
+	v1_ = _v1;
+	v2_ = _v2;
+	v3_ = _v3;
+	if (compute_signed_area() < 0.0f) {
+		v1_ = _v1;
+		v2_ = _v3;
+		v3_ = _v2;
+	}
+	set_cached_fields();
   }
 
   bool rayTrace(const Eigen::Vector2d &point1, const Eigen::Vector2d &point2,
@@ -65,6 +77,7 @@ class Triangle : public Shape {
   void set_v2(const Eigen::Vector2d &_v2);
   void set_v3(const Eigen::Vector2d &_v3);
 
+
 #if ENABLE_SERIALIZER
   serialize::ICollisionObjectExport *exportThis(void) const override;
 #endif
@@ -87,6 +100,8 @@ class Triangle : public Shape {
   Eigen::Vector2d compute_center();
   void compute_incircle_radius_and_center();
   void compute_is_valid();
+
+  double compute_signed_area() const;
 
   using Shape::center_;
   using Shape::radius_;

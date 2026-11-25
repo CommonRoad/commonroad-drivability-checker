@@ -72,6 +72,17 @@ struct EndsLineSegmentSort_Y_goe {
   }
 } endsSortY_goe;
 
+/*!
+ \brief Given an original inpput line segment, finds line segments within it that intersect with the given
+ group of collision objects.
+ \param[in] collision_objects input collision objects
+ \param[in] point1 start of the original input line segment
+ \param[in] point2 end of the original input line segment
+ \param[out] intersect vector for the output line segments
+ \param[in] remove_overlaps if true, ensures that the output line segments do not overlap with each other, i.e.
+                                     joins the overlapping output line segments together.
+*/
+
 bool rayTracePrimitive(
     std::vector<collision::CollisionObjectConstPtr> collision_objects,
     const Eigen::Vector2d &point1, const Eigen::Vector2d &point2,
@@ -101,6 +112,21 @@ bool rayTracePrimitive(
   }
   return res;
 }
+
+/*!
+ \brief Function to postprocess the raytracing results for simple shapes.
+ For example, when both input line segment points lie within the simple shape, i.e., there are no
+ intersections with the shape border, return the line segment itself.
+ When there is one intersection point, return the line segment between the intersection point and
+ the point of the input segment that lies within the shape.
+ When there are two intersection points, return the line segment between them.
+ If there are more than two intersection points, remove duplicate points and behave as described above.
+ \param[in] point 1 - start of the input line segment that is checked for intersection
+ \param[in] point 2 - end of the input line segment
+ \param[in] inters1 vector of intersection points
+ \param[out] intersect output vector onto which the line segment that intersects with the shape is appended
+ \param[in] obj shape object which is used for finding the intersecting line segment
+*/
 
 bool rayTracePostprocess(const Eigen::Vector2d &point1,
                          const Eigen::Vector2d &point2,
@@ -193,6 +219,15 @@ bool rayTracePostprocess(const Eigen::Vector2d &point1,
   }
   return true;
 }
+
+/*!
+ \brief Function that takes the line segments that intersect with the group of shapes, as the input
+ and postprocesses them in the way that all output line segments do not overlap with each other.
+ The starts of the output line segments are sorted w.r.t. to the specified axis (X or Y).
+ \param[in] intersect - input line segments
+ \param[out] out_vec - output line segments
+ \param[in] axis - the axis (X or Y) according to which the starts of the output line segments are sorted
+*/
 
 int rayTraceRemoveOverlaps(const std::vector<LineSegment>& intersect,
                            std::vector<LineSegment> &out_vec, int axis) {

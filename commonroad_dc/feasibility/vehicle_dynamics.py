@@ -6,7 +6,7 @@ import numpy as np
 import math
 from commonroad.common.solution import VehicleType, VehicleModel
 from commonroad.common.util import make_valid_orientation
-from commonroad.geometry.shape import Rectangle
+from commonroad.geometry.obstacle_shapes.rect_obstacle_shape import RectObstacleShape
 from commonroad.scenario.trajectory import Trajectory
 from commonroad.scenario.state import InitialState, InputState, PMInputState, PMState, KSState, KSTState, STState, \
     MBState, LongitudinalState, LateralState, LKSInputState
@@ -94,7 +94,7 @@ class VehicleDynamics(ABC):
         self.vehicle_model = vehicle_model
         self.vehicle_type = vehicle_type
         self.parameters = VehicleParameterMapping[self.vehicle_type.name].value
-        self.shape = Rectangle(length=self.parameters.l, width=self.parameters.w)
+        self.shape = RectObstacleShape(length=self.parameters.l, width=self.parameters.w)
 
     @classmethod
     def PM(cls, vehicle_type: VehicleType) -> 'PointMassDynamics':

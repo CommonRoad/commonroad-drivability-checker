@@ -9,6 +9,10 @@
 
 namespace collision {
 
+/*!
+ \brief Clones the CollisionChecker object. Returns a shared pointer to the clone.
+*/
+
 CollisionCheckerPtr CollisionChecker::clone_shared(void) const {
   CollisionCheckerPtr new_cc =
       CollisionCheckerPtr(new collision::CollisionChecker());
@@ -73,6 +77,9 @@ bool CollisionChecker::collide(CollisionObjectConstPtr co,
 collide with the given object
 
  \param[in] co given object
+
+ \param[out] obstacle output reference for the colliding object
+
  \param[in] ungroup_shape_groups when false, ShapeGroups will be treated as
 separate objects and included in the result. Otherwise, one of the colliding
 obstacles within the ShapeGroups will be added to the output Vector.
@@ -81,9 +88,6 @@ obstacles within the ShapeGroups will be added to the output Vector.
 treated as separate objects and included in the result. Otherwise, one of the
 colliding obstacles within the TimeVarintCollisionObject will be added to the
 output Vector.
-
- \param[out] obstacle output reference for the colliding object
-
 
  \warning The function is not thread-safe
 
@@ -306,9 +310,19 @@ void CollisionChecker::print(std::ostringstream &stream) const {
 
 #if ENABLE_SERIALIZER
 
+/*!
+ \brief Serializes the CollisionChecker into an output stream
+ \param[out] output_stream - the output stream to serialize the object into
+*/
+
 int CollisionChecker::serialize(std::ostream &output_stream) const {
   return serialize::serialize(*this, output_stream);
 }
+
+/*!
+ \brief Deserializes the CollisionChecker from an input stream
+ \param[in] input_stream - the input stream to deserialize the object from
+*/
 
 CollisionCheckerConstPtr CollisionChecker::deserialize(
     std::istream &input_stream) {
@@ -322,6 +336,10 @@ CollisionCheckerConstPtr CollisionChecker::deserialize(
 namespace serialize {
 ICollisionCheckerExport *exportObject(const collision::CollisionChecker &);
 }
+
+/*!
+ \brief Exports the CollisionChecker into a serializable object. S11n library is used for serialization.
+*/
 
 serialize::ICollisionCheckerExport *CollisionChecker::exportThis(void) const {
   return serialize::exportObject(*this);

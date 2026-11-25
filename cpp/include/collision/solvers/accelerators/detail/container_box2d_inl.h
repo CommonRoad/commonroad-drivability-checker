@@ -50,18 +50,6 @@ class ContainerBox2D {
     for (auto obj : objects_in) {
       addObject(obj);
     }
-    double min_x = std::numeric_limits<double>::max();
-    double max_x = std::numeric_limits<double>::min();
-    double min_y = std::numeric_limits<double>::max();
-    double max_y = std::numeric_limits<double>::min();
-    for (auto obj : objects_in) {
-      AABB aabb = getAABB(obj);
-
-      min_x = std::min(min_x, aabb.x_min);
-      min_y = std::min(min_y, aabb.y_min);
-      max_x = std::max(max_x, aabb.x_max);
-      max_y = std::max(max_y, aabb.y_max);
-    }
 
     broadphase_manager_ = new b2DynamicTree();
 
@@ -73,12 +61,6 @@ class ContainerBox2D {
     for (auto obj : sg_ptr->unpack()) {
       addObject(obj.get());
     }
-
-    auto sg_aabb = sg_ptr->getAABB();
-    double min_x = sg_aabb->min()(0);
-    double min_y = sg_aabb->min()(1);
-    double max_x = sg_aabb->max()(0);
-    double max_y = sg_aabb->max()(1);
 
     broadphase_manager_ = new b2DynamicTree();
 

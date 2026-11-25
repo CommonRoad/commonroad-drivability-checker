@@ -55,7 +55,6 @@ inline bool isTriangleValid(const Triangle& tri) {
   return tri.is_valid();
 }
 
-// experimental
 // Test if 2D point P lies inside the counterclockwise 2D triangle ABC
 inline bool collisionDetection(const Point& point,
                                const Triangle& triangle) {
@@ -84,7 +83,6 @@ inline bool collisionDetection(const Point& point,
   return true;
 }
 
-// experimental
 inline bool collisionDetection(const Point& point,
                                const RectangleOBB& obb) {
   Eigen::Vector2d pt1(obb.center() - obb.r_x() * obb.local_x_axis() -
@@ -147,7 +145,6 @@ inline bool collisionDetection(const RectangleAABB &aabb,
   return true;
 }
 
-// experimental
 // Computes if a sphere and an AABB collide.
 // From: C. Ericson, Real-Time Collision Detection, pp. 165-166, 2004
 //
@@ -163,7 +160,6 @@ inline bool collisionDetection(const RectangleAABB& aabb,
   return false;
 }
 
-// experimental
 inline bool collisionDetection(const RectangleAABB& aabb,
                                const Triangle& triangle) {
 
@@ -286,7 +282,6 @@ inline bool collisionDetection(const RectangleOBB &obb_first,
   return true;
 }
 
-// experimental
 // Computes if a sphere and an OBB collide.
 // From: C. Ericson, Real-Time Collision Detection, pp. 166-167, 2004
 //
@@ -301,7 +296,6 @@ inline bool collisionDetection(const RectangleOBB& obb, const Sphere& sphere) {
 return false;
 }
 
-// experimental
 // Computes if two spheres collide.
 // From: C. Ericson, Real-Time Collision Detection, pp. 88, 2004
 //
@@ -361,7 +355,6 @@ inline bool pointInsideTriangle(const Triangle& triangle,
   }
 }
 
-// experimental
 inline bool collisionDetection(const Sphere& sphere, const Triangle& triangle) {
   if (!isTriangleValid(triangle))
     return false;
@@ -398,7 +391,6 @@ inline bool collisionDetection(const Sphere& sphere, const Triangle& triangle) {
   return false;
 }
 
-// experimental
 inline bool collisionDetection(const Triangle& triangle_a,
                                const Triangle& triangle_b) {
 
@@ -469,7 +461,6 @@ inline bool collisionDetection(const Triangle& triangle_a,
   return true;
 }
 
-// experimental
 inline bool collisionDetection(const RectangleOBB& obb,
                                const Triangle& triangle) {
   Eigen::Vector2d pt1(obb.center() - obb.r_x() * obb.local_x_axis() -

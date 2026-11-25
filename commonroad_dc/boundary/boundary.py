@@ -5,13 +5,13 @@ from commonroad.scenario.scenario import Scenario
 from commonroad_dc.boundary import construction
 
 
-def create_road_boundary_obstacle(scenario: Scenario, method='obb_rectangles', return_scenario_obstacle=True, **kwargs):
+def create_road_boundary_obstacle(scenario: Scenario, method='obb_rectangles', return_list_of_occupancies=True, **kwargs):
     """
     Creates the road boundary for the given scenario.
 
     :param scenario: the input scenario to be triangulated
     :param method: road boundary creation method: triangulation - Delaunay triangulation, aligned_triangulation - axis-aligned triangles using GPC polygon strips, obb_rectangles - OBB rectangles on the road border (default: obb_rectangles)
-    :param return_scenario_obstacle: additionally create a commonroad StaticObstacle for the road boundary
+    :param return_list_of_occupancies: additionally create a list of commonroad Occupancy objects for the road boundary
     :param kwargs: settings of the method
     :return: [optional: StaticObstacle representing the road boundary,] ShapeGroup with the collision checker objects
 
@@ -49,7 +49,7 @@ def create_road_boundary_obstacle(scenario: Scenario, method='obb_rectangles', r
 
     """
 
-    boundary = construction.construct_boundary_obstacle(scenario, method, return_scenario_obstacle, kwargs)
+    boundary = construction.construct_boundary_obstacle(scenario, method, return_list_of_occupancies, kwargs)
     return boundary
 
 

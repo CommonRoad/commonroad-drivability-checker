@@ -73,9 +73,9 @@ class ContainerFCL {
       addObject(obj);
     }
     double min_x = std::numeric_limits<double>::max();
-    double max_x = std::numeric_limits<double>::min();
+    double max_x = -1 * std::numeric_limits<double>::max();
     double min_y = std::numeric_limits<double>::max();
-    double max_y = std::numeric_limits<double>::min();
+    double max_y = -1 * std::numeric_limits<double>::max();
     for (auto obj : objects_in) {
       AABB aabb = getAABB(obj);
 
@@ -83,6 +83,12 @@ class ContainerFCL {
       min_y = std::min(min_y, aabb.y_min);
       max_x = std::max(max_x, aabb.x_max);
       max_y = std::max(max_y, aabb.y_max);
+    }
+    if (objects_in.size() == 0) {
+      min_x = -1;
+      max_x = 1;
+      min_y = -1;
+      max_y = 1;
     }
 
     double gridlen = max_x - min_x;

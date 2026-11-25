@@ -9,15 +9,23 @@
 namespace collision {
 namespace raytrace {
 
-Point::Point() {
-  x = 0;
-  y = 0;
-};
+Point::Point() {}
 Point::Point(const Eigen::Vector2d &pnt) : x(pnt.x()), y(pnt.y()){};
-Point::Point(const Point &pnt) : x(pnt.x), y(pnt.y){};
 
 // Adapted from
 // http://csharphelper.com/blog/2014/09/determine-where-a-line-intersects-a-circle-in-c/
+
+/*!
+ \brief Finds points of intersection between a line and a circle. Returns the number of
+ points of intersection.
+ \param[in] cx x coordinate of the circle center
+ \param[in] cy y coordinate of the circle center
+ \param[in] radius radius of the circle
+ \param[in] p1 first point that lies on the line
+ \param[in] p2 second point that lies on the line
+ \param[out] inters points of intersection between the circle and the line
+*/
+
 int findLineCircleIntersections(double cx, double cy, double radius,
                                 const Eigen::Vector2d &p1,
                                 const Eigen::Vector2d &p2,
@@ -66,6 +74,14 @@ void RaiseRaytraceError(const char *message) {
 
 // Adapted from
 // https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
+
+/*!
+ \brief Function to check if point q lies on line segment 'pr'.
+ \param[in] q Point q
+ \param[in] p Point p, the beginning of the line segment
+ \param[in] r Point r, the end of the line segment
+*/
+
 bool onSegment(Point p, Point q, Point r) {
   if (q.x <= max(p.x, r.x) && q.x >= min(p.x, r.x) && q.y <= max(p.y, r.y) &&
       q.y >= min(p.y, r.y))
@@ -74,11 +90,14 @@ bool onSegment(Point p, Point q, Point r) {
   return false;
 }
 
-// To find orientation of ordered triplet (p, q, r).
-// The function returns following values
-// 0 --> p, q and r are colinear
-// 1 --> Clockwise
-// 2 --> Counterclockwise
+/*!
+ \brief Function to find orientation of ordered triplet (p, q, r).
+ The function returns following values
+ 0 --> p, q and r are colinear
+ 1 --> Clockwise
+ 2 --> Counterclockwise
+*/
+
 int orientation(Point p, Point q, Point r) {
   // See 10th slides from following link for derivation of the formula
   // http://www.dcs.gla.ac.uk/~pat/52233/slides/Geometry1x1.pdf
@@ -89,9 +108,20 @@ int orientation(Point p, Point q, Point r) {
   return (val > 0) ? 1 : 2;  // clock or counterclock wise
 }
 
+/*!
+ \brief Function to find the determinant of the matrix
+ [a b]
+ [c d]
+*/
+
 inline double det(double a, double b, double c, double d) {
   return a * d - b * c;
 }
+
+/*!
+ \brief Returns whether two lines intersect. Stores the coordinates of the intersection into
+ variables ixOut, iyOut.
+*/
 
 bool lineLineIntersect(double x1, double y1,          // Line 1 start
                        double x2, double y2,          // Line 1 end
@@ -127,8 +157,12 @@ bool lineLineIntersect(double x1, double y1,          // Line 1 start
 }
 
 // Part taken from
-// https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/ The
-// main function that returns true if line segment 'p1q1' and 'p2q2' intersect.
+// https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
+
+/*!
+ \brief The main function that returns true if line segment 'p1q1' and 'p2q2' intersect.
+*/
+
 bool doIntersect(Point p1, Point q1, Point p2, Point q2,
                  std::vector<Point> &inters) {
   // Find the four orientations needed for general and

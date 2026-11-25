@@ -10,6 +10,14 @@ namespace collision {
 namespace solvers {
 namespace solverFCL {
 
+/*!
+ \brief Helper function to check for a collision between two Shapes
+ \param[in] obj1 - first collision object
+ \param[in] obj2 - second collision object
+ \param[out] res - result of the collision checking
+ \param[in] req - parameters for collision detection
+*/
+
 std::size_t collide_obj_obj(const CollisionObject &obj1,
                             const CollisionObject &obj2, CollisionResult &res,
                             const CollisionRequest &req) {
@@ -21,6 +29,15 @@ std::size_t collide_obj_obj(const CollisionObject &obj1,
       *obj1_fcl, *obj2_fcl));
   return 0;
 }
+
+/*!
+ \brief Helper function to check for a collision between a ShapeGroup and a Shape
+ \param[in] obj1 - first collision object
+ \param[in] obj2 - second collision object
+ \param[out] res - result of the collision checking
+ \param[in] req - parameters for collision detection
+*/
+
 std::size_t collide_shape_group_obj(const CollisionObject &obj1,
                                     const CollisionObject &obj2,
                                     CollisionResult &res,
@@ -32,12 +49,30 @@ std::size_t collide_shape_group_obj(const CollisionObject &obj1,
       *obj1_fcl, *obj2_fcl));
   return 0;
 }
+
+/*!
+ \brief Helper function to check for a collision between a Shape and a ShapeGroup
+ \param[in] obj1 - first collision object
+ \param[in] obj2 - second collision object
+ \param[out] res - result of the collision checking
+ \param[in] req - parameters for collision detection
+*/
+
 std::size_t collide_obj_shape_group(const CollisionObject &obj1,
                                     const CollisionObject &obj2,
                                     CollisionResult &res,
                                     const CollisionRequest &req) {
   return collide_shape_group_obj(obj2, obj1, res, req);
 }
+
+/*!
+ \brief Helper function to check for a collision between two ShapeGroups
+ \param[in] obj1 - first collision object
+ \param[in] obj2 - second collision object
+ \param[out] res - result of the collision checking
+ \param[in] req - parameters for collision detection
+*/
+
 std::size_t collide_shape_group_shape_group(const CollisionObject &obj1,
                                             const CollisionObject &obj2,
                                             CollisionResult &res,
@@ -50,6 +85,14 @@ std::size_t collide_shape_group_shape_group(const CollisionObject &obj1,
       *obj1_fcl, *obj2_fcl));
   return 0;
 }
+
+/*!
+ \brief Helper function to check for a collision between a TimeVariantCollisionObject and a non-time-variant CollisionObject
+ \param[in] obj1 - first collision object
+ \param[in] obj2 - second collision object
+ \param[out] res - result of the collision checking
+ \param[in] req - parameters for collision detection
+*/
 
 std::size_t collide_tvobst_obj(const CollisionObject &obj1,
                                const CollisionObject &obj2,
@@ -84,12 +127,28 @@ std::size_t collide_tvobst_obj(const CollisionObject &obj1,
   return 0;
 }
 
+/*!
+ \brief Helper function to check for a collision between a non-time-variant CollisionObject and a TimeVariantCollisionObject
+ \param[in] obj1 - first collision object
+ \param[in] obj2 - second collision object
+ \param[out] res - result of the collision checking
+ \param[in] req - parameters for collision detection
+*/
+
 std::size_t collide_obj_tvobst(const CollisionObject &obj1,
                                const CollisionObject &obj2,
                                CollisionResult &res,
                                const CollisionRequest &req) {
   return collide_tvobst_obj(obj2, obj1, res, req);
 }
+
+/*!
+ \brief Helper function to check for a collision between two time-variant collision objects
+ \param[in] obj1 - first collision object
+ \param[in] obj2 - second collision object
+ \param[out] res - result of the collision checking
+ \param[in] req - parameters for collision detection
+*/
 
 std::size_t collide_tvobst_tvobst(const CollisionObject &obj1,
                                   const CollisionObject &obj2,
@@ -129,6 +188,10 @@ std::size_t collide_tvobst_tvobst(const CollisionObject &obj1,
 }
 
 }  // namespace solverFCL
+
+/*!
+ \brief Constructor that fills in pointers to functions to which the collision queries are to be dispatched.
+*/
 
 CollisionFunctionMatrix::CollisionFunctionMatrix(
     const solvers::FCLSolver *solver) {

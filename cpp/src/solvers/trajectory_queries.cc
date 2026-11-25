@@ -14,6 +14,11 @@ using namespace solvers::solverBoost;
 namespace detail {
 using namespace accelerators;
 
+/*!
+ \brief Preprocesses each trajectory using OBB sum hull (for continuous collision detection). The occupancies of the OBB boxes for two
+ subsequent states are overapproximated with a tightly fitting OBB box. It is an in-place operation.
+*/
+
 int OBBDenseTrajectoryBatch::preprocess_inplace(void) {
   if (traj_length_ < 2) return 0;
   invalidateAABBs();
@@ -39,6 +44,13 @@ int OBBDenseTrajectoryBatch::preprocess_inplace(void) {
 
 namespace trajectory_queries {
 
+/*!
+ \brief Gets minimal time step and maximal time step for the given trajectories.
+ \param[in] traj_in - input trajectories
+ \param[out] min_time_step - minimal time step
+ \param[out] max_time_step - maximal time step
+*/
+
 inline void get_time_step_bounds(
     const aligned_vector<const collision::TimeVariantCollisionObject*>& traj_in,
     int& min_time_step, int& max_time_step) {
@@ -50,6 +62,17 @@ inline void get_time_step_bounds(
     max_time_step = std::max(max_time_step, el->time_end_idx());
   }
 }
+
+/*!
+ \brief Gets minimal time steps and maximal time steps given trajectories and time-variant obstacles.
+ \param[in] traj_in - input trajectories
+ \param[in] traj_in - input obstacles
+ \param[out] min_time_step_traj - the largest of min_time_step_obst and the minimal time step across the given trajectories
+ \param[out] max_time_step_traj - the smallest of max_time_step_obst and the maximal time step across the given trajectories
+ \param[out] min_time_step_obst - minimal time step across the given time-variant obstacles
+ \param[out] max_time_step_obst - maximal time step across the given time-variant obstacles
+*/
+
 inline void get_time_step_bounds(
     const aligned_vector<const collision::TimeVariantCollisionObject*>& traj_in,
     const aligned_vector<const collision::TimeVariantCollisionObject*>&
@@ -61,6 +84,14 @@ inline void get_time_step_bounds(
   min_time_step_traj = std::max(min_time_step_traj, min_time_step_obst);
   max_time_step_traj = std::min(max_time_step_traj, max_time_step_obst);
 }
+
+/*!
+ \brief Retrieves Shapes from all given trajectories at the specified time step.
+ The ShapeGroups at the given time step are ungrouped into Shapes.
+ \param[in] time_step - input time step
+ \param[in] trajectory_list - input trajectories
+ \param[out] shapes_out - resulting Shapes
+*/
 
 inline void retrieve_shapes_from_trajectories(
     int time_step,
@@ -89,37 +120,60 @@ inline void retrieve_shapes_from_trajectories(
   }
 }
 
+/*!
+ \brief Helper function to check for collisions between static obstacles and the given trajectories.
+ The result is returned into the result parameter. The number of elements in the result vector must equal the number of trajectories plus 2.
+ The element in result corresponding to the index of the input trajectory is set to -1 if there is no collision between the input trajectory
+ and the static obstacles. Otherwise, the element is set to the time step of first collision.
+ The last two elements of the result vector contain debug info for performance comparison.
+ \param[in] obstacles_container - container with static obstacles
+ \param[in] traj_in - input trajectories
+ \param[in] req - collision request parameters
+ \param[out] result - result of collision detection
+*/
+
 template <class T>
 inline int trajectories_collision_staticobst_helper(
     T& obstacles_container,
-    const aligned_vector<const collision::TimeVariantCollisionObject*>&
-        obsts_in,
+    const aligned_vector<const collision::TimeVariantCollisionObject*>& traj_in,
     ContainerCollisionRequest req, aligned_vector<int>& result) {
-  if (obsts_in.size() + 2 != result.size()) return -1;
+  if (traj_in.size() + 2 != result.size()) return -1;
 
   std::fill(result.begin(), result.end(), -1);
   int min_time_step = -1, max_time_step = -1;
-  get_time_step_bounds(obsts_in, min_time_step, max_time_step);
-  aligned_vector<bool> done(obsts_in.size());
+  get_time_step_bounds(traj_in, min_time_step, max_time_step);
+  aligned_vector<bool> done(traj_in.size());
 
   for (int cur_time_step = min_time_step; cur_time_step <= max_time_step;
        cur_time_step++) {
-    for (int cur_obst = 0; cur_obst < obsts_in.size(); cur_obst++) {
-      if (!done[cur_obst]) {
-        auto cur_obj = obsts_in[cur_obst]->getObstacleAtTimePtr(cur_time_step);
+    for (int cur_traj = 0; cur_traj < traj_in.size(); cur_traj++) {
+      if (!done[cur_traj]) {
+        auto cur_obj = traj_in[cur_traj]->getObstacleAtTimePtr(cur_time_step);
         if (cur_obj && obstacles_container.checkCollision(cur_obj, req))
 
         {
-          done[cur_obst] = true;
-          result[cur_obst] = cur_time_step;
+          done[cur_traj] = true;
+          result[cur_traj] = cur_time_step;
         }
       }
     }
   }
-  result[obsts_in.size()] = (obstacles_container.numcands());
-  result[obsts_in.size() + 1] = (obstacles_container.numchecks());
+  result[traj_in.size()] = (obstacles_container.numcands());
+  result[traj_in.size() + 1] = (obstacles_container.numchecks());
   return 0;
 }
+
+/*!
+ \brief Checks for collisions between static obstacles and the given trajectories using the grid broadphase container.
+ The result is returned into the result parameter. The number of elements in the result vector must equal the number of trajectories plus 2.
+ The element in result corresponding to the index of the input trajectory is set to -1 if there is no collision between the input trajectory
+ and the static obstacles. Otherwise, the element is set to the time step of first collision.
+ The last two elements of the result vector contain debug info for performance comparison.
+ \param[in] traj_in - input trajectories
+ \param[in] obj - input obstacles
+ \param[in] treq - collision request parameters
+ \param[out] result - result of collision detection
+*/
 
 int trajectories_collision_staticobst_grid(
     const aligned_vector<const collision::TimeVariantCollisionObject*>& traj_in,
@@ -154,22 +208,38 @@ int trajectories_collision_staticobst_grid(
   }
 }
 
+/*!
+ \brief Helper function to check for collisions between a set obstacles and the given trajectories using the grid broadphase container.
+ The caller function is to create a grid of obstacles at the given time step and pass it into the obstacles_grid parameter.
+ The result is returned into the result parameter. The number of elements in the result vector must equal the number of trajectories plus 2.
+ The element in result corresponding to the index of the input trajectory is set to -1 if there is no collision between the input trajectory
+ and the obstacles. Otherwise, the element is set to the time step of first collision.
+ The last two elements of the result vector contain debug info for performance comparison.
+ \param[in] enable_verification - whether to enable the online verification of the grid broadphase algorithm
+ \param[in] done - input vector with the number of elements equal to the number of trajectories, with all elements set to false
+ \param[in] obstacles_grid - grid with input obstacles
+ \param[in] cur_time_step - current time step
+ \param[in] numcands_global - variable that is to accumulate the number of collision check candidates (debug info)
+ \param[in] numchecks_global - variable that is to accumulate the number of collision check candidates (debug info)
+ \param[out] result - result of collision detection
+ \param[in] traj_in - input trajectories
+*/
+
 template <class T>
 inline int trajectories_collision_dynamic_grid_helper(
     bool enable_verification, aligned_vector<bool>& done, T& obstacles_grid,
     int cur_time_step, int& numcands_global, int& numchecks_global,
     aligned_vector<int>& result,
-    const aligned_vector<const collision::TimeVariantCollisionObject*>&
-        obsts_in) {
-  for (int cur_obst = 0; cur_obst < obsts_in.size(); cur_obst++) {
+    const aligned_vector<const collision::TimeVariantCollisionObject*>& traj_in) {
+  for (int cur_traj = 0; cur_traj < traj_in.size(); cur_traj++) {
     ContainerCollisionRequest creq;
     creq.enable_verification = enable_verification;
     creq.test_obb_bbox = false;
-    if (!done[cur_obst]) {
-      auto cur_obj = obsts_in[cur_obst]->getObstacleAtTimePtr(cur_time_step);
+    if (!done[cur_traj]) {
+      auto cur_obj = traj_in[cur_traj]->getObstacleAtTimePtr(cur_time_step);
       if (cur_obj && obstacles_grid.checkCollision(cur_obj, creq)) {
-        done[cur_obst] = true;
-        result[cur_obst] = cur_time_step;
+        done[cur_traj] = true;
+        result[cur_traj] = cur_time_step;
       }
     }
   }
@@ -177,6 +247,18 @@ inline int trajectories_collision_dynamic_grid_helper(
   numchecks_global += obstacles_grid.numchecks();
   return 0;
 }
+
+/*!
+ \brief Check for collisions between a set obstacles and the given trajectories using the grid broadphase container.
+ The result is returned into the result parameter. The number of elements in the result vector must equal the number of trajectories plus 2.
+ The element in result corresponding to the index of the input trajectory is set to -1 if there is no collision between the input trajectory
+ and the dynamic obstacles. Otherwise, the element is set to the time step of first collision.
+ The last two elements of the result vector contain debug info for performance comparison.
+ \param[in] traj_in - input trajectories
+ \param[in] obsts_scenario - input dynamic obstacles
+ \param[in] treq - parameters for the collision request
+ \param[out] result - result of collision detection
+*/
 
 int trajectories_collision_dynamic_grid(
     const aligned_vector<const collision::TimeVariantCollisionObject*>& traj_in,
@@ -243,11 +325,24 @@ int trajectories_collision_dynamic_grid(
   return 0;
 }
 
+/*!
+ \brief Helper function to check for collisions between dynamic obstacles and the given trajectories.
+ The result is returned into the result parameter. The number of elements in the result vector must equal the number of trajectories plus 2.
+ The element in result corresponding to the index of the input trajectory is set to -1 if there is no collision between the input trajectory
+ and the dynamic obstacles. Otherwise, the element is set to the time step of first collision.
+ The last two elements of the result vector contain debug info for performance comparison.
+ \param[in] enable_verification - whether to enable the online verification of the grid broadphase algorithm
+ \param[out] result - result of collision detection
+ \param[in] traj_in - input trajectories
+ \param[in] obsts_scenario - input dynamic obstacles
+ \param[in] sett - parameters for the collision container to be created for obstacles at each of the checked time steps
+*/
+
 template <typename T>
 inline int trajectories_collision_dynamic_helper(
     bool enable_verification, aligned_vector<int>& result,
     const aligned_vector<const collision::TimeVariantCollisionObject*>&
-        obsts_in,
+		traj_in,
     const aligned_vector<const collision::TimeVariantCollisionObject*>&
         obsts_scenario,
     const ContainerSettings& sett) {
@@ -257,11 +352,11 @@ inline int trajectories_collision_dynamic_helper(
 
   int min_time_step_traj = -1, max_time_step_traj = -1;
   int min_time_step_obst = -1, max_time_step_obst = -1;
-  get_time_step_bounds(obsts_in, obsts_scenario, min_time_step_traj,
+  get_time_step_bounds(traj_in, obsts_scenario, min_time_step_traj,
                        max_time_step_traj, min_time_step_obst,
                        max_time_step_obst);
 
-  aligned_vector<bool> done(obsts_in.size());
+  aligned_vector<bool> done(traj_in.size());
   std::fill(result.begin(), result.end(), -1);
 
   aligned_vector<collision::CollisionObject*> col_objs_tvobst;
@@ -281,12 +376,12 @@ inline int trajectories_collision_dynamic_helper(
     ContainerCollisionRequest creq;
     creq.enable_verification = enable_verification;
     creq.test_obb_bbox = false;
-    for (int cur_obst = 0; cur_obst < obsts_in.size(); cur_obst++) {
-      if (!done[cur_obst]) {
-        auto cur_obj = obsts_in[cur_obst]->getObstacleAtTimePtr(cur_time_step);
+    for (int cur_traj = 0; cur_traj < traj_in.size(); cur_traj++) {
+      if (!done[cur_traj]) {
+        auto cur_obj = traj_in[cur_traj]->getObstacleAtTimePtr(cur_time_step);
         if (cur_obj && obstacles_grid.checkCollision(cur_obj, creq)) {
-          done[cur_obst] = true;
-          result[cur_obst] = cur_time_step;
+          done[cur_traj] = true;
+          result[cur_traj] = cur_time_step;
         }
       }
     }
@@ -294,11 +389,23 @@ inline int trajectories_collision_dynamic_helper(
     numchecks_global += obstacles_grid.numchecks();
   }
 
-  result[obsts_in.size()] = numcands_global;
-  result[obsts_in.size() + 1] = numchecks_global;
+  result[traj_in.size()] = numcands_global;
+  result[traj_in.size() + 1] = numchecks_global;
 
   return 0;
 }
+
+/*!
+ \brief Checks for collisions between dynamic obstacles and the given trajectories using Box2D library dynamic tree broadphase.
+ The result is returned into the result parameter. The number of elements in the result vector must equal the number of trajectories plus 2.
+ The element in result corresponding to the index of the input trajectory is set to -1 if there is no collision between the input trajectory
+ and the dynamic obstacles. Otherwise, the element is set to the time step of first collision.
+ The last two elements of the result vector contain debug info for performance comparison.
+ \param[in] traj_in - input trajectories
+ \param[in] obsts_scenario - input dynamic obstacles
+ \param[in] treq - parameters for the collision request
+ \param[out] result - result of collision detection
+*/
 
 int trajectories_collision_dynamic_box2d(
     const aligned_vector<const collision::TimeVariantCollisionObject*>& traj_in,
@@ -310,6 +417,18 @@ int trajectories_collision_dynamic_box2d(
   return trajectories_collision_dynamic_helper<ContainerBox2D>(
       treq.enable_verification, result, traj_in, obsts_scenario, sett);
 }
+
+/*!
+ \brief Checks for collisions between dynamic obstacles and the given trajectories using FCL library broadphase.
+ The result is returned into the result parameter. The number of elements in the result vector must equal the number of trajectories plus 2.
+ The element in result corresponding to the index of the input trajectory is set to -1 if there is no collision between the input trajectory
+ and the dynamic obstacles. Otherwise, the element is set to the time step of first collision.
+ The last two elements of the result vector contain debug info for performance comparison.
+ \param[in] traj_in - input trajectories
+ \param[in] obsts_scenario - input dynamic obstacles
+ \param[in] treq - parameters for the collision request
+ \param[out] result - result of collision detection
+*/
 
 int trajectories_collision_dynamic_fcl(
     const aligned_vector<const collision::TimeVariantCollisionObject*>& traj_in,
@@ -324,6 +443,18 @@ int trajectories_collision_dynamic_fcl(
   return trajectories_collision_dynamic_helper<ContainerFCL>(
       treq.enable_verification, result, traj_in, obsts_scenario, sett);
 }
+
+/*!
+ \brief Checks for collisions between static obstacles and the given trajectories using FCL library broadphase.
+ The result is returned into the result parameter. The number of elements in the result vector must equal the number of trajectories plus 2.
+ The element in result corresponding to the index of the input trajectory is set to -1 if there is no collision between the input trajectory
+ and the static obstacles. Otherwise, the element is set to the time step of first collision.
+ The last two elements of the result vector contain debug info for performance comparison.
+ \param[in] traj_in - input trajectories
+ \param[in] obj - input static obstacles
+ \param[in] treq - parameters for the collision request
+ \param[out] result - result of collision detection
+*/
 
 int trajectories_collision_staticobst_fcl(
     const aligned_vector<const collision::TimeVariantCollisionObject*>& traj_in,
@@ -347,6 +478,18 @@ int trajectories_collision_staticobst_fcl(
   return trajectories_collision_staticobst_helper(obstacles_cont, traj_in, creq,
                                                   result);
 }
+
+/*!
+ \brief Checks for each of the input trajectories if it is enclosed within the given polygons.
+ The result is returned into the result parameter. The number of elements in the result vector must equal the number of trajectories plus 2.
+ The element in result corresponding to the index of the input trajectory is set to -1 if the input trajectory is always enclosed within the given polygons.
+ Otherwise, the element is set to the time step of non-enclosure.
+ The last two elements of the result vector contain debug info for performance comparison.
+ \param[in] traj_in - input trajectories. The trajectory for polygon enclosure checks can consist only of OBB or AABB boxes.
+ \param[in] obj - ShapeGroup with input Polygons
+ \param[in] treq - parameters for the collision request (used for finding the candidate polygons)
+ \param[out] result - result
+*/
 
 int trajectories_enclosure_polygons_static_grid(
     const aligned_vector<const collision::TimeVariantCollisionObject*>& traj_in,
@@ -432,6 +575,18 @@ int trajectories_enclosure_polygons_static_grid(
   return 0;
 }
 
+/*!
+ \brief Checks for collisions between static obstacles and the given trajectories using Box2D dynamic tree broadphase.
+ The result is returned into the result parameter. The number of elements in the result vector must equal the number of trajectories plus 2.
+ The element in result corresponding to the index of the input trajectory is set to -1 if there is no collision between the input trajectory
+ and the static obstacles. Otherwise, the element is set to the time step of first collision.
+ The last two elements of the result vector contain debug info for performance comparison.
+ \param[in] traj_in - input trajectories
+ \param[in] obj - input static obstacles
+ \param[in] treq - parameters for the collision request
+ \param[out] result - result of collision detection
+*/
+
 int trajectories_collision_staticobst_box2d(
     const aligned_vector<const collision::TimeVariantCollisionObject*>& traj_in,
     const collision::ShapeGroup& obj,
@@ -453,6 +608,19 @@ int trajectories_collision_staticobst_box2d(
 }  // namespace detail
 namespace trajectory_queries {
 using namespace detail::trajectory_queries;
+
+/*!
+ \brief Checks for collisions between dynamic obstacles and the given trajectories.
+ The result is returned into the res parameter. The number of elements in the res vector must equal the number of trajectories plus 2.
+ The element in the result corresponding to the index of the input trajectory is set to -1 if there is no collision between the input trajectory
+ and the dynamic obstacles. Otherwise, the element is set to the time step of first collision.
+ The last two elements of the res vector contain debug info for performance comparison.
+ \param[in] trajectories_in - input trajectories
+ \param[in] dynamic_obstacles - input dynamic obstacles
+ \param[out] res - result of collision detection
+ \param[in] treq - parameters for the collision request
+*/
+
 int trajectories_collision_time_dynamic_obstacles(
     const aligned_vector<const collision::TimeVariantCollisionObject*>&
         trajectories_in,
@@ -483,6 +651,18 @@ int trajectories_collision_time_dynamic_obstacles(
   return -1;
 }
 
+/*!
+ \brief Checks for collisions between static obstacles and the given trajectories.
+ The result is returned into the res parameter. The number of elements in the res vector must equal the number of trajectories plus 2.
+ The element in the result corresponding to the index of the input trajectory is set to -1 if there is no collision between the input trajectory
+ and the static obstacles. Otherwise, the element is set to the time step of first collision.
+ The last two elements of the res vector contain debug info for performance comparison.
+ \param[in] trajectories_in - input trajectories
+ \param[in] static_obstacles - input static obstacles
+ \param[out] res - result of collision detection
+ \param[in] treq - parameters for the collision request
+*/
+
 int trajectories_collision_time_static_obstacles(
     const aligned_vector<const collision::TimeVariantCollisionObject*>&
         trajectories_in,
@@ -512,6 +692,19 @@ int trajectories_collision_time_static_obstacles(
   }
   return -1;
 }
+
+/*!
+ \brief Checks for each of the input trajectories if it is enclosed within the given polygons.
+ The result is returned into the res parameter. The number of elements in the res vector must equal the number of trajectories plus 2.
+ The element in the result corresponding to the index of the input trajectory is set to -1 if the input trajectory is always enclosed within the given polygons.
+ Otherwise, the element is set to the time step of non-enclosure.
+ The last two elements of the res vector contain debug info for performance comparison.
+ \param[in] traj_in - input trajectories. The trajectory for polygon enclosure checks can consist only of OBB or AABB boxes.
+ \param[in] obj - ShapeGroup with input Polygons
+ \param[in] treq - parameters for the collision request (used for finding the candidate polygons)
+ \param[out] result - result
+*/
+
 int trajectories_enclosure_time_polygons_static(
     const aligned_vector<const collision::TimeVariantCollisionObject*>&
         trajectories_in,

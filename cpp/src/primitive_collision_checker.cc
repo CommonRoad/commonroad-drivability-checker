@@ -2,6 +2,8 @@
 
 namespace collision {
 
+// the meaning of the functions is the same as with CollisionChecker, but the collisions are checked using the bruteforce method
+
 void PrimitiveCollisionChecker::addCollisionObject(CollisionObjectConstPtr co) {
   collision_objects_.push_back(co);
 }

@@ -116,7 +116,7 @@ def tri_tri_test():
     return True
 
 def tri_tri_invalid_test():
-    obj1 = creator.create_random_invalid_triangle()
+    obj1 = creator.create_random_invalid_triangle_normal()
     obj2 = creator.create_random_triangle()
     if narrowphase_test(obj1, obj2) == False:
         narrowphase_test(obj1, obj2, dump_failures=False)

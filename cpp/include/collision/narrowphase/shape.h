@@ -47,7 +47,7 @@ class Shape : public CollisionObject, IFCLCollisionObject {
   double center_y() const;
 
   //! Set geometric center of shape
-  void set_center(const Eigen::Vector2d &_center);
+  virtual void set_center(const Eigen::Vector2d &_center);
 
   //! Print all parameters of the shape
   virtual void print(std::ostringstream &stream) const = 0;
@@ -59,9 +59,6 @@ class Shape : public CollisionObject, IFCLCollisionObject {
 
   //! Get radius
   double radius() const;
-
-  // virtual ShapeConstPtr scale(double factor) const = 0;
-  // virtual ShapeConstPtr shrink(double value) const = 0;
 
   virtual ~Shape();
 

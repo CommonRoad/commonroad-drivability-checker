@@ -12,6 +12,11 @@ nanobind_add_module(${python_module_name} MODULE
 )
 target_link_libraries(${python_module_name} PRIVATE crcc)
 
+if (CR_DC_BUILD_WITH_MEMORY_SAFETY_CHECKS)
+    target_compile_options(${python_module_name} PRIVATE -fsanitize=address -static-libasan -fno-omit-frame-pointer)
+    target_link_options(${python_module_name} PRIVATE -fsanitize=address -static-libasan)
+endif (CR_DC_BUILD_WITH_MEMORY_SAFETY_CHECKS)
+
 # link libs11n
 if (CR_DC_BUILD_S11N)
     message(STATUS "<${PROJECT_NAME}> Serialization and pickling support have been ENABLED for ${python_module_name}")

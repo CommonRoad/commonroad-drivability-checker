@@ -40,6 +40,14 @@ bool FCLCollisionObject::BVCheck(CollisionObjectConstPtr obj2) const {
         (static_cast<const FCLCollisionObject *>(obj2_entity))
             ->getCollisionObject_fcl()
             .get();
+    auto is_invalid_polygon = [](const CollisionObject* poly) {
+       return (poly->getCollisionObjectType() == OBJ_TYPE_POLYGON) && (poly->is_valid() == false);
+    };
+
+    if (is_invalid_polygon(obj2.get()) || is_invalid_polygon(m_parent)) {
+       // an invalid Polygon has no valid triangles, does not overlap with another object
+       return false;
+    }
     fcl::AABB<double> BV_this = fcl_this_obj->getAABB();
     fcl::AABB<double> BV_2 = fcl_obj2->getAABB();
     return BV_this.overlap(BV_2);

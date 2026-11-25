@@ -24,14 +24,14 @@ class RectangleAABB : public Shape {
       : Shape(_center), r_(_rx, _ry) {
     min_ = center_ - r_;
     max_ = center_ + r_;
+    set_up_segments();
+  }
 
-    segments_.push_back(LineSegment(min_, Eigen::Vector2d(min_.x(), max_.y())));
-
-    segments_.push_back(LineSegment(Eigen::Vector2d(min_.x(), max_.y()), max_));
-
-    segments_.push_back(LineSegment(max_, Eigen::Vector2d(max_.x(), min_.y())));
-
-    segments_.push_back(LineSegment(Eigen::Vector2d(max_.x(), min_.y()), min_));
+  inline void set_up_segments() {
+	  segments_.push_back(LineSegment(min_, Eigen::Vector2d(min_.x(), max_.y())));
+	  segments_.push_back(LineSegment(Eigen::Vector2d(min_.x(), max_.y()), max_));
+	  segments_.push_back(LineSegment(max_, Eigen::Vector2d(max_.x(), min_.y())));
+	  segments_.push_back(LineSegment(Eigen::Vector2d(max_.x(), min_.y()), min_));
   }
 
   bool rayTrace(const Eigen::Vector2d &point1, const Eigen::Vector2d &point2,
@@ -71,7 +71,7 @@ class RectangleAABB : public Shape {
       const std::shared_ptr<fcl::CollisionGeometry<FCL_PRECISION>> &col_geom)
       const override;
 
-  void set_center(const Eigen::Vector2d &_center);
+  void set_center(const Eigen::Vector2d &_center) override;
   void set_r(const Eigen::Vector2d &_r);
   void set_r_x(double _r_x);
   void set_r_y(double _r_y);

@@ -1,5 +1,4 @@
 # commonroad
-from commonroad.geometry.shape import Polygon, ShapeGroup, Shape, Rectangle
 from commonroad.scenario.lanelet import LaneletNetwork
 from commonroad.scenario.obstacle import StaticObstacle, ObstacleType
 from commonroad.scenario.scenario import Scenario

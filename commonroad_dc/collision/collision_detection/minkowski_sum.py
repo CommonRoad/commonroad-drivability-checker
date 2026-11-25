@@ -1,10 +1,15 @@
-import commonroad.geometry.shape
+import commonroad.geometry.occupancy.occupancy
+import commonroad.geometry.occupancy.rect_occupancy
+import commonroad.geometry.occupancy.circle_occupancy
+import commonroad.geometry.occupancy.polygon_occupancy
+import commonroad.geometry.occupancy.occupancy_group
+
 import numpy as np
 import shapely
 
 
-def minkowski_sum_circle(shape: commonroad.geometry.shape.Shape,
-                         radius: float, resolution: int) -> commonroad.geometry.shape.Shape:
+def minkowski_sum_circle(shape: commonroad.geometry.occupancy.occupancy.Occupancy,
+                         radius: float, resolution: int) -> commonroad.geometry.occupancy.occupancy.Occupancy:
     return minkowski_sum_circle_func_dict[type(shape)](shape, radius, resolution)
 
 
@@ -43,42 +48,42 @@ def minkowski_sum_circle_shapely_polygon(polygon: shapely.geometry.Polygon,
     return np.array(p_vertices)
 
 
-def minkowski_sum_circle_polygon(polygon: commonroad.geometry.shape.Polygon,
+def minkowski_sum_circle_polygon(polygon: commonroad.geometry.occupancy.polygon_occupancy.PolygonOccupancy,
                                  radius: float, resolution: int) \
-        -> commonroad.geometry.shape.Polygon:
+        -> commonroad.geometry.occupancy.polygon_occupancy.PolygonOccupancy:
     if np.isclose(radius, 0.0):
         return polygon
     else:
-        return commonroad.geometry.shape.Polygon(
-            minkowski_sum_circle_shapely_polygon(polygon._shapely_polygon, radius, resolution))
+        return commonroad.geometry.occupancy.polygon_occupancy.PolygonOccupancy(
+            polygon = shapely.geometry.Polygon(minkowski_sum_circle_shapely_polygon(polygon.shapely_object, radius, resolution)))
 
 
-def minkowski_sum_circle_circle(circle: commonroad.geometry.shape.Circle,
+def minkowski_sum_circle_circle(circle:  commonroad.geometry.occupancy.circle_occupancy.CircleOccupancy,
                                 radius: float, resolution: int) \
-        -> commonroad.geometry.shape.Circle:
-    return commonroad.geometry.shape.Circle(
-        circle.radius + radius, circle.center)
+        ->  commonroad.geometry.occupancy.circle_occupancy.CircleOccupancy:
+    return  commonroad.geometry.occupancy.circle_occupancy.CircleOccupancy(
+        radius = circle.radius + radius, circle_center = circle.circle_center)
 
 
 def minkowski_sum_circle_rectangle(
-        rectangle: commonroad.geometry.shape.Rectangle, radius: float, resolution: int) \
-        -> commonroad.geometry.shape.Polygon:
-    return commonroad.geometry.shape.Polygon(
-        minkowski_sum_circle_shapely_polygon(rectangle._shapely_polygon, radius, resolution))
+        rectangle: commonroad.geometry.occupancy.rect_occupancy.RectOccupancy, radius: float, resolution: int) \
+        -> commonroad.geometry.occupancy.polygon_occupancy.PolygonOccupancy:
+    return commonroad.geometry.occupancy.polygon_occupancy.PolygonOccupancy(
+        polygon = shapely.geometry.Polygon(minkowski_sum_circle_shapely_polygon(rectangle.shapely_object, radius, resolution)))
 
 
-def minkowski_sum_circle_shape_group(
-        shape_group: commonroad.geometry.shape.ShapeGroup, radius: float, resolution: int) \
-        -> commonroad.geometry.shape.ShapeGroup:
-    new_shapes = list()
-    for s in shape_group.shapes:
-        new_shapes.append(minkowski_sum_circle(s, radius, resolution))
-    return commonroad.geometry.shape.ShapeGroup(new_shapes)
+def minkowski_sum_circle_occupancy_group(
+        occupancy_group: commonroad.geometry.occupancy.occupancy_group.OccupancyGroup, radius: float, resolution: int) \
+        -> commonroad.geometry.occupancy.occupancy_group.OccupancyGroup:
+    new_occupancies = list()
+    for s in occupancy_group.occupancies:
+        new_occupancies.append(minkowski_sum_circle(s, radius, resolution))
+    return commonroad.geometry.occupancy.occupancy_group.OccupancyGroup(occupancies = tuple(new_occupancies))
 
 
 minkowski_sum_circle_func_dict = {
-    commonroad.geometry.shape.ShapeGroup: minkowski_sum_circle_shape_group,
-    commonroad.geometry.shape.Polygon: minkowski_sum_circle_polygon,
-    commonroad.geometry.shape.Circle: minkowski_sum_circle_circle,
-    commonroad.geometry.shape.Rectangle: minkowski_sum_circle_rectangle,
+    commonroad.geometry.occupancy.occupancy_group.OccupancyGroup: minkowski_sum_circle_occupancy_group,
+    commonroad.geometry.occupancy.polygon_occupancy.PolygonOccupancy: minkowski_sum_circle_polygon,
+    commonroad.geometry.occupancy.circle_occupancy.CircleOccupancy: minkowski_sum_circle_circle,
+    commonroad.geometry.occupancy.rect_occupancy.RectOccupancy: minkowski_sum_circle_rectangle,
 }

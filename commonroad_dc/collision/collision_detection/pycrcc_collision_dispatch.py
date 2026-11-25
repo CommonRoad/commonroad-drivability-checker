@@ -1,6 +1,7 @@
 import sys
 
-import commonroad.geometry.shape
+import commonroad.geometry.occupancy.occupancy_group
+import commonroad.geometry.occupancy.occupancy
 import commonroad_dc.pycrcc as pycrcc
 
 import commonroad_dc.collision.collision_detection.scenario
@@ -69,8 +70,8 @@ def create_collision_object(obj, params=None, collision_object_func=None) -> pyc
         for o in obj:
             collision_objects.append(create_collision_object(o, params))
         return collision_objects
-    elif isinstance(obj, commonroad.geometry.shape.Shape) \
-            and params['minkowski_sum_circle'] and not isinstance(obj, commonroad.geometry.shape.ShapeGroup):
+    elif isinstance(obj, commonroad.geometry.occupancy.occupancy.Occupancy) \
+            and params['minkowski_sum_circle'] and not isinstance(obj, commonroad.geometry.occupancy.occupancy_group.OccupancyGroup):
         shape = minkowski_sum_circle(obj, params['minkowski_sum_circle_radius'], params['resolution'])
         return collision_object_func[type(shape)](shape, params)
     else:

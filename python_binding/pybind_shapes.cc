@@ -154,6 +154,7 @@ auto bind_triangle(const nb::module_ &module) {
                     const collision::CollisionObject &co) {
                      return cc.collide(co);
                  })
+            .def("is_valid", &collision::Triangle::is_valid)
             .def("vertices",
                  [](const collision::Triangle &obj) {
                      nb::list v1;

@@ -13,6 +13,7 @@ class RandomObjectCreator:
         self.object_creator[3] = self.create_random_sphere
         self.object_creator[4] = self.create_random_triangle
         self.object_creator[5] = self.create_random_polygon
+        self.object_creator[6] = self.create_random_point
         self.grid_x_start = grid_x_start
         self.grid_x_end = grid_x_end
         self.grid_y_start = grid_y_start
@@ -83,16 +84,21 @@ class RandomObjectCreator:
         else:
             return pycrcc.Triangle(p1[0], p1[1], p3[0], p3[1], p2[0], p2[1])
 
-    def create_random_invalid_triangle(self):
-        v3=np.zeros(2)
-        v1=np.zeros(2)
-        while (np.linalg.norm(v3-v1)==0.):
+    def create_random_point(self):
+        p1 = self.generate_random_vector()
+        return pycrcc.Point(p1[0], p1[1])
+
+    def create_random_invalid_triangle_normal(self):
+        v3 = np.zeros(2)
+        v1 = np.zeros(2)
+        while (np.linalg.norm(v3 - v1) == 0.):
+
             v1 = np.asarray(self.generate_random_vector())
             v3 = np.asarray(self.generate_random_vector())
         v3_v1 = v3 - v1
         v3_v1 /= np.linalg.norm(v3_v1)
         normal = np.asarray([v3_v1[1], -1 * v3_v1[0]])
-        v2 = v3 + (v3 - v1) / 3 + normal * 1e-20
+        v2 = v3 + (v1 - v3) / 3 + normal * 1e-20
         vertices = [v1, v2, v3]
         signed_area_sum = 0.
         for i in range(len(vertices)):
@@ -103,6 +109,58 @@ class RandomObjectCreator:
             return pycrcc.Triangle(v1[0], v1[1], v2[0], v2[1], v3[0], v3[1])
         else:
             return pycrcc.Triangle(v1[0], v1[1], v3[0], v3[1], v2[0], v2[1])
+
+    def generate_random_direction(self):
+        vec = np.asarray(self.generate_random_vector())
+        while (np.linalg.norm((vec)) == 0.):
+            vec = np.asarray(self.generate_random_vector())
+        return vec/np.linalg.norm(vec)
+
+    def create_random_invalid_triangle_side(self):
+        v3 = np.zeros(2)
+        v1 = np.zeros(2)
+        while (np.linalg.norm(v3 - v1) == 0.):
+            v1 = np.asarray(self.generate_random_vector())
+            v3 = np.asarray(self.generate_random_vector())
+        v2 = v1 + 1e-11 * self.generate_random_direction()
+        vertices = [v1, v2, v3]
+        signed_area_sum = 0.
+        for i in range(len(vertices)):
+            x1, y1 = vertices[i]
+            x2, y2 = vertices[(i + 1) % len(vertices)]
+            signed_area_sum += (x1 * y2 - x2 * y1)
+        if signed_area_sum > 0.:
+            return pycrcc.Triangle(v1[0], v1[1], v2[0], v2[1], v3[0], v3[1])
+        else:
+            return pycrcc.Triangle(v1[0], v1[1], v3[0], v3[1], v2[0], v2[1])
+
+    def create_random_valid_triangle(self):
+        def is_triangle_definitely_valid(tri):
+            area = 0.0
+            verts = tri.vertices()
+            v1 = np.asarray(verts[0])
+            v2 = np.asarray(verts[1])
+            v3 = np.asarray(verts[2])
+            area += (v1[0] * v2[1] - v2[0] * v1[1])
+            area += (v2[0] * v3[1]- v3[0] * v2[1])
+            area += (v3[0] * v1[1] - v1[0] * v3[1])
+            area = abs(area / 2.0);
+            side1 = np.linalg.norm((v2 - v1))
+            side2 = np.linalg.norm((v3 - v1))
+            side3 = np.linalg.norm((v3 - v2))
+
+            max_side = max(side1, side2, side3)
+            min_side = min(side1, side2, side3)
+
+            if ((min_side > 1e-9) and (area / max_side) > 1e-9):
+                return True
+            else:
+                return False
+
+        tri = self.create_random_triangle()
+        while (is_triangle_definitely_valid(tri) == False):
+            tri = self.create_random_triangle()
+        return tri
 
     def create_random_polygon(self, tri_count=-1):
         if tri_count == -1:
@@ -121,7 +179,7 @@ class RandomObjectCreator:
         return pycrcc.Polygon(vertex_list, list(), triangle_list)
 
     def create_random_shape(self):
-        obj_type = np.random.choice(range(6))
+        obj_type = np.random.choice(range(7))
         return self.create_random_shape_helper(obj_type)
 
     def create_random_shape_group(self, shape_count=-1):
@@ -155,15 +213,15 @@ class RandomObjectCreator:
         return tvobj
 
     def create_random_static_object(self):
-        obj_type = np.random.choice(range(7))
-        if obj_type == 6:
+        obj_type = np.random.choice(range(8))
+        if obj_type == 7:
             return self.create_random_shape_group()
 
         return self.create_random_shape()
 
     def create_random_object(self):
-        obj_type = np.random.choice(range(8))
-        if obj_type == 7:
+        obj_type = np.random.choice(range(9))
+        if obj_type == 8:
             return self.create_random_tvobst()
         return self.create_random_static_object()
 
@@ -172,3 +230,4 @@ class RandomObjectCreator:
         assert (obj_type in self.object_creator.keys())
 
         return self.object_creator[obj_type]()
+

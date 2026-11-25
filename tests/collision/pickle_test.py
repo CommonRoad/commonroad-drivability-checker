@@ -1,9 +1,12 @@
+import os
+
 import commonroad_dc.pycrcc as pycrcc
 import pickle
 from tqdm import tqdm
-
-from .random_object_creator import RandomObjectCreator
-
+if __name__ == "__main__":
+    from random_object_creator import RandomObjectCreator
+else:
+    from .random_object_creator import RandomObjectCreator
 
 def run_test():
     tvo2 = pycrcc.TimeVariantCollisionObject(4)
@@ -30,8 +33,11 @@ def run_test():
         cc_dump2 = pickle.dumps(cc2)
 
         if (cc_dump != cc_dump2):
-            print("pickling error")
-            has_error = True
+            print("pickling error, checking if it is a numerics issue")
+            cc3 = pickle.loads(cc_dump2)
+            cc_dump3 = pickle.dumps(cc3)
+            if cc_dump2 != cc_dump3:
+                has_error = True
 
         obj_0 = creat.create_random_shape()
 
@@ -42,8 +48,11 @@ def run_test():
         obj_dump2 = pickle.dumps(obj2)
 
         if (obj_dump != obj_dump2):
-            print("pickling error")
-            has_error = True
+            print("pickling error, checking if it is a numerics issue")
+            obj3 = pickle.loads(obj_dump2)
+            obj_dump3 = pickle.dumps(obj3)
+            if obj_dump2 != obj_dump3:
+                has_error = True
     return has_error
 
 

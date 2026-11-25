@@ -9,6 +9,39 @@ import numpy as np
 # Test CollisionChecker
 # Test ShapeGroups
 
+def create_invalid_triangle_altitude():
+    v1=np.asarray([-16.47294589178357, 14.78957915831663])
+    v3=np.asarray([-7.334669338677354, -17.27454909819639])
+    v3_v1 = v3 - v1
+    v3_v1 /= np.linalg.norm(v3_v1)
+    normal = np.asarray([v3_v1[1], -1 * v3_v1[0]])
+    v2 = v3 + (v3 - v1) / 3 + normal * 1e-20
+    vertices = [v1, v2, v3]
+    signed_area_sum = 0.
+    for i in range(len(vertices)):
+        x1, y1 = vertices[i]
+        x2, y2 = vertices[(i + 1) % len(vertices)]
+        signed_area_sum += (x1 * y2 - x2 * y1)
+    if signed_area_sum > 0.:
+        return pycrcc.Triangle(v1[0], v1[1], v2[0], v2[1], v3[0], v3[1])
+    else:
+        return pycrcc.Triangle(v1[0], v1[1], v3[0], v3[1], v2[0], v2[1])
+
+def create_invalid_triangle_side():
+    v1 = np.zeros(2)
+    v2 = v1 + 1e-11 * np.asarray([1,1])
+    v3 = np.asarray([-10, 10])
+    vertices = [v1, v2, v3]
+    signed_area_sum = 0.
+    for i in range(len(vertices)):
+        x1, y1 = vertices[i]
+        x2, y2 = vertices[(i + 1) % len(vertices)]
+        signed_area_sum += (x1 * y2 - x2 * y1)
+    if signed_area_sum > 0.:
+        return pycrcc.Triangle(v1[0], v1[1], v2[0], v2[1], v3[0], v3[1])
+    else:
+        return pycrcc.Triangle(v1[0], v1[1], v3[0], v3[1], v2[0], v2[1])
+
 class TestCollision(unittest.TestCase):
 
     def test_AABBCircle(self):
@@ -71,8 +104,9 @@ class TestCollision(unittest.TestCase):
 
     def test_polyg(self):
         triang = pycrcc.Triangle(0, 0, 10, 0, 4, 5)
-
+        self.assertEqual(triang.is_valid(), True)
         triang2 = pycrcc.Triangle(10, 2, 2, 2, 5, 5)
+        self.assertEqual(triang2.is_valid(), True)
         triangles = list()
         triangles.append(triang)
         triangles.append(triang2)
@@ -101,24 +135,10 @@ class TestCollision(unittest.TestCase):
 
         self.assertEqual(polyg.collide(obb8), 1)
 
-        def create_invalid_triangle():
-            v1=np.asarray([-16.47294589178357, 14.78957915831663])
-            v3=np.asarray([-7.334669338677354, -17.27454909819639])
-            v3_v1 = v3 - v1
-            v3_v1 /= np.linalg.norm(v3_v1)
-            normal = np.asarray([v3_v1[1], -1 * v3_v1[0]])
-            v2 = v3 + (v3 - v1) / 3 + normal * 1e-20
-            vertices = [v1, v2, v3]
-            signed_area_sum = 0.
-            for i in range(len(vertices)):
-                x1, y1 = vertices[i]
-                x2, y2 = vertices[(i + 1) % len(vertices)]
-                signed_area_sum += (x1 * y2 - x2 * y1)
-            if signed_area_sum > 0.:
-                return pycrcc.Triangle(v1[0], v1[1], v2[0], v2[1], v3[0], v3[1])
-            else:
-                return pycrcc.Triangle(v1[0], v1[1], v3[0], v3[1], v2[0], v2[1])
-        tri_invalid = create_invalid_triangle()
+        tri_invalid = create_invalid_triangle_altitude()
+        self.assertEqual(tri_invalid.is_valid(), False)
+        tri_invalid2 = create_invalid_triangle_side()
+        self.assertEqual(tri_invalid2.is_valid(), False)
         poly = pycrcc.Polygon(tri_invalid.vertices(), list(), [tri_invalid])
         poly2 = pycrcc.Polygon(tri_invalid.vertices(), list(), [tri_invalid])
         self.assertEqual(poly.collide(poly2), False)
@@ -244,19 +264,11 @@ class TestCollision(unittest.TestCase):
 
         self.assertEqual(tvo1.collide(tvo2), 1)
 
-        # obb2=pycrcc.RectOBB(2, 1, 1.5, 6.0, 0)
-
         # TODO: poly-poly collision test
 
-
-# def testGroupObj:
-
-
-# def testGroupGroup:
-
-# def testTV_Obj:
-# def testTV_Group:
-
-# def testTrajectory_Group:
-
-# def testTrajectory_Obj_:
+    def test_invalid_polygon_aabb(self):
+     tri = create_invalid_triangle_altitude()
+     poly = pycrcc.Polygon([], [], [tri])
+     aabb = poly.getAABB()
+     self.assertEqual(aabb.min_x(), aabb.max_x())
+     self.assertEqual(aabb.min_y(), aabb.max_y())

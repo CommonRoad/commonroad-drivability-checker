@@ -38,13 +38,20 @@ extern "C" {
 namespace collision {
 namespace triangulation {
 
+/*!
+ \brief Triangulate only the AABB box of the Polygon
+ \param[in] vertices input vertices of the Polygon to be triangulated
+ \param[out] triangles_out vector to which the output triangles are to be appended
+ Creates 2 triangles representing the AABB box around the Polygon.
+*/
+
 int do_triangulate_aabb(
     std::vector<Eigen::Vector2d> vertices,
     std::vector<collision::TriangleConstPtr> &triangles_out) {
   double min_x = std::numeric_limits<double>::max();
-  double max_x = std::numeric_limits<double>::min();
+  double max_x = -1 * std::numeric_limits<double>::max();
   double min_y = std::numeric_limits<double>::max();
-  double max_y = std::numeric_limits<double>::min();
+  double max_y = -1 * std::numeric_limits<double>::max();
   for (auto vert : vertices) {
     min_x = std::min(min_x, vert(0));
     min_y = std::min(min_y, vert(1));
@@ -324,7 +331,7 @@ int do_triangulate_gpc(std::vector<Eigen::Vector2d> vertices,
   gpc_free_tristrip(t);
   
   
-  delete gpc_vertices;
+  delete[] gpc_vertices;
   gpc_free_polygon(gpc_p);
   free(gpc_p);
 
@@ -341,6 +348,13 @@ int do_triangulateQuality_gpc(
 
 
 #endif
+
+/*!
+ \brief Triangulate the Polygon without specifying the quality of the Triangle mesh
+ \param[in] vertices input vertices of the Polygon to be triangulated
+ \param[out] triangles_out vector to which the output triangles are to be appended
+ \param[in] method which library to use for Polygon triangulation
+*/
 
 int do_triangulate(std::vector<Eigen::Vector2d> vertices,
                    std::vector<collision::TriangleConstPtr> &triangles_out, int method) {
@@ -373,6 +387,13 @@ int do_triangulate(std::vector<Eigen::Vector2d> vertices,
 	}
 	return 0;
 }
+
+/*!
+ \brief Triangulate the Polygon specifying the quality of the Triangle mesh
+ \param[in] vertices input vertices of the Polygon to be triangulated
+ \param[out] triangles_out vector to which the output triangles are to be appended
+ \param[in] method which library to use for Polygon triangulation
+*/
 
 int do_triangulateQuality(
     std::vector<Eigen::Vector2d> vertices,

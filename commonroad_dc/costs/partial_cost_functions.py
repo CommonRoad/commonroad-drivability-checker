@@ -3,7 +3,7 @@ from typing import List, Tuple, Dict, Any
 import matplotlib.pyplot as plt
 import numpy as np
 from commonroad.common.util import Interval
-from commonroad.geometry.shape import ShapeGroup
+
 from commonroad.planning.planning_problem import PlanningProblem
 from commonroad.scenario.lanelet import Lanelet
 from commonroad.scenario.scenario import Scenario
@@ -306,17 +306,7 @@ def longitudinal_velocity_offset_cost(
     except Exception as ex:
         msg = f"An exception occurred during calculation of velocity offset cost!"
         raise PartialCostFunctionException(msg) from ex
-
-
-def _get_shape_center(shape):
-    # TODO make recursive later
-    if not isinstance(shape, ShapeGroup):
-        return shape.center
-    else:
-        x = np.array([shape.center[0] for shape in shape.shapes])
-        y = np.array([shape.center[1] for shape in shape.shapes])
-    return np.array([np.mean(x), np.mean(y)])
-
+   
 
 def distance_to_obstacle_cost(
     scenario: Scenario, planning_problem: PlanningProblem, trajectory: Trajectory,

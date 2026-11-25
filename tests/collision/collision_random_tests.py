@@ -1,14 +1,10 @@
 import commonroad_dc.pycrcc as pycrcc
 
-if __name__ == "__main__":
-    from random_object_creator import RandomObjectCreator
-else:
-    from .random_object_creator import RandomObjectCreator
+from random_object_creator import RandomObjectCreator
 from tqdm import tqdm
 
 
-def run_test():
-    print('performing random collision stress-tests')
+def run_random_tests():
     creat = RandomObjectCreator(-20, 20, -20, 20, 500, 500)
     loopc_max = 10000
     obj_0 = creat.create_random_shape()
@@ -26,9 +22,7 @@ def run_test():
         sg_new.add_shape(obj_0)
         cc1.collide(obj2)
         obstacles = cc1.find_all_colliding_objects(obj2)
-
-    print("done")
-
+    return False
 
 if __name__ == "__main__":
-    run_test()
+    run_random_tests()

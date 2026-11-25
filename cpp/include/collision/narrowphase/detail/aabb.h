@@ -1,9 +1,12 @@
 #ifndef CPP_COLLISION_INCLUDE_COLLISION_FASTAABB_H_
 #define CPP_COLLISION_INCLUDE_COLLISION_FASTAABB_H_
 
-#include "collision/narrowphase/rectangle_aabb.h"
+#include <utility>
 
 namespace collision {
+
+class RectangleAABB;
+
 class AABB {
  public:
   double x_min;
@@ -21,12 +24,7 @@ class AABB {
     this->y_max = y_max;
   }
 
-  AABB(const RectangleAABB& aabb_rect) {
-    x_min = aabb_rect.min()[0];
-    y_min = aabb_rect.min()[1];
-    x_max = aabb_rect.max()[0];
-    y_max = aabb_rect.max()[1];
-  }
+  AABB(const RectangleAABB& aabb_rect);
 
   bool collides(const AABB& other);
 

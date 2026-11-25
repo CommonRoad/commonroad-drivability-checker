@@ -199,7 +199,7 @@ def trajectory_preprocess_obb_sum(trajectory: pycrcc.TimeVariantCollisionObject)
 
     :param trajectory: trajectory for preprocessing (pycrcc.TimeVariantCollisionObject)
 
-    :return: postprocessed trajectory (pycrcc.TimeVariantCollisionObject). Its length is one step smaller compared to the input trajectory.
+    :return: postprocessed trajectory (pycrcc.TimeVariantCollisionObject).
 
     """
     if trajectory.time_end_idx() - trajectory.time_start_idx() <= 0:

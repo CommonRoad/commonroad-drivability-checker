@@ -3,7 +3,6 @@ from typing import Tuple, Dict
 
 import numpy as np
 from commonroad.common.solution import PlanningProblemSolution, TrajectoryType, Solution, VehicleModel
-from commonroad.geometry.shape import Polygon, ShapeGroup
 from commonroad.planning.planning_problem import PlanningProblemSet
 from commonroad.prediction.prediction import TrajectoryPrediction
 from commonroad.scenario.obstacle import StaticObstacle, ObstacleType
@@ -70,20 +69,10 @@ def _create_pp_solution_collision_object(planning_problem_set: PlanningProblemSe
 
 
 def _construct_boundary_checker(scenario: Scenario) -> CollisionChecker:
+    collision_checker = CollisionChecker()
     build = ['section_triangles', 'triangulation']
     boundary = construction.construct(scenario, build)
-    road_boundary_shape_list = []
-    initial_state = None
-    for r in boundary['triangulation'].unpack():
-        initial_state = InitialState(position=np.array([0, 0]), orientation=0.0, time_step=0)
-        p = Polygon(np.array(r.vertices()))
-        road_boundary_shape_list.append(p)
-    road_bound = StaticObstacle(obstacle_id=scenario.generate_object_id(),
-                                obstacle_type=ObstacleType.ROAD_BOUNDARY,
-                                obstacle_shape=ShapeGroup(road_boundary_shape_list),
-                                initial_state=initial_state)
-    collision_checker = CollisionChecker()
-    collision_checker.add_collision_object(create_collision_object(road_bound))
+    collision_checker.add_collision_object(boundary['triangulation'])
     return collision_checker
 
 

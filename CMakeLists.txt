@@ -110,7 +110,7 @@ if (CMAKE_EXPORT_COMPILE_COMMANDS)
 endif ()
 
 option(CR_DC_BUILD_PYTHON_BINDINGS "Build Python bindings for Drivability Checker" OFF)
-
+option(CR_DC_BUILD_WITH_MEMORY_SAFETY_CHECKS "Build Drivability Checker with memory sanitizer (ASAN)" OFF)
 # IMPORTANT: DO NOT MOVE this section, in particular the calls to find_package(Python)
 # and find_package(pybind11), without careful consideration
 if (CR_DC_BUILD_PYTHON_BINDINGS)

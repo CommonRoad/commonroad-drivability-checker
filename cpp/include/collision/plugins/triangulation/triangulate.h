@@ -10,9 +10,9 @@ namespace triangulation {
 
 enum TRIANGULATION_METHOD
 {
-	TRIANGULATION_GPC=0,
-	TRIANGULATION_TRIANGLE,
-	TRIANGULATION_CGAL
+	TRIANGULATION_GPC=0,  // use General Polygon Clipper Library for triangulation
+	TRIANGULATION_TRIANGLE,  // use non-free Triangle library for triangulation
+	TRIANGULATION_CGAL  // use non-free CGAL library for triangulation
 };
 
 class TriangulationQuality {
@@ -31,9 +31,9 @@ class TriangulationQuality {
     bb_only = false;
   }
 
-  bool bb_only;
-  bool use_quality;
-  double mesh_quality;
+  bool bb_only;  // triangulate only the AABB box of the Polygon (create 2 triangles)
+  bool use_quality;  // use the mesh_quality parameter for triangulation
+  double mesh_quality;  // required quality for the triangle mesh (parameter used for the non-free CGAL and Triangle libraries)
 };
 
 int do_triangulate_aabb(

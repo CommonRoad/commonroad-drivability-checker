@@ -74,9 +74,8 @@ class Polygon : public Shape {
   bool isWithin(const Polygon &poly2) const;
 
   virtual void toString(std::ostringstream &stream) const;
+
   virtual void print(std::ostringstream &stream) const;
-  virtual CollisionObjectConstPtr timeSlice(
-      int time_idx, CollisionObjectConstPtr shared_ptr_this) const;
 
   ShapeGroupConstPtr getTrapezoids() const;
 
@@ -90,6 +89,8 @@ class Polygon : public Shape {
 
   solvers::solverBoost::BoostPolygon* getOrCreateBoostPolygon(void) const;
 
+  RectangleAABBConstPtr getAABB() const override;
+
 #if ENABLE_SERIALIZER
   serialize::ICollisionObjectExport *exportThis(void) const override;
 #endif
@@ -101,6 +102,9 @@ class Polygon : public Shape {
   fcl::CollisionObject<FCL_PRECISION> *createFCLCollisionObject(
       const std::shared_ptr<fcl::CollisionGeometry<FCL_PRECISION>> &)
       const override;
+
+  void validate_ring_ordering();
+  void compute_is_valid();
 
   mutable std::unique_ptr<solvers::solverBoost::BoostObjectInternal> boost_polygon_;
   mutable bool has_boost_polygon_ = false;

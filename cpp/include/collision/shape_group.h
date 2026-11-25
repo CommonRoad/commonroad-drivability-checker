@@ -106,7 +106,7 @@ class ShapeGroup : public CollisionObject,
 
 protected:
     std::vector<ShapeConstPtr> getShapes();
-    std::unordered_map<const CollisionObject *, std::list<int>> getShapesMap();
+    std::unordered_map<const CollisionObject *, std::list<int>> getShapesMap() const;
 
  private:
   std::vector<ShapeConstPtr> shapes_;

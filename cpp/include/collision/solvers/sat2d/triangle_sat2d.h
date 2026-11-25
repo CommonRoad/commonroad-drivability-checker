@@ -4,6 +4,11 @@
 
 namespace collision {
 namespace detail {
+
+/**
+ * \brief Cache-friendly triangle class that supports collision checks in 2D using the Separating Axis Theorem
+ */
+
 class Triangle_SAT2D {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW

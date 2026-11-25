@@ -17,6 +17,10 @@ namespace test {
 bool is_borderline_case_tvobstacle_support(CollisionObjectConstPtr obj,
 		CollisionObjectConstPtr co);
 
+/**
+ * \brief Class for auto-testing the CollisionChecker broadphase collision detection functions.
+ */
+
 class CollisionCheckerTest {
  public:
   static bool run_test_collide(CollisionObjectConstPtr co,
@@ -41,6 +45,10 @@ class CollisionCheckerTest {
                   const CollisionObjectConstPtr &b);
 
 };
+
+/**
+ * \brief Class for auto-testing the ShapeGroup broadphase collision detection functions.
+ */
 
 class ShapeGroupTest {
  public:

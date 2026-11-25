@@ -15,9 +15,11 @@ struct Point {
  public:
   Point();
   Point(const Eigen::Vector2d &pnt);
-  double x;
-  double y;
-  Point(const Point &);
+  Point(const Point &) = default;
+  Point& operator=(const Point&) = default;
+
+  double x = 0;
+  double y = 0;
 
   double getCoord(int axis) const {
     if (!axis)
